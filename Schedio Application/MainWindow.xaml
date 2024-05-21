@@ -5,21 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Schedio_Application"
         mc:Ignorable="d"
-        Title="Schedio" Height="450" Width="800">
+        Title="Schedio" Height="720" Width="1280"
+        WindowStartupLocation="CenterScreen"
+        MinWidth="640"
+        Icon="pack://application:,,,/Resources/General/title_icon.ico">
+
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition  Height="50"/>
+            <RowDefinition  Height="70"/>
             <RowDefinition  Height="*"/>
         </Grid.RowDefinitions>
 
         <Rectangle Fill="#253093">
-            
+
         </Rectangle>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Width="40" Height="25" Margin="10" Foreground="White" Background="#1C246A" BorderThickness="0">Home</Button>
+            <Button Width="40" Height="25" Margin="10" Foreground="White"   Background="#253093" BorderThickness="0">Home</Button>
             <Button Width="40" Height="25" Margin="10" Foreground="White" Background="#253093" BorderThickness="0">New</Button>
             <Button Width="40" Height="25" Margin="10" Foreground="White" Background="#253093" BorderThickness="0">Open</Button>
         </StackPanel>
-        
+
     </Grid>
 </Window>

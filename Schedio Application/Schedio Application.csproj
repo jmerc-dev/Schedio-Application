@@ -10,9 +10,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\General\title_icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="MVVM\Model\" />
     <Folder Include="MVVM\ViewModel\" />
     <Folder Include="MVVM\View\CustomControls\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\General\title_icon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
