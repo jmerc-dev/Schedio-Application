@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Reflection;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -18,7 +19,7 @@ namespace Schedio_Application
     {
         public MainWindow()
         {
-            InitializeComponent();
+            
         }
     }
 }

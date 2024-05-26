@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Schedio_Application"
+        xmlns:NavButtons="clr-namespace:Schedio_Application.MVVM.View.UserControls"
         mc:Ignorable="d"
         Title="Schedio" Height="720" Width="1280"
         WindowStartupLocation="CenterScreen"
@@ -13,18 +14,28 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition  Height="70"/>
-            <RowDefinition  Height="*"/>
+            <RowDefinition Height="70" />
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Rectangle Fill="#253093">
+        <Rectangle Fill="#253093"></Rectangle>
+        
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
 
-        </Rectangle>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Width="40" Height="25" Margin="10" Foreground="White"   Background="#253093" BorderThickness="0">Home</Button>
-            <Button Width="40" Height="25" Margin="10" Foreground="White" Background="#253093" BorderThickness="0">New</Button>
-            <Button Width="40" Height="25" Margin="10" Foreground="White" Background="#253093" BorderThickness="0">Open</Button>
-        </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Foreground="{StaticResource PrimaryColor}" FontSize="20">asd</TextBlock>
+            </StackPanel>
+
+            <NavButtons:HomeNavButtons Grid.Column="1"></NavButtons:HomeNavButtons>
+        </Grid>
+        
+        
+        
 
     </Grid>
 </Window>

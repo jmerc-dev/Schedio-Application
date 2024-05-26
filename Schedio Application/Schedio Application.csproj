@@ -16,7 +16,6 @@
   <ItemGroup>
     <Folder Include="MVVM\Model\" />
     <Folder Include="MVVM\ViewModel\" />
-    <Folder Include="MVVM\View\CustomControls\" />
   </ItemGroup>
 
   <ItemGroup>
