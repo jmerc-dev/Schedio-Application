@@ -11,9 +11,12 @@
 
   <ItemGroup>
     <None Remove="Resources\General\title_icon.ico" />
+    <None Remove="Resources\Images\home-focused.png" />
     <None Remove="Resources\Images\home.png" />
     <None Remove="Resources\Images\logo.png" />
+    <None Remove="Resources\Images\new-focused.png" />
     <None Remove="Resources\Images\new.png" />
+    <None Remove="Resources\Images\open-focused.png" />
     <None Remove="Resources\Images\open.png" />
   </ItemGroup>
 
@@ -26,9 +29,12 @@
     <Resource Include="Resources\General\title_icon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\Images\home-focused.png" />
     <Resource Include="Resources\Images\home.png" />
     <Resource Include="Resources\Images\logo.png" />
+    <Resource Include="Resources\Images\new-focused.png" />
     <Resource Include="Resources\Images\new.png" />
+    <Resource Include="Resources\Images\open-focused.png" />
     <Resource Include="Resources\Images\open.png" />
   </ItemGroup>
 

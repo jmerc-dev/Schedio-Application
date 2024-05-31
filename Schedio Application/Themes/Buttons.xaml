@@ -7,19 +7,17 @@
         <Setter Property="Margin" Value="40,0,40,0"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
+                <ControlTemplate TargetType="{x:Type Button}" x:Name="NavButtonTemplate">
 
-                    <Border x:Name="Border" CornerRadius="5" BorderThickness="5" MinHeight="80" MinWidth="100" BorderBrush="{StaticResource SecondaryColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Border Padding="2" x:Name="Border" CornerRadius="5" BorderThickness="3" MinHeight="70" MinWidth="80" BorderBrush="{StaticResource SecondaryColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
                         <Grid>
-                            <Rectangle x:Name="Rectangle" Fill="{StaticResource SecondaryColor}"/>
-                            <Grid MinHeight="80" MinWidth="100" x:Name="Panel" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="3*"/>
-                                    <RowDefinition Height="2*"/>
-                                </Grid.RowDefinitions>
+                            
+                            <Grid MinHeight="70" MinWidth="80" x:Name="Panel" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Rectangle x:Name="Rectangle" Fill="{StaticResource SecondaryColor}"/>
                                 <ContentPresenter Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Grid>
                         </Grid>
@@ -30,8 +28,14 @@
                             <Setter TargetName="Rectangle" Property="Fill" Value="{StaticResource ShadedSecondaryColor}"/>
                             <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource ShadedSecondaryColor}"/>
                             <Setter TargetName="Border" Property="Background" Value="{StaticResource ShadedSecondaryColor}"/>  
-                            
                         </Trigger>
+
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="Rectangle" Property="Fill" Value="{StaticResource ShadedSecondaryColor}"/>
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource ShadedSecondaryColor}"/>
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource ShadedSecondaryColor}"/>
+                        </Trigger>
+
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
 

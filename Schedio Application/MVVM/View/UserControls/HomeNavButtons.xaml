@@ -13,17 +13,47 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
+    <Grid FocusManager.IsFocusScope="True">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        
-        <Button Grid.Column="0" Content="New" Click="Button_Click" Style="{StaticResource HomeNavButton}"></Button>
-        <Button Grid.Column="1" Content="Home" Style="{StaticResource HomeNavButton}"></Button>
-        <Button Grid.Column="2" Content="Open" Style="{StaticResource HomeNavButton}"></Button>
+
+        <Button x:Name="btn_HomeButton" Grid.Column="0" Style="{StaticResource HomeNavButton}" Click="btn_HomeButton_Clicked" GotFocus="btn_HomeButton_GotFocus" LostFocus="btn_HomeButton_LostFocus" MouseEnter="btn_HomeButton_MouseEnter" MouseLeave="btn_HomeButton_MouseLeave">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+                <Image x:Name="HomeImage" Stretch="Uniform"  Grid.Row="0" Source="pack://application:,,,/Schedio Application;component/Resources/Images/home.png"/>
+                <TextBlock Grid.Row="1" HorizontalAlignment="Center">Home</TextBlock>
+            </Grid>
+        </Button>
+
+        <Button x:Name="btn_NewButton" Grid.Column="1" Style="{StaticResource HomeNavButton}" GotFocus="btn_NewButton_GotFocus" LostFocus="btn_NewButton_LostFocus" MouseEnter="btn_NewButton_MouseEnter" MouseLeave="btn_NewButton_MouseLeave">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+                <Image x:Name="NewImage" Stretch="Uniform"  Grid.Row="0" Source="pack://application:,,,/Schedio Application;component/Resources/Images/new.png"/>
+                <TextBlock Grid.Row="1" HorizontalAlignment="Center">New</TextBlock>
+            </Grid>
+        </Button>
+
+        <Button x:Name="btn_OpenButton" Grid.Column="2" Style="{StaticResource HomeNavButton}" GotFocus="OpenButton_GotFocus" LostFocus="OpenButton_LostFocus" MouseEnter="OpenButton_MouseEnter" MouseLeave="OpenButton_MouseLeave">
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+                <Image x:Name="OpenImage" Stretch="Uniform" Grid.Row="0" Source="pack://application:,,,/Schedio Application;component/Resources/Images/open.png"/>
+                <TextBlock Grid.Row="1" HorizontalAlignment="Center">Open</TextBlock>
+            </Grid>
+        </Button>
         
     </Grid>
 </UserControl>

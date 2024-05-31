@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Schedio_Application"
         xmlns:NavButtons="clr-namespace:Schedio_Application.MVVM.View.UserControls"
         mc:Ignorable="d"
+        ResizeMode="CanResizeWithGrip"
         Title="Schedio" Height="720" Width="1280"
         WindowStartupLocation="CenterScreen"
         MinWidth="640"
@@ -39,7 +40,10 @@
 
             <NavButtons:HomeNavButtons Grid.Column="1"></NavButtons:HomeNavButtons>
         </Grid>
-        
+
+        <Grid Grid.Row="1">
+            <Button>Test</Button>
+        </Grid>
         
         
 
