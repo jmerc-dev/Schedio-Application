@@ -13,7 +13,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid FocusManager.IsFocusScope="True">
+    <Grid FocusManager.IsFocusScope="True" FocusManager.FocusedElement="{Binding ElementName=btn_HomeButton}">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -24,8 +24,8 @@
         <Button x:Name="btn_HomeButton" Grid.Column="0" Style="{StaticResource HomeNavButton}" Click="btn_HomeButton_Clicked" GotFocus="btn_HomeButton_GotFocus" LostFocus="btn_HomeButton_LostFocus" MouseEnter="btn_HomeButton_MouseEnter" MouseLeave="btn_HomeButton_MouseLeave">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="3*"/>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="5*"/>
                 </Grid.RowDefinitions>
                 <Image x:Name="HomeImage" Stretch="Uniform"  Grid.Row="0" Source="pack://application:,,,/Schedio Application;component/Resources/Images/home.png"/>
                 <TextBlock Grid.Row="1" HorizontalAlignment="Center">Home</TextBlock>
@@ -35,8 +35,8 @@
         <Button x:Name="btn_NewButton" Grid.Column="1" Style="{StaticResource HomeNavButton}" GotFocus="btn_NewButton_GotFocus" LostFocus="btn_NewButton_LostFocus" MouseEnter="btn_NewButton_MouseEnter" MouseLeave="btn_NewButton_MouseLeave">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="3*"/>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="5*"/>
                 </Grid.RowDefinitions>
                 <Image x:Name="NewImage" Stretch="Uniform"  Grid.Row="0" Source="pack://application:,,,/Schedio Application;component/Resources/Images/new.png"/>
                 <TextBlock Grid.Row="1" HorizontalAlignment="Center">New</TextBlock>
@@ -47,8 +47,8 @@
             <Grid>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="3*"/>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="5*"/>
                 </Grid.RowDefinitions>
                 <Image x:Name="OpenImage" Stretch="Uniform" Grid.Row="0" Source="pack://application:,,,/Schedio Application;component/Resources/Images/open.png"/>
                 <TextBlock Grid.Row="1" HorizontalAlignment="Center">Open</TextBlock>

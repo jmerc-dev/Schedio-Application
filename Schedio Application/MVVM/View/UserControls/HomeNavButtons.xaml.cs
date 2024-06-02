@@ -57,6 +57,7 @@ namespace Schedio_Application.MVVM.View.UserControls
         public HomeNavButtons()
         {
             InitializeComponent();
+            
             ColorDictionary = new ResourceDictionary();
             ColorDictionary.Source = new Uri("/Schedio Application;component/Themes/Colors.xaml", UriKind.RelativeOrAbsolute);
         }
@@ -83,16 +84,17 @@ namespace Schedio_Application.MVVM.View.UserControls
 
         private void btn_HomeButton_GotFocus(object sender, RoutedEventArgs e)
         {
-            clearFocuses();
-            resetButtonImages();
             btn_HomeButton_isFocused = true;
             HomeImage.Source = home_focused_Image;
-            //HomeBackground.Fill = (Brush) ColorDictionary["ShadedSecondaryColor"];
+            
+            // Open the Home Page
+            
         }
 
         private void btn_HomeButton_LostFocus(object sender, RoutedEventArgs e)
         {
-
+            btn_HomeButton_isFocused = false;
+            HomeImage.Source = home_Image;
         }
 
         private void btn_HomeButton_MouseEnter(object sender, MouseEventArgs e)
@@ -113,15 +115,14 @@ namespace Schedio_Application.MVVM.View.UserControls
         // New Button Events
         private void btn_NewButton_GotFocus(object sender, RoutedEventArgs e)
         {
-            clearFocuses();
-            resetButtonImages();
             btn_NewButton_isFocused = true;
             NewImage.Source = new_focused_Image;
         }
 
         private void btn_NewButton_LostFocus(object sender, RoutedEventArgs e)
         {
-        
+            btn_NewButton_isFocused = false;
+            NewImage.Source = new_Image;
         }
 
         private void btn_NewButton_MouseEnter(object sender, MouseEventArgs e)
@@ -140,15 +141,14 @@ namespace Schedio_Application.MVVM.View.UserControls
         // Open Button events
         private void OpenButton_GotFocus(object sender, RoutedEventArgs e)
         {
-            clearFocuses();
-            resetButtonImages();
             btn_OpenButton_isFocused = true;
             OpenImage.Source = open_focused_Image;
         }
 
         private void OpenButton_LostFocus(object sender, RoutedEventArgs e)
         {
-            
+            btn_OpenButton_isFocused = false;
+            OpenImage.Source = open_Image;
         }
 
         private void OpenButton_MouseEnter(object sender, MouseEventArgs e)

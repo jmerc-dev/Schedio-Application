@@ -3,7 +3,7 @@
 
     <Style TargetType="TextBlock">
         <Setter Property="FontStyle" Value="Normal"/>
-        <Setter Property="FontFamily" Value="Verdana"/>
+        <Setter Property="FontFamily" Value="Aharoni"/>
     </Style>
     
 </ResourceDictionary>

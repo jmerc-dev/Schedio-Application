@@ -19,12 +19,12 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Rectangle Fill="#253093"></Rectangle>
+        <Rectangle Fill="{StaticResource SecondaryColor}"></Rectangle>
         
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*" MinWidth="250"/>
+                <ColumnDefinition Width="3*" MinWidth="500"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
@@ -35,14 +35,16 @@
                 </Grid.ColumnDefinitions>
 
                 <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/logo.png" Height="60" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                <TextBlock Grid.Column="1" Foreground="AntiqueWhite" VerticalAlignment="Center" FontSize="18">Schedio</TextBlock>
+                <TextBlock Grid.Column="1" Foreground="{StaticResource PrimaryColor}" VerticalAlignment="Center" FontSize="18" FontWeight="DemiBold"  FontFamily="Aharoni">Schedio</TextBlock>
             </Grid>
-
+            
             <NavButtons:HomeNavButtons Grid.Column="1"></NavButtons:HomeNavButtons>
         </Grid>
 
         <Grid Grid.Row="1">
-            <Button>Test</Button>
+            <Frame x:Name="MainContent">
+                
+            </Frame>
         </Grid>
         
         

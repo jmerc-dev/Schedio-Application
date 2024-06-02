@@ -11,16 +11,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}" x:Name="NavButtonTemplate">
-
-                    <Border Padding="2" x:Name="Border" CornerRadius="5" BorderThickness="3" MinHeight="70" MinWidth="80" BorderBrush="{StaticResource SecondaryColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-
-                        <Grid>
-                            
-                            <Grid MinHeight="70" MinWidth="80" x:Name="Panel" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Rectangle x:Name="Rectangle" Fill="{StaticResource SecondaryColor}"/>
-                                <ContentPresenter Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Grid>
+                    <Border x:Name="Border" CornerRadius="5" BorderThickness="2" BorderBrush="{StaticResource SecondaryColor}" MaxHeight="79" MaxWidth="109">
+                        <Grid MinHeight="80" MinWidth="110" x:Name="Panel" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Rectangle x:Name="Rectangle" Fill="{StaticResource SecondaryColor}"/>
+                            <ContentPresenter Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
+
                     </Border>
                     
                     <ControlTemplate.Triggers>
@@ -32,7 +28,7 @@
 
                         <Trigger Property="IsFocused" Value="True">
                             <Setter TargetName="Rectangle" Property="Fill" Value="{StaticResource ShadedSecondaryColor}"/>
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource ShadedSecondaryColor}"/>
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource PrimaryColor}"/>
                             <Setter TargetName="Border" Property="Background" Value="{StaticResource ShadedSecondaryColor}"/>
                         </Trigger>
 
