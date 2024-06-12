@@ -5,5 +5,10 @@
         <Setter Property="FontStyle" Value="Normal"/>
         <Setter Property="FontFamily" Value="Aharoni"/>
     </Style>
+
+    <Style TargetType="TextBlock" x:Key="TabHeader">
+        <Setter Property="FontSize" Value="16"/>
+
+    </Style>
     
 </ResourceDictionary>

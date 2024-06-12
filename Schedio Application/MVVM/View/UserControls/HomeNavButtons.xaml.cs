@@ -22,147 +22,71 @@ namespace Schedio_Application.MVVM.View.UserControls
     /// </summary>
     public partial class HomeNavButtons : UserControl
     {
-
-        private bool btn_HomeButton_isFocused = false;
-        private bool btn_NewButton_isFocused = false;
-        private bool btn_OpenButton_isFocused = false;
-
-        private ImageSource home_focused_Image = new BitmapImage(new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/home-focused.png"));
-        private ImageSource home_Image = new BitmapImage(new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/home.png"));
-        private ImageSource new_focused_Image = new BitmapImage(new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/new-focused.png"));
-        private ImageSource new_Image = new BitmapImage(new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/new.png"));
-        private ImageSource open_Image = new BitmapImage(new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/open.png"));
-        private ImageSource open_focused_Image = new BitmapImage(new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/open-focused.png"));
-
-        private ResourceDictionary ColorDictionary;
-
-        public bool HomeButtonFocus
-        {
-            get { return btn_HomeButton_isFocused;}
-            set {  btn_HomeButton_isFocused = value;}
-        }
-
-        public bool NewButtonFocus
-        {
-            get { return btn_NewButton_isFocused; }
-            set { btn_NewButton_isFocused = value; }
-        }
-
-        public bool OpenButtonFocus
-        {
-            get { return btn_OpenButton_isFocused; }
-            set { btn_OpenButton_isFocused = value; }
-        }
-
         public HomeNavButtons()
         {
             InitializeComponent();
-            
-            ColorDictionary = new ResourceDictionary();
-            ColorDictionary.Source = new Uri("/Schedio Application;component/Themes/Colors.xaml", UriKind.RelativeOrAbsolute);
-        }
+            this.DataContext = this;
 
-        private void clearFocuses()
-        {
-            btn_HomeButton_isFocused = false;
-            btn_NewButton_isFocused = false;
-            btn_OpenButton_isFocused = false;
-        }
-
-        private void resetButtonImages()
-        {
-            HomeImage.Source = home_Image;
-            NewImage.Source = new_Image;
-            OpenImage.Source = open_Image;
-        }
-
-        // Home Button Events
-        private void btn_HomeButton_Clicked(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void btn_HomeButton_GotFocus(object sender, RoutedEventArgs e)
-        {
-            btn_HomeButton_isFocused = true;
-            HomeImage.Source = home_focused_Image;
-            
-            // Open the Home Page
-            
-        }
-
-        private void btn_HomeButton_LostFocus(object sender, RoutedEventArgs e)
-        {
-            btn_HomeButton_isFocused = false;
-            HomeImage.Source = home_Image;
-        }
-
-        private void btn_HomeButton_MouseEnter(object sender, MouseEventArgs e)
-        {
-            HomeImage.Source = home_focused_Image;
-        }
-
-        private void btn_HomeButton_MouseLeave(object sender, MouseEventArgs e)
-        {
-            if (!btn_HomeButton_isFocused)
+            Loaded += (sender, args) =>
             {
-                HomeImage.Source = home_Image;
-            }
-            
+                if (LabelName.Equals("Home"))
+                {
+                    btn_Button.Focus();
+                }
+            };
         }
 
 
-        // New Button Events
-        private void btn_NewButton_GotFocus(object sender, RoutedEventArgs e)
+        // Image
+        public string ImagePath
         {
-            btn_NewButton_isFocused = true;
-            NewImage.Source = new_focused_Image;
+            get { return (string)GetValue(_ImagePath); }
+            set { SetValue(_ImagePath, value); }
         }
 
-        private void btn_NewButton_LostFocus(object sender, RoutedEventArgs e)
+        public static readonly DependencyProperty _ImagePath =
+        DependencyProperty.Register("ImagePath", typeof(string), typeof(HomeNavButtons), new PropertyMetadata(null));
+
+        // Default Image
+        public string DefaultImagePath
         {
-            btn_NewButton_isFocused = false;
-            NewImage.Source = new_Image;
+            get { return (string)GetValue(_DefaultImagePath); }
+            set { SetValue(_DefaultImagePath, value); }
         }
 
-        private void btn_NewButton_MouseEnter(object sender, MouseEventArgs e)
+        public static readonly DependencyProperty _DefaultImagePath =
+        DependencyProperty.Register("DefaultImagePath", typeof(string), typeof(HomeNavButtons), new PropertyMetadata(null));
+
+        // Focused Image
+        public string FocusedImagePath
         {
-            NewImage.Source = new_focused_Image;
+            get { return (string)GetValue(_FocusedImagePath); }
+            set { SetValue(_FocusedImagePath, value); }
         }
 
-        private void btn_NewButton_MouseLeave(object sender, MouseEventArgs e)
-        { 
-            if (!btn_NewButton_isFocused)
-            {
-                NewImage.Source = new_Image;
-            }
-        }
+        public static readonly DependencyProperty _FocusedImagePath =
+        DependencyProperty.Register("FocusedImagePath", typeof(string), typeof(HomeNavButtons), new PropertyMetadata(null));
 
-        // Open Button events
-        private void OpenButton_GotFocus(object sender, RoutedEventArgs e)
+        // Label
+        public string LabelName
         {
-            btn_OpenButton_isFocused = true;
-            OpenImage.Source = open_focused_Image;
+            get { return (string)GetValue(_Label); }
+            set { SetValue(_Label, value); }
         }
 
-        private void OpenButton_LostFocus(object sender, RoutedEventArgs e)
+        public static readonly DependencyProperty _Label =
+        DependencyProperty.Register("LabelName", typeof(string), typeof(HomeNavButtons), new PropertyMetadata(null));
+
+        // Button Events
+
+        private void btn_Button_GotFocus(object sender, RoutedEventArgs e)
         {
-            btn_OpenButton_isFocused = false;
-            OpenImage.Source = open_Image;
+            ButtonImage.Source = new BitmapImage(new Uri((string)GetValue(_FocusedImagePath)));
         }
 
-        private void OpenButton_MouseEnter(object sender, MouseEventArgs e)
+        private void btn_Button_LostFocus(object sender, RoutedEventArgs e)
         {
-            OpenImage.Source = open_focused_Image;
-        }
-
-        private void OpenButton_MouseLeave(object sender, MouseEventArgs e)
-        {
-            if (!OpenButtonFocus)
-            {
-                OpenImage.Source = open_Image;
-            }
-            
+            ButtonImage.Source = new BitmapImage(new Uri((string)GetValue(_DefaultImagePath)));
         }
     }
 }

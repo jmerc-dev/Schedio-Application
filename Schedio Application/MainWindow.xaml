@@ -10,7 +10,8 @@
         Title="Schedio" Height="720" Width="1280"
         WindowStartupLocation="CenterScreen"
         MinWidth="640"
-        Icon="pack://application:,,,/Resources/General/title_icon.ico">
+        Icon="pack://application:,,,/Resources/General/title_icon.ico"
+        Background="{StaticResource PrimaryBackground}">
 
 
     <Grid>
@@ -37,14 +38,26 @@
                 <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/logo.png" Height="60" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 <TextBlock Grid.Column="1" Foreground="{StaticResource PrimaryColor}" VerticalAlignment="Center" FontSize="18" FontWeight="DemiBold"  FontFamily="Aharoni">Schedio</TextBlock>
             </Grid>
-            
-            <NavButtons:HomeNavButtons Grid.Column="1"></NavButtons:HomeNavButtons>
+            <Grid Grid.Column="1" FocusManager.IsFocusScope="True" FocusManager.FocusedElement="{Binding ElementName=HomeButton}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <!-- Main Navigation Buttons -->
+
+                <NavButtons:HomeNavButtons x:Name="HomeButton" Grid.Column="0" LabelName="Home" DefaultImagePath="pack://application:,,,/Schedio Application;component/Resources/Images/home.png" FocusedImagePath="pack://application:,,,/Schedio Application;component/Resources/Images/home-focused.png"  PreviewMouseLeftButtonDown="HomeButton_PreviewMouseLeftButtonDown" GotFocus="HomeButton_GotFocus"></NavButtons:HomeNavButtons>
+                <NavButtons:HomeNavButtons x:Name="NewButton" Grid.Column="1" LabelName="New" DefaultImagePath="pack://application:,,,/Schedio Application;component/Resources/Images/new.png" FocusedImagePath="pack://application:,,,/Schedio Application;component/Resources/Images/new-focused.png" GotFocus="NewButton_GotFocus"></NavButtons:HomeNavButtons>
+                <NavButtons:HomeNavButtons x:Name="OpenButton" Grid.Column="2" LabelName="Open" DefaultImagePath="pack://application:,,,/Schedio Application;component/Resources/Images/open.png" FocusedImagePath="pack://application:,,,/Schedio Application;component/Resources/Images/open-focused.png" GotFocus="OpenButton_GotFocus"></NavButtons:HomeNavButtons>
+                
+                
+            </Grid>
         </Grid>
 
-        <Grid Grid.Row="1">
-            <Frame x:Name="MainContent">
-                
-            </Frame>
+        <Grid Grid.Row="1" >
+            <Frame x:Name="MainContent" NavigationUIVisibility="Hidden"></Frame>
+
         </Grid>
         
         
