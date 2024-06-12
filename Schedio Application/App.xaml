@@ -4,6 +4,12 @@
              xmlns:local="clr-namespace:Schedio_Application"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/Colors.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/Fonts.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/Buttons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

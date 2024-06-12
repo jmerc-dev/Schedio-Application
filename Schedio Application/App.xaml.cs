@@ -9,6 +9,7 @@ namespace Schedio_Application
     /// </summary>
     public partial class App : Application
     {
+        
     }
 
 }
