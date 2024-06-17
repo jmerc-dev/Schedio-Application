@@ -22,11 +22,11 @@
             <RowDefinition Height="5*" />
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TabControl Background="{StaticResource PrimaryBackground}" TabStripPlacement="Left" Margin="0,0,0,0">
-            <TabItem Style="{StaticResource MainTabItems}">
+        <TabControl Name="tabCntrl_NewPage" Background="{StaticResource PrimaryBackground}" TabStripPlacement="Left" Margin="0,0,0,0" SelectionChanged="tabCntrl_NewPage_SelectionChanged">
+            <TabItem Name="tabItem_Personnel" Style="{StaticResource MainTabItems}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal" >
-                        <Image VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/home.png" Stretch="Uniform" Width="20"/>
+                        <Image Name="img_Personnel" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/personnel.png" Stretch="Uniform" Width="40" Margin="10"/>
                         <TextBlock VerticalAlignment="Center" Style="{StaticResource TabHeader}">Personnel</TextBlock>
                     </StackPanel>
                 </TabItem.Header>
@@ -34,10 +34,10 @@
                     <TextBlock>Personnel</TextBlock>
                 </TabItem.Content>
             </TabItem>
-            <TabItem Style="{StaticResource MainTabItems}">
+            <TabItem Name="tabItem_Rooms" Style="{StaticResource MainTabItems}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal" >
-                        <Image VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/home.png" Stretch="Uniform" Width="20"/>
+                        <Image Name="img_Rooms" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/rooms.png" Stretch="Uniform" Width="40" Margin="10"/>
                         <TextBlock VerticalAlignment="Center" Style="{StaticResource TabHeader}">Rooms</TextBlock>
                     </StackPanel>
                 </TabItem.Header>
@@ -45,21 +45,21 @@
                     <TextBlock>Rooms</TextBlock>
                 </TabItem.Content>
             </TabItem>
-            <TabItem Style="{StaticResource MainTabItems}">
+            <TabItem Name="tabItem_Sections" Style="{StaticResource MainTabItems}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal" >
-                        <Image VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/home.png" Stretch="Uniform" Width="20"/>
-                        <TextBlock VerticalAlignment="Center" Style="{StaticResource TabHeader}">Section</TextBlock>
+                        <Image Name="img_Sections" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/sections.png" Stretch="Uniform" Width="40" Margin="10"/>
+                        <TextBlock VerticalAlignment="Center" Style="{StaticResource TabHeader}">Sections</TextBlock>
                     </StackPanel>
                 </TabItem.Header>
                 <TabItem.Content>
                     <TextBlock>Section</TextBlock>
                 </TabItem.Content>
             </TabItem>
-            <TabItem Style="{StaticResource MainTabItems}">
+            <TabItem Name="tabItem_Time" Style="{StaticResource MainTabItems}" >
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal" >
-                        <Image VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/home.png" Stretch="Uniform" Width="20"/>
+                        <Image Name="img_Time" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/time.png" Stretch="Uniform" Width="40" Margin="10"/>
                         <TextBlock VerticalAlignment="Center" Style="{StaticResource TabHeader}">Time</TextBlock>
                     </StackPanel>
                 </TabItem.Header>
