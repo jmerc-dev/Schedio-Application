@@ -26,7 +26,7 @@
                             <ContentPresenter  HorizontalAlignment="Left" VerticalAlignment="Center" ContentSource="Header" Grid.Column="1"></ContentPresenter>
                         </Grid>
                     </Grid>
-                    
+
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
@@ -36,10 +36,9 @@
                     </ControlTemplate.Triggers>
 
                 </ControlTemplate>
-                
             </Setter.Value>
         </Setter>
-        
+
     </Style>
     
 </ResourceDictionary>
