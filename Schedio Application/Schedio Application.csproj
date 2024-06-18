@@ -14,10 +14,20 @@
     <None Remove="Resources\Images\home-focused.png" />
     <None Remove="Resources\Images\home.png" />
     <None Remove="Resources\Images\logo.png" />
+    <None Remove="Resources\Images\man.png" />
     <None Remove="Resources\Images\new-focused.png" />
     <None Remove="Resources\Images\new.png" />
     <None Remove="Resources\Images\open-focused.png" />
     <None Remove="Resources\Images\open.png" />
+    <None Remove="Resources\Images\personnel-filled.png" />
+    <None Remove="Resources\Images\personnel.png" />
+    <None Remove="Resources\Images\rooms-filled.png" />
+    <None Remove="Resources\Images\rooms.png" />
+    <None Remove="Resources\Images\sections-filled.png" />
+    <None Remove="Resources\Images\sections.png" />
+    <None Remove="Resources\Images\time-filled.png" />
+    <None Remove="Resources\Images\time.png" />
+    <None Remove="Resources\Images\woman.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,10 +42,20 @@
     <Resource Include="Resources\Images\home-focused.png" />
     <Resource Include="Resources\Images\home.png" />
     <Resource Include="Resources\Images\logo.png" />
+    <Resource Include="Resources\Images\man.png" />
     <Resource Include="Resources\Images\new-focused.png" />
     <Resource Include="Resources\Images\new.png" />
     <Resource Include="Resources\Images\open-focused.png" />
     <Resource Include="Resources\Images\open.png" />
+    <Resource Include="Resources\Images\personnel-filled.png" />
+    <Resource Include="Resources\Images\personnel.png" />
+    <Resource Include="Resources\Images\rooms-filled.png" />
+    <Resource Include="Resources\Images\rooms.png" />
+    <Resource Include="Resources\Images\sections-filled.png" />
+    <Resource Include="Resources\Images\sections.png" />
+    <Resource Include="Resources\Images\time-filled.png" />
+    <Resource Include="Resources\Images\time.png" />
+    <Resource Include="Resources\Images\woman.png" />
   </ItemGroup>
 
 </Project>
