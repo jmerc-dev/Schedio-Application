@@ -22,7 +22,7 @@
             <RowDefinition Height="5*" />
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TabControl Name="tabCntrl_NewPage" Background="{StaticResource PrimaryBackground}" TabStripPlacement="Left" Margin="0,0,0,0" SelectionChanged="tabCntrl_NewPage_SelectionChanged">
+        <TabControl BorderBrush="{StaticResource PrimaryBackground}" Name="tabCntrl_NewPage" Background="{StaticResource PrimaryBackground}" TabStripPlacement="Left" Margin="0,0,0,0" SelectionChanged="tabCntrl_NewPage_SelectionChanged">
             <TabItem Name="tabItem_Personnel" Style="{StaticResource MainTabItems}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal" >
@@ -31,7 +31,22 @@
                     </StackPanel>
                 </TabItem.Header>
                 <TabItem.Content>
-                    <TextBlock>Personnel</TextBlock>
+                    <ScrollViewer BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}">
+                        <StackPanel>
+                            <Button Height="50">Button</Button>
+                            <Button Height="50">Button</Button>
+                            <Button Height="50">Button</Button>
+                            <Button Height="50">Button</Button>
+                            <Button Height="50">Button</Button>
+                            <Button Height="50">Button</Button>
+                            <Button Height="50">Button</Button>
+                            <Button Height="50">Button</Button>
+                            <Button Height="50">Button</Button>
+                            <Button Height="50">Button</Button>
+                            <Button Height="50">Button</Button>
+                            <Button Height="50">Button</Button>
+                        </StackPanel>
+                    </ScrollViewer>
                 </TabItem.Content>
             </TabItem>
             <TabItem Name="tabItem_Rooms" Style="{StaticResource MainTabItems}">
@@ -68,12 +83,36 @@
                 </TabItem.Content>
             </TabItem>
         </TabControl>
-        <Grid>
-            
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="204"/>
+                <ColumnDefinition Width="*" MinWidth="300"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="4*" MinWidth="300" MaxWidth="500"/>
+            </Grid.ColumnDefinitions>
+            <Button Name="btn_Add" HorizontalAlignment="Left" Grid.Column="1" Margin="10" Width="120" MaxHeight="100" Style="{StaticResource AddButton}" Padding="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Image Name="img_ButtonAdd" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Stretch="Uniform" Source="pack://application:,,,/Schedio Application;component/Resources/Images/personnel-add.png"></Image>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" FontSize="15" Foreground="{StaticResource TertiaryColor}">Add</TextBlock>
+                </Grid>
+            </Button>
+            <Grid Grid.Column="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Margin="20" FontSize="15" MaxHeight="70" MinWidth="100" Style="{StaticResource CancelButton}">
+                    <TextBlock Margin="10 0 10 0">Clear Settings</TextBlock>
+                </Button>
+                <Button Grid.Column="2" Margin="20" FontSize="15" MaxHeight="70" MinWidth="100" Style="{StaticResource ConfirmButton}">Confirm</Button>
+            </Grid>
+
         </Grid>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Margin="20,20,20,20" Width="100" Height="50" FontSize="15" Style="{StaticResource CancelButton}" Content="Cancel"></Button>
-            <Button Margin="20,20,20,20" Width="100" Height="50" FontSize="15" Style="{StaticResource ConfirmButton}">Confirm</Button>
-        </StackPanel>
+        
     </Grid>
 </Page>

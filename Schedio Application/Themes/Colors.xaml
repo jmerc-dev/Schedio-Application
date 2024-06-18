@@ -7,6 +7,7 @@
     <SolidColorBrush x:Key="TertiaryColor" Color="#75A0F5"/>
 
     <SolidColorBrush x:Key="ShadedSecondaryColor" Color="#2252B0"/>
+    <SolidColorBrush x:Key="ShadedTertiaryColor" Color="#5C87DD"/>
 
     <SolidColorBrush x:Key="PrimaryTextColor" Color="#000000"/>
 
