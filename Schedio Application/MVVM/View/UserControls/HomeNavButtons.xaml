@@ -22,7 +22,7 @@
                 </Grid.RowDefinitions>
 
                 <Image x:Name="ButtonImage" Grid.Row="0" Source="{Binding DefaultImagePath}" Stretch="Uniform"/>
-                <TextBlock Grid.Row="1" x:Name="MyLabel" HorizontalAlignment="Center" Text="{Binding LabelName}"></TextBlock>
+                <TextBlock Grid.Row="1" x:Name="MyLabel" HorizontalAlignment="Center" Text="{Binding LabelName}" Visibility="Collapsed"></TextBlock>
             </Grid>
         </Button>
     </Grid>

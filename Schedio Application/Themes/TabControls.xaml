@@ -8,7 +8,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="TabItem">
                     <Grid Cursor="Hand">
-                        <Rectangle Fill="{StaticResource PrimaryBackground}"/>
+                        <Rectangle Name="Rectangle" Fill="{StaticResource PrimaryBackground}"/>
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -33,6 +33,14 @@
                             <Setter Property="Panel.ZIndex" Value="100" />
                             <Setter TargetName="Border" Property="Background" Value="{StaticResource TertiaryColor}"/>
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsSelected" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Rectangle" Property="Fill" Value="{StaticResource PrimaryShadeColor}"/>
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource PrimaryShadeColor}"/>
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
 
                 </ControlTemplate>

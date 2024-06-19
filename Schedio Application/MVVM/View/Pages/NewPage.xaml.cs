@@ -24,8 +24,9 @@ namespace Schedio_Application.MVVM.View.Pages
         public NewPage()
         {
             InitializeComponent();
+            
         }
-
+        
         private void tabCntrl_NewPage_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             changeTabImage();
@@ -75,6 +76,11 @@ namespace Schedio_Application.MVVM.View.Pages
                     }
                 }
             }
+        }
+
+        private void btn_Add_Click(object sender, RoutedEventArgs e)
+        {
+            lv_PersonnelList.Items.Add("Jelmar");
         }
     }
 }

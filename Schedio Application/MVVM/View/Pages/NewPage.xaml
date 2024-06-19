@@ -31,21 +31,11 @@
                     </StackPanel>
                 </TabItem.Header>
                 <TabItem.Content>
-                    <ScrollViewer BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}">
-                        <StackPanel>
-                            <Button Height="50">Button</Button>
-                            <Button Height="50">Button</Button>
-                            <Button Height="50">Button</Button>
-                            <Button Height="50">Button</Button>
-                            <Button Height="50">Button</Button>
-                            <Button Height="50">Button</Button>
-                            <Button Height="50">Button</Button>
-                            <Button Height="50">Button</Button>
-                            <Button Height="50">Button</Button>
-                            <Button Height="50">Button</Button>
-                            <Button Height="50">Button</Button>
-                            <Button Height="50">Button</Button>
-                        </StackPanel>
+                    <ScrollViewer CanContentScroll="False" BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}">
+
+                        <ListView x:Name="lv_PersonnelList" ItemTemplate="{StaticResource dt_PersonnelList}">
+                            <ListViewItem>asd</ListViewItem>
+                        </ListView>
                     </ScrollViewer>
                 </TabItem.Content>
             </TabItem>
@@ -90,14 +80,14 @@
                 <ColumnDefinition Width="4*"/>
                 <ColumnDefinition Width="4*" MinWidth="300" MaxWidth="500"/>
             </Grid.ColumnDefinitions>
-            <Button Name="btn_Add" HorizontalAlignment="Left" Grid.Column="1" Margin="10" Width="120" MaxHeight="100" Style="{StaticResource AddButton}" Padding="10">
+            <Button Name="btn_Add" HorizontalAlignment="Left" Grid.Column="1" Margin="10" Width="120" MaxHeight="100" Style="{StaticResource AddButton}" Padding="10" Cursor="Hand" Click="btn_Add_Click">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="2*"/>
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <Image Name="img_ButtonAdd" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Stretch="Uniform" Source="pack://application:,,,/Schedio Application;component/Resources/Images/personnel-add.png"></Image>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" FontSize="15" Foreground="{StaticResource TertiaryColor}">Add</TextBlock>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" FontSize="15" Foreground="{StaticResource PrimaryTextColor}">Add</TextBlock>
                 </Grid>
             </Button>
             <Grid Grid.Column="4">
