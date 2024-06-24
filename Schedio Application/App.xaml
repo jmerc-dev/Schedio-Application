@@ -8,8 +8,14 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/Colors.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/Fonts.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/Buttons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/Buttons.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/ScrollViewer.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/ListViews.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/ToggleButtons.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/Textboxes.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/CheckBoxes.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

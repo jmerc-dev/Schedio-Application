@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="Schedio_Application.MVVM.View.UserControls.SecondaryButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Schedio_Application.MVVM.View.UserControls"
+             mc:Ignorable="d"
+             d:DesignHeight="100" d:DesignWidth="300">
+
+    <Button Grid.Row="3" 
+            Style="{StaticResource SecondaryButton}"
+            MouseEnter="Button_MouseEnter"
+            MouseLeave="Button_MouseLeave"
+            IsEnabledChanged="Button_IsEnabledChanged"
+            Name="btn">
+        <StackPanel Orientation="Horizontal">
+
+            <Image Name="img_Content" 
+                    Stretch="Uniform" 
+                    Grid.Column="0" 
+                    Source="{Binding ImageSource}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    MaxWidth="40"
+                    Margin="10,2,10,2"/>
+            <TextBlock Name="lbl_Content" 
+                        Grid.Column="1" 
+                        Foreground="{StaticResource SecondaryColor}" 
+                        VerticalAlignment="Center" Text="{Binding Text}"
+                        HorizontalAlignment="Center"/>
+        </StackPanel>
+    </Button>
+
+    
+</UserControl>

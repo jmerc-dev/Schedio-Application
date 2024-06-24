@@ -11,18 +11,29 @@
 
   <ItemGroup>
     <None Remove="Resources\General\title_icon.ico" />
-    <None Remove="Resources\Images\home-focused.png" />
+    <None Remove="Resources\Images\change-disabled.png" />
+    <None Remove="Resources\Images\change.png" />
+    <None Remove="Resources\Images\clocksetting-disabled.png" />
+    <None Remove="Resources\Images\clocksetting-inversed.png" />
+    <None Remove="Resources\Images\clocksetting.png" />
+    <None Remove="Resources\Images\home-filled.png" />
     <None Remove="Resources\Images\home.png" />
     <None Remove="Resources\Images\logo.png" />
     <None Remove="Resources\Images\man.png" />
-    <None Remove="Resources\Images\new-focused.png" />
+    <None Remove="Resources\Images\new-filled.png" />
     <None Remove="Resources\Images\new.png" />
-    <None Remove="Resources\Images\open-focused.png" />
+    <None Remove="Resources\Images\open-filled.png" />
     <None Remove="Resources\Images\open.png" />
+    <None Remove="Resources\Images\person.png" />
+    <None Remove="Resources\Images\personnel-add.png" />
     <None Remove="Resources\Images\personnel-filled.png" />
     <None Remove="Resources\Images\personnel.png" />
+    <None Remove="Resources\Images\plus-inversed.png" />
+    <None Remove="Resources\Images\plus.png" />
+    <None Remove="Resources\Images\rooms-add.png" />
     <None Remove="Resources\Images\rooms-filled.png" />
     <None Remove="Resources\Images\rooms.png" />
+    <None Remove="Resources\Images\sections-add.png" />
     <None Remove="Resources\Images\sections-filled.png" />
     <None Remove="Resources\Images\sections.png" />
     <None Remove="Resources\Images\time-filled.png" />
@@ -31,26 +42,39 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Images\change-disabled.png" />
+    <Resource Include="Resources\Images\change.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="MVVM\Model\" />
-    <Folder Include="MVVM\ViewModel\" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\General\title_icon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\home-focused.png" />
+    <Resource Include="Resources\Images\clocksetting-disabled.png" />
+    <Resource Include="Resources\Images\clocksetting-inversed.png" />
+    <Resource Include="Resources\Images\clocksetting.png" />
+    <Resource Include="Resources\Images\home-filled.png" />
     <Resource Include="Resources\Images\home.png" />
     <Resource Include="Resources\Images\logo.png" />
     <Resource Include="Resources\Images\man.png" />
-    <Resource Include="Resources\Images\new-focused.png" />
+    <Resource Include="Resources\Images\new-filled.png" />
     <Resource Include="Resources\Images\new.png" />
-    <Resource Include="Resources\Images\open-focused.png" />
+    <Resource Include="Resources\Images\open-filled.png" />
     <Resource Include="Resources\Images\open.png" />
+    <Resource Include="Resources\Images\person.png" />
+    <Resource Include="Resources\Images\personnel-add.png" />
     <Resource Include="Resources\Images\personnel-filled.png" />
     <Resource Include="Resources\Images\personnel.png" />
+    <Resource Include="Resources\Images\plus-inversed.png" />
+    <Resource Include="Resources\Images\plus.png" />
+    <Resource Include="Resources\Images\rooms-add.png" />
     <Resource Include="Resources\Images\rooms-filled.png" />
     <Resource Include="Resources\Images\rooms.png" />
+    <Resource Include="Resources\Images\sections-add.png" />
     <Resource Include="Resources\Images\sections-filled.png" />
     <Resource Include="Resources\Images\sections.png" />
     <Resource Include="Resources\Images\time-filled.png" />
