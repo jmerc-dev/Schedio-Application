@@ -1,0 +1,165 @@
+﻿<Window x:Class="Schedio_Application.MVVM.View.Windows.PersonnelAddForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"
+        xmlns:TimeTextBox="clr-namespace:Schedio_Application.MVVM.View.UserControls"
+        xmlns:SecondaryButtons="clr-namespace:Schedio_Application.MVVM.View.UserControls"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize"
+        MouseDown="Window_MouseDown"
+        Title="Add Personnel" Height="450" Width="800">
+    <Border  Background="{StaticResource PrimaryBackground}" 
+             BorderThickness="1" 
+             CornerRadius="10" 
+             BorderBrush="{StaticResource SecondaryShadeColor}">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" 
+                        VerticalAlignment="Center" 
+                        Margin="30,0,0,0" 
+                        Orientation="Horizontal">
+                <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/person.png"
+                       Stretch="Uniform"
+                       MaxWidth="80"/>
+                <TextBox Name="tb_Name"
+                         Style="{StaticResource TitleTextBox}"
+                         FontSize="21"
+                         VerticalAlignment="Center"
+                         GotKeyboardFocus="tb_Name_GotKeyboardFocus"
+                         LostKeyboardFocus="tb_Name_LostKeyboardFocus">Add Name</TextBox>
+            </StackPanel>
+
+            <Grid Grid.Row="1" Margin="70,10,70,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="8*"/>
+                    <RowDefinition Height="5*"/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" 
+                               FontSize="18" 
+                               FontWeight="Normal" 
+                               VerticalAlignment="Center">Availability Settings</TextBlock>
+
+                    <StackPanel Grid.Row="1" 
+                                Orientation="Horizontal">
+                        <CheckBox Name="chb_SelectAll"
+                                  Template="{DynamicResource PrimaryCheckBox}" 
+                                  FontSize="16" 
+                                  VerticalAlignment="Center" 
+                                  Margin="0,0,20,0"
+                                  Click="chb_SelectAll_Click">All</CheckBox>
+                    </StackPanel>
+
+                    <WrapPanel Name="wp_Days"
+                               Grid.Row="2" 
+                               Orientation="Horizontal" 
+                               Margin="20,5,20,5">
+                        <CheckBox Name="chb_Monday" Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Monday</CheckBox>
+                        <CheckBox Name="chb_Tuesday" Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Tuesday</CheckBox>
+                        <CheckBox Name="chb_Wednesday" Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Wednesday</CheckBox>
+                        <CheckBox Name="chb_Thursday" Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Thursday</CheckBox>
+                        <CheckBox Name="chb_Friday" Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Friday</CheckBox>
+                        <CheckBox Name="chb_Saturday" Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,10,27,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Saturday</CheckBox>
+                        <CheckBox Name="chb_Sunday" Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,10,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Sunday</CheckBox>
+                    </WrapPanel>
+
+                    <SecondaryButtons:SecondaryButton Grid.Row="3"
+                                                      Text="Custom Time"
+                                                      ImageSource="pack://application:,,,/Schedio Application;component/Resources/Images/clocksetting.png"
+                                                      Width="150"
+                                                      HorizontalAlignment="Right"
+                                                      x:Name="btn_CustomTime"/>
+                    <!--<Button Grid.Row="3" HorizontalAlignment="Right" Style="{StaticResource SecondaryButton}">
+                        <Grid Width="150" Margin="5,1,5,1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5*"/>
+                                <ColumnDefinition Width="10*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="pack://application:,,,/Schedio Application;component/Resources/Images/clocksetting.png"/>
+                            <TextBlock VerticalAlignment="Center" Grid.Column="1" Text="Custom Time"/>
+                        </Grid>
+                    </Button>-->
+                </Grid>
+
+
+                <Grid Grid.Row="1" 
+                      VerticalAlignment="Top" 
+                      Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <ToggleButton Name="btn_TimeframeSetter" 
+                                      Style="{DynamicResource PrimaryToggleButton}"
+                                      HorizontalAlignment="Left"
+                                      Click="btn_TimeframeSetter_Click"></ToggleButton>
+                        <TextBlock VerticalAlignment="Center" 
+                                   FontWeight="Normal"
+                                   FontSize="15"
+                                   Margin="10,0,0,0">Constant Timeframe</TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Name="sp_ConstTimeFrame"
+                                Grid.Row="1" 
+                                Orientation="Horizontal" 
+                                Margin="20,0,0,0"
+                                IsEnabled="False">
+                        <TimeTextBox:TimeInput FontHeight="16"
+                                               ButtonHeight="20"
+                                               Width="150"/>
+                        <TextBlock Text="-"
+                                   FontSize="20"
+                                   VerticalAlignment="Center"
+                                   Margin="15,0"/>
+                        <TimeTextBox:TimeInput FontHeight="16"
+                                               ButtonHeight="20"
+                                               Width="150"/>
+                    </StackPanel>
+                    
+                </Grid>
+            </Grid>
+
+            <StackPanel Grid.Row="3" 
+                        Orientation="Horizontal" 
+                        Height="50" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Right">
+                <Button x:Name="btn_Cancel" 
+                        Style="{StaticResource CancelButton}" 
+                        FontSize="15" 
+                        Width="90" 
+                        Margin="5" 
+                        Click="btn_Cancel_Click">Cancel</Button>
+                <Button Style="{StaticResource ConfirmButton}" 
+                        FontSize="15" 
+                        Width="90" 
+                        Margin="5">Save</Button>
+            </StackPanel>
+        </Grid>
+    </Border>
+
+</Window>

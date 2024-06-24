@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:SecondaryButtons="clr-namespace:Schedio_Application.MVVM.View.UserControls"
       xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
@@ -32,9 +33,7 @@
                 </TabItem.Header>
                 <TabItem.Content>
                     <ScrollViewer CanContentScroll="False" BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}">
-
                         <ListView x:Name="lv_PersonnelList" ItemTemplate="{StaticResource dt_PersonnelList}">
-                            <ListViewItem>asd</ListViewItem>
                         </ListView>
                     </ScrollViewer>
                 </TabItem.Content>
@@ -47,7 +46,10 @@
                     </StackPanel>
                 </TabItem.Header>
                 <TabItem.Content>
-                    <TextBlock>Rooms</TextBlock>
+                    <ScrollViewer CanContentScroll="False" BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}">
+                        <ListView x:Name="lv_RoomList" ItemTemplate="{StaticResource dt_PersonnelList}">
+                        </ListView>
+                    </ScrollViewer>
                 </TabItem.Content>
             </TabItem>
             <TabItem Name="tabItem_Sections" Style="{StaticResource MainTabItems}">
@@ -76,11 +78,22 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="204"/>
-                <ColumnDefinition Width="*" MinWidth="300"/>
+                <ColumnDefinition Width="2*" MinWidth="200"/>
                 <ColumnDefinition Width="4*"/>
                 <ColumnDefinition Width="4*" MinWidth="300" MaxWidth="500"/>
             </Grid.ColumnDefinitions>
-            <Button Name="btn_Add" HorizontalAlignment="Left" Grid.Column="1" Margin="10" Width="120" MaxHeight="100" Style="{StaticResource AddButton}" Padding="10" Cursor="Hand" Click="btn_Add_Click">
+            <SecondaryButtons:SecondaryButton ImageSource="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
+                                              Text="Add Person"
+                                              Margin="10,20"
+                                              Grid.Column="1" 
+                                              MaxHeight="70" 
+                                              MinWidth="100"
+                                              MaxWidth="200"
+                                              FontSize="15"
+                                              FontWeight="Normal"
+                                              PreviewMouseLeftButtonDown="btn_Add_MouseLeftButtonDown" 
+                                              x:Name="btn_Add"/>
+            <!--<Button HorizontalAlignment="Left" Grid.Column="1" Margin="10" Width="120" MaxHeight="100" Style="{StaticResource AddButton}" Padding="10" Cursor="Hand" Visibility="Collapsed">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="2*"/>
@@ -89,7 +102,7 @@
                     <Image Name="img_ButtonAdd" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Stretch="Uniform" Source="pack://application:,,,/Schedio Application;component/Resources/Images/personnel-add.png"></Image>
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" FontSize="15" Foreground="{StaticResource PrimaryTextColor}">Add</TextBlock>
                 </Grid>
-            </Button>
+            </Button>-->
             <Grid Grid.Column="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
