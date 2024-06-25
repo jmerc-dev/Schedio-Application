@@ -80,7 +80,7 @@
                 <ColumnDefinition Width="204"/>
                 <ColumnDefinition Width="2*" MinWidth="200"/>
                 <ColumnDefinition Width="4*"/>
-                <ColumnDefinition Width="4*" MinWidth="300" MaxWidth="500"/>
+                <ColumnDefinition Width="4*" MinWidth="400" MaxWidth="500"/>
             </Grid.ColumnDefinitions>
             <SecondaryButtons:SecondaryButton ImageSource="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
                                               Text="Add Person"
