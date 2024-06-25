@@ -98,6 +98,10 @@ namespace Schedio_Application.MVVM.View.UserControls
                 if (CheckValue(tbTraversalIndex, Int32.Parse(input), Int32.Parse(textboxes[0].Text), Int32.Parse(textboxes[1].Text)))
                 {
                     ((TextBox)sender).Text = input;
+                    if (tbTraversalIndex >= 0 && tbTraversalIndex <= 2)
+                    {
+                        textboxes[tbTraversalIndex + 1].Focus();
+                    }
                 }
             }
             else if (Regex.Match(e.Key.ToString(), "NumPad[0-9]").Success)
@@ -111,6 +115,10 @@ namespace Schedio_Application.MVVM.View.UserControls
                         if (CheckValue(tbTraversalIndex, Int32.Parse(input), Int32.Parse(textboxes[0].Text), Int32.Parse(textboxes[1].Text)))
                         {
                             ((TextBox)sender).Text = input.ToString();
+                            if (tbTraversalIndex >= 0 && tbTraversalIndex <= 2)
+                            {
+                                textboxes[tbTraversalIndex + 1].Focus();
+                            }
                         }
                     }
                 } catch (Exception ex)
