@@ -38,7 +38,7 @@ namespace Schedio_Application.MVVM.View.Pages
 
         private void changeTabImage()
         {
-            TabItem[] tabItems = { tabItem_Personnel, tabItem_Rooms, tabItem_Sections, tabItem_Time };
+            TabItem[] tabItems = { tabItem_Personnel, tabItem_Rooms, tabItem_Sections};
 
             for (int i = 0; i < tabItems.Length; i++)
             {
@@ -58,7 +58,7 @@ namespace Schedio_Application.MVVM.View.Pages
         // Add button will be manipulated according to selected Tab Item
         private void ChangeAddButton(SecondaryButton button)
         {
-            TabItem[] tabItems = { tabItem_Personnel, tabItem_Rooms, tabItem_Sections, tabItem_Time };
+            TabItem[] tabItems = { tabItem_Personnel, tabItem_Rooms, tabItem_Sections};
 
             for (int i = 0;i < tabItems.Length;i++)
             {
@@ -73,7 +73,6 @@ namespace Schedio_Application.MVVM.View.Pages
                     else
                     {
                         button.Visibility = Visibility.Visible;
-                        btn_Add.Text = "Add " + tabItemName;
                     }
                 }
             }
@@ -81,30 +80,22 @@ namespace Schedio_Application.MVVM.View.Pages
 
         private void btn_Add_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            // Rooms Functions
-            if (btn_Add.Text.Equals("Add Rooms"))
-            {
-                RoomAddForm form = new RoomAddForm();
-                form.ShowInTaskbar = false;
-                form.Owner = Application.Current.MainWindow;
-                if (form.ShowDialog() == false)
-                {
-                    // Do Nothing
-                }
-                else
-                {
-                    // Add ListViewItem 
-                }
-            }
-            // Personnel Functions
-            else if (btn_Add.Text.Equals("Add Personnel"))
-            {
-                PersonnelAddForm form = new PersonnelAddForm();
-                form.ShowInTaskbar = false;
-                form.Owner = Application.Current.MainWindow;
-                form.ShowDialog();
-            }
         }
 
+        private void btn_AddPersonnel_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            PersonnelAddForm form = new PersonnelAddForm();
+            form.ShowInTaskbar = false;
+            form.Owner = Application.Current.MainWindow;
+            form.ShowDialog();
+        }
+
+        private void btn_AddRooms_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            RoomAddForm form = new RoomAddForm();
+            form.ShowInTaskbar = false;
+            form.Owner = Application.Current.MainWindow;
+            form.ShowDialog();
+        }
     }
 }

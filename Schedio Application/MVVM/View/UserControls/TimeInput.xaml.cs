@@ -61,6 +61,12 @@ namespace Schedio_Application.MVVM.View.UserControls
 
         }
 
+        private static void Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            
+            // now, do something
+        }
+
         private void button_Click(object sender, RoutedEventArgs e)
         {
             if (TimeLabel.Text.Equals("AM"))

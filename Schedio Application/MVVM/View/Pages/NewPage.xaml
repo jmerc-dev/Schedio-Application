@@ -32,10 +32,54 @@
                     </StackPanel>
                 </TabItem.Header>
                 <TabItem.Content>
-                    <ScrollViewer CanContentScroll="False" BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}">
-                        <ListView x:Name="lv_PersonnelList" ItemTemplate="{StaticResource dt_PersonnelList}">
-                        </ListView>
-                    </ScrollViewer>
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="100"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock FontSize="30" Margin="20" FontWeight="Thin" VerticalAlignment="Center" HorizontalAlignment="Left">Personnel Management</TextBlock>
+                        <SecondaryButtons:SecondaryButton ImageSource="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
+                                                          Text=""
+                                                          Height="50"
+                                                          Width="70"
+                                                          Margin="20,20"
+                                                          Grid.Row="0" 
+                                                          HorizontalAlignment="Right"
+                                                          MaxHeight="70" 
+                                                          MinWidth="50"
+                                                          MaxWidth="70"
+                                                          FontSize="15"
+                                                          FontWeight="Normal"
+                                                          PreviewMouseLeftButtonDown="btn_AddPersonnel_PreviewMouseLeftButtonDown" 
+                                                          x:Name="btn_AddPersonnel"/>
+                        <TextBlock FontSize="20" Margin="40,5,5,5" FontWeight="Light" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1">List of Persons</TextBlock>
+                        <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,1,0,0" Grid.Row="2">
+                            <ScrollViewer CanContentScroll="True" Grid.Row="1" BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}">
+                                <ListView x:Name="lv_PersonnelList" ItemTemplate="{StaticResource dt_PersonnelList}">
+
+                                    <!-- Mockups for data display -->
+
+                                    <ListViewItem>Jakob Mcknight</ListViewItem>
+                                    <ListViewItem>Aden Knox</ListViewItem>
+                                    <ListViewItem>Keyla Buchanan</ListViewItem>
+                                    <ListViewItem>Briana Cain</ListViewItem>
+                                    <ListViewItem>Emery Kent</ListViewItem>
+                                    <ListViewItem>Liam Duran</ListViewItem>
+                                    <ListViewItem>Jaydon Rollins</ListViewItem>
+                                    <ListViewItem>Piper Paul</ListViewItem>
+                                    <ListViewItem>Barrett Mcclain</ListViewItem>
+                                    <ListViewItem>Laylah Dalton</ListViewItem>
+                                    <ListViewItem>Kadin Mcfarland</ListViewItem>
+                                    <ListViewItem>Marcelo Dennis</ListViewItem>
+
+                                </ListView>
+                            </ScrollViewer>
+                        </Border>
+                    </Grid>
+                    
+                    
                 </TabItem.Content>
             </TabItem>
             <TabItem Name="tabItem_Rooms" Style="{StaticResource MainTabItems}">
@@ -46,10 +90,51 @@
                     </StackPanel>
                 </TabItem.Header>
                 <TabItem.Content>
-                    <ScrollViewer CanContentScroll="False" BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}">
-                        <ListView x:Name="lv_RoomList" ItemTemplate="{StaticResource dt_PersonnelList}">
-                        </ListView>
-                    </ScrollViewer>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="100"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock FontSize="30" Margin="20" FontWeight="Thin" VerticalAlignment="Center" HorizontalAlignment="Left">Room Management</TextBlock>
+                        <SecondaryButtons:SecondaryButton ImageSource="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
+                                      Text=""
+                                      Height="50"
+                                      Width="70"
+                                      Margin="20,20"
+                                      Grid.Row="0" 
+                                      HorizontalAlignment="Right"
+                                      MaxHeight="70" 
+                                      MinWidth="50"
+                                      MaxWidth="70"
+                                      FontSize="15"
+                                      FontWeight="Normal"
+                                      PreviewMouseLeftButtonDown="btn_AddRooms_PreviewMouseLeftButtonDown" 
+                                      x:Name="btn_AddRooms"/>
+                        <TextBlock FontSize="20" Margin="40,5,5,5" FontWeight="Light" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1">List of Rooms</TextBlock>
+                        <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,1,0,0" Grid.Row="2">
+                            <ScrollViewer CanContentScroll="True" Grid.Row="1" BorderBrush="{StaticResource PrimaryBackground}" Style="{DynamicResource MainScrollViewer}">
+                                <ListView x:Name="lv_RoomsList" ItemTemplate="{StaticResource dt_PersonnelList}">
+
+                                    <!-- Mockups for data display -->
+
+                                    <ListViewItem>Room 101</ListViewItem>
+                                    <ListViewItem>Room 102</ListViewItem>
+                                    <ListViewItem>Room 103</ListViewItem>
+                                    <ListViewItem>Room 104</ListViewItem>
+                                    <ListViewItem>Room 105</ListViewItem>
+                                    <ListViewItem>Room 106</ListViewItem>
+                                    <ListViewItem>Room 107</ListViewItem>
+                                    <ListViewItem>Room 108</ListViewItem>
+                                    <ListViewItem>Room 109</ListViewItem>
+                                    <ListViewItem>Room 110</ListViewItem>
+                                    <ListViewItem>Room 108</ListViewItem>
+                                    <ListViewItem>Room 109</ListViewItem>
+                                    <ListViewItem>Room 110</ListViewItem>
+                                </ListView>
+                            </ScrollViewer>
+                        </Border>
+                    </Grid>
                 </TabItem.Content>
             </TabItem>
             <TabItem Name="tabItem_Sections" Style="{StaticResource MainTabItems}">
@@ -60,18 +145,52 @@
                     </StackPanel>
                 </TabItem.Header>
                 <TabItem.Content>
-                    <TextBlock>Section</TextBlock>
-                </TabItem.Content>
-            </TabItem>
-            <TabItem Name="tabItem_Time" Style="{StaticResource MainTabItems}" >
-                <TabItem.Header>
-                    <StackPanel Orientation="Horizontal" >
-                        <Image Name="img_Time" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/time.png" Stretch="Uniform" Width="40" Margin="10"/>
-                        <TextBlock VerticalAlignment="Center" Style="{StaticResource TabHeader}">Time</TextBlock>
-                    </StackPanel>
-                </TabItem.Header>
-                <TabItem.Content>
-                    <TextBlock>Time</TextBlock>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="100"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock FontSize="30" Margin="20" FontWeight="Thin" VerticalAlignment="Center" HorizontalAlignment="Left">Section Management</TextBlock>
+                        <SecondaryButtons:SecondaryButton ImageSource="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
+                                                          Text=""
+                                                          Height="50"
+                                                          Width="70"
+                                                          Margin="20,20"
+                                                          Grid.Row="0" 
+                                                          HorizontalAlignment="Right"
+                                                          MaxHeight="70" 
+                                                          MinWidth="50"
+                                                          MaxWidth="70"
+                                                          FontSize="15"
+                                                          FontWeight="Normal"
+                                                          PreviewMouseLeftButtonDown="btn_Add_MouseLeftButtonDown" 
+                                                          x:Name="btn_AddSections"/>
+                        <TextBlock FontSize="20" Margin="40,5,5,5" FontWeight="Light" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1">List of Sections</TextBlock>
+                        <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,1,0,0" Grid.Row="2">
+                            <ScrollViewer CanContentScroll="True" Grid.Row="1" BorderBrush="{StaticResource PrimaryBackground}" Style="{DynamicResource MainScrollViewer}">
+                                <ListView x:Name="lv_SectionsList" ItemTemplate="{StaticResource dt_PersonnelList}">
+
+                                    <!-- Mockups for data display -->
+
+                                    <ListViewItem>Room 101</ListViewItem>
+                                    <ListViewItem>Room 102</ListViewItem>
+                                    <ListViewItem>Room 103</ListViewItem>
+                                    <ListViewItem>Room 104</ListViewItem>
+                                    <ListViewItem>Room 105</ListViewItem>
+                                    <ListViewItem>Room 106</ListViewItem>
+                                    <ListViewItem>Room 107</ListViewItem>
+                                    <ListViewItem>Room 108</ListViewItem>
+                                    <ListViewItem>Room 109</ListViewItem>
+                                    <ListViewItem>Room 110</ListViewItem>
+                                    <ListViewItem>Room 108</ListViewItem>
+                                    <ListViewItem>Room 109</ListViewItem>
+                                    <ListViewItem>Room 110</ListViewItem>
+                                </ListView>
+                            </ScrollViewer>
+                        </Border>
+                        
+                    </Grid>
                 </TabItem.Content>
             </TabItem>
         </TabControl>
@@ -82,17 +201,17 @@
                 <ColumnDefinition Width="4*"/>
                 <ColumnDefinition Width="4*" MinWidth="400" MaxWidth="500"/>
             </Grid.ColumnDefinitions>
-            <SecondaryButtons:SecondaryButton ImageSource="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
-                                              Text="Add Person"
-                                              Margin="10,20"
-                                              Grid.Column="1" 
-                                              MaxHeight="70" 
-                                              MinWidth="100"
-                                              MaxWidth="200"
-                                              FontSize="15"
-                                              FontWeight="Normal"
-                                              PreviewMouseLeftButtonDown="btn_Add_MouseLeftButtonDown" 
-                                              x:Name="btn_Add"/>
+            <SecondaryButtons:SecondaryButton ImageSource="pack://application:,,,/Schedio Application;component/Resources/Images/time.png"
+                                  Text="Time Schedule"
+                                  Margin="10,20"
+                                  Grid.Column="1" 
+                                  MaxHeight="70" 
+                                  MinWidth="100"
+                                  MaxWidth="200"
+                                  FontSize="15"
+                                  FontWeight="Normal"
+                                  PreviewMouseLeftButtonDown="btn_Add_MouseLeftButtonDown" 
+                                  x:Name="btn_Add"/>
             <!--<Button HorizontalAlignment="Left" Grid.Column="1" Margin="10" Width="120" MaxHeight="100" Style="{StaticResource AddButton}" Padding="10" Cursor="Hand" Visibility="Collapsed">
                 <Grid>
                     <Grid.RowDefinitions>

@@ -37,6 +37,7 @@
     <None Remove="Resources\Images\sections-filled.png" />
     <None Remove="Resources\Images\sections.png" />
     <None Remove="Resources\Images\time-filled.png" />
+    <None Remove="Resources\Images\time-inversed.png" />
     <None Remove="Resources\Images\time.png" />
     <None Remove="Resources\Images\woman.png" />
   </ItemGroup>
@@ -78,6 +79,7 @@
     <Resource Include="Resources\Images\sections-filled.png" />
     <Resource Include="Resources\Images\sections.png" />
     <Resource Include="Resources\Images\time-filled.png" />
+    <Resource Include="Resources\Images\time-inversed.png" />
     <Resource Include="Resources\Images\time.png" />
     <Resource Include="Resources\Images\woman.png" />
   </ItemGroup>
