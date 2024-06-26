@@ -24,6 +24,8 @@
     <None Remove="Resources\Images\new.png" />
     <None Remove="Resources\Images\open-filled.png" />
     <None Remove="Resources\Images\open.png" />
+    <None Remove="Resources\Images\pen-inversed.png" />
+    <None Remove="Resources\Images\pen.png" />
     <None Remove="Resources\Images\person.png" />
     <None Remove="Resources\Images\personnel-add.png" />
     <None Remove="Resources\Images\personnel-filled.png" />
@@ -39,6 +41,7 @@
     <None Remove="Resources\Images\time-filled.png" />
     <None Remove="Resources\Images\time-inversed.png" />
     <None Remove="Resources\Images\time.png" />
+    <None Remove="Resources\Images\trash.png" />
     <None Remove="Resources\Images\woman.png" />
   </ItemGroup>
 
@@ -66,6 +69,8 @@
     <Resource Include="Resources\Images\new.png" />
     <Resource Include="Resources\Images\open-filled.png" />
     <Resource Include="Resources\Images\open.png" />
+    <Resource Include="Resources\Images\pen-inversed.png" />
+    <Resource Include="Resources\Images\pen.png" />
     <Resource Include="Resources\Images\person.png" />
     <Resource Include="Resources\Images\personnel-add.png" />
     <Resource Include="Resources\Images\personnel-filled.png" />
@@ -81,6 +86,7 @@
     <Resource Include="Resources\Images\time-filled.png" />
     <Resource Include="Resources\Images\time-inversed.png" />
     <Resource Include="Resources\Images\time.png" />
+    <Resource Include="Resources\Images\trash.png" />
     <Resource Include="Resources\Images\woman.png" />
   </ItemGroup>
 
