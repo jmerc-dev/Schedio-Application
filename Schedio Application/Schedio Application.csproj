@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <None Remove="Resources\General\title_icon.ico" />
+    <None Remove="Resources\Images\back.png" />
     <None Remove="Resources\Images\change-disabled.png" />
     <None Remove="Resources\Images\change.png" />
     <None Remove="Resources\Images\clocksetting-disabled.png" />
@@ -46,6 +47,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Images\back.png" />
     <Resource Include="Resources\Images\change-disabled.png" />
     <Resource Include="Resources\Images\change.png" />
   </ItemGroup>

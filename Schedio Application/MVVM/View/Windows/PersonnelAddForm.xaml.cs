@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -106,6 +107,31 @@ namespace Schedio_Application.MVVM.View.Windows
             }
 
             
+        }
+
+        private void btn_CustomTime_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Dictionary<string, bool> availableDays = new Dictionary<string, bool>();
+
+            foreach (CheckBox checkbox in wp_Days.Children)
+            {
+                if (checkbox.IsChecked == true)
+                {
+                    availableDays.Add(checkbox.Content.ToString(), true);
+                }
+                else
+                {
+                    availableDays.Add(checkbox.Content.ToString(), false);
+                }
+            }
+
+
+            this.Opacity = 0;
+            PersonnelCustomTime form = new PersonnelCustomTime(availableDays);
+            form.ShowInTaskbar = false;
+            form.Owner = Application.Current.MainWindow;
+            form.ShowDialog();
+            this.Opacity = 1;
         }
     }
 }

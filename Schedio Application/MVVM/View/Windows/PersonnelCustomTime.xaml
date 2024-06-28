@@ -1,0 +1,251 @@
+﻿<Window x:Class="Schedio_Application.MVVM.View.Windows.PersonnelCustomTime"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:TimeTextBox="clr-namespace:Schedio_Application.MVVM.View.UserControls"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"
+        mc:Ignorable="d"
+        Title="PersonnelCustomTime" Height="500" Width="500"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <Style TargetType="Expander">
+            <Setter Property="Padding" Value="10,20"/>
+            <Setter Property="Margin" Value="0,3,5,3"/>
+
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsMouseOver" Value="True"/>
+                        <Condition Property="IsExpanded" Value="False"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="Background" Value="{StaticResource PrimaryShadeColor}"/>
+                </MultiTrigger>
+
+                <Trigger Property="IsExpanded" Value="True">
+                    <Setter Property="BorderBrush" Value="{StaticResource PrimaryShadeColor}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Border BorderBrush="{StaticResource SecondaryShadeColor}"
+            Background="{StaticResource PrimaryBackground}" 
+            BorderThickness="1" 
+            CornerRadius="10" >
+        <Grid Margin="40,30,20,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Customize Time"
+                       FontSize="23"
+                       FontWeight="Light"
+                       VerticalAlignment="Center"/>
+            <ScrollViewer Grid.Row="1"
+                          Margin="0,10,0,0"
+                          Style="{DynamicResource MainScrollViewer}">
+                <StackPanel Name="sp_ExpanderContainer">
+                    <Expander>
+                        <Expander.Header>
+                            <TextBlock FontSize="15">Monday</TextBlock>
+                        </Expander.Header>
+                        <Expander.Content>
+                            <StackPanel>
+                                <Button Style="{StaticResource ExtraWideButton}"
+                                        Height="40"
+                                        Width="70"
+                                        HorizontalAlignment="Right"
+                                        Click="Button_Click">
+                                    <Grid>
+                                        <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Margin="10"/>
+                                    </Grid>
+                                </Button>
+                            </StackPanel>
+                            
+
+                        </Expander.Content>
+                    </Expander>
+                    <Expander>
+                        <Expander.Header>
+                            <TextBlock FontSize="15">Tuesday</TextBlock>
+                        </Expander.Header>
+                        <Expander.Content>
+                            <StackPanel>
+                                <Button Style="{StaticResource ExtraWideButton}"
+                                        Height="40"
+                                        Width="70"
+                                        HorizontalAlignment="Right"
+                                        Click="Button_Click">
+                                    <Grid>
+                                        <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Margin="10"/>
+                                    </Grid>
+
+                                </Button>
+                            </StackPanel>
+
+                        </Expander.Content>
+                    </Expander>
+                    <Expander>
+                        <Expander.Header>
+                            <TextBlock FontSize="15">Wednesday</TextBlock>
+
+                        </Expander.Header>
+                        <Expander.Content>
+                            <StackPanel>
+                                <Button Style="{StaticResource ExtraWideButton}"
+                                        Height="40"
+                                        Width="70"
+                                        HorizontalAlignment="Right"
+                                        Click="Button_Click">
+                                    <Grid>
+                                        <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Margin="10"/>
+                                    </Grid>
+
+                                </Button>
+                            </StackPanel>
+                            
+
+                        </Expander.Content>
+                    </Expander>
+                    <Expander>
+                        <Expander.Header>
+                            <TextBlock FontSize="15">Thursday</TextBlock>
+                        </Expander.Header>
+                        <Expander.Content>
+                            <StackPanel>
+                                <Button Style="{StaticResource ExtraWideButton}"
+                                        Height="40"
+                                        Width="70"
+                                        HorizontalAlignment="Right">
+                                    <Grid>
+                                        <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Margin="10"/>
+                                    </Grid>
+
+                                </Button>
+                            </StackPanel>
+
+
+                        </Expander.Content>
+                    </Expander>
+                    <Expander>
+                        <Expander.Header>
+                            <TextBlock FontSize="15">Friday</TextBlock>
+
+                        </Expander.Header>
+                        <Expander.Content>
+                            <StackPanel>
+                                <Button Style="{StaticResource ExtraWideButton}"
+                                        Height="40"
+                                        Width="70"
+                                        HorizontalAlignment="Right">
+                                    <Grid>
+                                        <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Margin="10"/>
+                                    </Grid>
+
+                                </Button>
+                            </StackPanel>
+
+
+                        </Expander.Content>
+                    </Expander>
+                    <Expander>
+                        <Expander.Header>
+                            <TextBlock FontSize="15">Saturday</TextBlock>
+                        </Expander.Header>
+                        <Expander.Content>
+                            <StackPanel>
+                                <Button Style="{StaticResource ExtraWideButton}"
+                                        Height="40"
+                                        Width="70"
+                                        HorizontalAlignment="Right">
+                                    <Grid>
+                                        <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Margin="10"/>
+                                    </Grid>
+
+                                </Button>
+                            </StackPanel>
+
+
+                        </Expander.Content>
+                    </Expander>
+                    <Expander>
+                        <Expander.Header>
+                            <TextBlock FontSize="15">Sunday</TextBlock>
+                        </Expander.Header>
+                        <Expander.Content>
+                            <StackPanel>
+                                <Button Style="{StaticResource ExtraWideButton}"
+                                        Height="40"
+                                        Width="70"
+                                        HorizontalAlignment="Right">
+                                    <Grid>
+                                        <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Margin="10"/>
+                                    </Grid>
+
+                                </Button>
+                            </StackPanel>
+
+
+                        </Expander.Content>
+                    </Expander>
+                </StackPanel>
+            </ScrollViewer>
+            
+
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="2"
+                        HorizontalAlignment="Right">
+                <Button Style="{StaticResource CancelButton}"
+                        Width="100"
+                        Content="Cancel"
+                        FontSize="15"
+                        Margin="5"
+                        HorizontalAlignment="Right"
+                        Name="btn_Cancel"
+                        IsCancel="True">    
+                </Button>
+
+                <Button Style="{StaticResource ConfirmButton}"
+                        Width="100"
+                        Content="Save"
+                        FontSize="15"
+                        Margin="5"
+                        HorizontalAlignment="Right"
+                        Name="btn_Save"
+                        Click="btn_Save_Click">
+                </Button>
+            </StackPanel>
+
+            
+        </Grid>
+    </Border>
+    
+</Window>

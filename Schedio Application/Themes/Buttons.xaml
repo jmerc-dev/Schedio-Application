@@ -7,6 +7,7 @@
         <Setter Property="Margin" Value="40,0,40,0"/>
         <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
         <Setter Property="FontSize" Value="14"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -43,6 +44,7 @@
         <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
         <Setter Property="Background" Value="{StaticResource SecondaryColor}"/>
         <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -66,6 +68,7 @@
     <Style TargetType="Button" x:Key="ConfirmButton">
         <Setter Property="Foreground" Value="{StaticResource PrimaryBackground}"/>
         <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -90,6 +93,7 @@
     <Style TargetType="Button" x:Key="AddButton">
         <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
         <Setter Property="Background" Value="{StaticResource SecondaryColor}"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -116,12 +120,13 @@
         <Setter Property="Height" Value="70"/>
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid>
                         <Rectangle x:Name="Rectangle" Fill="{StaticResource PrimaryBackground}"/>
-                        <ContentPresenter Margin="50,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
 
                     <ControlTemplate.Triggers>
@@ -140,6 +145,7 @@
 
     <Style TargetType="Button" x:Key="SecondaryButton">
         <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">

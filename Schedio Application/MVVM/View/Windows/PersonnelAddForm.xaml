@@ -72,13 +72,13 @@
                                Grid.Row="2" 
                                Orientation="Horizontal" 
                                Margin="20,5,20,5">
-                        <CheckBox Name="chb_Monday" Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Monday</CheckBox>
-                        <CheckBox Name="chb_Tuesday" Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Tuesday</CheckBox>
-                        <CheckBox Name="chb_Wednesday" Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Wednesday</CheckBox>
-                        <CheckBox Name="chb_Thursday" Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Thursday</CheckBox>
-                        <CheckBox Name="chb_Friday" Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Friday</CheckBox>
-                        <CheckBox Name="chb_Saturday" Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,10,27,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Saturday</CheckBox>
-                        <CheckBox Name="chb_Sunday" Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,10,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Sunday</CheckBox>
+                        <CheckBox Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Monday</CheckBox>
+                        <CheckBox Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Tuesday</CheckBox>
+                        <CheckBox Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Wednesday</CheckBox>
+                        <CheckBox Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Thursday</CheckBox>
+                        <CheckBox Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Friday</CheckBox>
+                        <CheckBox Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,10,27,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Saturday</CheckBox>
+                        <CheckBox Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,10,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Sunday</CheckBox>
                     </WrapPanel>
 
                     <SecondaryButtons:SecondaryButton Grid.Row="3"
@@ -86,7 +86,8 @@
                                                       ImageSource="pack://application:,,,/Schedio Application;component/Resources/Images/clocksetting.png"
                                                       Width="150"
                                                       HorizontalAlignment="Right"
-                                                      x:Name="btn_CustomTime"/>
+                                                      x:Name="btn_CustomTime"
+                                                      PreviewMouseLeftButtonDown="btn_CustomTime_MouseDown"/>
                     <!--<Button Grid.Row="3" HorizontalAlignment="Right" Style="{StaticResource SecondaryButton}">
                         <Grid Width="150" Margin="5,1,5,1">
                             <Grid.ColumnDefinitions>
