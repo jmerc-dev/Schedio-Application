@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schedio_Application.MVVM.View.UserControls;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -49,11 +50,11 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            StartEndTimeInput entry = new StartEndTimeInput(); 
+
             StackPanel parent = (StackPanel)((Button)sender).Parent;
-            Button newButton = new Button();
-            newButton.Content = parent.Children.Count - 1;
-            newButton.Click += NewButton_Click;
-            parent.Children.Insert(parent.Children.Count - 1, newButton);
+            entry.BoxNum = (parent.Children.Count).ToString() + ".";
+            parent.Children.Insert(parent.Children.Count - 1, entry);
         }
 
         private void NewButton_Click(object sender, RoutedEventArgs e)
