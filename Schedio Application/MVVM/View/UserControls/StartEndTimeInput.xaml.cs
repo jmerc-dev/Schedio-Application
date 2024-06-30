@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -31,7 +33,13 @@ namespace Schedio_Application.MVVM.View.UserControls
         public StartEndTimeInput()
         {
             InitializeComponent();
+            Label.Text = "\u2022";
             this.DataContext = this;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ((StackPanel)this.Parent).Children.Remove(this);
         }
     }
 }

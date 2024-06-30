@@ -53,13 +53,10 @@ namespace Schedio_Application.MVVM.View.Windows
             StartEndTimeInput entry = new StartEndTimeInput(); 
 
             StackPanel parent = (StackPanel)((Button)sender).Parent;
-            entry.BoxNum = (parent.Children.Count).ToString() + ".";
             parent.Children.Insert(parent.Children.Count - 1, entry);
+
         }
 
-        private void NewButton_Click(object sender, RoutedEventArgs e)
-        {
-            Trace.WriteLine(((StackPanel)((Button)sender).Parent).Children.IndexOf(((Button)sender)));
-        }
+
     }
 }

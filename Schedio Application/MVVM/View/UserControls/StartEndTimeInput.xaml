@@ -14,7 +14,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding BoxNum}"
+                <TextBlock x:Name="Label"
                            FontSize="15"
                            VerticalAlignment="Center"
                            Margin="20,0"/>
@@ -29,7 +29,8 @@
             </StackPanel>
             <Button Style="{StaticResource ImageButton}"
                     Grid.Column="1"
-                    Margin="5">
+                    Margin="5" 
+                    Click="Button_Click">
                 <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/trash.png"/>
             </Button>
         </Grid>
