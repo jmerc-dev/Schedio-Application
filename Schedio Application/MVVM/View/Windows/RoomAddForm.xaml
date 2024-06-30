@@ -30,7 +30,7 @@
                 <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15">Name</TextBlock>
                 <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15">Type</TextBlock>
 
-                <ComboBox Name="cb_Name" Grid.Row="0" BorderThickness="0,0,0,1" Grid.Column="1" Margin="5" Height="30" FontSize="14" IsEditable="True" />
+                <TextBox Name="tbx_Name" Grid.Row="0" BorderThickness="0,0,0,1" Grid.Column="1" Margin="5" Height="30" FontSize="14"/>
                 <ComboBox Name="cb_Type" Grid.Row="1" BorderThickness="0,0,0,1" Grid.Column="2" Margin="5" Height="30" FontSize="14" IsEditable="True" />
             </Grid>
 

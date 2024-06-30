@@ -45,7 +45,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Save_Click(object sender, RoutedEventArgs e)
         {
-            _RoomName = cb_Name.Text;
+            _RoomName = tbx_Name.Text;
             _ChosenRoomType = cb_Type.Text;
 
             DialogResult = true;
