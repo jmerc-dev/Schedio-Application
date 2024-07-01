@@ -32,7 +32,6 @@ namespace Schedio_Application.MVVM.View.Pages
         private void tabCntrl_NewPage_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             changeTabImage();
-            ChangeAddButton(btn_Add);
             
         }
 
@@ -78,9 +77,6 @@ namespace Schedio_Application.MVVM.View.Pages
             }
         }
 
-        private void btn_Add_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-        }
 
         private void btn_AddPersonnel_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -93,6 +89,19 @@ namespace Schedio_Application.MVVM.View.Pages
         private void btn_AddRooms_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             RoomAddForm form = new RoomAddForm();
+            form.ShowInTaskbar = false;
+            form.Owner = Application.Current.MainWindow;
+            form.ShowDialog();
+        }
+
+        private void btn_AddSections_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void btn_TimeSchedule_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            TimeScheduleAddForm form = new TimeScheduleAddForm();
             form.ShowInTaskbar = false;
             form.Owner = Application.Current.MainWindow;
             form.ShowDialog();
