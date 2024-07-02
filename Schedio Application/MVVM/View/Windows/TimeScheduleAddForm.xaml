@@ -54,7 +54,8 @@
                               Template="{DynamicResource PrimaryCheckBox}"
                               VerticalAlignment="Center"
                               FontSize="16"
-                              Click="CheckBox_All_Click"/>
+                              Click="CheckBox_All_Click"
+                              Name="chb_All"/>
                     <StackPanel Orientation="Vertical"
                                 Grid.Row="2"
                                 Margin="20,0"
@@ -69,11 +70,15 @@
                                       Content="Monday"
                                       Template="{DynamicResource PrimaryCheckBox}"
                                       VerticalAlignment="Center"
-                                      FontSize="16"/>
+                                      FontSize="16"
+                                      Checked="CheckBox_Day_Checked"
+                                      Unchecked="CheckBox_Day_Unchecked"
+                                      />
 
                             <StackPanel Grid.Column="1"
                                         Orientation="Horizontal"
-                                        HorizontalAlignment="Right">
+                                        HorizontalAlignment="Right"
+                                        IsEnabled="False">
                                 <userControls:TimeInput FontHeight="15"
                                                         ButtonHeight="23"
                                                         Margin="3"/>
@@ -97,12 +102,15 @@
                                       Content="Tuesday"
                                       Template="{DynamicResource PrimaryCheckBox}"
                                       VerticalAlignment="Center"
-                                      FontSize="16"/>
+                                      FontSize="16"
+                                      Checked="CheckBox_Day_Checked"
+                                      Unchecked="CheckBox_Day_Unchecked"
+                                      />
 
                             <StackPanel Grid.Column="1"
                                         Orientation="Horizontal"
                                         HorizontalAlignment="Right"
-                                        >
+                                        IsEnabled="False">
                                 <userControls:TimeInput FontHeight="15"
                                                         ButtonHeight="23"
                                                         Margin="3"/>
@@ -126,12 +134,14 @@
                                       Content="Wednesday"
                                       Template="{DynamicResource PrimaryCheckBox}"
                                       VerticalAlignment="Center"
-                                      FontSize="16"/>
+                                      FontSize="16"
+                                      Checked="CheckBox_Day_Checked"
+                                      Unchecked="CheckBox_Day_Unchecked"/>
 
                             <StackPanel Grid.Column="1"
                                         Orientation="Horizontal"
                                         HorizontalAlignment="Right"
-                                        >
+                                        IsEnabled="False">
                                 <userControls:TimeInput FontHeight="15"
                                                         ButtonHeight="23"
                                                         Margin="3"/>
@@ -155,12 +165,15 @@
                                       Content="Thursday"
                                       Template="{DynamicResource PrimaryCheckBox}"
                                       VerticalAlignment="Center"
-                                      FontSize="16"/>
+                                      FontSize="16"
+                                      Checked="CheckBox_Day_Checked"
+                                      Unchecked="CheckBox_Day_Unchecked"
+                                      />
 
                             <StackPanel Grid.Column="1"
                                         Orientation="Horizontal"
                                         HorizontalAlignment="Right"
-                                        >
+                                        IsEnabled="False">
                                 <userControls:TimeInput FontHeight="15"
                                                         ButtonHeight="23"
                                                         Margin="3"/>
@@ -185,12 +198,15 @@
                                       Content="Friday"
                                       Template="{DynamicResource PrimaryCheckBox}"
                                       VerticalAlignment="Center"
-                                      FontSize="16"/>
+                                      FontSize="16"
+                                      Checked="CheckBox_Day_Checked"
+                                      Unchecked="CheckBox_Day_Unchecked"
+                                      />
 
                             <StackPanel Grid.Column="1"
                                         Orientation="Horizontal"
                                         HorizontalAlignment="Right"
-                                        >
+                                        IsEnabled="False">
                                 <userControls:TimeInput FontHeight="15"
                                                         ButtonHeight="23"
                                                         Margin="3"/>
@@ -214,12 +230,15 @@
                                       Content="Saturday"
                                       Template="{DynamicResource PrimaryCheckBox}"
                                       VerticalAlignment="Center"
-                                      FontSize="16"/>
+                                      FontSize="16"
+                                      Checked="CheckBox_Day_Checked"
+                                      Unchecked="CheckBox_Day_Unchecked"
+                                      />
 
                             <StackPanel Grid.Column="1"
                                         Orientation="Horizontal"
                                         HorizontalAlignment="Right"
-                                        >
+                                        IsEnabled="False">
                                 <userControls:TimeInput FontHeight="15"
                                                         ButtonHeight="23"
                                                         Margin="3"/>
@@ -243,12 +262,15 @@
                                       Content="Sunday"
                                       Template="{DynamicResource PrimaryCheckBox}"
                                       VerticalAlignment="Center"
-                                      FontSize="16"/>
+                                      FontSize="16"
+                                      Checked="CheckBox_Day_Checked"
+                                      Unchecked="CheckBox_Day_Unchecked"
+                                      />
 
                             <StackPanel Grid.Column="1"
                                         Orientation="Horizontal"
                                         HorizontalAlignment="Right"
-                                        >
+                                        IsEnabled="False">
                                 <userControls:TimeInput FontHeight="15"
                                                         ButtonHeight="23"
                                                         Margin="3"/>
@@ -274,12 +296,15 @@
 
                     <StackPanel Orientation="Horizontal">
                         <CheckBox Style="{StaticResource PrimaryToggleButton}"
-                              Grid.Row="0"
-                              HorizontalAlignment="Left"/>
+                                  Grid.Row="0"
+                                  HorizontalAlignment="Left"
+                                  Click="CheckBox_ConstantTime_Click"
+                                  Name="chb_ConstantTime"/>
                         <TextBlock Text="Constant Timeframe" 
                                    VerticalAlignment="Center"
                                    FontSize="16"
-                                   Margin="10" FontWeight="Normal"/>
+                                   Margin="10" 
+                                   FontWeight="Normal"/>
                     </StackPanel>
 
                     <StackPanel Grid.Row="1"
@@ -295,8 +320,6 @@
                                                 ButtonHeight="23"
                                                 Margin="3"/>
                     </StackPanel>
-
-
                 </Grid>
             </Grid>
 

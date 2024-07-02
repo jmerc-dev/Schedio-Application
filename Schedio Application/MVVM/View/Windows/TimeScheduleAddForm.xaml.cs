@@ -42,5 +42,68 @@ namespace Schedio_Application.MVVM.View.Windows
                 });
             }
         }
+
+        private void CheckBox_Day_Checked(object sender, RoutedEventArgs e)
+        {
+            // To not affect constant timeframe mode
+            if (chb_ConstantTime.IsChecked == true)
+            {
+                return;
+            }
+
+            ((Grid)((CheckBox)sender).Parent).Children.OfType<StackPanel>().ToList().ForEach((stackPanel) =>
+            {
+                stackPanel.IsEnabled = true;
+            });
+
+            if (chb_All.IsChecked != true)
+            {
+                try
+                {
+                    foreach (Grid container in sp_DaysContainer.Children)
+                    {
+                        if (container.Children.OfType<CheckBox>().FirstOrDefault().IsChecked != true)
+                        {
+                            return;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                chb_All.IsChecked = true;
+            }
+
+        }
+
+        private void CheckBox_Day_Unchecked(object sender, RoutedEventArgs e)
+        {
+            // To not affect constant timeframe mode
+            if (chb_ConstantTime.IsChecked == true)
+            {
+                return;
+            }
+
+            ((Grid)((CheckBox)sender).Parent).Children.OfType<StackPanel>().ToList().ForEach((stackPanel) =>
+            {
+                stackPanel.IsEnabled = false;
+            });
+
+            chb_All.IsChecked = false;
+        }
+
+        private void CheckBox_ConstantTime_Click(object sender, RoutedEventArgs e)
+        {
+
+            foreach(Grid container in sp_DaysContainer.Children)
+            {
+                container.Children.OfType<StackPanel>().ToList().ForEach((stackPanel) =>
+                {
+                    stackPanel.IsEnabled = !(bool)((CheckBox)sender).IsChecked;    
+                });
+            }
+            
+        }
     }
 }
