@@ -53,12 +53,13 @@
                               Content="All"
                               Template="{DynamicResource PrimaryCheckBox}"
                               VerticalAlignment="Center"
-                              FontSize="16"/>
+                              FontSize="16"
+                              Click="CheckBox_All_Click"/>
                     <StackPanel Orientation="Vertical"
                                 Grid.Row="2"
-                                Margin="20,0">
+                                Margin="20,0"
+                                Name="sp_DaysContainer">
                         <Grid>
-
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="2*"/>
@@ -72,8 +73,7 @@
 
                             <StackPanel Grid.Column="1"
                                         Orientation="Horizontal"
-                                        HorizontalAlignment="Right"
-                                        Name="ti_Monday">
+                                        HorizontalAlignment="Right">
                                 <userControls:TimeInput FontHeight="15"
                                                         ButtonHeight="23"
                                                         Margin="3"/>

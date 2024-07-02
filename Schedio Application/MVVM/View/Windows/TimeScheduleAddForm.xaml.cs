@@ -23,5 +23,24 @@ namespace Schedio_Application.MVVM.View.Windows
         {
             InitializeComponent();
         }
+
+        private void CheckBox_All_Click(object sender, RoutedEventArgs e)
+        {
+            
+            foreach (Grid container in sp_DaysContainer.Children)
+            {
+                container.Children.OfType<CheckBox>().ToList().ForEach(checkBox =>
+                {
+                    if (((CheckBox)sender).IsChecked == true)
+                    {
+                        checkBox.IsChecked = true;
+                    }
+                    else
+                    {
+                        checkBox.IsChecked = false;
+                    }
+                });
+            }
+        }
     }
 }
