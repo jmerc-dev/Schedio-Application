@@ -208,7 +208,7 @@
                                         Margin="0,10"
                                         Style="{StaticResource ImageButton}"
                                         Grid.Row="1"
-                                        PreviewMouseLeftButtonDown="btn_AddSections_PreviewMouseLeftButtonDown" >
+                                        PreviewMouseLeftButtonDown="btn_AddSections_PreviewMouseLeftButtonDown">
                                     <Image Stretch="Uniform"
                                            Source="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
                                            Margin="3"/> 

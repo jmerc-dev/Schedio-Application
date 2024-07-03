@@ -36,6 +36,7 @@
     <None Remove="Resources\Images\rooms-add.png" />
     <None Remove="Resources\Images\rooms-filled.png" />
     <None Remove="Resources\Images\rooms.png" />
+    <None Remove="Resources\Images\section-1.png" />
     <None Remove="Resources\Images\sections-add.png" />
     <None Remove="Resources\Images\sections-filled.png" />
     <None Remove="Resources\Images\sections.png" />
@@ -82,6 +83,7 @@
     <Resource Include="Resources\Images\rooms-add.png" />
     <Resource Include="Resources\Images\rooms-filled.png" />
     <Resource Include="Resources\Images\rooms.png" />
+    <Resource Include="Resources\Images\section-1.png" />
     <Resource Include="Resources\Images\sections-add.png" />
     <Resource Include="Resources\Images\sections-filled.png" />
     <Resource Include="Resources\Images\sections.png" />

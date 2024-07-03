@@ -96,7 +96,10 @@ namespace Schedio_Application.MVVM.View.Pages
 
         private void btn_AddSections_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
+            SectionAddForm form = new SectionAddForm();
+            form.ShowInTaskbar = false;
+            form.Owner = Application.Current.MainWindow;
+            form.ShowDialog();
         }
 
         private void btn_TimeSchedule_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

@@ -16,7 +16,41 @@
             BorderThickness="1" 
             CornerRadius="10" 
             BorderBrush="{StaticResource SecondaryShadeColor}">
-        
+        <Grid Margin="40,30,20,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="20,0">
+                <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/section-1.png"
+                       Stretch="Uniform"
+                       Height="70"
+                       VerticalAlignment="Center"/>
+                <TextBox Text="Section Name"
+                         Style="{StaticResource TitleTextBox}"
+                         FontSize="22"
+                         VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="2"
+                        HorizontalAlignment="Right">
+                <Button Style="{StaticResource CancelButton}"
+                        Content="Cancel"
+                        MinWidth="90"
+                        FontSize="15"
+                        Margin="10,0"
+                        IsCancel="True"/>
+                <Button Style="{StaticResource ConfirmButton}"
+                        Content="Save"
+                        MinWidth="90"
+                        FontSize="15"
+                        Margin="10,0"/>
+            </StackPanel>
+        </Grid>
     </Border>
 
 </Window>
