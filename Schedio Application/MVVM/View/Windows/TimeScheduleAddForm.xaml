@@ -309,7 +309,9 @@
 
                     <StackPanel Grid.Row="1"
                                 Orientation="Horizontal"
-                                Margin="20,0">
+                                Margin="20,0"
+                                Name="ti_ConstTime"
+                                IsEnabled="False">
                         <userControls:TimeInput FontHeight="15"
                                                 ButtonHeight="23"
                                                 Margin="3"/>

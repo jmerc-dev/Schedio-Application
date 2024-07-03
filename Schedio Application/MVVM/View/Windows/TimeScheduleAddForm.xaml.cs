@@ -103,7 +103,10 @@ namespace Schedio_Application.MVVM.View.Windows
                     stackPanel.IsEnabled = !(bool)((CheckBox)sender).IsChecked;    
                 });
             }
-            
+
+            ti_ConstTime.IsEnabled = (bool)((CheckBox)sender).IsChecked;
+
+
         }
     }
 }
