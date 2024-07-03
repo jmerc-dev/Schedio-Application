@@ -31,13 +31,19 @@
                         Orientation="Horizontal">
                 <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/person.png"
                        Stretch="Uniform"
-                       MaxWidth="80"/>
+                       MaxWidth="80"
+                       />
                 <TextBox Name="tb_Name"
                          Style="{StaticResource TitleTextBox}"
                          FontSize="21"
                          VerticalAlignment="Center"
+                         MaxWidth="300"
                          GotKeyboardFocus="tb_Name_GotKeyboardFocus"
-                         LostKeyboardFocus="tb_Name_LostKeyboardFocus">Add Name</TextBox>
+                         LostKeyboardFocus="tb_Name_LostKeyboardFocus"
+                         ToolTip="Preferred format: Last Name, First Name MI."
+                         ToolTipService.ShowDuration="8000"
+                         ToolTipService.InitialShowDelay="500"
+                         TextWrapping="Wrap">Add Name</TextBox>
             </StackPanel>
 
             <Grid Grid.Row="1" Margin="70,10,70,10">
