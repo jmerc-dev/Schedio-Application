@@ -11,6 +11,8 @@
 
   <ItemGroup>
     <None Remove="Resources\General\title_icon.ico" />
+    <None Remove="Resources\Images\arrow-down.png" />
+    <None Remove="Resources\Images\arrow-up.png" />
     <None Remove="Resources\Images\back.png" />
     <None Remove="Resources\Images\change-disabled.png" />
     <None Remove="Resources\Images\change.png" />
@@ -48,6 +50,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Images\arrow-down.png" />
+    <Resource Include="Resources\Images\arrow-up.png" />
     <Resource Include="Resources\Images\back.png" />
     <Resource Include="Resources\Images\change-disabled.png" />
     <Resource Include="Resources\Images\change.png" />

@@ -50,17 +50,17 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0"
-                      Margin="0,0,70,0">
+                <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="70"/>
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Column="0"
-                               Text="Subjects"
+                               Text="Subject"
                                Style="{StaticResource Title}"/>
                     <TextBlock Grid.Column="1"
                                Text="Room Type"
@@ -74,6 +74,15 @@
 
                 </Grid>
 
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="70"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
                 <StackPanel Orientation="Vertical"
                             Grid.Row="1">
                     <userControls:SubjectItem Height="70"/>
