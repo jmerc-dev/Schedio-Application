@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"
+        xmlns:userControls="clr-namespace:Schedio_Application.MVVM.View.UserControls"
         mc:Ignorable="d"
-        Title="SectionAddForm" Height="450" Width="800"
+        Title="SectionAddForm" Height="550" Width="900"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
@@ -75,7 +76,7 @@
 
                 <StackPanel Orientation="Vertical"
                             Grid.Row="1">
-
+                    <userControls:SubjectItem Height="70"/>
                 </StackPanel>
             </Grid>
             
