@@ -90,7 +90,6 @@
                               Grid.Row="1">
                     <StackPanel Orientation="Vertical"
                                 Name="sp_SubjectList">
-                        <userControls:SubjectItem Height="70"/>
                         <Button Style="{StaticResource ExtraWideButton}"
                                 Height="50"
                                 Name="btn_AddSubject"

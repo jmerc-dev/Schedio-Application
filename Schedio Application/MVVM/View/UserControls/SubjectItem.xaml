@@ -84,10 +84,6 @@
                       Height="30"
                       VerticalContentAlignment="Center"
                       Width="150">
-                <ComboBoxItem Content="Test 1"/>
-                <ComboBoxItem Content="Test 1"/>
-                <ComboBoxItem Content="Test 1"/>
-                <ComboBoxItem Content="Test 1"/>
             </ComboBox>
 
             <local:Counter Grid.Column="2"
