@@ -24,5 +24,28 @@ namespace Schedio_Application.MVVM.View.UserControls
         {
             InitializeComponent();
         }
+
+        private void btn_Add_Click(object sender, RoutedEventArgs e)
+        {
+            int num = Convert.ToInt32(tb_Num.Text);
+            if (num < 99)
+            {
+                tb_Num.Text = (num + 1).ToString();
+            }
+        }
+
+        private void btn_Sub_Click(object sender, RoutedEventArgs e)
+        {
+            int num = Convert.ToInt32(tb_Num.Text);
+            if (num > 0)
+            {
+                tb_Num.Text = (num - 1).ToString();
+            }
+        }
+
+        private void tb_Num_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

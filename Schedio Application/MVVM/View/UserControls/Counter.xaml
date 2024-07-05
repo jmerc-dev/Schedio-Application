@@ -17,7 +17,10 @@
                  HorizontalContentAlignment="Center"
                  VerticalContentAlignment="Center"
                  MinWidth="30"
-                 MaxLength="2"/>
+                 MaxLength="2"
+                 Name="tb_Num"
+                 Text="0"
+                 TextChanged="tb_Num_TextChanged"/>
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
@@ -27,7 +30,9 @@
             <Button Style="{StaticResource ImageButton}"
                     Grid.Row="0"
                     HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
+                    VerticalAlignment="Center"
+                    Name="btn_Add"
+                    Click="btn_Add_Click">
                 <Image Stretch="Uniform"
                        Margin="3"
                        Source="pack://application:,,,/Schedio Application;component/Resources/Images/arrow-up.png"/>
@@ -35,7 +40,9 @@
             <Button Style="{StaticResource ImageButton}"
                     Grid.Row="1"
                     HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
+                    VerticalAlignment="Center"
+                    Name="btn_Sub"
+                    Click="btn_Sub_Click">
                 <Image Stretch="Uniform"
                        Margin="3"
                        Source="pack://application:,,,/Schedio Application;component/Resources/Images/arrow-down.png"/>
