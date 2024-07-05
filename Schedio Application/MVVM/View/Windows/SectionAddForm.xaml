@@ -18,6 +18,9 @@
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
+        <Style TargetType="userControls:SubjectItem">
+            <Setter Property="Height" Value="70"/>
+        </Style>
     </Window.Resources>
 
     <Border Background="{StaticResource PrimaryBackground}" 
@@ -83,13 +86,19 @@
                         <ColumnDefinition Width="70"/>
                     </Grid.ColumnDefinitions>
                 </Grid>
-                <StackPanel Orientation="Vertical"
-                            Grid.Row="1">
-                    <userControls:SubjectItem Height="70"/>
-                </StackPanel>
+                <ScrollViewer Style="{StaticResource MainScrollViewer}"
+                              Grid.Row="1">
+                    <StackPanel Orientation="Vertical">
+                        <userControls:SubjectItem Height="70"/>
+                        <Button Style="{StaticResource ExtraWideButton}"
+                                Height="50">
+                            <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
+                                   Stretch="Uniform"
+                                   Margin="15"/>
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
             </Grid>
-            
-
             <StackPanel Orientation="Horizontal"
                         Grid.Row="2"
                         HorizontalAlignment="Right">
