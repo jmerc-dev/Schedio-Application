@@ -24,5 +24,10 @@ namespace Schedio_Application.MVVM.View.UserControls
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ((StackPanel)this.Parent).Children.Remove(this);
+        }
     }
 }

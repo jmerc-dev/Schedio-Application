@@ -104,7 +104,8 @@
                     MaxHeight="40"
                     Grid.Column="4"
                     VerticalAlignment="Center"
-                    HorizontalAlignment="Center">
+                    HorizontalAlignment="Center"
+                    Click="Button_Click">
                 <Image Margin="5"
                        Source="pack://application:,,,/Schedio Application;component/Resources/Images/trash.png"
                        Stretch="Uniform"/>
