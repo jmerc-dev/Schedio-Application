@@ -88,10 +88,13 @@
                 </Grid>
                 <ScrollViewer Style="{StaticResource MainScrollViewer}"
                               Grid.Row="1">
-                    <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Vertical"
+                                Name="sp_SubjectList">
                         <userControls:SubjectItem Height="70"/>
                         <Button Style="{StaticResource ExtraWideButton}"
-                                Height="50">
+                                Height="50"
+                                Name="btn_AddSubject"
+                                Click="btn_AddSubject_Click">
                             <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
                                    Stretch="Uniform"
                                    Margin="15"/>

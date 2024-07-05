@@ -101,7 +101,7 @@
                       HorizontalAlignment="Center"
                       Width="150"/>
             <Button Style="{StaticResource ImageButton}"
-                    MaxHeight="50"
+                    MaxHeight="40"
                     Grid.Column="4"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center">

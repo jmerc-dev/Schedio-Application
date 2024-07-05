@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schedio_Application.MVVM.View.UserControls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,11 @@ namespace Schedio_Application.MVVM.View.Windows
         public SectionAddForm()
         {
             InitializeComponent();
+        }
+
+        private void btn_AddSubject_Click(object sender, RoutedEventArgs e)
+        {
+            sp_SubjectList.Children.Insert(sp_SubjectList.Children.Count - 1, new SubjectItem());
         }
     }
 }
