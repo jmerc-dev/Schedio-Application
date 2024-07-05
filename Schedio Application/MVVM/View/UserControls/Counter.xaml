@@ -16,7 +16,8 @@
                  FontSize="15"
                  HorizontalContentAlignment="Center"
                  VerticalContentAlignment="Center"
-                 MinWidth="30"/>
+                 MinWidth="30"
+                 MaxLength="2"/>
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
