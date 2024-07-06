@@ -28,7 +28,7 @@ namespace Schedio_Application
 
         private void HomeButton_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Trace.WriteLine("Home button clicked!");
+
         }
 
         private void HomeButton_GotFocus(object sender, RoutedEventArgs e)
@@ -44,6 +44,14 @@ namespace Schedio_Application
         private void OpenButton_GotFocus(object sender, RoutedEventArgs e)
         {
             MainContent.Navigate(new Uri("pack://application:,,,/Schedio Application;component/MVVM/View/Pages/OpenPage.xaml"));
+        }
+
+        private void MainContent_Navigating(object sender, NavigatingCancelEventArgs e)
+        {
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+                e.Cancel = true;
+            }
         }
     }
 }

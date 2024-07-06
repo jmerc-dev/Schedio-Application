@@ -19,7 +19,7 @@
         </Style>
     </Window.Resources>
     <Border Background="{StaticResource PrimaryBackground}" BorderThickness="1" CornerRadius="10" BorderBrush="{StaticResource SecondaryShadeColor}">
-        <Grid Margin="20">
+        <Grid Margin="20,20,20,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="4*"/>
@@ -52,7 +52,7 @@
 
             <StackPanel Orientation="Horizontal"
                         Grid.Row="1"
-                        Margin="95,0,20,0"
+                        Margin="94,0,20,0"
                         VerticalAlignment="Center">
                 <TextBlock Name="tb_Type"
                            Text="Type"
@@ -71,12 +71,14 @@
                         Content="Cancel"
                         Width="100"
                         FontSize="15"
-                        Margin="5"/>
+                        Margin="5"
+                        IsCancel="True"/>
                 <Button Style="{StaticResource DeleteButton}"
                         Content="Delete"
                         Width="100"
                         FontSize="15"
-                        Margin="5"/>
+                        Margin="5"
+                        Click="Button_Click"/>
             </StackPanel>
         </Grid>
     </Border>

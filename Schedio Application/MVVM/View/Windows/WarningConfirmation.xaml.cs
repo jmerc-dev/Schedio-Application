@@ -19,9 +19,20 @@ namespace Schedio_Application.MVVM.View.Windows
     /// </summary>
     public partial class WarningConfirmation : Window
     {
-        public WarningConfirmation()
+        public WarningConfirmation(string type, string name)
         {
             InitializeComponent();
+
+            Loaded += (sender, e) =>
+            {
+                tb_Name.Text = name;
+                tb_Type.Text = type;
+            };
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
         }
     }
 }

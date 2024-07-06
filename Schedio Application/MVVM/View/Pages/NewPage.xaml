@@ -35,7 +35,7 @@
                         MaxHeight="50"
                         MaxWidth="60"
                         Margin="0,10"
-                        Style="{StaticResource ImageButton}">       
+                        Style="{StaticResource ImageButton}">
                     <Image Stretch="Uniform"
                            Source="pack://application:,,,/Schedio Application;component/Resources/Images/pen.png"
                            Margin="3"/>
@@ -45,13 +45,14 @@
                         MaxHeight="50"
                         MaxWidth="60"
                         Margin="0,10"
-                        Style="{StaticResource ImageButton}">
+                        Style="{StaticResource ImageButton}"
+                        Click="btn_Delete_Click">
                     <Image Stretch="Uniform"
                            Source="pack://application:,,,/Schedio Application;component/Resources/Images/trash.png"
                            Margin="3"/>
                 </Button>
             </StackPanel>
-            
+
 
             <TabControl BorderBrush="{StaticResource PrimaryBackground}" Name="tabCntrl_NewPage" Background="{StaticResource PrimaryBackground}" TabStripPlacement="Left" Margin="0,0,0,0" SelectionChanged="tabCntrl_NewPage_SelectionChanged">
                 <TabItem Name="tabItem_Personnel" Style="{StaticResource MainTabItems}">
@@ -104,19 +105,6 @@
                                     <ListView x:Name="lv_PersonnelList" ItemTemplate="{StaticResource dt_PersonnelList}">
 
                                         <!-- Mockups for data display -->
-
-                                        <ListViewItem>Jakob Mcknight</ListViewItem>
-                                        <ListViewItem>Aden Knox</ListViewItem>
-                                        <ListViewItem>Keyla Buchanan</ListViewItem>
-                                        <ListViewItem>Briana Cain</ListViewItem>
-                                        <ListViewItem>Emery Kent</ListViewItem>
-                                        <ListViewItem>Liam Duran</ListViewItem>
-                                        <ListViewItem>Jaydon Rollins</ListViewItem>
-                                        <ListViewItem>Piper Paul</ListViewItem>
-                                        <ListViewItem>Barrett Mcclain</ListViewItem>
-                                        <ListViewItem>Laylah Dalton</ListViewItem>
-                                        <ListViewItem>Kadin Mcfarland</ListViewItem>
-                                        <ListViewItem>Marcelo Dennis</ListViewItem>
 
                                     </ListView>
                                 </ScrollViewer>
@@ -177,7 +165,7 @@
                                         <!-- Mockups for data display -->
 
                                         <ListViewItem>Room: 103</ListViewItem>
-                                        
+
 
                                     </ListView>
                                 </ScrollViewer>
@@ -211,7 +199,7 @@
                                         PreviewMouseLeftButtonDown="btn_AddSections_PreviewMouseLeftButtonDown">
                                     <Image Stretch="Uniform"
                                            Source="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
-                                           Margin="3"/> 
+                                           Margin="3"/>
                                 </Button>
                                 <TextBlock FontSize="20" Margin="20,5,5,5" FontWeight="Light" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1">List of Sections</TextBlock>
                             </StackPanel>
@@ -235,8 +223,6 @@
 
                                         <!-- Mockups for data display -->
 
-                                        <ListViewItem>CS401A</ListViewItem>
-
 
                                     </ListView>
                                 </ScrollViewer>
@@ -246,8 +232,7 @@
                 </TabItem>
             </TabControl>
         </Grid>
-        
-        
+
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="204"/>
@@ -266,16 +251,6 @@
                                   FontWeight="Normal"
                                   PreviewMouseLeftButtonDown="btn_TimeSchedule_PreviewMouseLeftButtonDown"
                                   x:Name="btn_TimeSchedule"/>
-            <!--<Button HorizontalAlignment="Left" Grid.Column="1" Margin="10" Width="120" MaxHeight="100" Style="{StaticResource AddButton}" Padding="10" Cursor="Hand" Visibility="Collapsed">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="2*"/>
-                        <RowDefinition Height="1*"/>
-                    </Grid.RowDefinitions>
-                    <Image Name="img_ButtonAdd" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Stretch="Uniform" Source="pack://application:,,,/Schedio Application;component/Resources/Images/personnel-add.png"></Image>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" FontSize="15" Foreground="{StaticResource PrimaryTextColor}">Add</TextBlock>
-                </Grid>
-            </Button>-->
             <Grid Grid.Column="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

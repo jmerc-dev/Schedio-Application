@@ -109,5 +109,17 @@ namespace Schedio_Application.MVVM.View.Pages
             form.Owner = Application.Current.MainWindow;
             form.ShowDialog();
         }
+
+        private void btn_Delete_Click(object sender, RoutedEventArgs e)
+        {
+            WarningConfirmation modal = new WarningConfirmation("", "");
+            modal.ShowInTaskbar = false;
+            modal.Owner = Application.Current.MainWindow;
+            if (modal.ShowDialog() == true)
+            {
+                Trace.WriteLine("Deleted");
+            }
+            
+        }
     }
 }
