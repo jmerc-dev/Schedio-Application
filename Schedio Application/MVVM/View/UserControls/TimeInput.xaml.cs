@@ -185,7 +185,6 @@ namespace Schedio_Application.MVVM.View.UserControls
 
         private bool CheckValue(int index, int number, int tenthHourValue, int hourValue)
         {
-            Console.WriteLine("Index: " + index);
             switch (index)
             {
                 case 0:

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -19,67 +22,96 @@ namespace Schedio_Application.MVVM.View.UserControls
     /// <summary>
     /// Interaction logic for Counter.xaml
     /// </summary>
-    public partial class Counter : UserControl
-    {
+    public partial class Counter : UserControl, INotifyPropertyChanged
+    { 
 
-        private string oldValue = "0";
+        private int oldValue = 0;
+
+        private int _Number;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public int Number
+        {
+            get { return _Number; }
+            set 
+            { 
+                _Number = value;
+                NotifyPropertyChanged(); 
+            }
+        }
 
         public Counter()
         {
             InitializeComponent();
+            this.DataContext = this;
+        }
+
+        private void NotifyPropertyChanged([CallerMemberName] string PropertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(PropertyName));
+            }
         }
 
         private void btn_Add_Click(object sender, RoutedEventArgs e)
         {
-            try
+
+            if (Number < 99)
             {
-                int num = Convert.ToInt32(tb_Num.Text);
-                if (num < 99)
-                {
-                    tb_Num.Text = (num + 1).ToString();
-                }
-            }
-            catch
-            {
-                tb_Num.Text = "1";
+                Number += 1;
             }
 
+            Trace.WriteLine(Number.ToString());
         }
 
         private void btn_Sub_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (Number > 0)
             {
-                int num = Convert.ToInt32(tb_Num.Text);
-                if (num > 0)
-                {
-                    tb_Num.Text = (num - 1).ToString();
-                }
-            } catch
-            {
-                tb_Num.Text = "1";
+                Number -= 1;
             }
-
         }
 
         private void tb_Num_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (tb_Num.Text.Equals(String.Empty))
             {
-                oldValue = String.Empty;
                 return;
             }
-
-            string pattern = @"^\d{1,2}$";
-            Regex regex = new Regex(pattern);
-            if (regex.IsMatch(tb_Num.Text))
+            else if (Regex.Match(tb_Num.Text, @"^\d{1}$").Success)
             {
-                oldValue = tb_Num.Text;
+                oldValue = Convert.ToInt32(tb_Num.Text);  // "1"
+            }
+            else if (Regex.Match(tb_Num.Text, @"^\d{2}$").Success)
+            {
+                oldValue = Convert.ToInt32(tb_Num.Text);
             }
             else
             {
-                tb_Num.Text = oldValue;
-                tb_Num.CaretIndex = oldValue.Length;
+                if (tb_Num.Text.Length == 1)
+                {
+                    tb_Num.Text = "";
+                }
+                else
+                {
+                    Number = oldValue;
+                    tb_Num.CaretIndex = 1;
+                }
+            }
+                /* Option 1: Regex for blank, 1char, 2char - IMPLEMENTED
+                 * Option 2: Validate on LostFocus (still able to write invalid char) NO
+                */
+
+
+        }
+
+        private void tb_Num_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (tb_Num.Text.Equals(String.Empty))
+            {
+                Number = 0;
             }
         }
     }

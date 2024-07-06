@@ -19,8 +19,9 @@
                  MinWidth="30"
                  MaxLength="2"
                  Name="tb_Num"
-                 Text="0"
-                 TextChanged="tb_Num_TextChanged"/>
+                 Text="{Binding Number}"
+                 TextChanged="tb_Num_TextChanged"
+                 LostFocus="tb_Num_LostFocus"/>
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
