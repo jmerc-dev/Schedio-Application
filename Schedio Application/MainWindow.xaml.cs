@@ -29,6 +29,7 @@ namespace Schedio_Application
         private void HomeButton_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
+            
         }
 
         private void HomeButton_GotFocus(object sender, RoutedEventArgs e)

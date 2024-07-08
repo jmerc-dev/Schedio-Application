@@ -13,8 +13,6 @@
         Icon="pack://application:,,,/Resources/General/title_icon.ico"
         Background="{StaticResource PrimaryBackground}">
 
-
-
 <Grid>
     <Grid.RowDefinitions>
         <RowDefinition Height="90" />
@@ -71,11 +69,16 @@
         </Grid>
 
     </Border>
-
+    
     <Grid Grid.Row="1" >
+
         <Frame x:Name="MainContent" NavigationUIVisibility="Hidden" Navigating="MainContent_Navigating"></Frame>
+
+        
     </Grid>
 </Grid>
+    
+    
 
 
 </Window>

@@ -62,8 +62,6 @@ namespace Schedio_Application.MVVM.View.UserControls
             {
                 Number += 1;
             }
-
-            Trace.WriteLine(Number.ToString());
         }
 
         private void btn_Sub_Click(object sender, RoutedEventArgs e)
@@ -76,6 +74,7 @@ namespace Schedio_Application.MVVM.View.UserControls
 
         private void tb_Num_TextChanged(object sender, TextChangedEventArgs e)
         {
+            // Validation that restricts input only for digits
             if (tb_Num.Text.Equals(String.Empty))
             {
                 return;
@@ -100,11 +99,9 @@ namespace Schedio_Application.MVVM.View.UserControls
                     tb_Num.CaretIndex = 1;
                 }
             }
-                /* Option 1: Regex for blank, 1char, 2char - IMPLEMENTED
-                 * Option 2: Validate on LostFocus (still able to write invalid char) NO
-                */
-
-
+            /* Option 1: Regex for blank, 1char, 2char - IMPLEMENTED
+             * Option 2: Validate on LostFocus (still able to write invalid char) NO
+            */
         }
 
         private void tb_Num_LostFocus(object sender, RoutedEventArgs e)
@@ -113,6 +110,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             {
                 Number = 0;
             }
+
         }
     }
 }

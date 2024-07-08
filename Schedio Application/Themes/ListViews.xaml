@@ -5,7 +5,7 @@
     <Style TargetType="ListView">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate>
+                <ControlTemplate TargetType="ListView">
                     <ItemsPresenter/>
                 </ControlTemplate>
             </Setter.Value>
@@ -15,7 +15,6 @@
     <Style TargetType="ListViewItem">
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="Height" Value="70"/>
-        <Setter Property="Padding" Value="50, 0, 0, 0"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -55,13 +54,17 @@
         </Setter>
     </Style>
 
-    <DataTemplate x:Key="dt_PersonnelList">
-        <StackPanel>
-            <Image Stretch="Uniform" />
-            <TextBlock/>
-        </StackPanel>
+    <DataTemplate x:Key="dt_RoomsList">
+        <Grid Margin="50,0,0,0" MinWidth="700">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Fill="Yellow" Grid.Column="0"/>
+            <Rectangle Fill="Brown" Grid.Column="1"/>
+            <TextBlock Grid.Column="0" FontSize="15" VerticalAlignment="Center" Text="{Binding Name}" Width="250" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+            <TextBlock Grid.Column="1" FontSize="15" VerticalAlignment="Center" Text="{Binding Type}" Width="250" TextWrapping="Wrap"  HorizontalAlignment="Left"/>
+        </Grid>
     </DataTemplate>
 
-    
-    
 </ResourceDictionary>
