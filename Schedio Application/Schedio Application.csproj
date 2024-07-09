@@ -42,6 +42,7 @@
     <None Remove="Resources\Images\sections-add.png" />
     <None Remove="Resources\Images\sections-filled.png" />
     <None Remove="Resources\Images\sections.png" />
+    <None Remove="Resources\Images\settings.png" />
     <None Remove="Resources\Images\time-filled.png" />
     <None Remove="Resources\Images\time-inversed.png" />
     <None Remove="Resources\Images\time.png" />
@@ -92,6 +93,7 @@
     <Resource Include="Resources\Images\sections-add.png" />
     <Resource Include="Resources\Images\sections-filled.png" />
     <Resource Include="Resources\Images\sections.png" />
+    <Resource Include="Resources\Images\settings.png" />
     <Resource Include="Resources\Images\time-filled.png" />
     <Resource Include="Resources\Images\time-inversed.png" />
     <Resource Include="Resources\Images\time.png" />

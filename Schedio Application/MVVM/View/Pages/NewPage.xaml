@@ -143,7 +143,7 @@
                                            Source="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
                                            Margin="3"/>
                                 </Button>
-                                <TextBlock FontSize="20" Margin="20,5,5,5" FontWeight="Light" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1">Name</TextBlock>
+                                <TextBlock FontSize="20" Margin="20,5,5,5" FontWeight="Light" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1">List of Rooms</TextBlock>
                             </StackPanel>
 
                             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="20,0,0,0" HorizontalAlignment="Right" Height="30">
@@ -162,9 +162,6 @@
                             <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,1,0,0" Grid.Row="2" Margin="20,0,0,0">
                                 <ScrollViewer CanContentScroll="True" Grid.Row="1" BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}">
                                     <ListView x:Name="lv_RoomsList" ItemTemplate="{StaticResource dt_RoomsList}" HorizontalContentAlignment="Stretch">
-
-
-
 
                                     </ListView>
                                 </ScrollViewer>

@@ -60,10 +60,14 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <Rectangle Fill="Yellow" Grid.Column="0"/>
-            <Rectangle Fill="Brown" Grid.Column="1"/>
             <TextBlock Grid.Column="0" FontSize="15" VerticalAlignment="Center" Text="{Binding Name}" Width="250" TextWrapping="Wrap" HorizontalAlignment="Left"/>
-            <TextBlock Grid.Column="1" FontSize="15" VerticalAlignment="Center" Text="{Binding Type}" Width="250" TextWrapping="Wrap"  HorizontalAlignment="Left"/>
+
+            <StackPanel Orientation="Horizontal" Grid.Column="1">
+                <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/settings.png"
+                       Stretch="Uniform"
+                       Margin="10,20"/>
+                <TextBlock Grid.Column="1" FontSize="15" VerticalAlignment="Center" Text="{Binding Type}" Width="250" TextWrapping="Wrap"  HorizontalAlignment="Left"/>
+            </StackPanel>
         </Grid>
     </DataTemplate>
 
