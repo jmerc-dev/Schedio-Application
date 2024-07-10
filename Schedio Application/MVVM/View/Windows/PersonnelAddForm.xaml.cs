@@ -141,12 +141,6 @@ namespace Schedio_Application.MVVM.View.Windows
         {
             Person person = new Person(tb_Name.Text, (bool)btn_TimeframeSetter.IsChecked);
 
-            if (person.IsCustom == null) 
-            {
-                MessageBox.Show("Custom boolean is null");
-                return;
-            }
-
             if (tb_Name.Text.Equals("Add Name"))
             {
                 MessageBox.Show("Please enter your name.");

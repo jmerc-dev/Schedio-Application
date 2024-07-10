@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -20,10 +22,70 @@ namespace Schedio_Application.MVVM.View.UserControls
     /// <summary>
     /// Interaction logic for TimeInput.xaml
     /// </summary>
-    public partial class TimeInput : UserControl
+    public partial class TimeInput : UserControl, INotifyPropertyChanged
     {
         private TextBox[] textboxes = new TextBox[4];
         private int tbTraversalIndex;
+
+        // Time Value
+        private string _Time, _Period;
+        private int _HourTenths, _Hour, _MinTenths, _Min;
+
+        public string Time 
+        {
+            get { return _Time; } 
+            set 
+            { 
+                _Time = value;
+            }
+        }
+
+        public string Period
+        {
+            get { return _Period; }
+            set
+            {
+                _Period = value;
+                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + _Period;
+            }
+        }
+
+        public int HourTenths
+        {
+            get { return _HourTenths; }
+            set
+            {
+                _HourTenths = value;
+                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + TimeLabel.Text;
+            }
+        }
+        public int Hour
+        {
+            get { return _Hour; }
+            set
+            {
+                _Hour = value;
+                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + TimeLabel.Text;
+            }
+        }
+        public int MinTenths
+        {
+            get { return _MinTenths; }
+            set
+            {
+                _MinTenths = value;
+                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + TimeLabel.Text;
+            }
+        }
+        public int Min
+        {
+            get { return _Min; }
+            set
+            {
+                _Min = value;
+                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + TimeLabel.Text;
+            }
+        }
 
         // Font Height Dependency Property
         public string FontHeight
@@ -45,6 +107,15 @@ namespace Schedio_Application.MVVM.View.UserControls
         public static readonly DependencyProperty _ButtonHeight =
             DependencyProperty.Register("ButtonHeight", typeof(string), typeof(TimeInput), new PropertyMetadata(null));
 
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] string PropertyName="")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(PropertyName));
+            }
+        }
+
         public TimeInput()
         {
             InitializeComponent();
@@ -59,12 +130,15 @@ namespace Schedio_Application.MVVM.View.UserControls
                 textboxes[3] = tb_Min;
             };
 
-        }
+            //Task.Run(() =>
+            //{
+            //    while (true)
+            //    {
+            //        Debug.WriteLine("Time: " + Time);
+            //        Thread.Sleep(500);
+            //    }
+            //});
 
-        private static void Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            
-            // now, do something
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -77,6 +151,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             {
                 TimeLabel.Text = "AM";
             }
+            Debug.WriteLine("Time: " + Time);
         }
 
         private void button_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)

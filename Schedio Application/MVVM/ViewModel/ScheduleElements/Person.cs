@@ -13,19 +13,12 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         private string _Name;
         private Day[] _Days;
-        private string _Timespan;
         private bool _IsCustom;
 
         public string Name
         {
             get { return _Name; } 
             set {  _Name = value; } 
-        }
-
-        public string Timespan
-        {
-            get { return _Timespan; }
-            set {; }
         }
 
         public bool IsCustom

@@ -74,14 +74,14 @@
                         HorizontalAlignment="Center"
                         FocusManager.IsFocusScope="True">
                 <TextBox Name="tb_HourTenths"
-                         Text="0"
+                         Text="{Binding HourTenths, UpdateSourceTrigger=PropertyChanged}"
                          VerticalAlignment="Center"
                          MaxLength="1"
                          PreviewKeyDown="tb_PreviewKeyDown"
                          CaretBrush="Transparent"
                          GotFocus="tb_GotFocus"/>
                 <TextBox Name="tb_Hour"
-                         Text="0"
+                         Text="{Binding Hour, UpdateSourceTrigger=PropertyChanged}"
                          VerticalAlignment="Center"
                          MaxLength="1"
                          PreviewKeyDown="tb_PreviewKeyDown"
@@ -90,14 +90,14 @@
                 <TextBlock Text=":"
                            VerticalAlignment="Center"/>
                 <TextBox Name="tb_MinTenths"
-                         Text="0"
+                         Text="{Binding MinTenths, UpdateSourceTrigger=PropertyChanged}"
                          VerticalAlignment="Center"
                          MaxLength="1"
                          PreviewKeyDown="tb_PreviewKeyDown"
                          CaretBrush="Transparent"
                          GotFocus="tb_GotFocus"/>
                 <TextBox Name="tb_Min"
-                         Text="0"
+                         Text="{Binding Min, UpdateSourceTrigger=PropertyChanged}"
                          VerticalAlignment="Center"
                          MaxLength="1"
                          PreviewKeyDown="tb_PreviewKeyDown"

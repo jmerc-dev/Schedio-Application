@@ -99,9 +99,6 @@ namespace Schedio_Application.MVVM.View.UserControls
                     tb_Num.CaretIndex = 1;
                 }
             }
-            /* Option 1: Regex for blank, 1char, 2char - IMPLEMENTED
-             * Option 2: Validate on LostFocus (still able to write invalid char) NO
-            */
         }
 
         private void tb_Num_LostFocus(object sender, RoutedEventArgs e)
@@ -110,7 +107,6 @@ namespace Schedio_Application.MVVM.View.UserControls
             {
                 Number = 0;
             }
-
         }
     }
 }
