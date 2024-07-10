@@ -19,4 +19,6 @@
     <SolidColorBrush x:Key="LightRedColor" Color="#DA7171"/>
     <SolidColorBrush x:Key="ShadedRedColor" Color="#A33131"/>
 
+    <SolidColorBrush x:Key="GreenColor" Color="#23E072"/>
+
 </ResourceDictionary>

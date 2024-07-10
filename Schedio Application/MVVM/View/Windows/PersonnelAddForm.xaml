@@ -164,7 +164,9 @@
                 <Button Style="{StaticResource ConfirmButton}" 
                         FontSize="15" 
                         Width="90" 
-                        Margin="5">Save</Button>
+                        Margin="5"
+                        Name="btn_Save"
+                        Click="btn_Save_Click">Save</Button>
             </StackPanel>
         </Grid>
     </Border>

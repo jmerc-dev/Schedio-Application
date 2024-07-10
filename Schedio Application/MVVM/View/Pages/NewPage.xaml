@@ -103,10 +103,7 @@
 
                             <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,1,0,0" Grid.Row="2" Margin="20,0,0,0">
                                 <ScrollViewer CanContentScroll="True" Grid.Row="1" BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}">
-                                    <ListView x:Name="lv_PersonnelList">
-
-                                        <!-- Mockups for data display -->
-
+                                    <ListView x:Name="lv_PersonnelList" ItemTemplate="{StaticResource dt_PersonnelList}">
                                     </ListView>
                                 </ScrollViewer>
                             </Border>

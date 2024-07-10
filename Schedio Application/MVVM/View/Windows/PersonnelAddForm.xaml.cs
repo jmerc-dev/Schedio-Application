@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -132,6 +133,43 @@ namespace Schedio_Application.MVVM.View.Windows
             form.Owner = Application.Current.MainWindow;
             form.ShowDialog();
             this.Opacity = 1;
+        }
+
+        
+
+        private void btn_Save_Click(object sender, RoutedEventArgs e)
+        {
+            Person person = new Person(tb_Name.Text, (bool)btn_TimeframeSetter.IsChecked);
+
+            if (person.IsCustom == null) 
+            {
+                MessageBox.Show("Custom boolean is null");
+                return;
+            }
+
+            if (tb_Name.Text.Equals("Add Name"))
+            {
+                MessageBox.Show("Please enter your name.");
+                return;
+            }
+
+            foreach (CheckBox checkbox in wp_Days.Children)
+            {
+                try
+                {
+                    DayOfWeek day = Enum.Parse<DayOfWeek>(checkbox.Content.ToString());
+                    person.SetAvailableDay(day,(bool) checkbox.IsChecked);
+                } catch
+                {
+                    MessageBox.Show("Failed to parse checkbox content to WeekDays");
+                }
+            }
+
+            Trace.WriteLine(person.Name);
+            Trace.WriteLine(person.IsCustom);
+            Trace.WriteLine(person.GetAvailDaysFormatted());
+
+            DialogResult = true;
         }
     }
 }
