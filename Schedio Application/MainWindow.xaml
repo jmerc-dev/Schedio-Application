@@ -9,11 +9,9 @@
         ResizeMode="CanResizeWithGrip"
         Title="Schedio" Height="720" Width="1280"
         WindowStartupLocation="CenterScreen"
-        MinWidth="640"
+        MinWidth="935"
         Icon="pack://application:,,,/Resources/General/title_icon.ico"
         Background="{StaticResource PrimaryBackground}">
-
-
 
 <Grid>
     <Grid.RowDefinitions>
@@ -71,11 +69,16 @@
         </Grid>
 
     </Border>
-
+    
     <Grid Grid.Row="1" >
-        <Frame x:Name="MainContent" NavigationUIVisibility="Hidden"></Frame>
+
+        <Frame x:Name="MainContent" NavigationUIVisibility="Hidden" Navigating="MainContent_Navigating"></Frame>
+
+        
     </Grid>
 </Grid>
+    
+    
 
 
 </Window>

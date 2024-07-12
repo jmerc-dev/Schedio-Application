@@ -14,5 +14,11 @@
     <SolidColorBrush x:Key="PrimaryShadeColor" Color="#D2D2D2"/>
     <SolidColorBrush x:Key="SecondaryShadeColor" Color="#808080"/>
     <SolidColorBrush x:Key="TertiaryShadeColor" Color="#737373"/>
-    
+
+    <SolidColorBrush x:Key="RedColor" Color="#C33D3D"/>
+    <SolidColorBrush x:Key="LightRedColor" Color="#DA7171"/>
+    <SolidColorBrush x:Key="ShadedRedColor" Color="#A33131"/>
+
+    <SolidColorBrush x:Key="GreenColor" Color="#23E072"/>
+
 </ResourceDictionary>

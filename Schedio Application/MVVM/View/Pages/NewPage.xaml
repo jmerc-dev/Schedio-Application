@@ -8,7 +8,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       KeepAlive="True"
-      Title="NewPage">
+      Title="NewPage"
+      Name="page_New">
 
     <Page.Resources>
         <ResourceDictionary>
@@ -23,86 +24,238 @@
             <RowDefinition Height="5*" />
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TabControl BorderBrush="{StaticResource PrimaryBackground}" Name="tabCntrl_NewPage" Background="{StaticResource PrimaryBackground}" TabStripPlacement="Left" Margin="0,0,0,0" SelectionChanged="tabCntrl_NewPage_SelectionChanged">
-            <TabItem Name="tabItem_Personnel" Style="{StaticResource MainTabItems}">
-                <TabItem.Header>
-                    <StackPanel Orientation="Horizontal" >
-                        <Image Name="img_Personnel" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/personnel.png" Stretch="Uniform" Width="40" Margin="10"/>
-                        <TextBlock VerticalAlignment="Center" Style="{StaticResource TabHeader}">Personnel</TextBlock>
-                    </StackPanel>
-                </TabItem.Header>
-                <TabItem.Content>
-                    <ScrollViewer CanContentScroll="False" BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}">
-                        <ListView x:Name="lv_PersonnelList" ItemTemplate="{StaticResource dt_PersonnelList}">
-                        </ListView>
-                    </ScrollViewer>
-                </TabItem.Content>
-            </TabItem>
-            <TabItem Name="tabItem_Rooms" Style="{StaticResource MainTabItems}">
-                <TabItem.Header>
-                    <StackPanel Orientation="Horizontal" >
-                        <Image Name="img_Rooms" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/rooms.png" Stretch="Uniform" Width="40" Margin="10"/>
-                        <TextBlock VerticalAlignment="Center" Style="{StaticResource TabHeader}">Rooms</TextBlock>
-                    </StackPanel>
-                </TabItem.Header>
-                <TabItem.Content>
-                    <ScrollViewer CanContentScroll="False" BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}">
-                        <ListView x:Name="lv_RoomList" ItemTemplate="{StaticResource dt_PersonnelList}">
-                        </ListView>
-                    </ScrollViewer>
-                </TabItem.Content>
-            </TabItem>
-            <TabItem Name="tabItem_Sections" Style="{StaticResource MainTabItems}">
-                <TabItem.Header>
-                    <StackPanel Orientation="Horizontal" >
-                        <Image Name="img_Sections" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/sections.png" Stretch="Uniform" Width="40" Margin="10"/>
-                        <TextBlock VerticalAlignment="Center" Style="{StaticResource TabHeader}">Sections</TextBlock>
-                    </StackPanel>
-                </TabItem.Header>
-                <TabItem.Content>
-                    <TextBlock>Section</TextBlock>
-                </TabItem.Content>
-            </TabItem>
-            <TabItem Name="tabItem_Time" Style="{StaticResource MainTabItems}" >
-                <TabItem.Header>
-                    <StackPanel Orientation="Horizontal" >
-                        <Image Name="img_Time" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/time.png" Stretch="Uniform" Width="40" Margin="10"/>
-                        <TextBlock VerticalAlignment="Center" Style="{StaticResource TabHeader}">Time</TextBlock>
-                    </StackPanel>
-                </TabItem.Header>
-                <TabItem.Content>
-                    <TextBlock>Time</TextBlock>
-                </TabItem.Content>
-            </TabItem>
-        </TabControl>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Vertical" Grid.Column="1" VerticalAlignment="Bottom">
+                <Button Name="btn_Edit"
+                        MaxHeight="50"
+                        MaxWidth="60"
+                        Margin="0,10"
+                        Style="{StaticResource ImageButton}">
+                    <Image Stretch="Uniform"
+                           Source="pack://application:,,,/Schedio Application;component/Resources/Images/pen.png"
+                           Margin="3"/>
+                </Button>
+
+                <Button Name="btn_Delete"
+                        MaxHeight="50"
+                        MaxWidth="60"
+                        Margin="0,10"
+                        Style="{StaticResource ImageButton}"
+                        Click="btn_Delete_Click">
+                    <Image Stretch="Uniform"
+                           Source="pack://application:,,,/Schedio Application;component/Resources/Images/trash.png"
+                           Margin="3"/>
+                </Button>
+            </StackPanel>
+
+
+            <TabControl BorderBrush="{StaticResource PrimaryBackground}" Name="tabCntrl_NewPage" Background="{StaticResource PrimaryBackground}" TabStripPlacement="Left" Margin="0,0,0,0" SelectionChanged="tabCntrl_NewPage_SelectionChanged">
+                <TabItem Name="tabItem_Personnel" Style="{StaticResource MainTabItems}">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal" >
+                            <Image Name="img_Personnel" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/personnel.png" Stretch="Uniform" Width="40" Margin="10"/>
+                            <TextBlock VerticalAlignment="Center" Style="{StaticResource TabHeader}">Personnel</TextBlock>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <TabItem.Content>
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock FontSize="30" Margin="20,10" FontWeight="Thin" VerticalAlignment="Center" HorizontalAlignment="Left">Personnel Management</TextBlock>
+
+                            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="20,0" HorizontalAlignment="Left">
+                                <Button 
+                                    MaxHeight="50"
+                                    MaxWidth="60"
+                                    Margin="0,10"
+                                    Style="{StaticResource ImageButton}"
+                                    Grid.Row="1"
+                                    PreviewMouseLeftButtonDown="btn_AddPersonnel_PreviewMouseLeftButtonDown" >
+                                    <Image Stretch="Uniform"
+                                       Source="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
+                                       Margin="3"/>
+                                </Button>
+                                <TextBlock FontSize="20" Margin="20,5,5,5" FontWeight="Light" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1">List of Persons</TextBlock>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="20,0,0,0" HorizontalAlignment="Right" Height="30">
+                                <TextBox Width="200"
+                                         FontSize="16"
+                                         Margin="12,0"
+                                         VerticalContentAlignment="Center"
+                                         TextBlock.TextAlignment="Left"/>
+                                <Button Style="{StaticResource ConfirmButton}"
+                                        FontSize="15"
+                                        Width="80">
+                                    Search
+                                </Button>
+                            </StackPanel>
+
+                            <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,1,0,0" Grid.Row="2" Margin="20,0,0,0">
+                                <ScrollViewer CanContentScroll="True" Grid.Row="1" BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}"  HorizontalScrollBarVisibility="Disabled">
+                                    <ListView x:Name="lv_PersonnelList" ItemTemplate="{StaticResource dt_PersonnelList}" HorizontalContentAlignment="Stretch">
+                                    </ListView>
+                                </ScrollViewer>
+                            </Border>
+                        </Grid>
+
+
+                    </TabItem.Content>
+                </TabItem>
+                <TabItem Name="tabItem_Rooms" Style="{StaticResource MainTabItems}">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal" >
+                            <Image Name="img_Rooms" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/rooms.png" Stretch="Uniform" Width="40" Margin="10"/>
+                            <TextBlock VerticalAlignment="Center" Style="{StaticResource TabHeader}">Rooms</TextBlock>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <TabItem.Content>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock FontSize="30" Margin="20,10" FontWeight="Thin" VerticalAlignment="Center" HorizontalAlignment="Left">Room Management</TextBlock>
+
+                            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="20,0" HorizontalAlignment="Left">
+                                <Button 
+                                        MaxHeight="50"
+                                        MaxWidth="60"
+                                        Margin="0,10"
+                                        Style="{StaticResource ImageButton}"
+                                        Grid.Row="1"
+                                        PreviewMouseLeftButtonDown="btn_AddRooms_PreviewMouseLeftButtonDown" >
+                                    <Image Stretch="Uniform"
+                                           Source="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
+                                           Margin="3"/>
+                                </Button>
+                                <TextBlock FontSize="20" Margin="20,5,5,5" FontWeight="Light" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1">List of Rooms</TextBlock>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="20,0,0,0" HorizontalAlignment="Right" Height="30">
+                                <TextBox Width="200"
+                                         FontSize="16"
+                                         Margin="12,0"
+                                         VerticalContentAlignment="Center"
+                                         TextBlock.TextAlignment="Left"/>
+                                <Button Style="{StaticResource ConfirmButton}"
+                                        FontSize="15"
+                                        Width="80">
+                                    Search
+                                </Button>
+                            </StackPanel>
+
+                            <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,1,0,0" Grid.Row="2" Margin="20,0,0,0">
+                                <ScrollViewer CanContentScroll="True" Grid.Row="1" BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}">
+                                    <ListView x:Name="lv_RoomsList" ItemTemplate="{StaticResource dt_RoomsList}" HorizontalContentAlignment="Stretch">
+
+                                    </ListView>
+                                </ScrollViewer>
+                            </Border>
+                        </Grid>
+                    </TabItem.Content>
+                </TabItem>
+                <TabItem Name="tabItem_Sections" Style="{StaticResource MainTabItems}">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal" >
+                            <Image Name="img_Sections" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/sections.png" Stretch="Uniform" Width="40" Margin="10"/>
+                            <TextBlock VerticalAlignment="Center" Style="{StaticResource TabHeader}">Sections</TextBlock>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <TabItem.Content>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock FontSize="30" Margin="20,10" FontWeight="Thin" VerticalAlignment="Center" HorizontalAlignment="Left">Section Management</TextBlock>
+
+                            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="20,0" HorizontalAlignment="Left">
+                                <Button 
+                                        MaxHeight="50"
+                                        MaxWidth="60"
+                                        Margin="0,10"
+                                        Style="{StaticResource ImageButton}"
+                                        Grid.Row="1"
+                                        PreviewMouseLeftButtonDown="btn_AddSections_PreviewMouseLeftButtonDown">
+                                    <Image Stretch="Uniform"
+                                           Source="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
+                                           Margin="3"/>
+                                </Button>
+                                <TextBlock FontSize="20" Margin="20,5,5,5" FontWeight="Light" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1">List of Sections</TextBlock>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="20,0,0,0" HorizontalAlignment="Right" Height="30">
+                                <TextBox Width="200"
+                                         FontSize="16"
+                                         Margin="12,0"
+                                         VerticalContentAlignment="Center"
+                                         TextBlock.TextAlignment="Left"/>
+                                <Button Style="{StaticResource ConfirmButton}"
+                                        FontSize="15"
+                                        Width="80">
+                                    Search
+                                </Button>
+                            </StackPanel>
+
+                            <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,1,0,0" Grid.Row="2" Margin="20,0,0,0">
+                                <ScrollViewer CanContentScroll="True" Grid.Row="1" BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}">
+                                    <!--<ListView x:Name="lv_SectionsList">
+
+                                         Mockups for data display 
+
+
+                                    </ListView>-->
+
+                                    <ListView>
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridView.Columns>
+                                                    <GridViewColumn Header="Asd" Width="200"/>
+                                                    <GridViewColumn Header="Asd" Width="200"/>
+                                                </GridView.Columns>
+
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </ScrollViewer>
+                            </Border>
+                        </Grid>
+                    </TabItem.Content>
+                </TabItem>
+            </TabControl>
+        </Grid>
+
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="204"/>
                 <ColumnDefinition Width="2*" MinWidth="200"/>
                 <ColumnDefinition Width="4*"/>
-                <ColumnDefinition Width="4*" MinWidth="300" MaxWidth="500"/>
+                <ColumnDefinition Width="4*" MinWidth="400" MaxWidth="500"/>
             </Grid.ColumnDefinitions>
-            <SecondaryButtons:SecondaryButton ImageSource="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
-                                              Text="Add Person"
-                                              Margin="10,20"
-                                              Grid.Column="1" 
-                                              MaxHeight="70" 
-                                              MinWidth="100"
-                                              MaxWidth="200"
-                                              FontSize="15"
-                                              FontWeight="Normal"
-                                              PreviewMouseLeftButtonDown="btn_Add_MouseLeftButtonDown" 
-                                              x:Name="btn_Add"/>
-            <!--<Button HorizontalAlignment="Left" Grid.Column="1" Margin="10" Width="120" MaxHeight="100" Style="{StaticResource AddButton}" Padding="10" Cursor="Hand" Visibility="Collapsed">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="2*"/>
-                        <RowDefinition Height="1*"/>
-                    </Grid.RowDefinitions>
-                    <Image Name="img_ButtonAdd" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Stretch="Uniform" Source="pack://application:,,,/Schedio Application;component/Resources/Images/personnel-add.png"></Image>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" FontSize="15" Foreground="{StaticResource PrimaryTextColor}">Add</TextBlock>
-                </Grid>
-            </Button>-->
+            <SecondaryButtons:SecondaryButton ImageSource="pack://application:,,,/Schedio Application;component/Resources/Images/time.png"
+                                  Text="Time Schedule"
+                                  Margin="10,20"
+                                  Grid.Column="1" 
+                                  MaxHeight="70" 
+                                  MinWidth="100"
+                                  MaxWidth="200"
+                                  FontSize="15"
+                                  FontWeight="Normal"
+                                  PreviewMouseLeftButtonDown="btn_TimeSchedule_PreviewMouseLeftButtonDown"
+                                  x:Name="btn_TimeSchedule"/>
             <Grid Grid.Column="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

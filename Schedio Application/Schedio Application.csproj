@@ -11,6 +11,9 @@
 
   <ItemGroup>
     <None Remove="Resources\General\title_icon.ico" />
+    <None Remove="Resources\Images\arrow-down.png" />
+    <None Remove="Resources\Images\arrow-up.png" />
+    <None Remove="Resources\Images\back.png" />
     <None Remove="Resources\Images\change-disabled.png" />
     <None Remove="Resources\Images\change.png" />
     <None Remove="Resources\Images\clocksetting-disabled.png" />
@@ -24,6 +27,8 @@
     <None Remove="Resources\Images\new.png" />
     <None Remove="Resources\Images\open-filled.png" />
     <None Remove="Resources\Images\open.png" />
+    <None Remove="Resources\Images\pen-inversed.png" />
+    <None Remove="Resources\Images\pen.png" />
     <None Remove="Resources\Images\person.png" />
     <None Remove="Resources\Images\personnel-add.png" />
     <None Remove="Resources\Images\personnel-filled.png" />
@@ -33,15 +38,23 @@
     <None Remove="Resources\Images\rooms-add.png" />
     <None Remove="Resources\Images\rooms-filled.png" />
     <None Remove="Resources\Images\rooms.png" />
+    <None Remove="Resources\Images\section-1.png" />
     <None Remove="Resources\Images\sections-add.png" />
     <None Remove="Resources\Images\sections-filled.png" />
     <None Remove="Resources\Images\sections.png" />
+    <None Remove="Resources\Images\settings.png" />
     <None Remove="Resources\Images\time-filled.png" />
+    <None Remove="Resources\Images\time-inversed.png" />
     <None Remove="Resources\Images\time.png" />
+    <None Remove="Resources\Images\trash.png" />
+    <None Remove="Resources\Images\warning.png" />
     <None Remove="Resources\Images\woman.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Images\arrow-down.png" />
+    <Resource Include="Resources\Images\arrow-up.png" />
+    <Resource Include="Resources\Images\back.png" />
     <Resource Include="Resources\Images\change-disabled.png" />
     <Resource Include="Resources\Images\change.png" />
   </ItemGroup>
@@ -65,6 +78,8 @@
     <Resource Include="Resources\Images\new.png" />
     <Resource Include="Resources\Images\open-filled.png" />
     <Resource Include="Resources\Images\open.png" />
+    <Resource Include="Resources\Images\pen-inversed.png" />
+    <Resource Include="Resources\Images\pen.png" />
     <Resource Include="Resources\Images\person.png" />
     <Resource Include="Resources\Images\personnel-add.png" />
     <Resource Include="Resources\Images\personnel-filled.png" />
@@ -74,11 +89,16 @@
     <Resource Include="Resources\Images\rooms-add.png" />
     <Resource Include="Resources\Images\rooms-filled.png" />
     <Resource Include="Resources\Images\rooms.png" />
+    <Resource Include="Resources\Images\section-1.png" />
     <Resource Include="Resources\Images\sections-add.png" />
     <Resource Include="Resources\Images\sections-filled.png" />
     <Resource Include="Resources\Images\sections.png" />
+    <Resource Include="Resources\Images\settings.png" />
     <Resource Include="Resources\Images\time-filled.png" />
+    <Resource Include="Resources\Images\time-inversed.png" />
     <Resource Include="Resources\Images\time.png" />
+    <Resource Include="Resources\Images\trash.png" />
+    <Resource Include="Resources\Images\warning.png" />
     <Resource Include="Resources\Images\woman.png" />
   </ItemGroup>
 

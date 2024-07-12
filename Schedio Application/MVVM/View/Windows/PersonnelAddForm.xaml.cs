@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -20,7 +22,14 @@ namespace Schedio_Application.MVVM.View.Windows
     /// </summary>
     public partial class PersonnelAddForm : Window
     {
-        
+
+        private Person _person;
+
+        public Person Person
+        {
+            get { return _person; }
+        }
+
         public PersonnelAddForm()
         {
             InitializeComponent();
@@ -106,6 +115,66 @@ namespace Schedio_Application.MVVM.View.Windows
             }
 
             
+        }
+
+        private void btn_CustomTime_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Dictionary<string, bool> availableDays = new Dictionary<string, bool>();
+
+            foreach (CheckBox checkbox in wp_Days.Children)
+            {
+                if (checkbox.IsChecked == true)
+                {
+                    availableDays.Add(checkbox.Content.ToString(), true);
+                }
+                else
+                {
+                    availableDays.Add(checkbox.Content.ToString(), false);
+                }
+            }
+
+
+            this.Opacity = 0;
+            PersonnelCustomTime form = new PersonnelCustomTime(availableDays);
+            form.ShowInTaskbar = false;
+            form.Owner = Application.Current.MainWindow;
+            form.ShowDialog();
+            this.Opacity = 1;
+        }
+
+
+        private void btn_Save_Click(object sender, RoutedEventArgs e)
+        {
+            _person = new Person(tb_Name.Text, (bool)btn_TimeframeSetter.IsChecked);
+
+            if (tb_Name.Text.Equals("Add Name"))
+            {
+                MessageBox.Show("Please enter your name.");
+                return;
+            }
+
+            foreach (CheckBox checkbox in wp_Days.Children)
+            {
+                try
+                {
+                    DayOfWeek day = Enum.Parse<DayOfWeek>(checkbox.Content.ToString());
+                    _person.SetAvailableDay(day,(bool) checkbox.IsChecked);
+                } catch
+                {
+                    MessageBox.Show("Failed to parse checkbox content to WeekDays");
+                }
+            }
+            Trace.WriteLine(_person.IsConstant);
+            if (_person.IsConstant)
+            {
+                _person.SetConstantTimeframe(new TimeFrame(ti_TimeStart.Time, ti_TimeEnd.Time));
+            }
+            else
+            {
+                // TODO: Set custom schedule
+            }
+
+            DialogResult = true;
         }
     }
 }

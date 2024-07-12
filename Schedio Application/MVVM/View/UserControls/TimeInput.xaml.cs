@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -20,10 +22,72 @@ namespace Schedio_Application.MVVM.View.UserControls
     /// <summary>
     /// Interaction logic for TimeInput.xaml
     /// </summary>
-    public partial class TimeInput : UserControl
+    public partial class TimeInput : UserControl, INotifyPropertyChanged
     {
         private TextBox[] textboxes = new TextBox[4];
         private int tbTraversalIndex;
+
+        // Time Value
+        private string _Time, _Period;
+        private int _HourTenths, _Hour, _MinTenths, _Min;
+
+        public string Time 
+        {
+            get { return _Time; } 
+            set 
+            { 
+                _Time = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string Period
+        {
+            get { return _Period; }
+            set
+            {
+                _Period = value;
+                NotifyPropertyChanged();
+                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + _Period;
+            }
+        }
+
+        public int HourTenths
+        {
+            get { return _HourTenths; }
+            set
+            {
+                _HourTenths = value;
+                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + _Period;
+            }
+        }
+        public int Hour
+        {
+            get { return _Hour; }
+            set
+            {
+                _Hour = value;
+                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + _Period;
+            }
+        }
+        public int MinTenths
+        {
+            get { return _MinTenths; }
+            set
+            {
+                _MinTenths = value;
+                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + _Period;
+            }
+        }
+        public int Min
+        {
+            get { return _Min; }
+            set
+            {
+                _Min = value;
+                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + _Period;
+            }
+        }
 
         // Font Height Dependency Property
         public string FontHeight
@@ -45,6 +109,15 @@ namespace Schedio_Application.MVVM.View.UserControls
         public static readonly DependencyProperty _ButtonHeight =
             DependencyProperty.Register("ButtonHeight", typeof(string), typeof(TimeInput), new PropertyMetadata(null));
 
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] string PropertyName="")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(PropertyName));
+            }
+        }
+
         public TimeInput()
         {
             InitializeComponent();
@@ -57,20 +130,23 @@ namespace Schedio_Application.MVVM.View.UserControls
                 textboxes[1] = tb_Hour;
                 textboxes[2] = tb_MinTenths;
                 textboxes[3] = tb_Min;
+
+                Period = "AM";
             };
 
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            if (TimeLabel.Text.Equals("AM"))
+            if (Period.Equals("AM"))
             {
-                TimeLabel.Text = "PM";
+                Period = "PM";
             }
             else
             {
-                TimeLabel.Text = "AM";
+                Period = "AM";
             }
+            Debug.WriteLine("Time: " + Time);
         }
 
         private void button_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -98,6 +174,10 @@ namespace Schedio_Application.MVVM.View.UserControls
                 if (CheckValue(tbTraversalIndex, Int32.Parse(input), Int32.Parse(textboxes[0].Text), Int32.Parse(textboxes[1].Text)))
                 {
                     ((TextBox)sender).Text = input;
+                    if (tbTraversalIndex >= 0 && tbTraversalIndex <= 2)
+                    {
+                        textboxes[tbTraversalIndex + 1].Focus();
+                    }
                 }
             }
             else if (Regex.Match(e.Key.ToString(), "NumPad[0-9]").Success)
@@ -111,6 +191,10 @@ namespace Schedio_Application.MVVM.View.UserControls
                         if (CheckValue(tbTraversalIndex, Int32.Parse(input), Int32.Parse(textboxes[0].Text), Int32.Parse(textboxes[1].Text)))
                         {
                             ((TextBox)sender).Text = input.ToString();
+                            if (tbTraversalIndex >= 0 && tbTraversalIndex <= 2)
+                            {
+                                textboxes[tbTraversalIndex + 1].Focus();
+                            }
                         }
                     }
                 } catch (Exception ex)
@@ -171,7 +255,6 @@ namespace Schedio_Application.MVVM.View.UserControls
 
         private bool CheckValue(int index, int number, int tenthHourValue, int hourValue)
         {
-            Console.WriteLine("Index: " + index);
             switch (index)
             {
                 case 0:

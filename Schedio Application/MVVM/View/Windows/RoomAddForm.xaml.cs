@@ -20,8 +20,8 @@ namespace Schedio_Application.MVVM.View.Windows
     public partial class RoomAddForm : Window
     {
 
-        private string? _RoomName;
-        private string? _ChosenRoomType;
+        private string _RoomName;
+        private string _ChosenRoomType;
         
         public string RoomName
         {
@@ -45,7 +45,18 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Save_Click(object sender, RoutedEventArgs e)
         {
-            _RoomName = cb_Name.Text;
+            if (tbx_Name.Text.Equals(String.Empty))
+            {
+                MessageBox.Show("Please fill up the Name field.");
+                return;
+            }
+            else if (cb_Type.Text.Equals(String.Empty))
+            {
+                MessageBox.Show("Please fill up the Type field.");
+                return;
+            }
+
+            _RoomName = tbx_Name.Text;
             _ChosenRoomType = cb_Type.Text;
 
             DialogResult = true;

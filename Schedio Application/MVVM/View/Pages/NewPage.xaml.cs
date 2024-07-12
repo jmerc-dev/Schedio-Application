@@ -1,7 +1,9 @@
 ﻿using Schedio_Application.MVVM.View.UserControls;
 using Schedio_Application.MVVM.View.Windows;
+using Schedio_Application.MVVM.ViewModel.ScheduleElements;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -21,24 +23,32 @@ namespace Schedio_Application.MVVM.View.Pages
     /// <summary>
     /// Interaction logic for NewPage.xaml
     /// </summary>
+    /// 
     public partial class NewPage : Page
     {
+
+        private ObservableCollection<Room> Rooms;
+        private ObservableCollection<Person> Personnel;
+
         public NewPage()
         {
+            this.Rooms = new ObservableCollection<Room>();
+            this.Personnel = new ObservableCollection<Person>();
             InitializeComponent();
             
+            lv_RoomsList.ItemsSource = this.Rooms;
+            lv_PersonnelList.ItemsSource = this.Personnel;
+            this.DataContext = this;
         }
         
         private void tabCntrl_NewPage_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             changeTabImage();
-            ChangeAddButton(btn_Add);
-            
         }
 
         private void changeTabImage()
         {
-            TabItem[] tabItems = { tabItem_Personnel, tabItem_Rooms, tabItem_Sections, tabItem_Time };
+            TabItem[] tabItems = { tabItem_Personnel, tabItem_Rooms, tabItem_Sections};
 
             for (int i = 0; i < tabItems.Length; i++)
             {
@@ -58,7 +68,7 @@ namespace Schedio_Application.MVVM.View.Pages
         // Add button will be manipulated according to selected Tab Item
         private void ChangeAddButton(SecondaryButton button)
         {
-            TabItem[] tabItems = { tabItem_Personnel, tabItem_Rooms, tabItem_Sections, tabItem_Time };
+            TabItem[] tabItems = { tabItem_Personnel, tabItem_Rooms, tabItem_Sections};
 
             for (int i = 0;i < tabItems.Length;i++)
             {
@@ -73,38 +83,60 @@ namespace Schedio_Application.MVVM.View.Pages
                     else
                     {
                         button.Visibility = Visibility.Visible;
-                        btn_Add.Text = "Add " + tabItemName;
                     }
                 }
             }
         }
 
-        private void btn_Add_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+
+        private void btn_AddPersonnel_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            // Rooms Functions
-            if (btn_Add.Text.Equals("Add Rooms"))
+            PersonnelAddForm form = new PersonnelAddForm();
+            form.ShowInTaskbar = false;
+            form.Owner = Application.Current.MainWindow;
+            if (form.ShowDialog() == true)
             {
-                RoomAddForm form = new RoomAddForm();
-                form.ShowInTaskbar = false;
-                form.Owner = Application.Current.MainWindow;
-                if (form.ShowDialog() == false)
-                {
-                    // Do Nothing
-                }
-                else
-                {
-                    // Add ListViewItem 
-                }
-            }
-            // Personnel Functions
-            else if (btn_Add.Text.Equals("Add Personnel"))
-            {
-                PersonnelAddForm form = new PersonnelAddForm();
-                form.ShowInTaskbar = false;
-                form.Owner = Application.Current.MainWindow;
-                form.ShowDialog();
+                this.Personnel.Add(form.Person);
             }
         }
 
+        private void btn_AddRooms_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            RoomAddForm form = new RoomAddForm();
+            form.ShowInTaskbar = false;
+            form.Owner = Application.Current.MainWindow;
+            if (form.ShowDialog() == true)
+            {
+                this.Rooms.Add(new Room(form.RoomName, form.RoomType));
+            }
+        }
+
+        private void btn_AddSections_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SectionAddForm form = new SectionAddForm();
+            form.ShowInTaskbar = false;
+            form.Owner = Application.Current.MainWindow;
+            form.ShowDialog();
+        }
+
+        private void btn_TimeSchedule_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            TimeScheduleAddForm form = new TimeScheduleAddForm();
+            form.ShowInTaskbar = false;
+            form.Owner = Application.Current.MainWindow;
+            form.ShowDialog();
+        }
+
+        private void btn_Delete_Click(object sender, RoutedEventArgs e)
+        {
+            WarningConfirmation modal = new WarningConfirmation("", "");
+            modal.ShowInTaskbar = false;
+            modal.Owner = Application.Current.MainWindow;
+            if (modal.ShowDialog() == true)
+            {
+                Trace.WriteLine("Deleted");
+            }
+
+        }
     }
 }

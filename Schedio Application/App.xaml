@@ -14,6 +14,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/ToggleButtons.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/Textboxes.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/CheckBoxes.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/ComboBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
         </ResourceDictionary>

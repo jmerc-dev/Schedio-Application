@@ -31,13 +31,19 @@
                         Orientation="Horizontal">
                 <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/person.png"
                        Stretch="Uniform"
-                       MaxWidth="80"/>
+                       MaxWidth="80"
+                       />
                 <TextBox Name="tb_Name"
                          Style="{StaticResource TitleTextBox}"
                          FontSize="21"
                          VerticalAlignment="Center"
+                         MaxWidth="300"
                          GotKeyboardFocus="tb_Name_GotKeyboardFocus"
-                         LostKeyboardFocus="tb_Name_LostKeyboardFocus">Add Name</TextBox>
+                         LostKeyboardFocus="tb_Name_LostKeyboardFocus"
+                         ToolTip="Preferred format: Last Name, First Name MI."
+                         ToolTipService.ShowDuration="8000"
+                         ToolTipService.InitialShowDelay="500"
+                         TextWrapping="Wrap">Add Name</TextBox>
             </StackPanel>
 
             <Grid Grid.Row="1" Margin="70,10,70,10">
@@ -72,13 +78,13 @@
                                Grid.Row="2" 
                                Orientation="Horizontal" 
                                Margin="20,5,20,5">
-                        <CheckBox Name="chb_Monday" Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Monday</CheckBox>
-                        <CheckBox Name="chb_Tuesday" Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Tuesday</CheckBox>
-                        <CheckBox Name="chb_Wednesday" Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Wednesday</CheckBox>
-                        <CheckBox Name="chb_Thursday" Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Thursday</CheckBox>
-                        <CheckBox Name="chb_Friday" Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Friday</CheckBox>
-                        <CheckBox Name="chb_Saturday" Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,10,27,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Saturday</CheckBox>
-                        <CheckBox Name="chb_Sunday" Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,10,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Sunday</CheckBox>
+                        <CheckBox Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Monday</CheckBox>
+                        <CheckBox Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Tuesday</CheckBox>
+                        <CheckBox Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Wednesday</CheckBox>
+                        <CheckBox Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Thursday</CheckBox>
+                        <CheckBox Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Friday</CheckBox>
+                        <CheckBox Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,10,27,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Saturday</CheckBox>
+                        <CheckBox Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,10,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Sunday</CheckBox>
                     </WrapPanel>
 
                     <SecondaryButtons:SecondaryButton Grid.Row="3"
@@ -86,7 +92,8 @@
                                                       ImageSource="pack://application:,,,/Schedio Application;component/Resources/Images/clocksetting.png"
                                                       Width="150"
                                                       HorizontalAlignment="Right"
-                                                      x:Name="btn_CustomTime"/>
+                                                      x:Name="btn_CustomTime"
+                                                      PreviewMouseLeftButtonDown="btn_CustomTime_MouseDown"/>
                     <!--<Button Grid.Row="3" HorizontalAlignment="Right" Style="{StaticResource SecondaryButton}">
                         <Grid Width="150" Margin="5,1,5,1">
                             <Grid.ColumnDefinitions>
@@ -128,14 +135,16 @@
                                 Orientation="Horizontal" 
                                 Margin="20,0,0,0"
                                 IsEnabled="False">
-                        <TimeTextBox:TimeInput FontHeight="16"
+                        <TimeTextBox:TimeInput x:Name="ti_TimeStart"
+                                               FontHeight="16"
                                                ButtonHeight="20"
                                                Width="150"/>
                         <TextBlock Text="-"
                                    FontSize="20"
                                    VerticalAlignment="Center"
                                    Margin="15,0"/>
-                        <TimeTextBox:TimeInput FontHeight="16"
+                        <TimeTextBox:TimeInput x:Name="ti_TimeEnd"
+                                               FontHeight="16"
                                                ButtonHeight="20"
                                                Width="150"/>
                     </StackPanel>
@@ -157,7 +166,9 @@
                 <Button Style="{StaticResource ConfirmButton}" 
                         FontSize="15" 
                         Width="90" 
-                        Margin="5">Save</Button>
+                        Margin="5"
+                        Name="btn_Save"
+                        Click="btn_Save_Click">Save</Button>
             </StackPanel>
         </Grid>
     </Border>
