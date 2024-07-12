@@ -37,6 +37,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             set 
             { 
                 _Time = value;
+                NotifyPropertyChanged();
             }
         }
 
@@ -46,6 +47,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             set
             {
                 _Period = value;
+                NotifyPropertyChanged();
                 Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + _Period;
             }
         }
@@ -56,7 +58,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             set
             {
                 _HourTenths = value;
-                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + TimeLabel.Text;
+                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + _Period;
             }
         }
         public int Hour
@@ -65,7 +67,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             set
             {
                 _Hour = value;
-                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + TimeLabel.Text;
+                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + _Period;
             }
         }
         public int MinTenths
@@ -74,7 +76,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             set
             {
                 _MinTenths = value;
-                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + TimeLabel.Text;
+                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + _Period;
             }
         }
         public int Min
@@ -83,7 +85,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             set
             {
                 _Min = value;
-                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + TimeLabel.Text;
+                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + _Period;
             }
         }
 
@@ -128,28 +130,21 @@ namespace Schedio_Application.MVVM.View.UserControls
                 textboxes[1] = tb_Hour;
                 textboxes[2] = tb_MinTenths;
                 textboxes[3] = tb_Min;
-            };
 
-            //Task.Run(() =>
-            //{
-            //    while (true)
-            //    {
-            //        Debug.WriteLine("Time: " + Time);
-            //        Thread.Sleep(500);
-            //    }
-            //});
+                Period = "AM";
+            };
 
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            if (TimeLabel.Text.Equals("AM"))
+            if (Period.Equals("AM"))
             {
-                TimeLabel.Text = "PM";
+                Period = "PM";
             }
             else
             {
-                TimeLabel.Text = "AM";
+                Period = "AM";
             }
             Debug.WriteLine("Time: " + Time);
         }

@@ -115,7 +115,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBox x:Name="TimeLabel"
-                         Text="AM"
+                         Text="{Binding Period}"
                          IsEnabled="False"
                          VerticalAlignment="Center"
                          HorizontalAlignment="Center"/>

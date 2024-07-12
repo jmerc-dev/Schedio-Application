@@ -22,13 +22,17 @@ namespace Schedio_Application.MVVM.View.UserControls
     /// </summary>
     public partial class StartEndTimeInput : UserControl
     {
-        public string BoxNum {
-            get { return (string) GetValue(_BoxNum);}
-            set { SetValue(_BoxNum, value); } 
+        private string _startTime;
+        private string _endTime;
+
+        public string StartTime
+        {
+            get => ti_StartTime.Time;
+        }
+        public string EndTime {
+            get => ti_EndTime.Time;
         }
 
-        private static readonly DependencyProperty _BoxNum =
-            DependencyProperty.Register("BoxNum", typeof(string), typeof(StartEndTimeInput), new PropertyMetadata(null));
 
         public StartEndTimeInput()
         {
@@ -39,7 +43,8 @@ namespace Schedio_Application.MVVM.View.UserControls
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ((StackPanel)this.Parent).Children.Remove(this);
+            //((StackPanel)this.Parent).Children.Remove(this);
+            Debug.WriteLine(StartTime + " - " + EndTime);
         }
     }
 }

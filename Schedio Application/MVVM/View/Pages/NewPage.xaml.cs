@@ -28,13 +28,16 @@ namespace Schedio_Application.MVVM.View.Pages
     {
 
         private ObservableCollection<Room> Rooms;
+        private ObservableCollection<Person> Personnel;
 
         public NewPage()
         {
             this.Rooms = new ObservableCollection<Room>();
+            this.Personnel = new ObservableCollection<Person>();
             InitializeComponent();
             
             lv_RoomsList.ItemsSource = this.Rooms;
+            lv_PersonnelList.ItemsSource = this.Personnel;
             this.DataContext = this;
         }
         
@@ -91,7 +94,10 @@ namespace Schedio_Application.MVVM.View.Pages
             PersonnelAddForm form = new PersonnelAddForm();
             form.ShowInTaskbar = false;
             form.Owner = Application.Current.MainWindow;
-            form.ShowDialog();
+            if (form.ShowDialog() == true)
+            {
+                this.Personnel.Add(form.Person);
+            }
         }
 
         private void btn_AddRooms_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

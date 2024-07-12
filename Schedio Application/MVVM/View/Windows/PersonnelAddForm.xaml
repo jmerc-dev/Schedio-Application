@@ -135,14 +135,16 @@
                                 Orientation="Horizontal" 
                                 Margin="20,0,0,0"
                                 IsEnabled="False">
-                        <TimeTextBox:TimeInput FontHeight="16"
+                        <TimeTextBox:TimeInput x:Name="ti_TimeStart"
+                                               FontHeight="16"
                                                ButtonHeight="20"
                                                Width="150"/>
                         <TextBlock Text="-"
                                    FontSize="20"
                                    VerticalAlignment="Center"
                                    Margin="15,0"/>
-                        <TimeTextBox:TimeInput FontHeight="16"
+                        <TimeTextBox:TimeInput x:Name="ti_TimeEnd"
+                                               FontHeight="16"
                                                ButtonHeight="20"
                                                Width="150"/>
                     </StackPanel>

@@ -62,7 +62,7 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" FontSize="15" VerticalAlignment="Center" Text="{Binding Name}" Width="250" TextWrapping="Wrap" HorizontalAlignment="Left"/>
 
-            <StackPanel Orientation="Horizontal" Grid.Column="1">
+            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
                 <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/settings.png"
                        Stretch="Uniform"
                        Margin="10,20"/>
@@ -74,28 +74,29 @@
     <DataTemplate x:Key="dt_PersonnelList">
         <Grid Margin="50,0,0,0" MinWidth="700">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition MinWidth="10" Width="*"/>
+                <ColumnDefinition Width="2*" MinWidth="50"/>
             </Grid.ColumnDefinitions>
+            <TextBlock Text="{Binding Name}" FontSize="15" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+            <WrapPanel Grid.Column="1" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Width="300" Margin="2">
+                    <Ellipse Fill="{StaticResource GreenColor}" Height="15" Width="15" VerticalAlignment="Center" Margin="5,0"/>
+                    <TextBlock Text="{Binding AvailableDays}" Grid.Column="1" FontSize="15" VerticalAlignment="Center" Margin="5,0" TextWrapping="Wrap"  HorizontalAlignment="Left"/>
+                </StackPanel>
 
-            <TextBlock Text="{Binding Name}" FontSize="15" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap"/>
-            <StackPanel Orientation="Horizontal" Grid.Column="1">
-                <Ellipse Fill="{StaticResource GreenColor}" Height="15" Width="15" VerticalAlignment="Center"/>
-                <TextBlock Text="{Binding AvailableDays}" Grid.Column="1" FontSize="15" VerticalAlignment="Center" Width="100" TextWrapping="Wrap"  HorizontalAlignment="Left"/>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal" Grid.Column="1">
-                <Ellipse Name="customIndicator" Height="15" Width="15" VerticalAlignment="Center" />
-                <TextBlock Text="{Binding Timespan}" Grid.Column="1" FontSize="15" VerticalAlignment="Center" Width="100" TextWrapping="Wrap"  HorizontalAlignment="Left"/>
-            </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Column="2" Width="300" Margin="2">
+                    <Ellipse Name="customIndicator" Height="15" Width="15" VerticalAlignment="Center" Margin="5,0"/>
+                    <TextBlock Text="{Binding Timeframe}" Grid.Column="1" FontSize="15" Margin="5,0" VerticalAlignment="Center" TextWrapping="Wrap"  HorizontalAlignment="Left"/>
+                </StackPanel>
+            </WrapPanel>
+            
         </Grid>
 
         <DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding IsCustom}" Value="True">
+            <DataTrigger Binding="{Binding IsConstant}" Value="True">
                 <Setter TargetName="customIndicator" Property="Fill" Value="{StaticResource SecondaryColor}"/>
             </DataTrigger>
-            <DataTrigger Binding="{Binding IsCustom}" Value="False">
+            <DataTrigger Binding="{Binding IsConstant}" Value="False">
                 <Setter TargetName="customIndicator" Property="Fill" Value="{StaticResource SecondaryShadeColor}"/>
             </DataTrigger>
         </DataTemplate.Triggers>

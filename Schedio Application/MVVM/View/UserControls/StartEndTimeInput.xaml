@@ -18,13 +18,14 @@
                            FontSize="15"
                            VerticalAlignment="Center"
                            Margin="20,0"/>
-                <timebox:TimeInput x:Name="txtInput"
+                <timebox:TimeInput x:Name="ti_StartTime"
                                    FontHeight="15"
                                    ButtonHeight="25"/>
                 <TextBlock Text="-"
                            VerticalAlignment="Center"
                            FontSize="15"/>
-                <timebox:TimeInput FontHeight="15"
+                <timebox:TimeInput x:Name="ti_EndTime"
+                                   FontHeight="15"
                                    ButtonHeight="25"/>
             </StackPanel>
             <Button Style="{StaticResource ImageButton}"

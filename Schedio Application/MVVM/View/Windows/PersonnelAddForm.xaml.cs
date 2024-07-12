@@ -22,7 +22,14 @@ namespace Schedio_Application.MVVM.View.Windows
     /// </summary>
     public partial class PersonnelAddForm : Window
     {
-        
+
+        private Person _person;
+
+        public Person Person
+        {
+            get { return _person; }
+        }
+
         public PersonnelAddForm()
         {
             InitializeComponent();
@@ -135,11 +142,10 @@ namespace Schedio_Application.MVVM.View.Windows
             this.Opacity = 1;
         }
 
-        
 
         private void btn_Save_Click(object sender, RoutedEventArgs e)
         {
-            Person person = new Person(tb_Name.Text, (bool)btn_TimeframeSetter.IsChecked);
+            _person = new Person(tb_Name.Text, (bool)btn_TimeframeSetter.IsChecked);
 
             if (tb_Name.Text.Equals("Add Name"))
             {
@@ -152,16 +158,21 @@ namespace Schedio_Application.MVVM.View.Windows
                 try
                 {
                     DayOfWeek day = Enum.Parse<DayOfWeek>(checkbox.Content.ToString());
-                    person.SetAvailableDay(day,(bool) checkbox.IsChecked);
+                    _person.SetAvailableDay(day,(bool) checkbox.IsChecked);
                 } catch
                 {
                     MessageBox.Show("Failed to parse checkbox content to WeekDays");
                 }
             }
-
-            Trace.WriteLine(person.Name);
-            Trace.WriteLine(person.IsCustom);
-            Trace.WriteLine(person.GetAvailDaysFormatted());
+            Trace.WriteLine(_person.IsConstant);
+            if (_person.IsConstant)
+            {
+                _person.SetConstantTimeframe(new TimeFrame(ti_TimeStart.Time, ti_TimeEnd.Time));
+            }
+            else
+            {
+                // TODO: Set custom schedule
+            }
 
             DialogResult = true;
         }

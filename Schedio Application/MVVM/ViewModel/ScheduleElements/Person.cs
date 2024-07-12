@@ -7,13 +7,13 @@ using System.Windows;
 
 namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
-    internal class Person
+    public class Person
     {
         const int MAX_CAPACITY = 7;
 
         private string _Name;
         private Day[] _Days;
-        private bool _IsCustom;
+        private bool _IsConstant;
 
         public string Name
         {
@@ -21,16 +21,36 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             set {  _Name = value; } 
         }
 
-        public bool IsCustom
+        public string Timeframe
         {
-            get { return _IsCustom; }
-            set { _IsCustom = value; }
+            get
+            {
+                for (int i = 0; i < MAX_CAPACITY; i++)
+                {
+                    if (_Days[i].IsAvailable) 
+                    {
+                        return _Days[i].Timeframe;
+                    }
+                }
+                return "None";
+            }
+        }
+
+        public bool IsConstant
+        {
+            get { return _IsConstant; }
+            set { _IsConstant = value; }
+        }
+
+        public string AvailableDays
+        {
+            get { return GetAvailDaysFormatted(); }
         }
 
         public Person(string name, bool isCustom) 
         {
             this.Name = name;
-            this.IsCustom = isCustom;
+            this.IsConstant = isCustom;
             _Days = new Day[MAX_CAPACITY];
 
             PopulateDays();
@@ -41,11 +61,11 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             //}
         }
 
-        private bool SetTimeSpan(Day[] days)
-        {
+        //private bool SetTimeSpan(Day[] days)
+        //{
 
-            return true;
-        }
+        //    return true;
+        //}
 
         private void PopulateDays()
         {
@@ -102,6 +122,18 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 }
             }
             return formattedDays;
+        }
+
+        public bool SetConstantTimeframe(TimeFrame time)
+        {
+            for (int i = 0; i < MAX_CAPACITY; i++)
+            {
+                if (_Days[i].IsAvailable)
+                {
+                    _Days[i].ConstantTimeframe = time;
+                }
+            }
+            return true;
         }
         
         public Day[] GetAvailableDays()

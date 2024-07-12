@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
-    internal class Section
+    public class Section
     {
 
     }
