@@ -98,6 +98,11 @@ namespace Schedio_Application.MVVM.View.Pages
             {
                 this.Personnel.Add(form.Person);
             }
+
+            foreach (Person person in Personnel)
+            {
+                Debug.WriteLine(person.Name);
+            }
         }
 
         private void btn_AddRooms_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

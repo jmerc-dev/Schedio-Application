@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -59,6 +60,8 @@ namespace Schedio_Application.MVVM.View.UserControls
             {
                 _HourTenths = value;
                 Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + _Period;
+                
+
             }
         }
         public int Hour
@@ -134,6 +137,14 @@ namespace Schedio_Application.MVVM.View.UserControls
                 Period = "AM";
             };
 
+            Task.Run(() =>
+            {
+                while (true) {
+                    Trace.WriteLine("Time: " + Time);
+                    Thread.Sleep(500);
+                }
+            });
+
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -146,7 +157,6 @@ namespace Schedio_Application.MVVM.View.UserControls
             {
                 Period = "AM";
             }
-            Debug.WriteLine("Time: " + Time);
         }
 
         private void button_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -201,7 +211,6 @@ namespace Schedio_Application.MVVM.View.UserControls
                 {
                     MessageBox.Show(ex.Message);
                 }
-
             }
             else if (e.Key == Key.Right)
             {
@@ -216,6 +225,15 @@ namespace Schedio_Application.MVVM.View.UserControls
                 {
                     textboxes[tbTraversalIndex - 1].Focus();
                 }
+            }
+        }
+
+        private void tb_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            char text = ((TextBox)sender).Text[0];
+            if (!Char.IsDigit(text))
+            {
+                ((TextBox)sender).Text = "0";
             }
         }
 
