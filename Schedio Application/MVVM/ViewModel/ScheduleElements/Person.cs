@@ -27,7 +27,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             {
                 for (int i = 0; i < MAX_CAPACITY; i++)
                 {
-                    if (_Days[i].IsAvailable) 
+                    if (_Days[i].IsAvailable)
                     {
                         return _Days[i].Timeframe;
                     }
@@ -55,17 +55,8 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
             PopulateDays();
             SetDaysName();
-            //if (SetTimeSpan())
-            //{
-
-            //}
         }
 
-        //private bool SetTimeSpan(Day[] days)
-        //{
-
-        //    return true;
-        //}
 
         private void PopulateDays()
         {

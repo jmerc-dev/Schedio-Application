@@ -24,6 +24,7 @@ namespace Schedio_Application.MVVM.View.Windows
     {
 
         private Person _person;
+        public PersonnelCustomTime form;
 
         public Person Person
         {
@@ -135,7 +136,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
 
             this.Opacity = 0;
-            PersonnelCustomTime form = new PersonnelCustomTime(availableDays);
+            form = new PersonnelCustomTime(availableDays);
             form.ShowInTaskbar = false;
             form.Owner = Application.Current.MainWindow;
             form.ShowDialog();
@@ -145,7 +146,18 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Save_Click(object sender, RoutedEventArgs e)
         {
-            _person = new Person(tb_Name.Text, (bool)btn_TimeframeSetter.IsChecked);
+            bool? constTime = btn_TimeframeSetter.IsChecked;
+            bool isConstant;
+            if (constTime == null)
+            {
+                throw new NullReferenceException();
+            }
+            else
+            {
+                isConstant = (bool)constTime;
+            }
+
+            _person = new Person(tb_Name.Text, isConstant);
 
             if (tb_Name.Text.Equals("Add Name"))
             {
@@ -157,21 +169,32 @@ namespace Schedio_Application.MVVM.View.Windows
             {
                 try
                 {
-                    DayOfWeek day = Enum.Parse<DayOfWeek>(checkbox.Content.ToString());
-                    _person.SetAvailableDay(day,(bool) checkbox.IsChecked);
+                    bool? day_IsChecked = checkbox.IsChecked;
+                    string? day_Name = checkbox.Content.ToString();
+
+                    if (day_IsChecked == null || day_Name == null)
+                    {
+                        throw new NullReferenceException();
+                    }
+
+                    DayOfWeek day = Enum.Parse<DayOfWeek>(day_Name);
+                    _person.SetAvailableDay(day, (bool)day_IsChecked);
                 } catch
                 {
                     MessageBox.Show("Failed to parse checkbox content to WeekDays");
                 }
             }
-            Trace.WriteLine(_person.IsConstant);
             if (_person.IsConstant)
             {
                 _person.SetConstantTimeframe(new TimeFrame(ti_TimeStart.Time, ti_TimeEnd.Time));
             }
             else
             {
-                // TODO: Set custom schedule
+                if (form == null)
+                {
+                    MessageBox.Show("Please add schedule on custom timeframe", "Error");
+                    return;
+                }
             }
 
             DialogResult = true;

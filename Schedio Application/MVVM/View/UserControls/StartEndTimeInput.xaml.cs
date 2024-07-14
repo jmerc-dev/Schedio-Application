@@ -22,8 +22,6 @@ namespace Schedio_Application.MVVM.View.UserControls
     /// </summary>
     public partial class StartEndTimeInput : UserControl
     {
-        private string _startTime;
-        private string _endTime;
 
         public string StartTime
         {

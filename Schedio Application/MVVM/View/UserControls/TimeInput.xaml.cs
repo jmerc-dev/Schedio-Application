@@ -126,6 +126,8 @@ namespace Schedio_Application.MVVM.View.UserControls
             InitializeComponent();
             this.DataContext = this;
 
+            _Time = "";
+
             Loaded += (sender, e) =>
             {
                 // Add textbox to array
@@ -136,14 +138,6 @@ namespace Schedio_Application.MVVM.View.UserControls
 
                 Period = "AM";
             };
-
-            Task.Run(() =>
-            {
-                while (true) {
-                    Trace.WriteLine("Time: " + Time);
-                    Thread.Sleep(500);
-                }
-            });
 
         }
 

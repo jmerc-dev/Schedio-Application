@@ -25,9 +25,14 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private TimeFrame _ConstantTimeframe;
         private List<TimeFrame> _CustomTimeframe;
 
+        // TODO: Add setters/getters for custom timeframe list
+
         public string Timeframe
         {
-            get { return _ConstantTimeframe.StartTime.ToString("hh:mm tt") + " - " + _ConstantTimeframe.EndTime.ToString("hh:mm tt"); }
+            get 
+            { 
+                return (_ConstantTimeframe.StartTime.ToString("hh:mm tt") + " - " + _ConstantTimeframe.EndTime.ToString("hh:mm tt")).ToUpper();
+            }
         }
 
         public DayOfWeek Name
@@ -98,6 +103,12 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public string GetAbbrevName()
         {
             return DaysAcronym[this.Name.ToString()];
+        }
+
+        public bool AddCustomTimeframe(TimeFrame timeFrame)
+        {
+            _CustomTimeframe.Add(timeFrame);
+            return true;
         }
 
     }

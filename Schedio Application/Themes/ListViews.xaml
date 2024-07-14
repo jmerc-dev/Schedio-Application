@@ -86,7 +86,7 @@
 
                 <StackPanel Orientation="Horizontal" Grid.Column="2" Width="300" Margin="2">
                     <Ellipse Name="customIndicator" Height="15" Width="15" VerticalAlignment="Center" Margin="5,0"/>
-                    <TextBlock Text="{Binding Timeframe}" Grid.Column="1" FontSize="15" Margin="5,0" VerticalAlignment="Center" TextWrapping="Wrap"  HorizontalAlignment="Left"/>
+                    <TextBlock Name="timeframe" Grid.Column="1" FontSize="15" Margin="5,0" VerticalAlignment="Center" TextWrapping="Wrap"  HorizontalAlignment="Left"/>
                 </StackPanel>
             </WrapPanel>
             
@@ -95,9 +95,11 @@
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding IsConstant}" Value="True">
                 <Setter TargetName="customIndicator" Property="Fill" Value="{StaticResource SecondaryColor}"/>
+                <Setter TargetName="timeframe" Property="Text" Value="{Binding Timeframe}"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding IsConstant}" Value="False">
                 <Setter TargetName="customIndicator" Property="Fill" Value="{StaticResource SecondaryShadeColor}"/>
+                <Setter TargetName="timeframe" Property="Text" Value="Custom"/>
             </DataTrigger>
         </DataTemplate.Triggers>
 
