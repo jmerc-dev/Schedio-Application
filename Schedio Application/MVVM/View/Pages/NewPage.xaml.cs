@@ -136,7 +136,32 @@ namespace Schedio_Application.MVVM.View.Pages
 
         private void btn_Delete_Click(object sender, RoutedEventArgs e)
         {
-            WarningConfirmation modal = new WarningConfirmation("", "");
+            string type;
+            List<string> names = new List<string>();
+
+            switch (tabCntrl_NewPage.SelectedIndex)
+            {
+                case 0:
+                    type = "Person";
+                    break;
+                case 1:
+                    type = "Room";
+                    foreach (Room room in lv_RoomsList.SelectedItems)
+                    {
+                        names.Add(room.Name);
+                    }
+                    break;
+                case 2:
+                    type = "Section";
+                    break;
+                default:
+                    MessageBox.Show("No tab selected.");
+                    return;
+            }
+            
+            
+
+            WarningConfirmation modal = new WarningConfirmation(names,type);
             modal.ShowInTaskbar = false;
             modal.Owner = Application.Current.MainWindow;
             if (modal.ShowDialog() == true)
@@ -148,16 +173,9 @@ namespace Schedio_Application.MVVM.View.Pages
                 }
                 else if (tabItem_Rooms.IsSelected)
                 {
-
-                    if (RemoveItems<Room>(Rooms, lv_RoomsList.SelectedItems))
+                    if (!RemoveItems<Room>(Rooms, lv_RoomsList.SelectedItems))
                     {
-                        MessageBox.Show("Successfully removed items");
-                    }
-                    
-
-                    foreach (Room room1 in Rooms)
-                    {
-                        Trace.WriteLine(room1.Name);
+                        MessageBox.Show("Cannot delete items.");
                     }
                 }
                 else if (tabItem_Sections.IsSelected)
@@ -168,10 +186,10 @@ namespace Schedio_Application.MVVM.View.Pages
 
         }
 
-        private bool RemoveItems<T>(ObservableCollection<T> source, IList values)
+        private bool RemoveItems<T>(ObservableCollection<T> source, IList valuesToBeDeleted)
         {
             List<T> toBeRemoved = new List<T>();
-            foreach (T item in values)
+            foreach (T item in valuesToBeDeleted)
             {
                 toBeRemoved.Add(item);
             }

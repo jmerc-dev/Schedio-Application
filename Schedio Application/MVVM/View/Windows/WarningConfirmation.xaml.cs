@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,21 @@ namespace Schedio_Application.MVVM.View.Windows
             {
                 tb_Name.Text = name;
                 tb_Type.Text = type;
+                DisplayMultiItems.Visibility = Visibility.Collapsed;
             };
+        }
+
+        public WarningConfirmation(List<string> itemsToBeRemoved, string type)
+        {
+            InitializeComponent();
+            DisplayOneItem.Visibility = Visibility.Collapsed;
+            tb_multiType.Text = type;
+
+            foreach (string item in itemsToBeRemoved)
+            {
+                wp_Names.Children.Add(new TextBlock() { Text = item });
+            }
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

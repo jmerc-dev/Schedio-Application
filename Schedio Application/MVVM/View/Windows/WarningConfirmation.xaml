@@ -10,7 +10,8 @@
         AllowsTransparency="True"
         Background="Transparent"
         ResizeMode="NoResize"
-        Title="WarningConfirmation" Height="200" Width="600">
+        Title="WarningConfirmation" 
+        Height="auto" SizeToContent="Height" Width="600">
     <Window.Resources>
         <Style TargetType="TextBlock" x:Key="dataInfo">
             <Setter Property="FontSize" Value="15"/>
@@ -18,12 +19,16 @@
             <Setter Property="FontWeight" Value="Normal"/>
         </Style>
     </Window.Resources>
-    <Border Background="{StaticResource PrimaryBackground}" BorderThickness="1" CornerRadius="10" BorderBrush="{StaticResource SecondaryShadeColor}">
+    <Border Background="{StaticResource PrimaryBackground}" 
+            BorderThickness="1" 
+            CornerRadius="10" 
+            BorderBrush="{StaticResource SecondaryShadeColor}"
+            Height="auto">
         <Grid Margin="20,20,20,10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="4*"/>
-                <RowDefinition Height="3*"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition MinHeight="40"/>
+                <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
@@ -50,10 +55,45 @@
                          FontSize="15"/>
             </Grid>
 
+            <Grid Name="DisplayMultiItems"
+                  Grid.Row="1"
+                  Margin="94,10,20,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0"
+                            Orientation="Horizontal">
+                    <TextBlock Name="tb_multiType"
+                               Style="{StaticResource dataInfo}"
+                               Margin="0,5"
+                               Grid.Column="0"></TextBlock>
+                    <TextBlock Text=":"
+                               Style="{StaticResource dataInfo}"
+                               Margin="0,5"
+                               Grid.Column="0"></TextBlock>
+                </StackPanel>
+                    
+                <WrapPanel Orientation="Vertical"
+                           MaxHeight="450"
+                           Name="wp_Names"
+                           Margin="20,5"
+                           Grid.Column="1">
+                    <WrapPanel.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="{StaticResource RedColor}"/>
+                            <Setter Property="FontSize" Value="15"/>
+                        </Style>
+                    </WrapPanel.Resources>
+
+                </WrapPanel>
+            </Grid>
+
             <StackPanel Orientation="Horizontal"
                         Grid.Row="1"
                         Margin="94,0,20,0"
-                        VerticalAlignment="Center">
+                        VerticalAlignment="Center"
+                        Name="DisplayOneItem">
                 <TextBlock Name="tb_Type"
                            Text="Type"
                            Style="{StaticResource dataInfo}"/>
