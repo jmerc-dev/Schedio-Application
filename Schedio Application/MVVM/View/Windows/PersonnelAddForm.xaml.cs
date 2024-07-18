@@ -134,12 +134,16 @@ namespace Schedio_Application.MVVM.View.Windows
                 }
             }
 
-
             this.Opacity = 0;
+
             form = new PersonnelCustomTime(availableDays);
             form.ShowInTaskbar = false;
             form.Owner = Application.Current.MainWindow;
-            form.ShowDialog();
+            if (form.ShowDialog() == true)
+            {
+                // Set custom schedule one-by-one
+            }
+
             this.Opacity = 1;
         }
 

@@ -2,9 +2,11 @@
 using Schedio_Application.MVVM.View.Windows;
 using Schedio_Application.MVVM.ViewModel.ScheduleElements;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -139,9 +141,47 @@ namespace Schedio_Application.MVVM.View.Pages
             modal.Owner = Application.Current.MainWindow;
             if (modal.ShowDialog() == true)
             {
-                Trace.WriteLine("Deleted");
+                // Delete selected list view item
+                if (tabItem_Personnel.IsSelected)
+                {
+                    
+                }
+                else if (tabItem_Rooms.IsSelected)
+                {
+
+                    if (RemoveItems<Room>(Rooms, lv_RoomsList.SelectedItems))
+                    {
+                        MessageBox.Show("Successfully removed items");
+                    }
+                    
+
+                    foreach (Room room1 in Rooms)
+                    {
+                        Trace.WriteLine(room1.Name);
+                    }
+                }
+                else if (tabItem_Sections.IsSelected)
+                {
+
+                }
             }
 
+        }
+
+        private bool RemoveItems<T>(ObservableCollection<T> source, IList values)
+        {
+            List<T> toBeRemoved = new List<T>();
+            foreach (T item in values)
+            {
+                toBeRemoved.Add(item);
+            }
+
+            foreach (T item in toBeRemoved)
+            {
+                source.Remove(item);
+            }
+
+            return true;
         }
     }
 }

@@ -26,7 +26,6 @@ namespace Schedio_Application.MVVM.View.Windows
         {
             InitializeComponent();
             DisableDaysExpander(availableDays);
-
         }
 
         private void btn_Back_Click(object sender, RoutedEventArgs e)
@@ -38,6 +37,11 @@ namespace Schedio_Application.MVVM.View.Windows
         private void btn_Save_Click(object sender, RoutedEventArgs e)
         {
             
+        }
+
+        public void UpdateAvailableDays(Dictionary<string, bool> availableDays)
+        {
+            DisableDaysExpander(availableDays);
         }
 
         private void DisableDaysExpander(Dictionary<string, bool> availableDays)

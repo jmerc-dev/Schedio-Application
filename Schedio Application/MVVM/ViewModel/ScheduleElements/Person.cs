@@ -126,6 +126,12 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
             return true;
         }
+
+        public bool AddCustomTimeFrame(TimeFrame timeFrame, DayOfWeek day)
+        {
+
+            return true;
+        }
         
         public Day[] GetAvailableDays()
         {

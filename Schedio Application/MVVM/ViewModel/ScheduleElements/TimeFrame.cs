@@ -26,6 +26,32 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         }
 
         Regex timeFormat = new Regex(@"^[0-1][0-9]:[0-6][0-9]\s[A|P]M$");
+
+        public DateTime[] ConvertToDateTime(string timeframe)
+        {
+            // 12:00 AM - 12:00 PM
+            string[] timeframe_Split = timeframe.Split('-');
+
+            for (int i = 0; i < timeframe_Split.Length; i++)
+            {
+                timeframe_Split[i] = timeframe_Split[i].Trim();
+            }
+
+            DateTime[] convertedTimeframe = new DateTime[2];
+            try
+            {
+                for (int i = 0; i< convertedTimeframe.Length; i++)
+                {
+                    convertedTimeframe[i] = DateTime.Parse(timeframe_Split[i]);
+                }
+
+                return convertedTimeframe;
+            } catch 
+            {
+                throw new FormatException("Timeframe is not in the format: 00:00 AM - 00:00 PM");
+            }
+        }
+
         public TimeFrame(string startTime, string endTime) 
         {
             if (DateTime.TryParse(startTime, out _startTime) && DateTime.TryParse(endTime, out _endTime))
