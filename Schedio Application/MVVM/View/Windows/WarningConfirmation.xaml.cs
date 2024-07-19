@@ -32,7 +32,7 @@ namespace Schedio_Application.MVVM.View.Windows
             };
         }
 
-        public WarningConfirmation(List<string> itemsToBeRemoved, string type)
+        public WarningConfirmation(string type, List<string> itemsToBeRemoved)
         {
             InitializeComponent();
             DisplayOneItem.Visibility = Visibility.Collapsed;

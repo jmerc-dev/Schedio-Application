@@ -31,6 +31,7 @@ namespace Schedio_Application.MVVM.View.Pages
 
         private ObservableCollection<Room> Rooms;
         private ObservableCollection<Person> Personnel;
+        private WarningConfirmation? warningModal;
 
         public NewPage()
         {
@@ -149,54 +150,93 @@ namespace Schedio_Application.MVVM.View.Pages
 
         private void btn_Delete_Click(object sender, RoutedEventArgs e)
         {
-            string type;
-            List<string> names = new List<string>();
 
             switch (tabCntrl_NewPage.SelectedIndex)
             {
                 case 0:
-                    type = "Person";
                     break;
                 case 1:
-                    type = "Room";
-                    foreach (Room room in lv_RoomsList.SelectedItems)
-                    {
-                        names.Add(room.Name);
-                    }
+                    DeleteItemFrom(lv_RoomsList, typeof(Room));
                     break;
                 case 2:
-                    type = "Section";
                     break;
                 default:
                     MessageBox.Show("No tab selected.");
                     return;
             }
+            //WarningConfirmation modal = new WarningConfirmation(names,type);
             
-            
-
-            WarningConfirmation modal = new WarningConfirmation(names,type);
-            modal.ShowInTaskbar = false;
-            modal.Owner = Application.Current.MainWindow;
-            if (modal.ShowDialog() == true)
-            {
-                // Delete selected list view item
-                if (tabItem_Personnel.IsSelected)
-                {
+            //if (modal.ShowDialog() == true)
+            //{
+            //    // Delete selected list view item
+            //    if (tabItem_Personnel.IsSelected)
+            //    {
                     
-                }
-                else if (tabItem_Rooms.IsSelected)
-                {
-                    if (!RemoveItems<Room>(Rooms, lv_RoomsList.SelectedItems))
-                    {
-                        MessageBox.Show("Cannot delete items.");
-                    }
-                }
-                else if (tabItem_Sections.IsSelected)
-                {
+            //    }
+            //    else if (tabItem_Rooms.IsSelected)
+            //    {
+            //        if (!RemoveItems<Room>(Rooms, lv_RoomsList.SelectedItems))
+            //        {
+            //            MessageBox.Show("Cannot delete items.");
+            //        }
+            //    }
+            //    else if (tabItem_Sections.IsSelected)
+            //    {
 
-                }
+            //    }
+            //}
+
+        }
+
+        private bool DeleteItemFrom(ListView lv, Type itemType)
+        {
+            if (lv.SelectedItems.Count == 0)
+            {
+                return false;
             }
 
+            // Type
+            string[] fullType = itemType.ToString().Split(".");
+            string specificType = fullType[fullType.Length - 1];
+
+            //string[] fullType_split = fullType.Split(".");
+            //string type = fullType_split[fullType_split.Length - 1];
+
+            // Prepare list of objects to be removed
+            List<string> objectsToBeRemoved = new List<string>();
+
+            if (itemType == typeof(Person))
+            {
+
+            }
+            else if (itemType == typeof(Room))
+            {
+                foreach (Room item in lv.SelectedItems)
+                {
+                    objectsToBeRemoved.Add(item.Name);
+                }
+            }
+            // section elseif
+
+
+            // Warning
+            warningModal = new WarningConfirmation(specificType, objectsToBeRemoved);
+            warningModal.ShowInTaskbar = false;
+            warningModal.Owner = Application.Current.MainWindow;
+
+            // Remove
+            if (warningModal.ShowDialog() == true)
+            {
+                if (itemType == typeof(Person))
+                {
+
+                }
+                else if (itemType == typeof(Room))
+                {
+                    return RemoveItems<Room>(Rooms, lv.SelectedItems);
+                }
+            }
+            return false;
         }
 
         private bool RemoveItems<T>(ObservableCollection<T> source, IList valuesToBeDeleted)
