@@ -45,7 +45,20 @@ namespace Schedio_Application.MVVM.View.Pages
         
         private void tabCntrl_NewPage_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (e.Source is TabControl)
+            {
+                clearListViewSelectedItems(lv_PersonnelList);
+                clearListViewSelectedItems(lv_RoomsList);
+                clearListViewSelectedItems(lv_SectionList);
+                Trace.WriteLine("cleared");
+                
+            }
             changeTabImage();
+        }
+
+        private void clearListViewSelectedItems(ListView lv)
+        {
+            lv.SelectedItems.Clear();
         }
 
         private void changeTabImage()
@@ -200,6 +213,24 @@ namespace Schedio_Application.MVVM.View.Pages
             }
 
             return true;
+        }
+
+        private void tabItem_LostFocus(object sender, RoutedEventArgs e)
+        {
+            string name = ((TabItem)sender).Name;
+
+            if (name.Equals("tabItem_Personnel"))
+            {
+                clearListViewSelectedItems(lv_PersonnelList);
+            }
+            else if (name.Equals("tabItem_Rooms"))
+            {
+                clearListViewSelectedItems(lv_RoomsList);
+            }
+            else if (name.Equals("tabItem_Sections"))
+            {
+                clearListViewSelectedItems(lv_SectionList);
+            }
         }
     }
 }

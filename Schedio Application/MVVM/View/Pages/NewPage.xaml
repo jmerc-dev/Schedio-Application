@@ -112,7 +112,8 @@
 
                     </TabItem.Content>
                 </TabItem>
-                <TabItem Name="tabItem_Rooms" Style="{StaticResource MainTabItems}">
+                <TabItem Name="tabItem_Rooms" 
+                         Style="{StaticResource MainTabItems}">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal" >
                             <Image Name="img_Rooms" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/rooms.png" Stretch="Uniform" Width="40" Margin="10"/>
@@ -166,7 +167,8 @@
                         </Grid>
                     </TabItem.Content>
                 </TabItem>
-                <TabItem Name="tabItem_Sections" Style="{StaticResource MainTabItems}">
+                <TabItem Name="tabItem_Sections" 
+                         Style="{StaticResource MainTabItems}">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal" >
                             <Image Name="img_Sections" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/sections.png" Stretch="Uniform" Width="40" Margin="10"/>
@@ -219,16 +221,7 @@
 
                                     </ListView>-->
 
-                                    <ListView>
-                                        <ListView.View>
-                                            <GridView>
-                                                <GridView.Columns>
-                                                    <GridViewColumn Header="Asd" Width="200"/>
-                                                    <GridViewColumn Header="Asd" Width="200"/>
-                                                </GridView.Columns>
-
-                                            </GridView>
-                                        </ListView.View>
+                                    <ListView Name="lv_SectionList">
                                     </ListView>
                                 </ScrollViewer>
                             </Border>
