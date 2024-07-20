@@ -30,6 +30,8 @@ namespace Schedio_Application.MVVM.View.Pages
     {
 
         private ObservableCollection<Room> Rooms;
+        private ObservableCollection<Room> TempRooms;
+
         private ObservableCollection<Person> Personnel;
         private WarningConfirmation? warningModal;
 
@@ -42,6 +44,20 @@ namespace Schedio_Application.MVVM.View.Pages
             lv_RoomsList.ItemsSource = this.Rooms;
             lv_PersonnelList.ItemsSource = this.Personnel;
             this.DataContext = this;
+
+            Rooms.Add(new Room("101", "Classic"));
+            Rooms.Add(new Room("102", "Classic"));
+            Rooms.Add(new Room("103", "Classic"));
+            Rooms.Add(new Room("104", "Classic"));
+            Rooms.Add(new Room("105", "Classic"));
+            Rooms.Add(new Room("106", "Classic"));
+            Rooms.Add(new Room("107", "Classic"));
+            Rooms.Add(new Room("108", "Classic"));
+            Rooms.Add(new Room("109", "Classic"));
+            Rooms.Add(new Room("110", "Lab"));
+            Rooms.Add(new Room("111", "Lab"));
+            Rooms.Add(new Room("112", "Lab"));
+            Rooms.Add(new Room("PE", "Court"));
         }
         
         private void tabCntrl_NewPage_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -150,13 +166,16 @@ namespace Schedio_Application.MVVM.View.Pages
 
         private void btn_Delete_Click(object sender, RoutedEventArgs e)
         {
-
             switch (tabCntrl_NewPage.SelectedIndex)
             {
                 case 0:
                     break;
                 case 1:
-                    DeleteItemFrom(lv_RoomsList, typeof(Room));
+                    if (DeleteItemFrom(lv_RoomsList, typeof(Room)))
+                    {
+                        tb_SearchRooms.Text = String.Empty;
+                        break;
+                    };
                     break;
                 case 2:
                     break;
@@ -164,28 +183,6 @@ namespace Schedio_Application.MVVM.View.Pages
                     MessageBox.Show("No tab selected.");
                     return;
             }
-            //WarningConfirmation modal = new WarningConfirmation(names,type);
-            
-            //if (modal.ShowDialog() == true)
-            //{
-            //    // Delete selected list view item
-            //    if (tabItem_Personnel.IsSelected)
-            //    {
-                    
-            //    }
-            //    else if (tabItem_Rooms.IsSelected)
-            //    {
-            //        if (!RemoveItems<Room>(Rooms, lv_RoomsList.SelectedItems))
-            //        {
-            //            MessageBox.Show("Cannot delete items.");
-            //        }
-            //    }
-            //    else if (tabItem_Sections.IsSelected)
-            //    {
-
-            //    }
-            //}
-
         }
 
         private bool DeleteItemFrom(ListView lv, Type itemType)
@@ -199,15 +196,12 @@ namespace Schedio_Application.MVVM.View.Pages
             string[] fullType = itemType.ToString().Split(".");
             string specificType = fullType[fullType.Length - 1];
 
-            //string[] fullType_split = fullType.Split(".");
-            //string type = fullType_split[fullType_split.Length - 1];
-
             // Prepare list of objects to be removed
             List<string> objectsToBeRemoved = new List<string>();
 
             if (itemType == typeof(Person))
             {
-
+                // TODO:
             }
             else if (itemType == typeof(Room))
             {
@@ -216,7 +210,7 @@ namespace Schedio_Application.MVVM.View.Pages
                     objectsToBeRemoved.Add(item.Name);
                 }
             }
-            // section elseif
+            // TODO: section elseif
 
 
             // Warning
@@ -270,6 +264,32 @@ namespace Schedio_Application.MVVM.View.Pages
             else if (name.Equals("tabItem_Sections"))
             {
                 clearListViewSelectedItems(lv_SectionList);
+            }
+        }
+
+        private void TextBox_Search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox searchBox = (TextBox) sender;
+            if (searchBox.Name.Equals("tb_SearchRooms"))
+            {
+                TempRooms = new ObservableCollection<Room>();
+
+                if (!searchBox.Text.Equals(String.Empty))
+                {
+                    foreach (Room room in Rooms)
+                    {
+                        if (room.Name.StartsWith(searchBox.Text, StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            TempRooms.Add(room);
+                        }
+                    }
+
+                    lv_RoomsList.ItemsSource = TempRooms;
+                }
+                else
+                {
+                    lv_RoomsList.ItemsSource = Rooms;
+                }
             }
         }
     }
