@@ -36,7 +36,8 @@
                         MaxHeight="50"
                         MaxWidth="60"
                         Margin="0,10"
-                        Style="{StaticResource ImageButton}">
+                        Style="{StaticResource ImageButton}"
+                        Click="btn_Edit_Click">
                     <Image Stretch="Uniform"
                            Source="pack://application:,,,/Schedio Application;component/Resources/Images/pen.png"
                            Margin="3"/>
@@ -226,8 +227,6 @@
                             <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,1,0,0" Grid.Row="2" Margin="20,0,0,0">
                                 <ScrollViewer CanContentScroll="True" Grid.Row="1" BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}">
                                     <!--<ListView x:Name="lv_SectionsList">
-
-                                         Mockups for data display 
 
 
                                     </ListView>-->

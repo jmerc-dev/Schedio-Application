@@ -67,7 +67,6 @@ namespace Schedio_Application.MVVM.View.Pages
                 clearListViewSelectedItems(lv_PersonnelList);
                 clearListViewSelectedItems(lv_RoomsList);
                 clearListViewSelectedItems(lv_SectionList);
-                Trace.WriteLine("cleared");
                 
             }
             changeTabImage();
@@ -290,6 +289,40 @@ namespace Schedio_Application.MVVM.View.Pages
                 {
                     lv_RoomsList.ItemsSource = Rooms;
                 }
+            }
+        }
+
+        private void btn_Edit_Click(object sender, RoutedEventArgs e)
+        {
+            switch (tabCntrl_NewPage.SelectedIndex)
+            {
+                case 0:
+                    break;
+                case 1:
+                    // Rooms
+                    if (lv_RoomsList.SelectedItems.Count == 0)
+                    {
+                        return;
+                    }
+                    else if (lv_RoomsList.SelectedItems.Count != 1)
+                    {
+                        MessageBox.Show("Editing is unavailable for multiple items.");
+                    }
+                    else
+                    {
+                        // Update
+                        if (((Room)lv_RoomsList.SelectedItem).Update())
+                        {
+
+                        }
+                        
+                    }
+                    break;
+                case 2:
+                    break;
+                default:
+                    MessageBox.Show("No Tab selected");
+                    return;
             }
         }
     }
