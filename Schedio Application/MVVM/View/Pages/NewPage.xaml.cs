@@ -122,18 +122,21 @@ namespace Schedio_Application.MVVM.View.Pages
 
         private void btn_AddPersonnel_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            PersonnelAddForm form = new PersonnelAddForm();
-            form.ShowInTaskbar = false;
-            form.Owner = Application.Current.MainWindow;
+            Person newPerson = new Person();
+            PersonnelAddForm form = new PersonnelAddForm(newPerson);
+
             if (form.ShowDialog() == true)
             {
                 this.Personnel.Add(form.Person);
             }
 
-            foreach (Person person in Personnel)
-            {
-                Debug.WriteLine(person.Name);
-            }
+            // TODO:
+            /* 
+             *  # Make a person obj
+             *  # Create a form for personnel, passing the person obj
+             *  # Bind controls of form in person obj
+             *  
+             */
         }
 
         private void btn_AddRooms_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

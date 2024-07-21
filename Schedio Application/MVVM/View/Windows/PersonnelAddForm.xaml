@@ -43,7 +43,8 @@
                          ToolTip="Preferred format: Last Name, First Name MI."
                          ToolTipService.ShowDuration="8000"
                          ToolTipService.InitialShowDelay="500"
-                         TextWrapping="Wrap">Add Name</TextBox>
+                         Text="{Binding PersonName}"
+                         TextWrapping="Wrap"></TextBox>
             </StackPanel>
 
             <Grid Grid.Row="1" Margin="70,10,70,10">
@@ -123,6 +124,7 @@
                         <ToggleButton Name="btn_TimeframeSetter" 
                                       Style="{DynamicResource PrimaryToggleButton}"
                                       HorizontalAlignment="Left"
+                                      IsChecked="{Binding IsConstant, Mode=TwoWay}"
                                       Click="btn_TimeframeSetter_Click"></ToggleButton>
                         <TextBlock VerticalAlignment="Center" 
                                    FontWeight="Normal"

@@ -26,14 +26,35 @@ namespace Schedio_Application.MVVM.View.Windows
         private Person _person;
         public PersonnelCustomTime form;
 
+        // Properties
+        public string PersonName
+        { 
+            get { return _person.Name; } 
+            set { _person.Name = value; } 
+        }
+
         public Person Person
         {
             get { return _person; }
+            set { _person = value; }
         }
 
-        public PersonnelAddForm()
+        public bool IsConstant
         {
+            get { return _person.IsConstant; }
+            set { _person.IsConstant = value; }
+        }
+
+        public PersonnelAddForm(Person person)
+        {
+            _person = person;
             InitializeComponent();
+
+            this.DataContext = this;
+            this.Owner = Application.Current.MainWindow;
+            this.ShowInTaskbar = false;
+
+            tb_Name.Focus();
         }
 
         private void tb_Name_GotKeyboardFocus(object sender, KeyboardEventArgs e)
@@ -114,7 +135,6 @@ namespace Schedio_Application.MVVM.View.Windows
 
                 chb_SelectAll.IsChecked = AllChecked;
             }
-
             
         }
 
@@ -150,58 +170,58 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Save_Click(object sender, RoutedEventArgs e)
         {
-            bool? constTime = btn_TimeframeSetter.IsChecked;
-            bool isConstant;
-            if (constTime == null)
-            {
-                throw new NullReferenceException();
-            }
-            else
-            {
-                isConstant = (bool)constTime;
-            }
+            //bool? constTime = btn_TimeframeSetter.IsChecked;
+            //bool isConstant;
+            //if (constTime == null)
+            //{
+            //    throw new NullReferenceException();
+            //}
+            //else
+            //{
+            //    isConstant = (bool)constTime;
+            //}
 
-            _person = new Person(tb_Name.Text, isConstant);
+            //if (tb_Name.Text.Equals("Add Name"))
+            //{
+            //    MessageBox.Show("Please enter your name.");
+            //    return;
+            //}
 
-            if (tb_Name.Text.Equals("Add Name"))
-            {
-                MessageBox.Show("Please enter your name.");
-                return;
-            }
+            //foreach (CheckBox checkbox in wp_Days.Children)
+            //{
+            //    try
+            //    {
+            //        bool? day_IsChecked = checkbox.IsChecked;
+            //        string? day_Name = checkbox.Content.ToString();
 
-            foreach (CheckBox checkbox in wp_Days.Children)
-            {
-                try
-                {
-                    bool? day_IsChecked = checkbox.IsChecked;
-                    string? day_Name = checkbox.Content.ToString();
+            //        if (day_IsChecked == null || day_Name == null)
+            //        {
+            //            throw new NullReferenceException();
+            //        }
 
-                    if (day_IsChecked == null || day_Name == null)
-                    {
-                        throw new NullReferenceException();
-                    }
+            //        DayOfWeek day = Enum.Parse<DayOfWeek>(day_Name);
+            //        _person.SetAvailableDay(day, (bool)day_IsChecked);
+            //    } catch
+            //    {
+            //        MessageBox.Show("Failed to parse checkbox content to WeekDays");
+            //    }
+            //}
+            //if (_person.IsConstant)
+            //{
+            //    _person.SetConstantTimeframe(new TimeFrame(ti_TimeStart.Time, ti_TimeEnd.Time));
+            //}
+            //else
+            //{
+            //    if (form == null)
+            //    {
+            //        MessageBox.Show("Please add schedule on custom timeframe", "Error");
+            //        return;
+            //    }
+            //}
 
-                    DayOfWeek day = Enum.Parse<DayOfWeek>(day_Name);
-                    _person.SetAvailableDay(day, (bool)day_IsChecked);
-                } catch
-                {
-                    MessageBox.Show("Failed to parse checkbox content to WeekDays");
-                }
-            }
-            if (_person.IsConstant)
-            {
-                _person.SetConstantTimeframe(new TimeFrame(ti_TimeStart.Time, ti_TimeEnd.Time));
-            }
-            else
-            {
-                if (form == null)
-                {
-                    MessageBox.Show("Please add schedule on custom timeframe", "Error");
-                    return;
-                }
-            }
+            //DialogResult = true;
 
-            DialogResult = true;
+            Trace.WriteLine(PersonName + ":" + IsConstant);
         }
     }
 }

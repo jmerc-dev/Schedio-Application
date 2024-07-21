@@ -47,10 +47,8 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             get { return GetAvailDaysFormatted(); }
         }
 
-        public Person(string name, bool isCustom) 
+        public Person() 
         {
-            this.Name = name;
-            this.IsConstant = isCustom;
             _Days = new Day[MAX_CAPACITY];
 
             PopulateDays();
