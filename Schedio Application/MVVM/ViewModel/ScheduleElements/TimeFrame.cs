@@ -44,7 +44,19 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
-        Regex timeFormat = new Regex(@"^[0-1][0-9]:[0-6][0-9]\s[A|P]M$");
+        public static Regex timeFormat = new Regex(@"^[0-1][0-9]:[0-6][0-9]\s[A|P]M$");
+
+        public static bool ValidateTimeFormat(string time)
+        {
+            if (timeFormat.Match(time).Success == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         public DateTime[] ConvertToDateTime(string timeframe)
         {

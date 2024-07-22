@@ -38,7 +38,6 @@
                          FontSize="21"
                          VerticalAlignment="Center"
                          MaxWidth="300"
-                         GotKeyboardFocus="tb_Name_GotKeyboardFocus"
                          LostKeyboardFocus="tb_Name_LostKeyboardFocus"
                          ToolTip="Preferred format: Last Name, First Name MI."
                          ToolTipService.ShowDuration="8000"

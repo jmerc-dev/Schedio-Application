@@ -67,7 +67,7 @@ namespace Schedio_Application.MVVM.View.Windows
         {
             if (tb_Name.Text.Equals("Add Name"))
             {
-                tb_Name.Text = string.Empty;
+                //tb_Name.Text = string.Empty;
             }
         }
 
@@ -80,18 +80,13 @@ namespace Schedio_Application.MVVM.View.Windows
         {
             if (tb_Name.Text.Equals(string.Empty))
             {
-                PersonName = "Add Name";
+                //PersonName = "Add Name";
             }
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Keyboard.ClearFocus();
-        }
-
-        private void tb_Name_GotKeyboardFocus_1(object sender, KeyboardFocusChangedEventArgs e)
-        {
-
         }
 
         private void btn_TimeframeSetter_Click(object sender, RoutedEventArgs e)
@@ -103,8 +98,6 @@ namespace Schedio_Application.MVVM.View.Windows
                     btn_CustomTime.IsEnabled = false;
                     sp_ConstTimeFrame.IsEnabled = true;
 
-                    _person.ConstTime_Start = ti_TimeStart.Time;
-                    _person.ConstTime_End = ti_TimeEnd.Time;
                 }
                 else
                 {
@@ -165,12 +158,19 @@ namespace Schedio_Application.MVVM.View.Windows
 
             this.Opacity = 0;
 
-            form = new PersonnelCustomTime(availableDays);
+            if (dailyTimeframe == null)
+            {
+                form = new PersonnelCustomTime(availableDays);
+            }
+            else
+            {
+                form = new PersonnelCustomTime(availableDays, dailyTimeframe);
+            }
+            
             form.ShowInTaskbar = false;
             form.Owner = Application.Current.MainWindow;
             if (form.ShowDialog() == true)
             {
-                // TODO: Set custom schedule
                 dailyTimeframe = form.dailyTimeframe;
             }
 
@@ -228,12 +228,7 @@ namespace Schedio_Application.MVVM.View.Windows
                     }
                 }
             }
-
-
             DialogResult = true;
-
-
-
         }
 
         private void SetAvailableDays()

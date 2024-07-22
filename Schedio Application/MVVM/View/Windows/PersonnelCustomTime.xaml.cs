@@ -36,10 +36,32 @@ namespace Schedio_Application.MVVM.View.Windows
         }
 
         // Updating
-        public PersonnelCustomTime(Dictionary<DayOfWeek, List<TimeFrame>> dtf)
+        public PersonnelCustomTime(Dictionary<string, bool> availableDays, Dictionary<DayOfWeek, List<TimeFrame>> dtf)
         {
             InitializeComponent();
             dailyTimeframe = dtf;
+            DisableDaysExpander(availableDays);
+            foreach (Expander exp in sp_ExpanderContainer.Children)
+            {
+                DayOfWeek day;
+                if(!Enum.TryParse(((TextBlock)exp.Header).Text, true, out day))
+                {
+                    MessageBox.Show($"Cannot Parse {((TextBlock)exp.Header).Text}");
+                }
+
+                if (!dailyTimeframe.ContainsKey(day))
+                {
+                    continue;
+                }
+
+                foreach (TimeFrame tf in dailyTimeframe[day])
+                {
+                    StackPanel container = (StackPanel)exp.Content;
+                    container.Children.Insert(container.Children.Count - 1, new StartEndTimeInput(tf));
+                }
+
+                
+            }
         }
 
         private void btn_Back_Click(object sender, RoutedEventArgs e)
@@ -49,6 +71,11 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Save_Click(object sender, RoutedEventArgs e)
         {
+            // Clear dictionary
+            foreach(KeyValuePair<DayOfWeek, List<TimeFrame>> listTf in dailyTimeframe)
+            {
+                listTf.Value.Clear();
+            }
             // Loop through mon-sun
             foreach (Expander exp in sp_ExpanderContainer.Children)
             {
