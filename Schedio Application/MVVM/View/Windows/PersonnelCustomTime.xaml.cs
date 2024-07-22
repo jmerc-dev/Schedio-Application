@@ -1,4 +1,5 @@
 ﻿using Schedio_Application.MVVM.View.UserControls;
+using Schedio_Application.MVVM.ViewModel.ScheduleElements;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Schedio_Application.MVVM.View.Windows
 {
@@ -22,21 +24,63 @@ namespace Schedio_Application.MVVM.View.Windows
     /// </summary>
     public partial class PersonnelCustomTime : Window
     {
+        public Dictionary<DayOfWeek, List<TimeFrame>> dailyTimeframe;
+
+        // Creating new
         public PersonnelCustomTime(Dictionary<string, bool> availableDays)
         {
             InitializeComponent();
             DisableDaysExpander(availableDays);
+
+            dailyTimeframe = new Dictionary<DayOfWeek, List<TimeFrame>>();
+        }
+
+        // Updating
+        public PersonnelCustomTime(Dictionary<DayOfWeek, List<TimeFrame>> dtf)
+        {
+            InitializeComponent();
+            dailyTimeframe = dtf;
         }
 
         private void btn_Back_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
-            this.Close();
         }
 
         private void btn_Save_Click(object sender, RoutedEventArgs e)
         {
-            
+            // Loop through mon-sun
+            foreach (Expander exp in sp_ExpanderContainer.Children)
+            {
+                // Only loop on enabled (available)
+                if (exp.IsEnabled)
+                {
+                    DayOfWeek day;
+                    
+                    if (!Enum.TryParse(((TextBlock)exp.Header).Text, true, out day))
+                    {
+                        MessageBox.Show($"Unable to parse {((TextBlock)exp.Header).Text} to {typeof(DayOfWeek)}");
+                    }
+                    
+                    // Iterate on each timeframe inside a day
+                    foreach (var entry in ((StackPanel)exp.Content).Children)
+                    {
+                        if (entry.GetType() == typeof(StartEndTimeInput))
+                        {
+                            StartEndTimeInput entryConverted = (StartEndTimeInput)entry;
+                            TimeFrame tf = new TimeFrame(entryConverted.StartTime, entryConverted.EndTime);
+
+                            if (!dailyTimeframe.ContainsKey(day))
+                            {
+                                dailyTimeframe.Add(day, new List<TimeFrame>());
+                            }
+                            dailyTimeframe[day].Add(tf);
+                        }
+                    }
+                }
+            }
+
+            DialogResult = true;
         }
 
         public void UpdateAvailableDays(Dictionary<string, bool> availableDays)
@@ -49,9 +93,15 @@ namespace Schedio_Application.MVVM.View.Windows
             foreach (Expander expander in sp_ExpanderContainer.Children)
             {
                 expander.IsEnabled = availableDays[((TextBlock)expander.Header).Text.ToString()];
+
+                if (!availableDays[((TextBlock)expander.Header).Text.ToString()])
+                {
+                    expander.Visibility = Visibility.Collapsed;
+                }
             }
         }
 
+        // Add entry
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             StartEndTimeInput entry = new StartEndTimeInput(); 

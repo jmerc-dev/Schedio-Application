@@ -12,8 +12,30 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         const int MAX_CAPACITY = 7;
 
         private string _Name;
+
+        // TODO: Make this a dictionary
         private Day[] _Days;
         private bool _IsConstant;
+
+        private string _ConstTime_Start;
+        private string _ConstTime_End;
+
+        public string Timeframe
+        {
+            get { return ConstTime_Start + " -> " + ConstTime_End; }
+        }
+
+        public string ConstTime_Start
+        {
+            get { return _ConstTime_Start; }
+            set { _ConstTime_Start = value; }
+        }
+
+        public string ConstTime_End
+        {
+            get { return _ConstTime_End; }
+            set { _ConstTime_End = value; }
+        }
 
         public string Name
         {
@@ -21,19 +43,51 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             set {  _Name = value; } 
         }
 
-        public string Timeframe
+        public Day[] Days
         {
-            get
-            {
-                for (int i = 0; i < MAX_CAPACITY; i++)
-                {
-                    if (_Days[i].IsAvailable)
-                    {
-                        return _Days[i].Timeframe;
-                    }
-                }
-                return "None";
-            }
+            get { return _Days; }
+        }
+
+        public bool Monday
+        {
+            get { return Days[0].IsAvailable; }
+            set { Days[0].IsAvailable = value; }
+        }
+
+        public bool Tuesday
+        {
+            get { return Days[1].IsAvailable; }
+            set { Days[1].IsAvailable = value; }
+        }
+
+        public bool Wednesday
+        {
+            get { return Days[2].IsAvailable; }
+            set { Days[2].IsAvailable = value; }
+        }
+
+        public bool Thursday
+        {
+            get { return Days[3].IsAvailable; }
+            set { Days[3].IsAvailable = value; }
+        }
+
+        public bool Friday
+        {
+            get { return Days[4].IsAvailable; }
+            set { Days[4].IsAvailable = value; }
+        }
+
+        public bool Saturday
+        {
+            get { return Days[5].IsAvailable; }
+            set { Days[5].IsAvailable = value; }
+        }
+
+        public bool Sunday
+        {
+            get { return Days[6].IsAvailable; }
+            set { Days[6].IsAvailable = value; }
         }
 
         public bool IsConstant

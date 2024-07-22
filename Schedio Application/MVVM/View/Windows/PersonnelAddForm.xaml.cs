@@ -1,4 +1,5 @@
-﻿using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+﻿using Schedio_Application.MVVM.ViewModel.Custom_Exceptions;
+using Schedio_Application.MVVM.ViewModel.ScheduleElements;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,7 +25,8 @@ namespace Schedio_Application.MVVM.View.Windows
     {
 
         private Person _person;
-        public PersonnelCustomTime form;
+        private PersonnelCustomTime form;
+        public Dictionary<DayOfWeek, List<TimeFrame>> dailyTimeframe;
 
         // Properties
         public string PersonName
@@ -54,6 +56,10 @@ namespace Schedio_Application.MVVM.View.Windows
             this.Owner = Application.Current.MainWindow;
             this.ShowInTaskbar = false;
 
+            // Setting datacontexts
+            wp_Days.DataContext = _person;
+            sp_ConstTimeFrame.DataContext = _person;
+
             tb_Name.Focus();
         }
 
@@ -74,7 +80,7 @@ namespace Schedio_Application.MVVM.View.Windows
         {
             if (tb_Name.Text.Equals(string.Empty))
             {
-                tb_Name.Text = "Add Name";
+                PersonName = "Add Name";
             }
         }
 
@@ -96,6 +102,9 @@ namespace Schedio_Application.MVVM.View.Windows
                 {
                     btn_CustomTime.IsEnabled = false;
                     sp_ConstTimeFrame.IsEnabled = true;
+
+                    _person.ConstTime_Start = ti_TimeStart.Time;
+                    _person.ConstTime_End = ti_TimeEnd.Time;
                 }
                 else
                 {
@@ -161,7 +170,8 @@ namespace Schedio_Application.MVVM.View.Windows
             form.Owner = Application.Current.MainWindow;
             if (form.ShowDialog() == true)
             {
-                // Set custom schedule one-by-one
+                // TODO: Set custom schedule
+                dailyTimeframe = form.dailyTimeframe;
             }
 
             this.Opacity = 1;
@@ -170,58 +180,77 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Save_Click(object sender, RoutedEventArgs e)
         {
-            //bool? constTime = btn_TimeframeSetter.IsChecked;
-            //bool isConstant;
-            //if (constTime == null)
-            //{
-            //    throw new NullReferenceException();
-            //}
-            //else
-            //{
-            //    isConstant = (bool)constTime;
-            //}
+            
+            // Assign available days
+            SetAvailableDays();
 
-            //if (tb_Name.Text.Equals("Add Name"))
-            //{
-            //    MessageBox.Show("Please enter your name.");
-            //    return;
-            //}
+            // Set name
+            _person.Name = tb_Name.Text;
+            // Set schedule
+            if (_person.IsConstant)
+            {
+                _person.IsConstant = true;
+                _person.ConstTime_Start = ti_TimeStart.Time;
+                _person.ConstTime_End = ti_TimeEnd.Time;
+            }
+            else
+            {
+                // add custom timeframe
+                _person.IsConstant = false;
 
-            //foreach (CheckBox checkbox in wp_Days.Children)
-            //{
-            //    try
-            //    {
-            //        bool? day_IsChecked = checkbox.IsChecked;
-            //        string? day_Name = checkbox.Content.ToString();
+                if (dailyTimeframe == null)
+                {
+                    MessageBox.Show("Please setup the custom timeframe first.");
+                    return;
+                }
 
-            //        if (day_IsChecked == null || day_Name == null)
-            //        {
-            //            throw new NullReferenceException();
-            //        }
+                foreach (KeyValuePair<DayOfWeek, List<TimeFrame>> keyValuePair in dailyTimeframe)
+                {
+                    // Locate where to put items
+                    for (int i = 0; i < _person.Days.Length; i++)
+                    {
+                        if (keyValuePair.Key == _person.Days[i].Name)
+                        {
+                            _person.Days[i].CustomTimeframe = keyValuePair.Value;
+                        }
+                    }
+                }
+            }
 
-            //        DayOfWeek day = Enum.Parse<DayOfWeek>(day_Name);
-            //        _person.SetAvailableDay(day, (bool)day_IsChecked);
-            //    } catch
-            //    {
-            //        MessageBox.Show("Failed to parse checkbox content to WeekDays");
-            //    }
-            //}
-            //if (_person.IsConstant)
-            //{
-            //    _person.SetConstantTimeframe(new TimeFrame(ti_TimeStart.Time, ti_TimeEnd.Time));
-            //}
-            //else
-            //{
-            //    if (form == null)
-            //    {
-            //        MessageBox.Show("Please add schedule on custom timeframe", "Error");
-            //        return;
-            //    }
-            //}
+            for (int i = 0; i < _person.Days.Length; i++)
+            {
+                Trace.WriteLine(_person.Days[i].Name.ToString() + " : " + _person.Days[i].IsAvailable);
+                if (_person.Days[i].IsAvailable)
+                {
+                    foreach(TimeFrame tf in _person.Days[i].CustomTimeframe)
+                    {
+                        Trace.WriteLine(tf.StartTime, tf.EndTime);
+                    }
+                }
+            }
 
-            //DialogResult = true;
 
-            Trace.WriteLine(PersonName + ":" + IsConstant);
+            DialogResult = true;
+
+
+
+        }
+
+        private void SetAvailableDays()
+        {
+            int index = 0;
+            foreach (CheckBox checkbox in wp_Days.Children) 
+            {
+                if (checkbox.Content.ToString().Equals(_person.Days[index].Name.ToString()))
+                {
+
+                    if (checkbox.IsChecked != null)
+                    {
+                        _person.Days[index].IsAvailable = (bool) checkbox.IsChecked;
+                    }
+                }
+                index++;
+            }
         }
     }
 }

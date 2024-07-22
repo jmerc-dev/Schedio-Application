@@ -60,8 +60,6 @@ namespace Schedio_Application.MVVM.View.UserControls
             {
                 _HourTenths = value;
                 Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + _Period;
-                
-
             }
         }
         public int Hour

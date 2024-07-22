@@ -65,18 +65,9 @@
                         </Expander.Header>
                         <Expander.Content>
                             <StackPanel>
-                                <Button Style="{StaticResource ExtraWideButton}"
-                                        Height="40"
-                                        Width="500"
-                                        HorizontalAlignment="Center"
-                                        Click="Button_Click">
-                                    <Grid>
-                                        <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               Margin="10"/>
-                                    </Grid>
-                                </Button>
+                                <Button Style="{StaticResource btn_WideAdd}"
+                                        Click="Button_Click"/>
+
                             </StackPanel>
                             
 
@@ -161,11 +152,6 @@
                         </Expander.Header>
                         <Expander.Content>
                             <StackPanel>
-                                <!--<userControls:StartEndTimeInput Height="40"
-                                                                Width="400"
-                                                                HorizontalAlignment="Right"
-                                                                Margin="5,0,5,5"
-                                                                BoxNum="1"/>-->
                                 <Button Style="{StaticResource ExtraWideButton}"
                                         Height="40"
                                         Width="500"

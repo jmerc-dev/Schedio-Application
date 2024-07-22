@@ -223,4 +223,42 @@
         </Setter>
     </Style>
 
+    <Style TargetType="Button" x:Key="btn_WideAdd">
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Width" Value="400"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Rectangle x:Name="Rectangle" Fill="{StaticResource PrimaryBackground}"/>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Rectangle" Property="Fill" Value="{StaticResource PrimaryShadeColor}"/>
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Rectangle" Property="Fill" Value="{StaticResource SecondaryShadeColor}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        
+        <Setter Property="Content">
+            <Setter.Value>
+                <Grid>
+                    <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Margin="10"/>
+                </Grid>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

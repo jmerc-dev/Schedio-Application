@@ -14,15 +14,34 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private DateTime _startTime;
         private DateTime _endTime;
 
-        public DateTime StartTime 
+        public string StartTime 
         { 
-            get {  return _startTime; } 
-            set {  _startTime = value; } 
+            get {  return _startTime.ToString("hh:mm tt").ToUpper(); } 
+            set 
+            {  
+                try
+                {
+                    _startTime = DateTime.Parse(value);
+                } catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            } 
         }
-        public DateTime EndTime
+        public string EndTime
         {
-            get { return _endTime; }
-            set { _endTime = value; }
+            get { return _endTime.ToString("hh:mm tt").ToUpper(); }
+            set
+            {
+                try
+                {
+                    _endTime = DateTime.Parse(value);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
 
         Regex timeFormat = new Regex(@"^[0-1][0-9]:[0-6][0-9]\s[A|P]M$");
@@ -46,9 +65,10 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 }
 
                 return convertedTimeframe;
-            } catch 
+            } catch (Exception ex)
             {
-                throw new FormatException("Timeframe is not in the format: 00:00 AM - 00:00 PM");
+                MessageBox.Show($"Cannot parse {timeframe}");
+                throw new FormatException(ex.Message);
             }
         }
 
@@ -56,7 +76,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         {
             if (DateTime.TryParse(startTime, out _startTime) && DateTime.TryParse(endTime, out _endTime))
             {
-                Debug.WriteLine(StartTime.ToString() + " : " + EndTime.ToString());
+
             }
             else
             {
