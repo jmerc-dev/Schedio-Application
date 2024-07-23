@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schedio_Application.MVVM.ViewModel.Custom_Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -46,6 +47,27 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         public static Regex timeFormat = new Regex(@"^[0-1][0-9]:[0-6][0-9]\s[A|P]M$");
 
+        private static bool ValidateTimeframe(string startTime, string endTime)
+        {
+            if (ValidateTimeFormat(startTime) && ValidateTimeFormat(endTime))
+            {
+                TimeSpan start = TimeSpan.Parse(DateTime.Parse(startTime).ToString("HH:mm"));
+                TimeSpan end = TimeSpan.Parse(DateTime.Parse(endTime).ToString("HH:mm"));
+
+                if (start < end)
+                {
+                    return true;
+                }
+
+                return false;
+            } 
+            else
+            {
+                MessageBox.Show("Invalid time format");
+                return false;
+            }
+        }
+
         public static bool ValidateTimeFormat(string time)
         {
             if (timeFormat.Match(time).Success == true)
@@ -88,13 +110,38 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         {
             if (DateTime.TryParse(startTime, out _startTime) && DateTime.TryParse(endTime, out _endTime))
             {
-
+                if (!ValidateTimeframe(startTime, endTime))
+                {
+                    throw new InvalidTimeFrameException(startTime, endTime);
+                }
             }
             else
             {
-                throw new Exception("Failed to construct TimeFrame object.");
+                throw new FormatException($"InvalidFormat of {startTime} or {endTime}");
+            }
+        }
+
+        public bool IsOverlap(string time)
+        {
+
+            try
+            {
+                TimeSpan startTime = TimeSpan.Parse(DateTime.Parse(StartTime).ToString("HH:mm"));
+                TimeSpan endTime = TimeSpan.Parse(DateTime.Parse(EndTime).ToString("HH:mm"));
+                TimeSpan timeToCompare = TimeSpan.Parse(DateTime.Parse(time).ToString());
+
+                if ((timeToCompare >= startTime) && (timeToCompare <= endTime))
+                {
+                    return true;
+                }
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show($"Cannot parse {time}.");
+                return false;
             }
 
+            return false;
         }
     }
 }

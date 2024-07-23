@@ -1,10 +1,12 @@
 ﻿using Schedio_Application.MVVM.ViewModel.Custom_Exceptions;
 using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+using Schedio_Application.MVVM.View.Windows;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -65,9 +67,9 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void tb_Name_GotKeyboardFocus(object sender, KeyboardEventArgs e)
         {
-            if (tb_Name.Text.Equals("Add Name"))
+            if (tb_Name.Text.Equals("Name"))
             {
-                //tb_Name.Text = string.Empty;
+                tb_Name.Text = string.Empty;
             }
         }
 
@@ -80,7 +82,7 @@ namespace Schedio_Application.MVVM.View.Windows
         {
             if (tb_Name.Text.Equals(string.Empty))
             {
-                //PersonName = "Add Name";
+                tb_Name.Text = "Name";
             }
         }
 
@@ -97,12 +99,13 @@ namespace Schedio_Application.MVVM.View.Windows
                 {
                     btn_CustomTime.IsEnabled = false;
                     sp_ConstTimeFrame.IsEnabled = true;
-
+                    img_ArrowRight.Source = new BitmapImage(new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/arrow-right.png"));
                 }
                 else
                 {
                     btn_CustomTime.IsEnabled = true;
                     sp_ConstTimeFrame.IsEnabled = false;
+                    img_ArrowRight.Source = new BitmapImage(new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/arrow-right-disabled.png"));
                 }
             }
         }
@@ -156,8 +159,6 @@ namespace Schedio_Application.MVVM.View.Windows
                 }
             }
 
-            this.Opacity = 0;
-
             if (dailyTimeframe == null)
             {
                 form = new PersonnelCustomTime(availableDays);
@@ -173,8 +174,6 @@ namespace Schedio_Application.MVVM.View.Windows
             {
                 dailyTimeframe = form.dailyTimeframe;
             }
-
-            this.Opacity = 1;
         }
 
 
@@ -189,9 +188,23 @@ namespace Schedio_Application.MVVM.View.Windows
             // Set schedule
             if (_person.IsConstant)
             {
+                TimeFrame tf;
+                // Validate time
+                try
+                {
+                    tf = new TimeFrame(ti_TimeStart.Time, ti_TimeEnd.Time);
+                }
+                catch (InvalidTimeFrameException ex)
+                {
+                    SystemSounds.Asterisk.Play();
+                    new MBox(ex.Message).ShowDialog();
+                    MessageBox.Show("Error",ex.Message, MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+
                 _person.IsConstant = true;
-                _person.ConstTime_Start = ti_TimeStart.Time;
-                _person.ConstTime_End = ti_TimeEnd.Time;
+                _person.ConstTime_Start = tf.StartTime;
+                _person.ConstTime_End = tf.EndTime;
             }
             else
             {
@@ -200,6 +213,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
                 if (dailyTimeframe == null)
                 {
+                    SystemSounds.Asterisk.Play();
                     MessageBox.Show("Please setup the custom timeframe first.");
                     return;
                 }

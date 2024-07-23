@@ -71,8 +71,11 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Save_Click(object sender, RoutedEventArgs e)
         {
+            // Validate entries
+
+
             // Clear dictionary
-            foreach(KeyValuePair<DayOfWeek, List<TimeFrame>> listTf in dailyTimeframe)
+            foreach (KeyValuePair<DayOfWeek, List<TimeFrame>> listTf in dailyTimeframe)
             {
                 listTf.Value.Clear();
             }
