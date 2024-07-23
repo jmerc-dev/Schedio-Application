@@ -5,13 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"
         mc:Ignorable="d"
-        WindowStyle="None"
         WindowStartupLocation="CenterScreen"
-        AllowsTransparency="True"
         Background="Transparent"
         ResizeMode="NoResize"
-        Title="WarningConfirmation" 
-        Height="auto" SizeToContent="Height" Width="600">
+        Title="Delete" 
+        Height="auto" SizeToContent="Height" Width="600"
+        ShowInTaskbar="False">
     <Window.Resources>
         <Style TargetType="TextBlock" x:Key="dataInfo">
             <Setter Property="FontSize" Value="15"/>
@@ -20,13 +19,10 @@
         </Style>
     </Window.Resources>
     <Border Background="{StaticResource PrimaryBackground}" 
-            BorderThickness="1" 
-            CornerRadius="10" 
-            BorderBrush="{StaticResource SecondaryShadeColor}"
             Height="auto">
         <Grid Margin="20,20,20,10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="60"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition MinHeight="40"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
@@ -47,12 +43,12 @@
                            Grid.Row="0"
                            Text="Are you sure?"
                            VerticalAlignment="Center"
-                           FontSize="20"
+                           FontSize="16"
                            FontWeight="DemiBold"/>
                 <TextBlock Grid.Row="1"
                          Grid.Column="1"
                          Text="This will be deleted permanently and cannot be undone."
-                         FontSize="15"/>
+                         FontSize="13"/>
             </Grid>
 
             <Grid Name="DisplayMultiItems"

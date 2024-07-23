@@ -69,7 +69,7 @@ namespace Schedio_Application.MVVM.View.Windows
         {
             if (tb_Name.Text.Equals("Name"))
             {
-                tb_Name.Text = string.Empty;
+                tb_Name.Text = "";
             }
         }
 
@@ -143,8 +143,25 @@ namespace Schedio_Application.MVVM.View.Windows
             
         }
 
+        private bool DaySelectExists()
+        {
+            foreach (CheckBox checkbox in wp_Days.Children)
+            {
+                if (checkbox.IsChecked == true)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void btn_CustomTime_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (!DaySelectExists())
+            {
+                new MBox("No selected day").ShowDialog();
+                return;
+            }
             Dictionary<string, bool> availableDays = new Dictionary<string, bool>();
 
             foreach (CheckBox checkbox in wp_Days.Children)
@@ -179,7 +196,12 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Save_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (!DaySelectExists())
+            {
+                new MBox("No selected day").ShowDialog();
+                return;
+            }
+
             // Assign available days
             SetAvailableDays();
 
@@ -196,9 +218,7 @@ namespace Schedio_Application.MVVM.View.Windows
                 }
                 catch (InvalidTimeFrameException ex)
                 {
-                    SystemSounds.Asterisk.Play();
                     new MBox(ex.Message).ShowDialog();
-                    MessageBox.Show("Error",ex.Message, MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
 
@@ -213,8 +233,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
                 if (dailyTimeframe == null)
                 {
-                    SystemSounds.Asterisk.Play();
-                    MessageBox.Show("Please setup the custom timeframe first.");
+                    new MBox("Please setup the custom timeframe first.").ShowDialog();
                     return;
                 }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schedio_Application.MVVM.ViewModel.Utilities;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +44,11 @@ namespace Schedio_Application.MVVM.View.Windows
                 wp_Names.Children.Add(new TextBlock() { Text = item });
             }
 
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            IconHelper.RemoveIcon(this);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

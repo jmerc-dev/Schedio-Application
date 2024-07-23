@@ -17,6 +17,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using static System.Net.Mime.MediaTypeNames;
 
+/*
+ * TODO: 
+ *  Validate Custom time
+ *  Validate if timeframes are overlapping
+ *  Redesign Windows
+ */
+
 namespace Schedio_Application.MVVM.View.Windows
 {
     /// <summary>

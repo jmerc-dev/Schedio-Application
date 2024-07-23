@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"
         mc:Ignorable="d"
-        Title="Error" MinHeight="200" MinWidth="300"
+        Title="" MinHeight="150" MinWidth="250"
         Height="auto" Width="auto"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        ShowInTaskbar="False">
     <Grid Margin="10,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -21,12 +22,13 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Image Stretch="Uniform"
-               Source="pack://application:,,,/Schedio Application;component/Resources/Images/info.png"
-               Margin="5"/>
+                   Source="pack://application:,,,/Schedio Application;component/Resources/Images/info.png"
+                   Margin="5"
+                   Name="img_Picture"/>
             <TextBlock MaxWidth="300"
                    TextWrapping="WrapWithOverflow"
                    Grid.Column="1"
-                   HorizontalAlignment="Center"
+                   HorizontalAlignment="Left"
                    VerticalAlignment="Center"
                    Margin="5"
                    Name="tb_Message">
@@ -34,7 +36,7 @@
             </TextBlock>
         </Grid>
 
-        <Button Style="{StaticResource SecondaryButton}"
+        <Button Style="{StaticResource ConfirmButton}"
             Content="OK"
             Height="30"
             Width="100"
