@@ -128,14 +128,14 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             {
                 TimeSpan startTime = TimeSpan.Parse(DateTime.Parse(StartTime).ToString("HH:mm"));
                 TimeSpan endTime = TimeSpan.Parse(DateTime.Parse(EndTime).ToString("HH:mm"));
-                TimeSpan timeToCompare = TimeSpan.Parse(DateTime.Parse(time).ToString());
+                TimeSpan timeToCompare = TimeSpan.Parse(DateTime.Parse(time).ToString("HH:mm"));
 
-                if ((timeToCompare >= startTime) && (timeToCompare <= endTime))
+                if ((timeToCompare >= startTime) && (timeToCompare < endTime))
                 {
                     return true;
                 }
             }
-            catch (FormatException)
+            catch (FormatException ex)
             {
                 MessageBox.Show($"Cannot parse {time}.");
                 return false;

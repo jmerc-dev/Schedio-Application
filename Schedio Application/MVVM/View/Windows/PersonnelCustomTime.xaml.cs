@@ -1,4 +1,5 @@
 ﻿using Schedio_Application.MVVM.View.UserControls;
+using Schedio_Application.MVVM.ViewModel.Custom_Exceptions;
 using Schedio_Application.MVVM.ViewModel.ScheduleElements;
 using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
@@ -22,7 +23,7 @@ using static System.Net.Mime.MediaTypeNames;
  * TODO: 
  *  Validate Custom time
  *  Validate if timeframes are overlapping
- *  Redesign Window
+ *  
  */
 
 namespace Schedio_Application.MVVM.View.Windows
@@ -72,9 +73,46 @@ namespace Schedio_Application.MVVM.View.Windows
                     StackPanel container = (StackPanel)exp.Content;
                     container.Children.Insert(container.Children.Count - 1, new StartEndTimeInput(tf));
                 }
-
-                
             }
+        }
+
+        private bool ValidateTimeOverlap() // Returns true if there are no overlaps in timeframe entries
+        {
+            // loop in each day
+            foreach(Expander exp in sp_ExpanderContainer.Children)
+            {
+                List<TimeFrame> dayTf = new List<TimeFrame>();
+                if (exp.IsEnabled)
+                {
+                    // Loop in timeframe entries
+                    StackPanel entryContainer = (StackPanel)exp.Content;
+                    foreach(var entry in entryContainer.Children)
+                    {
+                        if (entry.GetType() == typeof(StartEndTimeInput))
+                        {
+                            TimeFrame tfEntry = new TimeFrame(((StartEndTimeInput) entry).StartTime, ((StartEndTimeInput)entry).EndTime);
+                            Trace.WriteLine($"{tfEntry.StartTime} -> {tfEntry.EndTime}");
+                            if (dayTf.Count != 0)
+                            {
+                                // Comparison
+                                foreach(TimeFrame timeFrame in dayTf)
+                                {
+                                    if (timeFrame.IsOverlap(tfEntry.StartTime) || timeFrame.IsOverlap(tfEntry.EndTime))
+                                    {
+                                        throw new TimeframeOverlapException(timeFrame, tfEntry, ((TextBlock) exp.Header).Text);
+                                    }
+                                }
+                                dayTf.Add(tfEntry);
+                            }
+                            else
+                            {
+                                dayTf.Add(tfEntry);
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
         }
 
         private void btn_Back_Click(object sender, RoutedEventArgs e)
@@ -85,7 +123,15 @@ namespace Schedio_Application.MVVM.View.Windows
         private void btn_Save_Click(object sender, RoutedEventArgs e)
         {
             // Validate entries
-
+            try
+            {
+                ValidateTimeOverlap();
+            }
+            catch (Exception ex)
+            {
+                new MBox(ex.Message).ShowDialog();
+                return;
+            }
 
             // Clear dictionary
             foreach (KeyValuePair<DayOfWeek, List<TimeFrame>> listTf in dailyTimeframe)
@@ -111,7 +157,17 @@ namespace Schedio_Application.MVVM.View.Windows
                         if (entry.GetType() == typeof(StartEndTimeInput))
                         {
                             StartEndTimeInput entryConverted = (StartEndTimeInput)entry;
-                            TimeFrame tf = new TimeFrame(entryConverted.StartTime, entryConverted.EndTime);
+                            TimeFrame tf;
+                            try
+                            {
+                                tf = new TimeFrame(entryConverted.StartTime, entryConverted.EndTime);
+                            }
+                            catch (Exception ex)
+                            {
+                                new MBox(ex.Message).ShowDialog();
+                                return;
+                            }
+                            
 
                             if (!dailyTimeframe.ContainsKey(day))
                             {
