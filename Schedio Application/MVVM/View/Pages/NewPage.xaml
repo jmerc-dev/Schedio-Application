@@ -249,7 +249,7 @@
                 <ColumnDefinition Width="4*" MinWidth="400" MaxWidth="500"/>
             </Grid.ColumnDefinitions>
             <SecondaryButtons:SecondaryButton ImageSource="pack://application:,,,/Schedio Application;component/Resources/Images/time.png"
-                                  Text="Time Schedule"
+                                  Text="Base Schedule"
                                   Margin="10,20"
                                   Grid.Column="1" 
                                   MaxHeight="70" 
@@ -257,8 +257,8 @@
                                   MaxWidth="200"
                                   FontSize="15"
                                   FontWeight="Normal"
-                                  PreviewMouseLeftButtonDown="btn_TimeSchedule_PreviewMouseLeftButtonDown"
-                                  x:Name="btn_TimeSchedule"/>
+                                  PreviewMouseLeftButtonDown="btn_BaseSchedule_PreviewMouseLeftButtonDown"
+                                  x:Name="btn_BaseSchedule"/>
             <Grid Grid.Column="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

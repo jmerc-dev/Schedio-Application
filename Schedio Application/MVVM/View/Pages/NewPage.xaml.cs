@@ -158,10 +158,9 @@ namespace Schedio_Application.MVVM.View.Pages
             form.ShowDialog();
         }
 
-        private void btn_TimeSchedule_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void btn_BaseSchedule_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             TimeScheduleAddForm form = new TimeScheduleAddForm();
-            form.ShowInTaskbar = false;
             form.Owner = Application.Current.MainWindow;
             form.ShowDialog();
         }

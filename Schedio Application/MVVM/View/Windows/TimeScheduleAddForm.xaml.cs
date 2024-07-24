@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schedio_Application.MVVM.ViewModel.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,11 @@ namespace Schedio_Application.MVVM.View.Windows
         public TimeScheduleAddForm()
         {
             InitializeComponent();
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            IconHelper.RemoveIcon(this);
         }
 
         private void CheckBox_All_Click(object sender, RoutedEventArgs e)

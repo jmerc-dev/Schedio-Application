@@ -36,14 +36,12 @@ namespace Schedio_Application.MVVM.View.UserControls
         public StartEndTimeInput()
         {
             InitializeComponent();
-            Label.Text = "\u2022";
             this.DataContext = this;
         }
 
         public StartEndTimeInput(TimeFrame timeFrame)
         {
             InitializeComponent();
-            Label.Text = "\u2022";
             this.DataContext = this;
 
             if (! (SetStartTime(timeFrame.StartTime) && SetEndTime(timeFrame.EndTime)) )

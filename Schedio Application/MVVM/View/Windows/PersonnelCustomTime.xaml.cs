@@ -1,5 +1,6 @@
 ﻿using Schedio_Application.MVVM.View.UserControls;
 using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ using static System.Net.Mime.MediaTypeNames;
  * TODO: 
  *  Validate Custom time
  *  Validate if timeframes are overlapping
- *  Redesign Windows
+ *  Redesign Window
  */
 
 namespace Schedio_Application.MVVM.View.Windows
@@ -40,6 +41,11 @@ namespace Schedio_Application.MVVM.View.Windows
             DisableDaysExpander(availableDays);
 
             dailyTimeframe = new Dictionary<DayOfWeek, List<TimeFrame>>();
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            IconHelper.RemoveIcon(this);
         }
 
         // Updating
