@@ -111,7 +111,7 @@ namespace Schedio_Application.MVVM.View.Pages
         private void btn_AddPersonnel_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Person newPerson = new Person();
-            PersonnelAddForm form = new PersonnelAddForm(newPerson);
+            PersonnelAddForm form = new PersonnelAddForm(newPerson, Personnel);
 
             if (form.ShowDialog() == true)
             {
@@ -332,7 +332,6 @@ namespace Schedio_Application.MVVM.View.Pages
                             room.Name = roomAddForm.RoomName;
                             room.Type = roomAddForm.RoomType;
                         }
-                        
                     }
                     break;
                 case 2:

@@ -17,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace Schedio_Application.MVVM.View.Windows
 {
@@ -28,14 +29,10 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private Person _person;
         private PersonnelCustomTime form;
+        private ObservableCollection<Person> _people;
         public Dictionary<DayOfWeek, List<TimeFrame>> dailyTimeframe;
 
         // Properties
-        public string PersonName
-        { 
-            get { return _person.Name; } 
-            set { _person.Name = value; } 
-        }
 
         public Person Person
         {
@@ -49,9 +46,10 @@ namespace Schedio_Application.MVVM.View.Windows
             set { _person.IsConstant = value; }
         }
 
-        public PersonnelAddForm(Person person)
+        public PersonnelAddForm(Person person, ObservableCollection<Person> people)
         {
             _person = person;
+            _people = people;
             InitializeComponent();
 
             this.DataContext = this;
@@ -143,6 +141,18 @@ namespace Schedio_Application.MVVM.View.Windows
             
         }
 
+        private bool IsNameExists(string name)
+        {
+            foreach (Person person in _people)
+            {
+                if (person.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private bool DaySelectExists()
         {
             foreach (CheckBox checkbox in wp_Days.Children)
@@ -196,6 +206,12 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Save_Click(object sender, RoutedEventArgs e)
         {
+            if (IsNameExists(tb_Name.Text))
+            {
+                new MBox("Name already exists.").ShowDialog();
+                return;
+            }
+
             if (!DaySelectExists())
             {
                 new MBox("No selected day").ShowDialog();
