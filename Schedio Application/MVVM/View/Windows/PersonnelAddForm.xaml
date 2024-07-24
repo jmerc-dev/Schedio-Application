@@ -7,18 +7,15 @@
         xmlns:TimeTextBox="clr-namespace:Schedio_Application.MVVM.View.UserControls"
         xmlns:SecondaryButtons="clr-namespace:Schedio_Application.MVVM.View.UserControls"
         mc:Ignorable="d"
-        WindowStyle="None"
         WindowStartupLocation="CenterScreen"
-        AllowsTransparency="True"
         Background="Transparent"
+        ShowInTaskbar="False"
         ResizeMode="NoResize"
         MouseDown="Window_MouseDown"
-        Title="Add Personnel" Height="450" Width="800">
-    <Border  Background="{StaticResource PrimaryBackground}" 
-             BorderThickness="1" 
-             CornerRadius="10" 
-             BorderBrush="{StaticResource SecondaryShadeColor}">
-        <Grid Margin="20">
+        Title="Personnel" Height="450" Width="800"
+        Icon="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png">
+    <Border  Background="{StaticResource PrimaryBackground}">
+        <Grid Margin="20,10,20,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="4*"/>
@@ -27,11 +24,11 @@
 
             <StackPanel Grid.Row="0" 
                         VerticalAlignment="Center" 
-                        Margin="30,0,0,0" 
+                        Margin="20,0,0,0" 
                         Orientation="Horizontal">
                 <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/person.png"
                        Stretch="Uniform"
-                       MaxWidth="80"
+                       MaxWidth="60"
                        />
                 <TextBox Name="tb_Name"
                          Style="{StaticResource TitleTextBox}"
@@ -43,7 +40,7 @@
                          ToolTip="Preferred format: Last Name, First Name MI."
                          ToolTipService.ShowDuration="8000"
                          ToolTipService.InitialShowDelay="500"
-                         TextWrapping="Wrap">Add Name</TextBox>
+                         TextWrapping="Wrap"></TextBox>
             </StackPanel>
 
             <Grid Grid.Row="1" Margin="70,10,70,10">
@@ -84,7 +81,7 @@
                         <CheckBox Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Thursday</CheckBox>
                         <CheckBox Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Friday</CheckBox>
                         <CheckBox Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,10,27,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Saturday</CheckBox>
-                        <CheckBox Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,10,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Sunday</CheckBox>
+                        <CheckBox Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,8,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Sunday</CheckBox>
                     </WrapPanel>
 
                     <SecondaryButtons:SecondaryButton Grid.Row="3"
@@ -94,16 +91,6 @@
                                                       HorizontalAlignment="Right"
                                                       x:Name="btn_CustomTime"
                                                       PreviewMouseLeftButtonDown="btn_CustomTime_MouseDown"/>
-                    <!--<Button Grid.Row="3" HorizontalAlignment="Right" Style="{StaticResource SecondaryButton}">
-                        <Grid Width="150" Margin="5,1,5,1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5*"/>
-                                <ColumnDefinition Width="10*"/>
-                            </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0" Source="pack://application:,,,/Schedio Application;component/Resources/Images/clocksetting.png"/>
-                            <TextBlock VerticalAlignment="Center" Grid.Column="1" Text="Custom Time"/>
-                        </Grid>
-                    </Button>-->
                 </Grid>
 
 
@@ -123,6 +110,7 @@
                         <ToggleButton Name="btn_TimeframeSetter" 
                                       Style="{DynamicResource PrimaryToggleButton}"
                                       HorizontalAlignment="Left"
+                                      IsChecked="{Binding IsConstant, Mode=TwoWay}"
                                       Click="btn_TimeframeSetter_Click"></ToggleButton>
                         <TextBlock VerticalAlignment="Center" 
                                    FontWeight="Normal"
@@ -139,16 +127,20 @@
                                                FontHeight="16"
                                                ButtonHeight="20"
                                                Width="150"/>
-                        <TextBlock Text="-"
-                                   FontSize="20"
-                                   VerticalAlignment="Center"
-                                   Margin="15,0"/>
+                        <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/arrow-right-disabled.png"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Stretch="Uniform"
+                               Height="20"
+                               Margin="20,0"
+                               Name="img_ArrowRight"/>
+                        
                         <TimeTextBox:TimeInput x:Name="ti_TimeEnd"
                                                FontHeight="16"
                                                ButtonHeight="20"
                                                Width="150"/>
                     </StackPanel>
-                    
+
                 </Grid>
             </Grid>
 

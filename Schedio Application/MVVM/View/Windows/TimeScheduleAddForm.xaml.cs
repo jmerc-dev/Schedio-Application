@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schedio_Application.MVVM.ViewModel.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,11 @@ namespace Schedio_Application.MVVM.View.Windows
         public TimeScheduleAddForm()
         {
             InitializeComponent();
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            IconHelper.RemoveIcon(this);
         }
 
         private void CheckBox_All_Click(object sender, RoutedEventArgs e)
@@ -96,16 +102,28 @@ namespace Schedio_Application.MVVM.View.Windows
         private void CheckBox_ConstantTime_Click(object sender, RoutedEventArgs e)
         {
 
-            foreach(Grid container in sp_DaysContainer.Children)
+            bool? isNotNull = ((CheckBox)sender).IsChecked;
+            bool isConstant;
+            if (isNotNull == null)
+            {
+                MessageBox.Show("Constant timeframe toggle is null.");
+                return;
+            }
+            else
+            {
+                isConstant = isNotNull.Value;
+            }
+
+            // Toggle each day timeframe
+            foreach (Grid container in sp_DaysContainer.Children)
             {
                 container.Children.OfType<StackPanel>().ToList().ForEach((stackPanel) =>
                 {
-                    stackPanel.IsEnabled = !(bool)((CheckBox)sender).IsChecked;    
+                    stackPanel.IsEnabled = !isConstant;
                 });
             }
-
-            ti_ConstTime.IsEnabled = (bool)((CheckBox)sender).IsChecked;
-
+ 
+            ti_ConstTime.IsEnabled = isConstant;
 
         }
     }

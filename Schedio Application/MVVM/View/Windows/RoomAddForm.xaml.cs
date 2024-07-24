@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schedio_Application.MVVM.ViewModel.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,6 +37,19 @@ namespace Schedio_Application.MVVM.View.Windows
         public RoomAddForm()
         {
             InitializeComponent();
+            this.ShowInTaskbar = false;
+            this.Owner = Application.Current.MainWindow;
+            this.DataContext = this;
+        }
+
+        public RoomAddForm(string name, string type)
+        {
+            InitializeComponent();
+            this.ShowInTaskbar = false;
+            this.Owner = Application.Current.MainWindow;
+
+            tbx_Name.Text = name;
+            cb_Type.Text = type;
         }
 
         private void btn_Cancel_Click(object sender, RoutedEventArgs e)

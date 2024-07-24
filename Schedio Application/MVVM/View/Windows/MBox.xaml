@@ -1,0 +1,47 @@
+﻿<Window x:Class="Schedio_Application.MVVM.View.Windows.MBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"
+        mc:Ignorable="d"
+        Title="" MinHeight="150" MinWidth="250"
+        Height="auto" Width="auto"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False">
+    <Grid Margin="10,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Stretch="Uniform"
+                   Source="pack://application:,,,/Schedio Application;component/Resources/Images/info.png"
+                   Margin="5"
+                   Name="img_Picture"/>
+            <TextBlock MaxWidth="300"
+                   TextWrapping="WrapWithOverflow"
+                   Grid.Column="1"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="5"
+                   Name="tb_Message">
+                
+            </TextBlock>
+        </Grid>
+
+        <Button Style="{StaticResource ConfirmButton}"
+            Content="OK"
+            Height="30"
+            Width="100"
+            Grid.Row="1"
+            HorizontalAlignment="Right"
+            IsCancel="True"/>
+    </Grid>
+</Window>

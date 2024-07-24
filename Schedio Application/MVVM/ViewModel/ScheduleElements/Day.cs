@@ -12,22 +12,31 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
     public class Day
     {
         
-
-        // TODO:
-
-        /*  - Get the days checked by the user
-         *  - Convert it into a collection of strings {Monday, Tuesday, Wednesday...}
-         *  - Convert it into abbreviation {Mon, Tue, Wed}
-         *  - Make it one string "Mon, Tue, Wed"
-         */
         private DayOfWeek _name;
         private bool _IsAvailable;
         private TimeFrame _ConstantTimeframe;
         private List<TimeFrame> _CustomTimeframe;
 
-        public string Timeframe
+        // TODO: Add setters/getters for custom timeframe list
+
+        public string ConstTimeframe_Start
         {
-            get { return _ConstantTimeframe.StartTime.ToString("hh:mm tt") + " - " + _ConstantTimeframe.EndTime.ToString("hh:mm tt"); }
+            get 
+            { 
+                return _ConstantTimeframe.StartTime.ToUpper();
+            }
+
+            set { _ConstantTimeframe.StartTime = value;}
+        }
+
+        public string ConstTimeframe_End
+        {
+            get
+            {
+                return _ConstantTimeframe.EndTime.ToUpper();
+            }
+
+            set { _ConstantTimeframe.EndTime = value; }
         }
 
         public DayOfWeek Name
@@ -39,6 +48,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public List<TimeFrame> CustomTimeframe
         {
             get { return this._CustomTimeframe; }
+            set {  this._CustomTimeframe = value; }
         }
 
         public bool IsAvailable
@@ -98,6 +108,12 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public string GetAbbrevName()
         {
             return DaysAcronym[this.Name.ToString()];
+        }
+
+        public bool AddCustomTimeframe(TimeFrame timeFrame)
+        {
+            _CustomTimeframe.Add(timeFrame);
+            return true;
         }
 
     }

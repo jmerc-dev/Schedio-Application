@@ -7,6 +7,9 @@
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="MinWidth" Value="100"/>
         <Setter Property="TextAlignment" Value="Left"/>
+        <Setter Property="BorderThickness" Value="0,0,0,2"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Padding" Value="5"/>
 
         <Style.Triggers>
 

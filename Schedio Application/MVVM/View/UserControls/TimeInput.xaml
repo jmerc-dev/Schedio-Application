@@ -77,31 +77,39 @@
                          Text="{Binding HourTenths, UpdateSourceTrigger=PropertyChanged}"
                          VerticalAlignment="Center"
                          MaxLength="1"
-                         PreviewKeyDown="tb_PreviewKeyDown"
                          CaretBrush="Transparent"
-                         GotFocus="tb_GotFocus"/>
+                         PreviewKeyDown="tb_PreviewKeyDown"
+                         GotFocus="tb_GotFocus"
+                         SelectionLength="0"
+                         TextChanged="tb_TextChanged"/>
                 <TextBox Name="tb_Hour"
                          Text="{Binding Hour, UpdateSourceTrigger=PropertyChanged}"
                          VerticalAlignment="Center"
                          MaxLength="1"
-                         PreviewKeyDown="tb_PreviewKeyDown"
                          CaretBrush="Transparent"
+                         PreviewKeyDown="tb_PreviewKeyDown"
+                         SelectionLength="0"
+                         TextChanged="tb_TextChanged"
                          GotFocus="tb_GotFocus"/>
+                
                 <TextBlock Text=":"
                            VerticalAlignment="Center"/>
                 <TextBox Name="tb_MinTenths"
                          Text="{Binding MinTenths, UpdateSourceTrigger=PropertyChanged}"
                          VerticalAlignment="Center"
                          MaxLength="1"
-                         PreviewKeyDown="tb_PreviewKeyDown"
                          CaretBrush="Transparent"
+                         PreviewKeyDown="tb_PreviewKeyDown"
+                         TextChanged="tb_TextChanged"
+                         SelectionLength="0"
                          GotFocus="tb_GotFocus"/>
                 <TextBox Name="tb_Min"
                          Text="{Binding Min, UpdateSourceTrigger=PropertyChanged}"
                          VerticalAlignment="Center"
                          MaxLength="1"
-                         PreviewKeyDown="tb_PreviewKeyDown"
                          CaretBrush="Transparent"
+                         PreviewKeyDown="tb_PreviewKeyDown"
+                         TextChanged="tb_TextChanged"
                          GotFocus="tb_GotFocus"/>
             </StackPanel>
 

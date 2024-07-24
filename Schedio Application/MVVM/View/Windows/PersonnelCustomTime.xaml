@@ -5,46 +5,48 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"
-        mc:Ignorable="d"
-        Title="PersonnelCustomTime" Height="500" Width="500"
-        WindowStyle="None"
+        mc:Ignorable="d" 
+        ShowInTaskbar="False"
+        Height="500" Width="500"
         WindowStartupLocation="CenterScreen"
-        AllowsTransparency="True"
         Background="Transparent"
         ResizeMode="NoResize">
 
     <Window.Resources>
-        <Style TargetType="Expander">
-            <Setter Property="Padding" Value="10,20"/>
-            <Setter Property="Margin" Value="0,3,5,3"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/Expander.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
 
-            <Style.Triggers>
-                <MultiTrigger>
-                    <MultiTrigger.Conditions>
-                        <Condition Property="IsMouseOver" Value="True"/>
-                        <Condition Property="IsExpanded" Value="False"/>
-                    </MultiTrigger.Conditions>
-                    <Setter Property="Background" Value="{StaticResource PrimaryShadeColor}"/>
-                </MultiTrigger>
+            <Style TargetType="Expander">
+                <Setter Property="Padding" Value="10,20"/>
+                <Setter Property="Margin" Value="0,3,5,3"/>
+                <Setter Property="Template" Value="{DynamicResource CustomExpander}"/>
+                <Style.Triggers>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsMouseOver" Value="True"/>
+                            <Condition Property="IsExpanded" Value="False"/>
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background" Value="{StaticResource PrimaryShadeColor}"/>
+                    </MultiTrigger>
 
-                <Trigger Property="IsExpanded" Value="True">
-                    <Setter Property="BorderBrush" Value="{StaticResource PrimaryShadeColor}"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
+                    <Trigger Property="IsExpanded" Value="True">
+                        <Setter Property="BorderBrush" Value="{StaticResource PrimaryShadeColor}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
 
-        <Style TargetType="userControls:StartEndTimeInput">
-            <Setter Property="Height" Value="40"/>
-            <Setter Property="Width" Value="400"/>
-            <Setter Property="HorizontalAlignment" Value="Right"/>
-            <Setter Property="Margin" Value="5,0,5,5"/>
-        </Style>
+            <Style TargetType="userControls:StartEndTimeInput">
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="Width" Value="320"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="5,0,5,5"/>
+            </Style>
+        </ResourceDictionary>
     </Window.Resources>
-    <Border BorderBrush="{StaticResource SecondaryShadeColor}"
-            Background="{StaticResource PrimaryBackground}" 
-            BorderThickness="1" 
-            CornerRadius="10" >
-        <Grid Margin="40,30,20,20">
+    <Border Background="{StaticResource PrimaryBackground}"  >
+        <Grid Margin="40,15,20,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>
@@ -65,18 +67,9 @@
                         </Expander.Header>
                         <Expander.Content>
                             <StackPanel>
-                                <Button Style="{StaticResource ExtraWideButton}"
-                                        Height="40"
-                                        Width="500"
-                                        HorizontalAlignment="Center"
-                                        Click="Button_Click">
-                                    <Grid>
-                                        <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               Margin="10"/>
-                                    </Grid>
-                                </Button>
+                                <Button Style="{StaticResource btn_WideAdd}"
+                                        Click="Button_Click"/>
+
                             </StackPanel>
                             
 
@@ -161,11 +154,6 @@
                         </Expander.Header>
                         <Expander.Content>
                             <StackPanel>
-                                <!--<userControls:StartEndTimeInput Height="40"
-                                                                Width="400"
-                                                                HorizontalAlignment="Right"
-                                                                Margin="5,0,5,5"
-                                                                BoxNum="1"/>-->
                                 <Button Style="{StaticResource ExtraWideButton}"
                                         Height="40"
                                         Width="500"

@@ -11,13 +11,10 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="70"/>
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal">
-                <TextBlock x:Name="Label"
-                           FontSize="15"
-                           VerticalAlignment="Center"
-                           Margin="20,0"/>
+                
                 <timebox:TimeInput x:Name="ti_StartTime"
                                    FontHeight="15"
                                    ButtonHeight="25"/>

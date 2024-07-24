@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+using Schedio_Application.MVVM.ViewModel.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -31,14 +35,9 @@ namespace Schedio_Application.MVVM.View.UserControls
         private string _Time, _Period;
         private int _HourTenths, _Hour, _MinTenths, _Min;
 
-        public string Time 
+        public string Time
         {
-            get { return _Time; } 
-            set 
-            { 
-                _Time = value;
-                NotifyPropertyChanged();
-            }
+            get { return HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + Period; }
         }
 
         public string Period
@@ -47,8 +46,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             set
             {
                 _Period = value;
-                NotifyPropertyChanged();
-                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + _Period;
+                OnPropertyChanged();
             }
         }
 
@@ -58,7 +56,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             set
             {
                 _HourTenths = value;
-                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + _Period;
+                OnPropertyChanged();
             }
         }
         public int Hour
@@ -67,7 +65,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             set
             {
                 _Hour = value;
-                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + _Period;
+                OnPropertyChanged();
             }
         }
         public int MinTenths
@@ -76,7 +74,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             set
             {
                 _MinTenths = value;
-                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + _Period;
+                OnPropertyChanged();
             }
         }
         public int Min
@@ -85,7 +83,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             set
             {
                 _Min = value;
-                Time = HourTenths.ToString() + Hour.ToString() + ":" + MinTenths.ToString() + Min.ToString() + " " + _Period;
+                OnPropertyChanged();
             }
         }
 
@@ -110,7 +108,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             DependencyProperty.Register("ButtonHeight", typeof(string), typeof(TimeInput), new PropertyMetadata(null));
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        private void NotifyPropertyChanged([CallerMemberName] string PropertyName="")
+        private void OnPropertyChanged([CallerMemberName] string PropertyName="")
         {
             if (PropertyChanged != null)
             {
@@ -118,10 +116,41 @@ namespace Schedio_Application.MVVM.View.UserControls
             }
         }
 
+        public bool SetTime(string time)
+        {
+            // Validation of time
+            if (!TimeFrame.ValidateTimeFormat(time))
+            {
+                return false;
+            }
+            // String manipulation : 00:00 PM
+            string[] timeSplit = time.Split(' ');
+            if (timeSplit.Length != 2) {return false; }
+
+            // Value distribution
+            try
+            {
+                HourTenths = Int32.Parse(timeSplit[0][0].ToString());
+                Hour = Int32.Parse(timeSplit[0][1].ToString());
+                MinTenths = Int32.Parse(timeSplit[0][3].ToString());
+                Min = Int32.Parse(timeSplit[0][4].ToString());
+
+                Period = timeSplit[1].ToUpper();
+
+                return true;
+            } 
+            catch (FormatException ex)
+            {
+                return false;
+            }
+        }
+
         public TimeInput()
         {
             InitializeComponent();
             this.DataContext = this;
+
+            _Time = "";
 
             Loaded += (sender, e) =>
             {
@@ -132,6 +161,7 @@ namespace Schedio_Application.MVVM.View.UserControls
                 textboxes[3] = tb_Min;
 
                 Period = "AM";
+
             };
 
         }
@@ -146,7 +176,6 @@ namespace Schedio_Application.MVVM.View.UserControls
             {
                 Period = "AM";
             }
-            Debug.WriteLine("Time: " + Time);
         }
 
         private void button_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -201,7 +230,6 @@ namespace Schedio_Application.MVVM.View.UserControls
                 {
                     MessageBox.Show(ex.Message);
                 }
-
             }
             else if (e.Key == Key.Right)
             {
@@ -216,6 +244,15 @@ namespace Schedio_Application.MVVM.View.UserControls
                 {
                     textboxes[tbTraversalIndex - 1].Focus();
                 }
+            }
+        }
+
+        private void tb_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            char text = ((TextBox)sender).Text[0];
+            if (!Char.IsDigit(text))
+            {
+                ((TextBox)sender).Text = "0";
             }
         }
 

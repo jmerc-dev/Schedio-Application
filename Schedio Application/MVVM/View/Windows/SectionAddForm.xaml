@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"
         xmlns:userControls="clr-namespace:Schedio_Application.MVVM.View.UserControls"
         mc:Ignorable="d"
-        Title="SectionAddForm" Height="550" Width="900"
-        WindowStyle="None"
+        Title="Add Section" Height="550" Width="900"
         WindowStartupLocation="CenterScreen"
-        AllowsTransparency="True"
+        ShowInTaskbar="False"
+        Icon="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
         Background="Transparent"
         ResizeMode="NoResize">
     <Window.Resources>
@@ -23,11 +23,8 @@
         </Style>
     </Window.Resources>
 
-    <Border Background="{StaticResource PrimaryBackground}" 
-            BorderThickness="1" 
-            CornerRadius="10" 
-            BorderBrush="{StaticResource SecondaryShadeColor}">
-        <Grid Margin="20,30,20,20">
+    <Border Background="{StaticResource PrimaryBackground}">
+        <Grid Margin="20,10,20,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="5*"/>
@@ -47,7 +44,7 @@
             </StackPanel>
 
             <Grid Grid.Row="1"
-                  Margin="50,0">
+                  Margin="40,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="*"/>

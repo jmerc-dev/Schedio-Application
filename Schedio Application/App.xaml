@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:Schedio_Application"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/Colors.xaml"/>
@@ -15,6 +16,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/Textboxes.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/CheckBoxes.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/ComboBox.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/Expander.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
         </ResourceDictionary>

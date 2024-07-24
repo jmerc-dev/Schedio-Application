@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -22,8 +23,6 @@ namespace Schedio_Application.MVVM.View.UserControls
     /// </summary>
     public partial class StartEndTimeInput : UserControl
     {
-        private string _startTime;
-        private string _endTime;
 
         public string StartTime
         {
@@ -37,14 +36,41 @@ namespace Schedio_Application.MVVM.View.UserControls
         public StartEndTimeInput()
         {
             InitializeComponent();
-            Label.Text = "\u2022";
             this.DataContext = this;
+        }
+
+        public StartEndTimeInput(TimeFrame timeFrame)
+        {
+            InitializeComponent();
+            this.DataContext = this;
+
+            if (! (SetStartTime(timeFrame.StartTime) && SetEndTime(timeFrame.EndTime)) )
+            {
+                MessageBox.Show($"Cannot create {typeof(StartEndTimeInput)} object.");
+            }
+        }
+
+        public bool SetStartTime(string time)
+        {
+            if (ti_StartTime.SetTime(time))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool SetEndTime(string time)
+        {
+            if (ti_EndTime.SetTime(time))
+            {
+                return true;
+            }
+            return false;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //((StackPanel)this.Parent).Children.Remove(this);
-            Debug.WriteLine(StartTime + " - " + EndTime);
+            ((StackPanel)this.Parent).Children.Remove(this);
         }
     }
 }

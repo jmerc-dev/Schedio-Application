@@ -2,9 +2,11 @@
 using Schedio_Application.MVVM.View.Windows;
 using Schedio_Application.MVVM.ViewModel.ScheduleElements;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +30,10 @@ namespace Schedio_Application.MVVM.View.Pages
     {
 
         private ObservableCollection<Room> Rooms;
+        private ObservableCollection<Room> TempRooms;
+
         private ObservableCollection<Person> Personnel;
+        private WarningConfirmation? warningModal;
 
         public NewPage()
         {
@@ -39,11 +44,37 @@ namespace Schedio_Application.MVVM.View.Pages
             lv_RoomsList.ItemsSource = this.Rooms;
             lv_PersonnelList.ItemsSource = this.Personnel;
             this.DataContext = this;
+
+            Rooms.Add(new Room("101", "Classic"));
+            Rooms.Add(new Room("102", "Classic"));
+            Rooms.Add(new Room("103", "Classic"));
+            Rooms.Add(new Room("104", "Classic"));
+            Rooms.Add(new Room("105", "Classic"));
+            Rooms.Add(new Room("106", "Classic"));
+            Rooms.Add(new Room("107", "Classic"));
+            Rooms.Add(new Room("108", "Classic"));
+            Rooms.Add(new Room("109", "Classic"));
+            Rooms.Add(new Room("110", "Lab"));
+            Rooms.Add(new Room("111", "Lab"));
+            Rooms.Add(new Room("112", "Lab"));
+            Rooms.Add(new Room("PE", "Court"));
         }
         
         private void tabCntrl_NewPage_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (e.Source is TabControl)
+            {
+                clearListViewSelectedItems(lv_PersonnelList);
+                clearListViewSelectedItems(lv_RoomsList);
+                clearListViewSelectedItems(lv_SectionList);
+                
+            }
             changeTabImage();
+        }
+
+        private void clearListViewSelectedItems(ListView lv)
+        {
+            lv.SelectedItems.Clear();
         }
 
         private void changeTabImage()
@@ -91,13 +122,21 @@ namespace Schedio_Application.MVVM.View.Pages
 
         private void btn_AddPersonnel_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            PersonnelAddForm form = new PersonnelAddForm();
-            form.ShowInTaskbar = false;
-            form.Owner = Application.Current.MainWindow;
+            Person newPerson = new Person();
+            PersonnelAddForm form = new PersonnelAddForm(newPerson);
+
             if (form.ShowDialog() == true)
             {
                 this.Personnel.Add(form.Person);
             }
+
+            // TODO:
+            /* 
+             *  # Make a person obj
+             *  # Create a form for personnel, passing the person obj
+             *  # Bind controls of form in person obj
+             *  
+             */
         }
 
         private void btn_AddRooms_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -119,24 +158,174 @@ namespace Schedio_Application.MVVM.View.Pages
             form.ShowDialog();
         }
 
-        private void btn_TimeSchedule_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void btn_BaseSchedule_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             TimeScheduleAddForm form = new TimeScheduleAddForm();
-            form.ShowInTaskbar = false;
             form.Owner = Application.Current.MainWindow;
             form.ShowDialog();
         }
 
         private void btn_Delete_Click(object sender, RoutedEventArgs e)
         {
-            WarningConfirmation modal = new WarningConfirmation("", "");
-            modal.ShowInTaskbar = false;
-            modal.Owner = Application.Current.MainWindow;
-            if (modal.ShowDialog() == true)
+            switch (tabCntrl_NewPage.SelectedIndex)
             {
-                Trace.WriteLine("Deleted");
+                case 0:
+                    break;
+                case 1:
+                    if (DeleteItemFrom(lv_RoomsList, typeof(Room)))
+                    {
+                        tb_SearchRooms.Text = String.Empty;
+                        break;
+                    };
+                    break;
+                case 2:
+                    break;
+                default:
+                    MessageBox.Show("No tab selected.");
+                    return;
+            }
+        }
+
+        private bool DeleteItemFrom(ListView lv, Type itemType)
+        {
+            if (lv.SelectedItems.Count == 0)
+            {
+                return false;
             }
 
+            // Type
+            string[] fullType = itemType.ToString().Split(".");
+            string specificType = fullType[fullType.Length - 1];
+
+            // Prepare list of objects to be removed
+            List<string> objectsToBeRemoved = new List<string>();
+
+            if (itemType == typeof(Person))
+            {
+                // TODO:
+            }
+            else if (itemType == typeof(Room))
+            {
+                foreach (Room item in lv.SelectedItems)
+                {
+                    objectsToBeRemoved.Add(item.Name);
+                }
+            }
+            // TODO: section elseif
+
+
+            // Warning
+            warningModal = new WarningConfirmation(specificType, objectsToBeRemoved);
+            warningModal.ShowInTaskbar = false;
+            warningModal.Owner = Application.Current.MainWindow;
+
+            // Remove
+            if (warningModal.ShowDialog() == true)
+            {
+                if (itemType == typeof(Person))
+                {
+
+                }
+                else if (itemType == typeof(Room))
+                {
+                    return RemoveItems<Room>(Rooms, lv.SelectedItems);
+                }
+            }
+            return false;
+        }
+
+        private bool RemoveItems<T>(ObservableCollection<T> source, IList valuesToBeDeleted)
+        {
+            List<T> toBeRemoved = new List<T>();
+            foreach (T item in valuesToBeDeleted)
+            {
+                toBeRemoved.Add(item);
+            }
+
+            foreach (T item in toBeRemoved)
+            {
+                source.Remove(item);
+            }
+
+            return true;
+        }
+
+        private void tabItem_LostFocus(object sender, RoutedEventArgs e)
+        {
+            string name = ((TabItem)sender).Name;
+
+            if (name.Equals("tabItem_Personnel"))
+            {
+                clearListViewSelectedItems(lv_PersonnelList);
+            }
+            else if (name.Equals("tabItem_Rooms"))
+            {
+                clearListViewSelectedItems(lv_RoomsList);
+            }
+            else if (name.Equals("tabItem_Sections"))
+            {
+                clearListViewSelectedItems(lv_SectionList);
+            }
+        }
+
+        private void TextBox_Search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox searchBox = (TextBox) sender;
+            if (searchBox.Name.Equals("tb_SearchRooms"))
+            {
+                TempRooms = new ObservableCollection<Room>();
+
+                if (!searchBox.Text.Equals(String.Empty))
+                {
+                    foreach (Room room in Rooms)
+                    {
+                        if (room.Name.StartsWith(searchBox.Text, StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            TempRooms.Add(room);
+                        }
+                    }
+
+                    lv_RoomsList.ItemsSource = TempRooms;
+                }
+                else
+                {
+                    lv_RoomsList.ItemsSource = Rooms;
+                }
+            }
+        }
+
+        private void btn_Edit_Click(object sender, RoutedEventArgs e)
+        {
+            switch (tabCntrl_NewPage.SelectedIndex)
+            {
+                case 0:
+                    break;
+                case 1:
+                    // Rooms
+                    if (lv_RoomsList.SelectedItems.Count == 0)
+                    {
+                        return;
+                    }
+                    else if (lv_RoomsList.SelectedItems.Count != 1)
+                    {
+                        MessageBox.Show("Editing is unavailable for multiple items.");
+                    }
+                    else
+                    {
+                        // Update
+                        if (((Room)lv_RoomsList.SelectedItem).Update())
+                        {
+
+                        }
+                        
+                    }
+                    break;
+                case 2:
+                    break;
+                default:
+                    MessageBox.Show("No Tab selected");
+                    return;
+            }
         }
     }
 }
