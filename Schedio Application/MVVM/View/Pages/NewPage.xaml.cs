@@ -33,6 +33,8 @@ namespace Schedio_Application.MVVM.View.Pages
         private ObservableCollection<Room> TempRooms;
 
         private ObservableCollection<Person> Personnel;
+        private ObservableCollection<Person> TempPersonnel;
+
         private WarningConfirmation? warningModal;
 
         public NewPage()
@@ -44,20 +46,6 @@ namespace Schedio_Application.MVVM.View.Pages
             lv_RoomsList.ItemsSource = this.Rooms;
             lv_PersonnelList.ItemsSource = this.Personnel;
             this.DataContext = this;
-
-            Rooms.Add(new Room("101", "Classic"));
-            Rooms.Add(new Room("102", "Classic"));
-            Rooms.Add(new Room("103", "Classic"));
-            Rooms.Add(new Room("104", "Classic"));
-            Rooms.Add(new Room("105", "Classic"));
-            Rooms.Add(new Room("106", "Classic"));
-            Rooms.Add(new Room("107", "Classic"));
-            Rooms.Add(new Room("108", "Classic"));
-            Rooms.Add(new Room("109", "Classic"));
-            Rooms.Add(new Room("110", "Lab"));
-            Rooms.Add(new Room("111", "Lab"));
-            Rooms.Add(new Room("112", "Lab"));
-            Rooms.Add(new Room("PE", "Court"));
         }
         
         private void tabCntrl_NewPage_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -129,14 +117,6 @@ namespace Schedio_Application.MVVM.View.Pages
             {
                 this.Personnel.Add(form.Person);
             }
-
-            // TODO:
-            /* 
-             *  # Make a person obj
-             *  # Create a form for personnel, passing the person obj
-             *  # Bind controls of form in person obj
-             *  
-             */
         }
 
         private void btn_AddRooms_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -170,6 +150,8 @@ namespace Schedio_Application.MVVM.View.Pages
             switch (tabCntrl_NewPage.SelectedIndex)
             {
                 case 0:
+                    if (!DeleteItemFrom(lv_PersonnelList, typeof(Person)))
+                        new MBox("Cannot delete.").ShowDialog();
                     break;
                 case 1:
                     if (DeleteItemFrom(lv_RoomsList, typeof(Room)))
@@ -202,7 +184,10 @@ namespace Schedio_Application.MVVM.View.Pages
 
             if (itemType == typeof(Person))
             {
-                // TODO:
+                foreach (Person item in lv.SelectedItems)
+                {
+                    objectsToBeRemoved.Add(item.Name);
+                }
             }
             else if (itemType == typeof(Room))
             {
@@ -215,8 +200,7 @@ namespace Schedio_Application.MVVM.View.Pages
 
 
             // Warning
-            warningModal = new WarningConfirmation(specificType, objectsToBeRemoved);
-            warningModal.ShowInTaskbar = false;
+            warningModal = new WarningConfirmation(specificType, objectsToBeRemoved);;
             warningModal.Owner = Application.Current.MainWindow;
 
             // Remove
@@ -224,7 +208,7 @@ namespace Schedio_Application.MVVM.View.Pages
             {
                 if (itemType == typeof(Person))
                 {
-
+                    return RemoveItems<Person>(Personnel, lv.SelectedItems);
                 }
                 else if (itemType == typeof(Room))
                 {
@@ -326,6 +310,11 @@ namespace Schedio_Application.MVVM.View.Pages
                     MessageBox.Show("No Tab selected");
                     return;
             }
+        }
+
+        private void tb_SearchPersonnel_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

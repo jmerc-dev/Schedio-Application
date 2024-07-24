@@ -166,28 +166,5 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
             return formattedDays;
         }
-
-        public bool SetConstantTimeframe(TimeFrame time)
-        {
-            for (int i = 0; i < MAX_CAPACITY; i++)
-            {
-                if (_Days[i].IsAvailable)
-                {
-                    _Days[i].ConstantTimeframe = time;
-                }
-            }
-            return true;
-        }
-
-        public bool AddCustomTimeFrame(TimeFrame timeFrame, DayOfWeek day)
-        {
-
-            return true;
-        }
-        
-        public Day[] GetAvailableDays()
-        {
-            return _Days;
-        }
     }
 }

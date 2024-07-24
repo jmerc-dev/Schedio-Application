@@ -249,18 +249,6 @@ namespace Schedio_Application.MVVM.View.Windows
                     }
                 }
             }
-
-            for (int i = 0; i < _person.Days.Length; i++)
-            {
-                Trace.WriteLine(_person.Days[i].Name.ToString() + " : " + _person.Days[i].IsAvailable);
-                if (_person.Days[i].IsAvailable)
-                {
-                    foreach(TimeFrame tf in _person.Days[i].CustomTimeframe)
-                    {
-                        Trace.WriteLine(tf.StartTime, tf.EndTime);
-                    }
-                }
-            }
             DialogResult = true;
         }
 

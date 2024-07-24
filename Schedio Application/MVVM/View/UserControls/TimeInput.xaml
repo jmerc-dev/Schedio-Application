@@ -22,7 +22,7 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="FontSize" Value="{Binding FontHeight}"/>
-            <Setter Property="Foreground" Value="{StaticResource SecondaryShadeColor}"/>
+            <Setter Property="Foreground" Value="{StaticResource TertiaryShadeColor}"/>
 
             <Style.Triggers>
                 <Trigger Property="IsKeyboardFocused" Value="True">
@@ -124,9 +124,11 @@
 
                 <TextBox x:Name="TimeLabel"
                          Text="{Binding Period}"
-                         IsEnabled="False"
                          VerticalAlignment="Center"
-                         HorizontalAlignment="Center"/>
+                         IsReadOnly="True"
+                         HorizontalAlignment="Center"
+                         Width="30"
+                         Foreground="{StaticResource TertiaryShadeColor}"/>
                 <Button Name="button"
                         Grid.Column="1"
                         Click="button_Click"

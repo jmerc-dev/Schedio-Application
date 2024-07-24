@@ -14,30 +14,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         
         private DayOfWeek _name;
         private bool _IsAvailable;
-        private TimeFrame _ConstantTimeframe;
         private List<TimeFrame> _CustomTimeframe;
-
-        // TODO: Add setters/getters for custom timeframe list
-
-        public string ConstTimeframe_Start
-        {
-            get 
-            { 
-                return _ConstantTimeframe.StartTime.ToUpper();
-            }
-
-            set { _ConstantTimeframe.StartTime = value;}
-        }
-
-        public string ConstTimeframe_End
-        {
-            get
-            {
-                return _ConstantTimeframe.EndTime.ToUpper();
-            }
-
-            set { _ConstantTimeframe.EndTime = value; }
-        }
 
         public DayOfWeek Name
         { 
@@ -55,12 +32,6 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         {
             get { return _IsAvailable; }
             set { _IsAvailable = value; }
-        }
-
-        public TimeFrame ConstantTimeframe
-        {
-            get { return _ConstantTimeframe; }
-            set { _ConstantTimeframe = value; }
         }
 
         public Day()
