@@ -23,6 +23,8 @@ namespace Schedio_Application.MVVM.View.Windows
         public SectionAddForm()
         {
             InitializeComponent();
+            this.Owner = Application.Current.MainWindow;
+            this.ShowInTaskbar = false;
         }
 
         private void btn_AddSubject_Click(object sender, RoutedEventArgs e)

@@ -96,7 +96,7 @@
                                          VerticalContentAlignment="Center"
                                          TextBlock.TextAlignment="Left"
                                          Name="tb_SearchPersonnel"
-                                         TextChanged="tb_SearchPersonnel_TextChanged"
+                                         TextChanged="TextBox_Search_TextChanged"
                                          Padding="5,0">
                                 </TextBox>
                                 <TextBlock IsHitTestVisible="False" Text="Search..." VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" Foreground="DarkGray" FontSize="15">
@@ -104,7 +104,7 @@
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Text, ElementName=tb_SearchRooms}" Value="">
+                                                <DataTrigger Binding="{Binding Text, ElementName=tb_SearchPersonnel}" Value="">
                                                     <Setter Property="Visibility" Value="Visible"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -140,7 +140,17 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <TextBlock FontSize="30" Margin="20,10" FontWeight="Thin" VerticalAlignment="Center" HorizontalAlignment="Left">Room Management</TextBlock>
-
+                            <Button Name="btn_SetupRoomTypes"
+                                    Width="50"
+                                    Height="50"
+                                    Style="{StaticResource ImageButton}"
+                                    HorizontalAlignment="Right"
+                                    ToolTip="Setup Room Types"
+                                    Click="btn_SetupRoomTypes_Click">
+                                <Image Margin="5"
+                                       Stretch="Uniform"
+                                       Source="pack://application:,,,/Schedio Application;component/Resources/Images/settings.png"/>
+                            </Button>
                             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="20,0" HorizontalAlignment="Left">
                                 <Button 
                                         MaxHeight="50"

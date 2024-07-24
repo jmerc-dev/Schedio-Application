@@ -24,7 +24,7 @@ namespace Schedio_Application.MVVM.View.Windows
         public WarningConfirmation(string type, string name)
         {
             InitializeComponent();
-
+            this.Owner = Application.Current.MainWindow;
             Loaded += (sender, e) =>
             {
                 tb_Name.Text = name;
@@ -38,6 +38,7 @@ namespace Schedio_Application.MVVM.View.Windows
             InitializeComponent();
             DisplayOneItem.Visibility = Visibility.Collapsed;
             tb_multiType.Text = type;
+            this.Owner = Application.Current.MainWindow;
 
             foreach (string item in itemsToBeRemoved)
             {

@@ -19,12 +19,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using static System.Net.Mime.MediaTypeNames;
 
-/*
- * TODO: 
- *  Validate Custom time
- *  Validate if timeframes are overlapping
- *  
- */
 
 namespace Schedio_Application.MVVM.View.Windows
 {
@@ -40,6 +34,7 @@ namespace Schedio_Application.MVVM.View.Windows
         {
             InitializeComponent();
             DisableDaysExpander(availableDays);
+            this.Owner = System.Windows.Application.Current.MainWindow;
 
             dailyTimeframe = new Dictionary<DayOfWeek, List<TimeFrame>>();
         }
@@ -144,6 +139,11 @@ namespace Schedio_Application.MVVM.View.Windows
                 // Only loop on enabled (available)
                 if (exp.IsEnabled)
                 {
+                    if (((StackPanel)exp.Content).Children.Count == 1)
+                    {
+                        new MBox($"{((TextBlock)exp.Header).Text} is empty.").ShowDialog();
+                        return;
+                    }
                     DayOfWeek day;
                     
                     if (!Enum.TryParse(((TextBlock)exp.Header).Text, true, out day))

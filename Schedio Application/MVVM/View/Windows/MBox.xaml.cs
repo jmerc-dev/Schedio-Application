@@ -27,13 +27,33 @@ namespace Schedio_Application.MVVM.View.Windows
         Information,
         Warning
     }
+
+    public enum Sound
+    {
+        NoSound
+    }
     public partial class MBox : Window
     {
         public MBox(string message)
         {
             InitializeComponent();
             this.ShowInTaskbar = false;
+            this.Owner = Application.Current.MainWindow;
             SystemSounds.Asterisk.Play();
+
+            tb_Message.Text = message;
+        }
+
+        public MBox(string message, Sound sound)
+        {
+            InitializeComponent();
+            this.ShowInTaskbar = false;
+            this.Owner = Application.Current.MainWindow;
+            switch (sound) 
+            {
+                case Sound.NoSound:
+                    break;
+            }
 
             tb_Message.Text = message;
         }
@@ -42,6 +62,7 @@ namespace Schedio_Application.MVVM.View.Windows
         {
             InitializeComponent();
             this.ShowInTaskbar = false;
+            this.Owner = Application.Current.MainWindow;
 
             tb_Message.Text = message;
             switch (image)

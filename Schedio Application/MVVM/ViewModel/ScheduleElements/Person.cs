@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schedio_Application.MVVM.ViewModel.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Windows;
 
 namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
-    public class Person
+    public class Person : PropertyNotification
     {
         const int MAX_CAPACITY = 7;
 
@@ -40,54 +41,16 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public string Name
         {
             get { return _Name; } 
-            set {  _Name = value; } 
+            set 
+            {  
+                _Name = value;
+                OnPropertyChanged();
+            } 
         }
 
         public Day[] Days
         {
             get { return _Days; }
-        }
-
-        public bool Monday
-        {
-            get { return Days[0].IsAvailable; }
-            set { Days[0].IsAvailable = value; }
-        }
-
-        public bool Tuesday
-        {
-            get { return Days[1].IsAvailable; }
-            set { Days[1].IsAvailable = value; }
-        }
-
-        public bool Wednesday
-        {
-            get { return Days[2].IsAvailable; }
-            set { Days[2].IsAvailable = value; }
-        }
-
-        public bool Thursday
-        {
-            get { return Days[3].IsAvailable; }
-            set { Days[3].IsAvailable = value; }
-        }
-
-        public bool Friday
-        {
-            get { return Days[4].IsAvailable; }
-            set { Days[4].IsAvailable = value; }
-        }
-
-        public bool Saturday
-        {
-            get { return Days[5].IsAvailable; }
-            set { Days[5].IsAvailable = value; }
-        }
-
-        public bool Sunday
-        {
-            get { return Days[6].IsAvailable; }
-            set { Days[6].IsAvailable = value; }
         }
 
         public bool IsConstant

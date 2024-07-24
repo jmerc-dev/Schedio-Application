@@ -28,9 +28,9 @@ namespace Schedio_Application.MVVM.View.Pages
     /// 
     public partial class NewPage : Page
     {
-
         private ObservableCollection<Room> Rooms;
         private ObservableCollection<Room> TempRooms;
+        private ObservableCollection<string> RoomTypes;
 
         private ObservableCollection<Person> Personnel;
         private ObservableCollection<Person> TempPersonnel;
@@ -121,6 +121,12 @@ namespace Schedio_Application.MVVM.View.Pages
 
         private void btn_AddRooms_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (RoomTypes == null || RoomTypes.Count <= 1)
+            {
+                new MBox("Please setup the room types first").ShowDialog();
+                return;
+            }
+
             RoomAddForm form = new RoomAddForm();
             form.ShowInTaskbar = false;
             form.Owner = Application.Current.MainWindow;
@@ -150,8 +156,11 @@ namespace Schedio_Application.MVVM.View.Pages
             switch (tabCntrl_NewPage.SelectedIndex)
             {
                 case 0:
-                    if (!DeleteItemFrom(lv_PersonnelList, typeof(Person)))
-                        new MBox("Cannot delete.").ShowDialog();
+                    if (DeleteItemFrom(lv_PersonnelList, typeof(Person))) 
+                    {
+                        tb_SearchPersonnel.Text = String.Empty;
+                    }
+                    
                     break;
                 case 1:
                     if (DeleteItemFrom(lv_RoomsList, typeof(Room)))
@@ -276,6 +285,27 @@ namespace Schedio_Application.MVVM.View.Pages
                     lv_RoomsList.ItemsSource = Rooms;
                 }
             }
+            else if (searchBox.Name.Equals("tb_SearchPersonnel"))
+            {
+                TempPersonnel = new ObservableCollection<Person>();
+
+                if (!searchBox.Text.Equals(String.Empty))
+                {
+                    foreach (Person person in Personnel)
+                    {
+                        if (person.Name.StartsWith(searchBox.Text, StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            TempPersonnel.Add(person);
+                        }
+                    }
+
+                    lv_PersonnelList.ItemsSource = TempPersonnel;
+                }
+                else
+                {
+                    lv_PersonnelList.ItemsSource = Personnel;
+                }
+            }
         }
 
         private void btn_Edit_Click(object sender, RoutedEventArgs e)
@@ -292,7 +322,7 @@ namespace Schedio_Application.MVVM.View.Pages
                     }
                     else if (lv_RoomsList.SelectedItems.Count != 1)
                     {
-                        MessageBox.Show("Editing is unavailable for multiple items.");
+                        new MBox("Editing is unavailable for multiple items.").ShowDialog();
                     }
                     else
                     {
@@ -307,14 +337,23 @@ namespace Schedio_Application.MVVM.View.Pages
                 case 2:
                     break;
                 default:
-                    MessageBox.Show("No Tab selected");
+                    new MBox("No Tab selected").ShowDialog();
                     return;
             }
         }
 
-        private void tb_SearchPersonnel_TextChanged(object sender, TextChangedEventArgs e)
+        private void btn_SetupRoomTypes_Click(object sender, RoutedEventArgs e)
         {
+            RoomTypeSetup rts;
 
+            if (RoomTypes == null)
+            {
+                RoomTypes = new ObservableCollection<string>();
+                RoomTypes.Add("Choose a value...");
+            }
+
+            rts = new RoomTypeSetup(RoomTypes);
+            rts.ShowDialog();
         }
     }
 }

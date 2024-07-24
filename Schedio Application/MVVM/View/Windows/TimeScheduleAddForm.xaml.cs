@@ -23,6 +23,7 @@ namespace Schedio_Application.MVVM.View.Windows
         public TimeScheduleAddForm()
         {
             InitializeComponent();
+            this.Owner = Application.Current.MainWindow;
         }
 
         protected override void OnSourceInitialized(EventArgs e)

@@ -1,4 +1,5 @@
-﻿using Schedio_Application.MVVM.ViewModel.Utilities;
+﻿using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Schedio_Application.MVVM.View.Windows
@@ -20,7 +22,6 @@ namespace Schedio_Application.MVVM.View.Windows
     /// </summary>
     public partial class RoomAddForm : Window
     {
-
         private string _RoomName;
         private string _ChosenRoomType;
         
@@ -75,5 +76,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
             DialogResult = true;
         }
+
+        
     }
 }
