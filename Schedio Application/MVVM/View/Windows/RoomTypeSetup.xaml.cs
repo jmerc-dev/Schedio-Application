@@ -34,8 +34,6 @@ namespace Schedio_Application.MVVM.View.Windows
             RoomTypes = types;
             cbox_TypeNames.ItemsSource = RoomTypes;
             Rooms = rooms;
-
-            cbox_TypeNames.SelectedIndex = 0;
         }
 
         public bool UpdateRoomCategory(string oldValue, string newValue)
@@ -70,7 +68,7 @@ namespace Schedio_Application.MVVM.View.Windows
         private void btn_Add_Click(object sender, RoutedEventArgs e)
         {
             string item = tb_ItemAdd.Text;
-            if (item.Equals(String.Empty) || item.Equals("Choose a value..."))
+            if (item.Equals(String.Empty))
             {
                 new MBox("Invalid input").ShowDialog();
                 return;
@@ -92,7 +90,7 @@ namespace Schedio_Application.MVVM.View.Windows
         {
             string? selectedItem = cbox_TypeNames.SelectedValue.ToString();
 
-            if (selectedItem == null || selectedItem.Equals("Choose a value..."))
+            if (selectedItem == null)
             {
                 new MBox("Please choose an item to delete").ShowDialog();
                 return;
@@ -111,14 +109,13 @@ namespace Schedio_Application.MVVM.View.Windows
             {
                 RoomTypes.Remove(selectedItem);
                 new MBox($"{selectedItem} was successfully deleted", Sound.NoSound).ShowDialog();
-                cbox_TypeNames.SelectedIndex = 0;
             }
         }
 
         private void btn_Update_Click(object sender, RoutedEventArgs e)
         {
             string? selectedItem = cbox_TypeNames.SelectedValue.ToString();
-            if (selectedItem == null || selectedItem.Equals("Choose a value..."))
+            if (selectedItem == null)
             {
                 new MBox("Please choose an item to update").ShowDialog();
                 return;
@@ -150,7 +147,6 @@ namespace Schedio_Application.MVVM.View.Windows
                 if (RoomTypes[i].Equals(selectedItem))
                 {
                     RoomTypes[i] = newValue;
-                    cbox_TypeNames.SelectedIndex = 0;
                     break;
                 }
             }

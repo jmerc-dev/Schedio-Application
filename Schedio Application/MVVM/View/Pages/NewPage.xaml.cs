@@ -127,9 +127,7 @@ namespace Schedio_Application.MVVM.View.Pages
                 return;
             }
 
-            RoomAddForm form = new RoomAddForm(RoomTypes);
-            form.ShowInTaskbar = false;
-            form.Owner = Application.Current.MainWindow;
+            RoomAddForm form = new RoomAddForm(RoomTypes, Rooms);
             if (form.ShowDialog() == true)
             {
                 this.Rooms.Add(new Room(form.RoomName, form.RoomType));
@@ -318,7 +316,7 @@ namespace Schedio_Application.MVVM.View.Pages
                     // Rooms
                     if (lv_RoomsList.SelectedItems.Count == 0)
                     {
-                        return;
+                        new MBox("Please select an item.").ShowDialog();
                     }
                     else if (lv_RoomsList.SelectedItems.Count != 1)
                     {
@@ -327,9 +325,12 @@ namespace Schedio_Application.MVVM.View.Pages
                     else
                     {
                         // Update
-                        if (((Room)lv_RoomsList.SelectedItem).Update())
+                        Room room = (Room)lv_RoomsList.SelectedItem;
+                        RoomAddForm roomAddForm = new RoomAddForm(room, RoomTypes, Rooms);
+                        if (roomAddForm.ShowDialog() == true)
                         {
-
+                            room.Name = roomAddForm.RoomName;
+                            room.Type = roomAddForm.RoomType;
                         }
                         
                     }
@@ -349,7 +350,6 @@ namespace Schedio_Application.MVVM.View.Pages
             if (RoomTypes == null)
             {
                 RoomTypes = new ObservableCollection<string>();
-                RoomTypes.Add("Choose a value...");
             }
 
             rts = new RoomTypeSetup(RoomTypes, Rooms);

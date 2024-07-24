@@ -26,6 +26,7 @@ namespace Schedio_Application.MVVM.View.Windows
     {
         private string _RoomName;
         private string _ChosenRoomType;
+        private ObservableCollection<Room> _Rooms;
         
         public string RoomName
         {
@@ -37,24 +38,37 @@ namespace Schedio_Application.MVVM.View.Windows
             get => _ChosenRoomType;
         }
 
-        public RoomAddForm(ObservableCollection<string> types) 
+        public RoomAddForm(ObservableCollection<string> types, ObservableCollection<Room> rooms) 
         {
             InitializeComponent();
             this.ShowInTaskbar = false;
             this.Owner = Application.Current.MainWindow;
             this.DataContext = this;
+            _Rooms = rooms;
 
             cb_Type.ItemsSource = types;
         }
 
-        public RoomAddForm(string name, string type)
+        public RoomAddForm(Room room, ObservableCollection<string> types, ObservableCollection<Room> rooms)
         {
             InitializeComponent();
             this.ShowInTaskbar = false;
             this.Owner = Application.Current.MainWindow;
+            _Rooms = rooms;
+            tbx_Name.Text = room.Name;
+            cb_Type.Text = room.Type;
+        }
 
-            tbx_Name.Text = name;
-            cb_Type.Text = type;
+        private bool isNameExists(string name)
+        {
+            foreach(Room room in _Rooms)
+            {
+                if (room.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void btn_Cancel_Click(object sender, RoutedEventArgs e)
@@ -64,8 +78,13 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Save_Click(object sender, RoutedEventArgs e)
         {
+            if (isNameExists(tbx_Name.Text))
+            {
+                new MBox("Name already exists.").ShowDialog();
+                return;
+            }
+
             string selectedType = cb_Type.SelectedItem.ToString();
-            Trace.WriteLine(selectedType);
             if (tbx_Name.Text.Equals(String.Empty))
             {
                 MessageBox.Show("Please fill up the Name field.");

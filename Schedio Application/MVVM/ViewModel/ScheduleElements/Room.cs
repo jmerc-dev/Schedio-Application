@@ -40,17 +40,5 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             this._name = name;
             this._type = type;
         }
-
-        public bool Update()
-        {
-            RoomAddForm form = new RoomAddForm(Name, Type);
-            if (form.ShowDialog() == true)
-            {
-                Name = form.RoomName;
-                Type = form.RoomType;
-                return true;
-            }
-            return false;
-        }
     }
 }

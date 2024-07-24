@@ -52,6 +52,7 @@
                     Width="100"
                     HorizontalAlignment="Right"
                     Name="btn_OK"
+                    IsDefault="True"
                     Click="btn_OK_Click"/>
         </StackPanel>
         
