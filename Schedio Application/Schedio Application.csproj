@@ -51,6 +51,7 @@
     <None Remove="Resources\Images\time.png" />
     <None Remove="Resources\Images\trash-inversed.png" />
     <None Remove="Resources\Images\trash.png" />
+    <None Remove="Resources\Images\update-inversed.png" />
     <None Remove="Resources\Images\warning.png" />
     <None Remove="Resources\Images\woman.png" />
   </ItemGroup>
@@ -107,6 +108,7 @@
     <Resource Include="Resources\Images\time.png" />
     <Resource Include="Resources\Images\trash-inversed.png" />
     <Resource Include="Resources\Images\trash.png" />
+    <Resource Include="Resources\Images\update-inversed.png" />
     <Resource Include="Resources\Images\warning.png" />
     <Resource Include="Resources\Images\woman.png" />
   </ItemGroup>

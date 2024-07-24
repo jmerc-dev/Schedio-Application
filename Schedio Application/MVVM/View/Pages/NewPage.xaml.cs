@@ -127,7 +127,7 @@ namespace Schedio_Application.MVVM.View.Pages
                 return;
             }
 
-            RoomAddForm form = new RoomAddForm();
+            RoomAddForm form = new RoomAddForm(RoomTypes);
             form.ShowInTaskbar = false;
             form.Owner = Application.Current.MainWindow;
             if (form.ShowDialog() == true)
@@ -352,7 +352,7 @@ namespace Schedio_Application.MVVM.View.Pages
                 RoomTypes.Add("Choose a value...");
             }
 
-            rts = new RoomTypeSetup(RoomTypes);
+            rts = new RoomTypeSetup(RoomTypes, Rooms);
             rts.ShowDialog();
         }
     }

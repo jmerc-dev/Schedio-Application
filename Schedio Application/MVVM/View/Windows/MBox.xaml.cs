@@ -32,6 +32,12 @@ namespace Schedio_Application.MVVM.View.Windows
     {
         NoSound
     }
+
+    public enum MBoxType
+    {
+        OK,
+        CancelOrOK
+    }
     public partial class MBox : Window
     {
         public MBox(string message)
@@ -52,6 +58,24 @@ namespace Schedio_Application.MVVM.View.Windows
             switch (sound) 
             {
                 case Sound.NoSound:
+                    break;
+            }
+
+            tb_Message.Text = message;
+        }
+
+        public MBox(string message, MBoxType type)
+        {
+            InitializeComponent();
+            this.ShowInTaskbar = false;
+            this.Owner = Application.Current.MainWindow;
+            switch (type)
+            {
+                case MBoxType.CancelOrOK:
+                    btn_Cancel.Visibility = Visibility.Visible;
+                    btn_OK.IsCancel = false;
+                    break;
+                case MBoxType.OK:
                     break;
             }
 
@@ -81,6 +105,11 @@ namespace Schedio_Application.MVVM.View.Windows
         protected override void OnSourceInitialized(EventArgs e)
         {
             IconHelper.RemoveIcon(this);
+        }
+
+        private void btn_OK_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
         }
     }
 }

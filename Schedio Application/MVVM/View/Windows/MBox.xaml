@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"
         mc:Ignorable="d"
-        Title="" MinHeight="150" MinWidth="250"
+        Title="" MinHeight="150" MinWidth="300"
         Height="auto" Width="auto"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
@@ -36,12 +36,24 @@
             </TextBlock>
         </Grid>
 
-        <Button Style="{StaticResource ConfirmButton}"
-            Content="OK"
-            Height="30"
-            Width="100"
-            Grid.Row="1"
-            HorizontalAlignment="Right"
-            IsCancel="True"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Style="{StaticResource CancelButton}"
+                    Content="Cancel"
+                    Name="btn_Cancel"
+                    Visibility="Collapsed"
+                    Height="30"
+                    Width="100"
+                    HorizontalAlignment="Right"
+                    IsCancel="True"
+                    Margin="5,0"/>
+            <Button Style="{StaticResource ConfirmButton}"
+                    Content="OK"
+                    Height="30"
+                    Width="100"
+                    HorizontalAlignment="Right"
+                    Name="btn_OK"
+                    Click="btn_OK_Click"/>
+        </StackPanel>
+        
     </Grid>
 </Window>

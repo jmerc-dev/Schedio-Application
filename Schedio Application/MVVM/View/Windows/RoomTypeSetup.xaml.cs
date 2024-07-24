@@ -1,4 +1,5 @@
-﻿using Schedio_Application.MVVM.ViewModel.Utilities;
+﻿using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,7 +24,8 @@ namespace Schedio_Application.MVVM.View.Windows
     public partial class RoomTypeSetup : Window
     {
         ObservableCollection<string> RoomTypes;
-        public RoomTypeSetup(ObservableCollection<string> types)
+        ObservableCollection<Room> Rooms;
+        public RoomTypeSetup(ObservableCollection<string> types, ObservableCollection<Room> rooms)
         {
             InitializeComponent();
             this.DataContext = this;
@@ -31,11 +33,22 @@ namespace Schedio_Application.MVVM.View.Windows
 
             RoomTypes = types;
             cbox_TypeNames.ItemsSource = RoomTypes;
+            Rooms = rooms;
 
             cbox_TypeNames.SelectedIndex = 0;
         }
 
-        
+        public bool UpdateRoomCategory(string oldValue, string newValue)
+        {
+            for (int i = 0; i < Rooms.Count; i++)
+            {
+                if (Rooms[i].Type.Equals(oldValue))
+                {
+                    Rooms[i].Type = newValue;
+                }
+            }
+            return true;
+        }
 
         protected override void OnSourceInitialized(EventArgs e)
         {
@@ -85,6 +98,15 @@ namespace Schedio_Application.MVVM.View.Windows
                 return;
             }
 
+            foreach (Room room in Rooms)
+            {
+                if (room.Type.Equals(selectedItem))
+                {
+                    new MBox($"The {selectedItem} is currently being referenced by room items.").ShowDialog();
+                    return;
+                }
+            }
+
             if (RoomTypes.Contains(selectedItem))
             {
                 RoomTypes.Remove(selectedItem);
@@ -114,16 +136,30 @@ namespace Schedio_Application.MVVM.View.Windows
                 return;
             }
 
+            // Warning
+            if (Rooms.Count > 0)
+            {
+                if (new MBox($"This will affect all occurences of {selectedItem}.", MBoxType.CancelOrOK).ShowDialog() == false)
+                {
+                    return;
+                }
+            }
+
             for (int i = 0; i < RoomTypes.Count; i++)
             {
                 if (RoomTypes[i].Equals(selectedItem))
                 {
                     RoomTypes[i] = newValue;
-                    new MBox($"{selectedItem} changed to {newValue}", Sound.NoSound).ShowDialog();
                     cbox_TypeNames.SelectedIndex = 0;
-                    return;
+                    break;
                 }
             }
+
+            if (UpdateRoomCategory(selectedItem, newValue))
+            {
+                new MBox($"Successfylly updated all occurences of {selectedItem}.").ShowDialog();
+            }
+
         }
     }
 }
