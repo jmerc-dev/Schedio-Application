@@ -1,4 +1,6 @@
-﻿using Schedio_Application.MVVM.ViewModel.Utilities;
+﻿using Schedio_Application.MVVM.View.UserControls;
+using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,8 +26,13 @@ namespace Schedio_Application.MVVM.View.Windows
     public partial class TimeScheduleAddForm : Window, INotifyPropertyChanged
     {
         private bool _IsConstant;
+        private BaseSchedule _Schedule;
 
         public event PropertyChangedEventHandler? PropertyChanged;
+        public BaseSchedule Schedule
+        {
+            get { return _Schedule;}
+        }
 
         public bool IsConstant
         {
@@ -42,11 +49,13 @@ namespace Schedio_Application.MVVM.View.Windows
             get { return !_IsConstant; }
         }
 
-        public TimeScheduleAddForm()
+        public TimeScheduleAddForm(BaseSchedule baseSchedule)
         {
             InitializeComponent();
             this.DataContext = this;
             this.Owner = Application.Current.MainWindow;
+
+            _Schedule = baseSchedule;
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -187,17 +196,133 @@ namespace Schedio_Application.MVVM.View.Windows
             
         }
 
+        private bool daySelected()
+        {
+            foreach (Grid container in sp_DaysContainer.Children)
+            {
+                CheckBox? cb_Day = container.Children.OfType<CheckBox>().FirstOrDefault();
+                if (cb_Day == null)
+                {
+                    new MBox("cb_Day is null").ShowDialog();
+                    return false;
+                }
+
+                if (cb_Day.IsChecked == true)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void btn_Save_Click(object sender, RoutedEventArgs e)
         {
+            Dictionary<DayOfWeek, TimeFrame>? dailyTimeframe = new Dictionary<DayOfWeek, TimeFrame>();
+
+            if (!daySelected())
+            {
+                new MBox("Day available cannot be empty").ShowDialog();
+                return;
+            }
             // Validate
             if (IsConstant)
             {
+                // Set constant status
                 
+                string startTime = "";
+                string endTime = ""; 
+                foreach (var child in sp_ConstTime.Children)
+                {
+                    if (child.GetType() == typeof(TimeInput))
+                    {
+                        TimeInput timeInput = (TimeInput) child;
+                        
+
+                        if (timeInput.IsStart == true)
+                        {
+                            startTime = timeInput.Time;
+                        }
+                        else
+                        {
+                            endTime = timeInput.Time;
+                        }
+                    }
+                }
+                
+                TimeFrame tf;
+                try
+                {
+                    tf = new TimeFrame(startTime, endTime);
+                } 
+                catch (Exception ex)
+                {
+                    new MBox(ex.Message).ShowDialog();
+                    return;
+                }
+
+                
+                foreach (Grid container in sp_DaysContainer.Children)
+                {
+                    CheckBox? cb_Day = container.Children.OfType<CheckBox>().FirstOrDefault();
+                    if (cb_Day == null)
+                    {
+                        new MBox("cb_Day is null").ShowDialog();
+                        return;
+                    }
+
+                    if (cb_Day.IsChecked == true)
+                    {
+                        DayOfWeek day;
+
+                        if (!Enum.TryParse<DayOfWeek>(cb_Day.Content.ToString(), out day))
+                        {
+                            new MBox($"Cannot parse {cb_Day.Content}").ShowDialog();
+                            return;
+                        }
+                        dailyTimeframe.Add(day,tf);
+                    }
+                }
+
+                _Schedule.DailyTimeframe = dailyTimeframe;
+                _Schedule.IsConstant = true;
             }
             else
             {
-                
+                // Set  timeframes
+                foreach (Grid container in sp_DaysContainer.Children)
+                {
+                    CheckBox? cb_Day = container.Children.OfType<CheckBox>().FirstOrDefault();
+                    if (cb_Day == null)
+                    {
+                        new MBox("cb_Day is null").ShowDialog();
+                        return;
+                    }
+
+                    // Find container of timeframe
+                    StackPanel? tfContainer;
+                    if (cb_Day.IsChecked == true)
+                    {
+                        tfContainer = container.Children.OfType<StackPanel>().FirstOrDefault();
+                    }
+                    else
+                    {
+                        new MBox("tfContainer is null").ShowDialog();
+                        return;
+                    }
+
+                    string? constStartTime;
+                    string? constEndTime;
+                    foreach (var timeInput in tfContainer.Children)
+                    {
+                        if (timeInput.GetType() == typeof(TimeInput))
+                        {
+                            // TODO: Complete custom time saving
+                        }
+                    }
+
+                }
             }
+            
             DialogResult = true;
         }
     }

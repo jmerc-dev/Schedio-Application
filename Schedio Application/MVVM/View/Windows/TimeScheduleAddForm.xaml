@@ -78,8 +78,7 @@
                                       Template="{DynamicResource PrimaryCheckBox}"
                                       VerticalAlignment="Center"
                                       Checked="CheckBox_Day_Checked"
-                                      Unchecked="CheckBox_Day_Unchecked"
-                                      Name="chb_Monday"/>
+                                      Unchecked="CheckBox_Day_Unchecked"/>
 
                             <StackPanel Grid.Column="1"
                                         Orientation="Horizontal"
@@ -108,8 +107,7 @@
                                       Template="{DynamicResource PrimaryCheckBox}"
                                       VerticalAlignment="Center"
                                       Checked="CheckBox_Day_Checked"
-                                      Unchecked="CheckBox_Day_Unchecked"
-                                      />
+                                      Unchecked="CheckBox_Day_Unchecked"/>
 
                             <StackPanel Grid.Column="1"
                                         Orientation="Horizontal"
@@ -306,11 +304,12 @@
                     <StackPanel Grid.Row="1"
                                 Orientation="Horizontal"
                                 Margin="20,0"
-                                Name="ti_ConstTime"
+                                Name="sp_ConstTime"
                                 IsEnabled="{Binding ElementName=chb_ConstantTime, Path=IsChecked}">
                         <userControls:TimeInput FontHeight="15"
                                                 ButtonHeight="23"
-                                                Margin="3"/>
+                                                Margin="3"
+                                                IsStart="True"/>
                         <TextBlock Margin="3"
                                    Text="-"
                                    VerticalAlignment="Center"/>

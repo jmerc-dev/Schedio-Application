@@ -28,7 +28,7 @@ namespace Schedio_Application.MVVM.View.Pages
     /// 
     public partial class NewPage : Page
     {
-        private Dictionary<DayOfWeek, TimeFrame> BaseSchedule;
+        private BaseSchedule BaseSched;
 
         private ObservableCollection<Room> Rooms;
         private ObservableCollection<Room> TempRooms;
@@ -145,9 +145,15 @@ namespace Schedio_Application.MVVM.View.Pages
 
         private void btn_BaseSchedule_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            TimeScheduleAddForm form = new TimeScheduleAddForm();
-            form.Owner = Application.Current.MainWindow;
-            form.ShowDialog();
+            if (BaseSched == null)
+            {
+                BaseSched = new BaseSchedule();
+            }
+            TimeScheduleAddForm form = new TimeScheduleAddForm(BaseSched);
+            if (form.ShowDialog() == true)
+            {
+                new MBox("Base schedule has been set.").ShowDialog();
+            }
         }
 
         private void btn_Delete_Click(object sender, RoutedEventArgs e)

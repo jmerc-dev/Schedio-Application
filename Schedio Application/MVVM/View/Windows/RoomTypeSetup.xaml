@@ -114,7 +114,7 @@
                          Name="tb_ItemNewValue"
                          Padding="5,0">
                 </TextBox>
-                <TextBlock IsHitTestVisible="False" Text="Add item" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0" Foreground="DarkGray" FontSize="15">
+                <TextBlock IsHitTestVisible="False" Text="New Value" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0" Foreground="DarkGray" FontSize="15">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="Visibility" Value="Collapsed"/>

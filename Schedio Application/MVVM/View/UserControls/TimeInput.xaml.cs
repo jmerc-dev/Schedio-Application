@@ -26,14 +26,24 @@ namespace Schedio_Application.MVVM.View.UserControls
     /// <summary>
     /// Interaction logic for TimeInput.xaml
     /// </summary>
+    /// 
+
+
     public partial class TimeInput : UserControl, INotifyPropertyChanged
     {
         private TextBox[] textboxes = new TextBox[4];
         private int tbTraversalIndex;
+        private bool? _IsStart;
 
         // Time Value
         private string _Time, _Period;
         private int _HourTenths, _Hour, _MinTenths, _Min;
+
+        public bool? IsStart
+        {
+            get { return _IsStart; }
+            set { _IsStart = value; }
+        }
 
         public string Time
         {
