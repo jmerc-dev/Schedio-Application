@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schedio_Application.MVVM.ViewModel.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Dynamic;
@@ -9,7 +10,7 @@ using System.Windows;
 
 namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
-    public class Day
+    public class Day : PropertyNotification
     {
         
         private DayOfWeek _name;
@@ -25,13 +26,21 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public List<TimeFrame> CustomTimeframe
         {
             get { return this._CustomTimeframe; }
-            set {  this._CustomTimeframe = value; }
+            set 
+            {  
+                this._CustomTimeframe = value;
+                OnPropertyChanged();
+            }
         }
 
         public bool IsAvailable
         {
             get { return _IsAvailable; }
-            set { _IsAvailable = value; }
+            set 
+            { 
+                _IsAvailable = value;
+                OnPropertyChanged();
+            }
         }
 
         public Day()

@@ -21,10 +21,6 @@
                                 Width="35"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center">
-                                <!-- Optional -->
-                                <!--<Border.Effect>
-                                <DropShadowEffect ShadowDepth="0.5" Opacity=".2"/>
-                            </Border.Effect>-->
                             </Border>
                             <Ellipse x:Name="Ellipse"
                                      Height="20"
@@ -34,10 +30,6 @@
                                      Fill="{DynamicResource PrimaryShadeColor}"
                                      Stroke="{TemplateBinding BorderBrush}"
                                      StrokeThickness="3">
-                                <!-- Optional -->
-                                <!--<Ellipse.Effect>
-                                <DropShadowEffect ShadowDepth="0.5" Opacity=".2"/>
-                            </Ellipse.Effect>-->
                             </Ellipse>
                         </Grid>
                     </Grid>

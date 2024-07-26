@@ -29,13 +29,21 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public string ConstTime_Start
         {
             get { return _ConstTime_Start; }
-            set { _ConstTime_Start = value; }
+            set 
+            { 
+                _ConstTime_Start = value;
+                OnPropertyChanged();
+            }
         }
 
         public string ConstTime_End
         {
             get { return _ConstTime_End; }
-            set { _ConstTime_End = value; }
+            set 
+            { 
+                _ConstTime_End = value;
+                OnPropertyChanged();
+            }
         }
 
         public string Name
@@ -59,9 +67,15 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             set { _IsConstant = value; }
         }
 
+        private string _AvailableDays;
         public string AvailableDays
         {
-            get { return GetAvailDaysFormatted(); }
+            get { return _AvailableDays; }
+            set 
+            { 
+                _AvailableDays = value;
+                OnPropertyChanged();
+            }
         }
 
         public Person() 
@@ -79,6 +93,11 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             {
                 _Days[i] = new Day();
             }
+        }
+
+        public void UpdateFormattedDays()
+        {
+            AvailableDays = GetAvailDaysFormatted();
         }
 
         private void SetDaysName()

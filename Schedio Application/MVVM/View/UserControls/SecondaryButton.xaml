@@ -17,8 +17,7 @@
 
             <Image Name="img_Content" 
                     Stretch="Uniform" 
-                    Grid.Column="0" 
-                    Source="{Binding ImageSource}"
+                    Grid.Column="0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     MaxWidth="40"

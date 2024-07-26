@@ -40,12 +40,6 @@ namespace Schedio_Application.MVVM.View.Windows
             set { _person = value; }
         }
 
-        public bool IsConstant
-        {
-            get { return _person.IsConstant; }
-            set { _person.IsConstant = value; }
-        }
-
         public PersonnelAddForm(Person person, ObservableCollection<Person> people)
         {
             _person = person;
@@ -55,12 +49,24 @@ namespace Schedio_Application.MVVM.View.Windows
             this.DataContext = this;
             this.Owner = Application.Current.MainWindow;
             this.ShowInTaskbar = false;
-
-            // Setting datacontexts
-            wp_Days.DataContext = _person;
-            sp_ConstTimeFrame.DataContext = _person;
-
             tb_Name.Focus();
+
+            // Update
+            Loaded += (sender, e) =>
+            {
+                if (person.Name != null)
+                {
+                    // populate
+                    UpdateName(person.Name);
+                    UpdateIsConstant(person.IsConstant);
+                    UpdateDayAvailable(person.Days);
+                    if (person.IsConstant) 
+                    {
+                        UpdateConstTimeframe(person.ConstTime_Start, person.ConstTime_End);
+                    }
+                }
+            };
+            
         }
 
         private void tb_Name_GotKeyboardFocus(object sender, KeyboardEventArgs e)
@@ -93,17 +99,16 @@ namespace Schedio_Application.MVVM.View.Windows
         {
             if (btn_TimeframeSetter.IsChecked != null)
             {
-                if ((bool) btn_TimeframeSetter.IsChecked)
+                if ((bool)btn_TimeframeSetter.IsChecked)
                 {
-                    btn_CustomTime.IsEnabled = false;
-                    sp_ConstTimeFrame.IsEnabled = true;
-                    img_ArrowRight.Source = new BitmapImage(new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/arrow-right.png"));
+                    
+
                 }
                 else
                 {
                     btn_CustomTime.IsEnabled = true;
                     sp_ConstTimeFrame.IsEnabled = false;
-                    img_ArrowRight.Source = new BitmapImage(new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/arrow-right-disabled.png"));
+
                 }
             }
         }
@@ -206,10 +211,24 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Save_Click(object sender, RoutedEventArgs e)
         {
-            if (IsNameExists(tb_Name.Text))
+            string oldName = _person.Name;
+            string newName = tb_Name.Text;
+
+            if (oldName == null)
             {
-                new MBox("Name already exists.").ShowDialog();
-                return;
+                if (IsNameExists(newName))
+                {
+                    new MBox("Name already exists.").ShowDialog();
+                    return;
+                }
+            }
+            else
+            {
+                if (!oldName.Equals(newName, StringComparison.CurrentCultureIgnoreCase) && IsNameExists(newName))
+                {
+                    new MBox("Name already exists.").ShowDialog();
+                    return;
+                }
             }
 
             if (!DaySelectExists())
@@ -223,8 +242,20 @@ namespace Schedio_Application.MVVM.View.Windows
 
             // Set name
             _person.Name = tb_Name.Text;
+
             // Set schedule
-            if (_person.IsConstant)
+            bool ConstantTf;
+            if (btn_TimeframeSetter.IsChecked != null)
+            {
+                ConstantTf = (bool) btn_TimeframeSetter.IsChecked;
+            }
+            else
+            {
+                new MBox("isConstant is null").ShowDialog();
+                return;
+            }
+
+            if (ConstantTf)
             {
                 TimeFrame tf;
                 // Validate time
@@ -283,6 +314,67 @@ namespace Schedio_Application.MVVM.View.Windows
                 }
                 index++;
             }
+
+            _person.UpdateFormattedDays();
+        }
+
+        // Update Methods
+
+        private void UpdateName(string name)
+        {
+            tb_Name.Text = name;
+        }
+
+        private void UpdateIsConstant(bool constanttf)
+        {
+            btn_TimeframeSetter.IsChecked = constanttf;
+        }
+
+        private void UpdateDayAvailable(Day[] days)
+        {
+            foreach(CheckBox cb in wp_Days.Children)
+            {
+                string name = cb.Content.ToString();
+
+                for (int i = 0; i < days.Length; i++)
+                {
+                    if (days[i].Name.ToString().Equals(name))
+                    {
+                        cb.IsChecked = days[i].IsAvailable;
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void UpdateConstTimeframe(string start, string end)
+        {
+            ti_TimeStart.SetTime(start);
+            ti_TimeEnd.SetTime(end);
+        }
+
+        private void img_ArrowRight_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Image img = (Image)sender;
+            
+            if (img.IsEnabled)
+            {
+                img_ArrowRight.Source = new BitmapImage(new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/arrow-right.png"));
+            }
+            else
+            {
+                img_ArrowRight.Source = new BitmapImage(new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/arrow-right-disabled.png"));
+            }
+        }
+
+        private void btn_TimeframeSetter_Checked(object sender, RoutedEventArgs e)
+        {
+            btn_CustomTime.IsEnabled = false;
+        }
+
+        private void btn_TimeframeSetter_Unchecked(object sender, RoutedEventArgs e)
+        {
+            btn_CustomTime.IsEnabled = true;
         }
     }
 }

@@ -311,6 +311,25 @@ namespace Schedio_Application.MVVM.View.Pages
             switch (tabCntrl_NewPage.SelectedIndex)
             {
                 case 0:
+                    // Personnel
+                    if (lv_PersonnelList.SelectedItems.Count == 0)
+                    {
+                        new MBox("Please select an item.").ShowDialog();
+                    }
+                    else if (lv_PersonnelList.SelectedItems.Count != 1)
+                    {
+                        new MBox("Editing is unavailable for multiple items.").ShowDialog();
+                    }
+                    else
+                    {
+                        Person person = (Person)lv_PersonnelList.SelectedItem;
+                        PersonnelAddForm form = new PersonnelAddForm(person, Personnel);
+
+                        if (form.ShowDialog() == true)
+                        {
+
+                        }
+                    }
                     break;
                 case 1:
                     // Rooms
