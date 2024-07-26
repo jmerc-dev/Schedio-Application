@@ -121,7 +121,7 @@ namespace Schedio_Application.MVVM.View.Pages
 
         private void btn_AddRooms_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (RoomTypes == null || RoomTypes.Count <= 1)
+            if (RoomTypes == null || RoomTypes.Count < 1)
             {
                 new MBox("Please setup the room types first").ShowDialog();
                 return;

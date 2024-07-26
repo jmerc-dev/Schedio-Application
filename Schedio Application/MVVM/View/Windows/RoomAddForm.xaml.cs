@@ -55,6 +55,11 @@ namespace Schedio_Application.MVVM.View.Windows
             this.ShowInTaskbar = false;
             this.Owner = Application.Current.MainWindow;
             _Rooms = rooms;
+
+            _RoomName = room.Name;
+            _ChosenRoomType = room.Type;
+
+            cb_Type.ItemsSource = types;
             tbx_Name.Text = room.Name;
             cb_Type.Text = room.Type;
         }
@@ -78,7 +83,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Save_Click(object sender, RoutedEventArgs e)
         {
-            if (isNameExists(tbx_Name.Text))
+            if (isNameExists(tbx_Name.Text) && !tbx_Name.Text.Equals(_RoomName, StringComparison.CurrentCultureIgnoreCase))
             {
                 new MBox("Name already exists.").ShowDialog();
                 return;

@@ -78,6 +78,7 @@ namespace Schedio_Application.MVVM.View.Windows
             {
                 RoomTypes.Add(tb_ItemAdd.Text);
                 new MBox($"{item} is added", Sound.NoSound).ShowDialog();
+                tb_ItemAdd.Clear();
             }
             else
             {
@@ -154,6 +155,7 @@ namespace Schedio_Application.MVVM.View.Windows
             if (UpdateRoomCategory(selectedItem, newValue))
             {
                 new MBox($"Successfylly updated all occurences of {selectedItem}.").ShowDialog();
+                tb_ItemNewValue.Clear();
             }
 
         }
