@@ -64,6 +64,10 @@ namespace Schedio_Application.MVVM.View.Windows
                     {
                         UpdateConstTimeframe(person.ConstTime_Start, person.ConstTime_End);
                     }
+                    else
+                    {
+                        UpdateCustomTime();
+                    }
                 }
             };
             
@@ -257,46 +261,83 @@ namespace Schedio_Application.MVVM.View.Windows
 
             if (ConstantTf)
             {
-                TimeFrame tf;
-                // Validate time
-                try
+                if (!SetConstantTimeframe())
                 {
-                    tf = new TimeFrame(ti_TimeStart.Time, ti_TimeEnd.Time);
-                }
-                catch (InvalidTimeFrameException ex)
-                {
-                    new MBox(ex.Message).ShowDialog();
                     return;
                 }
-
-                _person.IsConstant = true;
-                _person.ConstTime_Start = tf.StartTime;
-                _person.ConstTime_End = tf.EndTime;
             }
             else
             {
-                // add custom timeframe
-                _person.IsConstant = false;
-
-                if (dailyTimeframe == null)
+                if (!SetCustomTimeframe())
                 {
-                    new MBox("Please setup the custom timeframe first.").ShowDialog();
                     return;
-                }
-
-                foreach (KeyValuePair<DayOfWeek, List<TimeFrame>> keyValuePair in dailyTimeframe)
-                {
-                    // Locate where to put items
-                    for (int i = 0; i < _person.Days.Length; i++)
-                    {
-                        if (keyValuePair.Key == _person.Days[i].Name)
-                        {
-                            _person.Days[i].CustomTimeframe = keyValuePair.Value;
-                        }
-                    }
                 }
             }
             DialogResult = true;
+        }
+
+        private bool SetConstantTimeframe()
+        {
+            TimeFrame tf;
+            // Validate time
+            try
+            {
+                tf = new TimeFrame(ti_TimeStart.Time, ti_TimeEnd.Time);
+            }
+            catch (InvalidTimeFrameException ex)
+            {
+                new MBox(ex.Message).ShowDialog();
+                return false;
+            }
+
+            _person.IsConstant = true;
+            _person.ConstTime_Start = tf.StartTime;
+            _person.ConstTime_End = tf.EndTime;
+            return true;
+        }
+
+        private bool SetCustomTimeframe()
+        {
+            // add custom timeframe
+            _person.IsConstant = false;
+
+            if (dailyTimeframe == null)
+            {
+                new MBox("Please setup the custom timeframe first.").ShowDialog();
+                return false;
+            }
+
+            // Check if available days are populated with timeframe/s
+            foreach (CheckBox cb in wp_Days.Children)
+            {
+                if (cb.IsChecked == true)
+                {
+                    DayOfWeek day;
+                    if (!Enum.TryParse(cb.Content.ToString(), out day))
+                    {
+                        new MBox($"Unable to parse {cb.Content}").ShowDialog();
+                        return false;
+                    }
+                    if (dailyTimeframe[day] == null || dailyTimeframe[day].Count == 0)
+                    {
+                        new MBox($"Day: {cb.Content} is empty").ShowDialog();
+                        return false;
+                    }
+                }
+            }
+
+            foreach (KeyValuePair<DayOfWeek, List<TimeFrame>> keyValuePair in dailyTimeframe)
+            {
+                // Locate where to put items
+                for (int i = 0; i < _person.Days.Length; i++)
+                {
+                    if (keyValuePair.Key == _person.Days[i].Name)
+                    {
+                        _person.Days[i].CustomTimeframe = keyValuePair.Value;
+                    }
+                }
+            }
+            return true;
         }
 
         private void SetAvailableDays()
@@ -351,6 +392,15 @@ namespace Schedio_Application.MVVM.View.Windows
         {
             ti_TimeStart.SetTime(start);
             ti_TimeEnd.SetTime(end);
+        }
+
+        private void UpdateCustomTime()
+        {
+            dailyTimeframe = new Dictionary<DayOfWeek, List<TimeFrame>>();
+            for (int i = 0; i < _person.Days.Length; i++)
+            {
+                dailyTimeframe.Add(_person.Days[i].Name, new List<TimeFrame>(_person.Days[i].CustomTimeframe));
+            }
         }
 
         private void img_ArrowRight_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)

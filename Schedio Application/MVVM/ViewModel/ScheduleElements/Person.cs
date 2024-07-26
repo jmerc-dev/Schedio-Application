@@ -64,7 +64,11 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public bool IsConstant
         {
             get { return _IsConstant; }
-            set { _IsConstant = value; }
+            set 
+            { 
+                _IsConstant = value;
+                OnPropertyChanged();
+            }
         }
 
         private string _AvailableDays;

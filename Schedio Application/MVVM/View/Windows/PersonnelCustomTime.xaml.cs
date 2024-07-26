@@ -50,6 +50,8 @@ namespace Schedio_Application.MVVM.View.Windows
             InitializeComponent();
             dailyTimeframe = dtf;
             DisableDaysExpander(availableDays);
+
+
             foreach (Expander exp in sp_ExpanderContainer.Children)
             {
                 DayOfWeek day;
@@ -86,7 +88,6 @@ namespace Schedio_Application.MVVM.View.Windows
                         if (entry.GetType() == typeof(StartEndTimeInput))
                         {
                             TimeFrame tfEntry = new TimeFrame(((StartEndTimeInput) entry).StartTime, ((StartEndTimeInput)entry).EndTime);
-                            Trace.WriteLine($"{tfEntry.StartTime} -> {tfEntry.EndTime}");
                             if (dayTf.Count != 0)
                             {
                                 // Comparison
