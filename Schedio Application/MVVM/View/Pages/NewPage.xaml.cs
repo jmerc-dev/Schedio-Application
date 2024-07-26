@@ -28,6 +28,8 @@ namespace Schedio_Application.MVVM.View.Pages
     /// 
     public partial class NewPage : Page
     {
+        private Dictionary<DayOfWeek, TimeFrame> BaseSchedule;
+
         private ObservableCollection<Room> Rooms;
         private ObservableCollection<Room> TempRooms;
         private ObservableCollection<string> RoomTypes;
@@ -55,7 +57,6 @@ namespace Schedio_Application.MVVM.View.Pages
                 clearListViewSelectedItems(lv_PersonnelList);
                 clearListViewSelectedItems(lv_RoomsList);
                 clearListViewSelectedItems(lv_SectionList);
-                
             }
             changeTabImage();
         }

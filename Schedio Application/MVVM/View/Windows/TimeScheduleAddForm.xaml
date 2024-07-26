@@ -6,11 +6,12 @@
         xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"
         xmlns:userControls="clr-namespace:Schedio_Application.MVVM.View.UserControls"
         mc:Ignorable="d"
-        Height="670" Width="600"
+        Height="600" Width="950"
         ShowInTaskbar="False"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         ResizeMode="NoResize">
+
 
     <Border Background="{StaticResource PrimaryBackground}" >
         <Grid Margin="30,5,30,30">
@@ -27,11 +28,12 @@
                        Margin="20"/>
 
             <Grid Grid.Row="1"
-                  Margin="30,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="4*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+                  Margin="50,0,20,0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
                 <Grid>
                     <Grid.RowDefinitions>
@@ -49,14 +51,23 @@
                               Content="All"
                               Template="{DynamicResource PrimaryCheckBox}"
                               VerticalAlignment="Center"
-                              FontSize="16"
+                              FontSize="15"
                               Click="CheckBox_All_Click"
                               Name="chb_All"/>
                     <StackPanel Orientation="Vertical"
                                 Grid.Row="2"
                                 Margin="20,0"
                                 Name="sp_DaysContainer">
+                        <StackPanel.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="FontSize" Value="15"/>
+                            </Style>
+                            <Style TargetType="CheckBox">
+                                <Setter Property="FontSize" Value="15"/>
+                            </Style>
+                        </StackPanel.Resources>
                         <Grid>
+
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="2*"/>
@@ -66,10 +77,9 @@
                                       Content="Monday"
                                       Template="{DynamicResource PrimaryCheckBox}"
                                       VerticalAlignment="Center"
-                                      FontSize="16"
                                       Checked="CheckBox_Day_Checked"
                                       Unchecked="CheckBox_Day_Unchecked"
-                                      />
+                                      Name="chb_Monday"/>
 
                             <StackPanel Grid.Column="1"
                                         Orientation="Horizontal"
@@ -79,7 +89,6 @@
                                                         ButtonHeight="23"
                                                         Margin="3"/>
                                 <TextBlock Text="-"
-                                           FontSize="15"
                                            VerticalAlignment="Center"
                                            Margin="3"/>
                                 <userControls:TimeInput FontHeight="15"
@@ -98,7 +107,6 @@
                                       Content="Tuesday"
                                       Template="{DynamicResource PrimaryCheckBox}"
                                       VerticalAlignment="Center"
-                                      FontSize="16"
                                       Checked="CheckBox_Day_Checked"
                                       Unchecked="CheckBox_Day_Unchecked"
                                       />
@@ -111,7 +119,6 @@
                                                         ButtonHeight="23"
                                                         Margin="3"/>
                                 <TextBlock Text="-"
-                                           FontSize="15"
                                            VerticalAlignment="Center"
                                            Margin="3"/>
                                 <userControls:TimeInput FontHeight="15"
@@ -130,7 +137,6 @@
                                       Content="Wednesday"
                                       Template="{DynamicResource PrimaryCheckBox}"
                                       VerticalAlignment="Center"
-                                      FontSize="16"
                                       Checked="CheckBox_Day_Checked"
                                       Unchecked="CheckBox_Day_Unchecked"/>
 
@@ -142,7 +148,6 @@
                                                         ButtonHeight="23"
                                                         Margin="3"/>
                                 <TextBlock Text="-"
-                                           FontSize="15"
                                            VerticalAlignment="Center"
                                            Margin="3"/>
                                 <userControls:TimeInput FontHeight="15"
@@ -161,7 +166,6 @@
                                       Content="Thursday"
                                       Template="{DynamicResource PrimaryCheckBox}"
                                       VerticalAlignment="Center"
-                                      FontSize="16"
                                       Checked="CheckBox_Day_Checked"
                                       Unchecked="CheckBox_Day_Unchecked"
                                       />
@@ -174,7 +178,6 @@
                                                         ButtonHeight="23"
                                                         Margin="3"/>
                                 <TextBlock Text="-"
-                                           FontSize="15"
                                            VerticalAlignment="Center"
                                            Margin="3"/>
                                 <userControls:TimeInput FontHeight="15"
@@ -194,7 +197,6 @@
                                       Content="Friday"
                                       Template="{DynamicResource PrimaryCheckBox}"
                                       VerticalAlignment="Center"
-                                      FontSize="16"
                                       Checked="CheckBox_Day_Checked"
                                       Unchecked="CheckBox_Day_Unchecked"
                                       />
@@ -207,7 +209,6 @@
                                                         ButtonHeight="23"
                                                         Margin="3"/>
                                 <TextBlock Text="-"
-                                           FontSize="15"
                                            VerticalAlignment="Center"
                                            Margin="3"/>
                                 <userControls:TimeInput FontHeight="15"
@@ -226,7 +227,6 @@
                                       Content="Saturday"
                                       Template="{DynamicResource PrimaryCheckBox}"
                                       VerticalAlignment="Center"
-                                      FontSize="16"
                                       Checked="CheckBox_Day_Checked"
                                       Unchecked="CheckBox_Day_Unchecked"
                                       />
@@ -239,7 +239,6 @@
                                                         ButtonHeight="23"
                                                         Margin="3"/>
                                 <TextBlock Text="-"
-                                           FontSize="15"
                                            VerticalAlignment="Center"
                                            Margin="3"/>
                                 <userControls:TimeInput FontHeight="15"
@@ -258,7 +257,6 @@
                                       Content="Sunday"
                                       Template="{DynamicResource PrimaryCheckBox}"
                                       VerticalAlignment="Center"
-                                      FontSize="16"
                                       Checked="CheckBox_Day_Checked"
                                       Unchecked="CheckBox_Day_Unchecked"
                                       />
@@ -271,7 +269,6 @@
                                                         ButtonHeight="23"
                                                         Margin="3"/>
                                 <TextBlock Text="-"
-                                           FontSize="15"
                                            VerticalAlignment="Center"
                                            Margin="3"/>
                                 <userControls:TimeInput FontHeight="15"
@@ -282,9 +279,11 @@
 
                     </StackPanel>
                 </Grid>
-                <Grid Grid.Row="1"
+                <Grid Grid.Row="0"
+                      Grid.Column="1"
                       Height="80"
-                      VerticalAlignment="Top">
+                      VerticalAlignment="Top"
+                      Margin="50,35">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition/>
@@ -295,7 +294,8 @@
                                   Grid.Row="0"
                                   HorizontalAlignment="Left"
                                   Click="CheckBox_ConstantTime_Click"
-                                  Name="chb_ConstantTime"/>
+                                  Name="chb_ConstantTime"
+                                  IsChecked="{Binding IsConstant}"/>
                         <TextBlock Text="Constant Timeframe" 
                                    VerticalAlignment="Center"
                                    FontSize="16"
@@ -307,7 +307,7 @@
                                 Orientation="Horizontal"
                                 Margin="20,0"
                                 Name="ti_ConstTime"
-                                IsEnabled="False">
+                                IsEnabled="{Binding ElementName=chb_ConstantTime, Path=IsChecked}">
                         <userControls:TimeInput FontHeight="15"
                                                 ButtonHeight="23"
                                                 Margin="3"/>
@@ -338,7 +338,9 @@
                         Height="50"
                         Width="100"
                         Margin="10,0"
-                        FontSize="15"/>
+                        FontSize="15"
+                        Name="btn_Save"
+                        Click="btn_Save_Click"/>
             </StackPanel>
         </Grid>
     </Border>

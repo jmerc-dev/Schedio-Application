@@ -1,7 +1,10 @@
 ﻿using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,17 +21,45 @@ namespace Schedio_Application.MVVM.View.Windows
     /// <summary>
     /// Interaction logic for TimeScheduleAddForm.xaml
     /// </summary>
-    public partial class TimeScheduleAddForm : Window
+    public partial class TimeScheduleAddForm : Window, INotifyPropertyChanged
     {
+        private bool _IsConstant;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public bool IsConstant
+        {
+            get { return _IsConstant; }
+            set 
+            { 
+                _IsConstant = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsCustom
+        {
+            get { return !_IsConstant; }
+        }
+
         public TimeScheduleAddForm()
         {
             InitializeComponent();
+            this.DataContext = this;
             this.Owner = Application.Current.MainWindow;
         }
 
         protected override void OnSourceInitialized(EventArgs e)
         {
             IconHelper.RemoveIcon(this);
+        }
+
+        public void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         private void CheckBox_All_Click(object sender, RoutedEventArgs e)
@@ -81,7 +112,6 @@ namespace Schedio_Application.MVVM.View.Windows
                 }
                 chb_All.IsChecked = true;
             }
-
         }
 
         private void CheckBox_Day_Unchecked(object sender, RoutedEventArgs e)
@@ -102,7 +132,6 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void CheckBox_ConstantTime_Click(object sender, RoutedEventArgs e)
         {
-
             bool? isNotNull = ((CheckBox)sender).IsChecked;
             bool isConstant;
             if (isNotNull == null)
@@ -116,16 +145,60 @@ namespace Schedio_Application.MVVM.View.Windows
             }
 
             // Toggle each day timeframe
-            foreach (Grid container in sp_DaysContainer.Children)
+            if (isConstant == true)
             {
-                container.Children.OfType<StackPanel>().ToList().ForEach((stackPanel) =>
+                foreach (Grid container in sp_DaysContainer.Children)
                 {
-                    stackPanel.IsEnabled = !isConstant;
-                });
+                    container.Children.OfType<StackPanel>().ToList().ForEach((stackPanel) =>
+                    {
+                        stackPanel.IsEnabled = false;
+                    });
+                }
             }
- 
-            ti_ConstTime.IsEnabled = isConstant;
+            else
+            {
+                foreach (Grid container in sp_DaysContainer.Children)
+                {
+                    CheckBox? chb = container.Children.OfType<CheckBox>().FirstOrDefault();
+                    StackPanel? daysContainer;
+                    if (chb == null)
+                    {
+                        new MBox($"An error occured at while closing Constant Time toggle.").ShowDialog();
+                        return;
+                    }
+                    else
+                    {
+                        if (chb.IsChecked == true)
+                        {
+                            daysContainer = container.Children.OfType<StackPanel>().FirstOrDefault();
+                        }
+                        else
+                        {
+                            daysContainer = null;
+                        }
+                    }
 
+                    if (daysContainer != null)
+                    {
+                        daysContainer.IsEnabled = true;
+                    }
+                }
+            }
+            
+        }
+
+        private void btn_Save_Click(object sender, RoutedEventArgs e)
+        {
+            // Validate
+            if (IsConstant)
+            {
+                
+            }
+            else
+            {
+                
+            }
+            DialogResult = true;
         }
     }
 }
