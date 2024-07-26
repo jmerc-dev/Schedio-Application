@@ -86,7 +86,10 @@
 
                 <StackPanel Orientation="Horizontal" Grid.Column="2" Width="300" Margin="2">
                     <Ellipse Name="customIndicator" Height="15" Width="15" VerticalAlignment="Center" Margin="5,0"/>
-                    <TextBlock Name="timeframe" Grid.Column="1" FontSize="15" Margin="5,0" VerticalAlignment="Center" TextWrapping="Wrap"  HorizontalAlignment="Left"/>
+                    <TextBlock Name="timeframeStart" FontSize="15" Margin="5,0" VerticalAlignment="Center" TextWrapping="Wrap"  HorizontalAlignment="Left"/>
+                    <Image x:Name="img" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3" Source="pack://application:,,,/Schedio Application;component/Resources/Images/arrow-right.png" Stretch="Uniform"/>
+                    <TextBlock Name="timeframeEnd" FontSize="15" Margin="5,0" VerticalAlignment="Center" TextWrapping="Wrap"  HorizontalAlignment="Left"/>
+                    <TextBlock Name="customText" Text="Custom" FontSize="15" Margin="5,0" VerticalAlignment="Center" TextWrapping="Wrap"  HorizontalAlignment="Left"/>
                 </StackPanel>
             </WrapPanel>
             
@@ -95,11 +98,16 @@
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding IsConstant}" Value="True">
                 <Setter TargetName="customIndicator" Property="Fill" Value="{StaticResource SecondaryColor}"/>
-                <Setter TargetName="timeframe" Property="Text" Value="{Binding Timeframe}"/>
+                <Setter TargetName="timeframeStart" Property="Text" Value="{Binding ConstTime_Start}"/>
+                <Setter TargetName="timeframeEnd" Property="Text" Value="{Binding ConstTime_End}"/>
+                <Setter TargetName="customText" Property="Visibility" Value="Collapsed"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding IsConstant}" Value="False">
                 <Setter TargetName="customIndicator" Property="Fill" Value="{StaticResource SecondaryShadeColor}"/>
-                <Setter TargetName="timeframe" Property="Text" Value="Custom"/>
+                <Setter TargetName="timeframeStart" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="timeframeEnd" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="img" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="customText" Property="Visibility" Value="Visible"/>
             </DataTrigger>
         </DataTemplate.Triggers>
 
