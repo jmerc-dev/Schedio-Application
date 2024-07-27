@@ -73,11 +73,11 @@ namespace Schedio_Application.MVVM.View.Windows
                         }
                     }
 
-                    SetAvailableDays(baseSchedule, sp_DaysContainer);;
+                    SetAvailableDays(baseSchedule, sp_DaysContainer);
                 }
                 else
                 {
-
+                    SetAvailableDays(baseSchedule, sp_DaysContainer);
                 }
             }
         }
@@ -100,16 +100,52 @@ namespace Schedio_Application.MVVM.View.Windows
             foreach (Grid dayContainer in container.Children)
             {
                 CheckBox? cbox = dayContainer.Children.OfType<CheckBox>().FirstOrDefault();
-
+                DayOfWeek day;
+                if (baseSchedule.DailyTimeframe == null)
+                {
+                    throw new NullReferenceException("BaseSchedule dailytimeframe is null");
+                }
                 if (cbox != null)
                 {
-                    DayOfWeek day;
-                    
                     if (Enum.TryParse<DayOfWeek>(cbox.Content.ToString(), out day))
                     {
                         if (baseSchedule.DailyTimeframe.ContainsKey(day))
                         {
                             cbox.IsChecked = true;
+                        }
+                    }
+                }
+                else
+                {
+                    throw new NullReferenceException("Cbox is null");
+                }
+
+                if (!baseSchedule.IsConstant)
+                {
+                    if (!baseSchedule.DailyTimeframe.ContainsKey(day))
+                    {
+                        continue;
+                    }
+
+                    StackPanel? tiContainer = dayContainer.Children.OfType<StackPanel>().FirstOrDefault();
+
+                    if (tiContainer != null)
+                    {
+                        foreach (var item in tiContainer.Children)
+                        {
+                            if (item.GetType() == typeof(TimeInput))
+                            {
+                                TimeInput input = (TimeInput)item;
+
+                                if (input.IsStart == true)
+                                {
+                                    input.SetTime(baseSchedule.DailyTimeframe[day].StartTime);
+                                }
+                                else
+                                {
+                                    input.SetTime(baseSchedule.DailyTimeframe[day].EndTime);
+                                }
+                            }
                         }
                     }
                 }
@@ -204,6 +240,7 @@ namespace Schedio_Application.MVVM.View.Windows
             chb_All.IsChecked = false;
         }
 
+
         private void CheckBox_ConstantTime_Click(object sender, RoutedEventArgs e)
         {
             bool? isNotNull = ((CheckBox)sender).IsChecked;
@@ -261,7 +298,7 @@ namespace Schedio_Application.MVVM.View.Windows
             
         }
 
-        private bool daySelected()
+        private bool DaySelected()
         {
             foreach (Grid container in sp_DaysContainer.Children)
             {
@@ -304,7 +341,7 @@ namespace Schedio_Application.MVVM.View.Windows
         {
             Dictionary<DayOfWeek, TimeFrame>? dailyTimeframe = new Dictionary<DayOfWeek, TimeFrame>();
 
-            if (!daySelected())
+            if (!DaySelected())
             {
                 new MBox("Day available cannot be empty").ShowDialog();
                 return;

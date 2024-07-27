@@ -145,19 +145,27 @@ namespace Schedio_Application.MVVM.View.Pages
 
         private void btn_BaseSchedule_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (BaseSched == null)
+            try
             {
-                BaseSched = new BaseSchedule();
-            }
-            TimeScheduleAddForm form = new TimeScheduleAddForm(BaseSched);
-            if (form.ShowDialog() == true)
-            {
-                foreach (KeyValuePair<DayOfWeek, TimeFrame> kvp in BaseSched.DailyTimeframe)
+                if (BaseSched == null)
                 {
-                    Trace.WriteLine($"{kvp.Key} : {kvp.Value.StartTime} - {kvp.Value.EndTime}");
+                    BaseSched = new BaseSchedule();
                 }
-                new MBox("Base schedule has been set.", Sound.NoSound).ShowDialog();
+                TimeScheduleAddForm form = new TimeScheduleAddForm(BaseSched);
+                if (form.ShowDialog() == true)
+                {
+                    foreach (KeyValuePair<DayOfWeek, TimeFrame> kvp in BaseSched.DailyTimeframe)
+                    {
+                        Trace.WriteLine($"{kvp.Key} : {kvp.Value.StartTime} - {kvp.Value.EndTime}");
+                    }
+                    new MBox("Base schedule has been set.", Sound.NoSound).ShowDialog();
+                }
             }
+            catch (Exception ex)
+            {
+                new MBox(ex.Message).ShowDialog();
+            }
+            
         }
 
         private void btn_Delete_Click(object sender, RoutedEventArgs e)
