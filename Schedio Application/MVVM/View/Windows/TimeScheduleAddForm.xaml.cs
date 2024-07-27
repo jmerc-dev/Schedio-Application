@@ -215,6 +215,26 @@ namespace Schedio_Application.MVVM.View.Windows
             return false;
         }
 
+        private bool SetBaseSchedule(TimeFrame timeFrame, DayOfWeek day, Dictionary<DayOfWeek, TimeFrame>? dailyTimeframe)
+        {
+
+            if (dailyTimeframe == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                dailyTimeframe.Add(day, timeFrame);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                new MBox(ex.Message).ShowDialog();
+                return false;
+            }
+        }
+
         private void btn_Save_Click(object sender, RoutedEventArgs e)
         {
             Dictionary<DayOfWeek, TimeFrame>? dailyTimeframe = new Dictionary<DayOfWeek, TimeFrame>();
@@ -279,7 +299,12 @@ namespace Schedio_Application.MVVM.View.Windows
                             new MBox($"Cannot parse {cb_Day.Content}").ShowDialog();
                             return;
                         }
-                        dailyTimeframe.Add(day,tf);
+
+                        if (!SetBaseSchedule(tf, day, dailyTimeframe))
+                        {
+                            new MBox($"Failed to add in Day: {cb_Day.Content}").ShowDialog();
+                            return;
+                        }
                     }
                 }
 
@@ -306,23 +331,61 @@ namespace Schedio_Application.MVVM.View.Windows
                     }
                     else
                     {
-                        new MBox("tfContainer is null").ShowDialog();
-                        return;
+                        // Go to next loop
+                        continue;
                     }
 
-                    string? constStartTime;
-                    string? constEndTime;
+
+                    string constStartTime = "";
+                    string constEndTime = "";
                     foreach (var timeInput in tfContainer.Children)
                     {
                         if (timeInput.GetType() == typeof(TimeInput))
                         {
-                            // TODO: Complete custom time saving
+                            TimeInput ti = (TimeInput)timeInput;
+                            if (ti.IsStart == true)
+                            {
+                                constStartTime = ti.Time;
+                            }
+                            else
+                            {
+                                constEndTime = ti.Time;
+                            }
+
                         }
                     }
 
+                    TimeFrame tf;
+                    DayOfWeek day;
+
+                    try
+                    {
+                        tf = new TimeFrame(constStartTime, constEndTime);
+                    }
+                    catch (Exception ex)
+                    {
+                        new MBox(ex.Message).ShowDialog();
+                        return;
+                    }
+
+                    if (!Enum.TryParse<DayOfWeek>(cb_Day.Content.ToString(), out day))
+                    {
+                        new MBox($"Cannot parse {cb_Day.Content} to DayOfWeek enum").ShowDialog();
+                        return;
+                    }
+
+                    if (!SetBaseSchedule(tf, day, dailyTimeframe))
+                    {
+                        new MBox($"Cannot set for {day.ToString()}").ShowDialog();
+                        return;
+                    }
                 }
             }
             
+            if (dailyTimeframe != null)
+            {
+                _Schedule.DailyTimeframe = dailyTimeframe;
+            }
             DialogResult = true;
         }
     }
