@@ -156,7 +156,7 @@ namespace Schedio_Application.MVVM.View.Pages
                 {
                     Trace.WriteLine($"{kvp.Key} : {kvp.Value.StartTime} - {kvp.Value.EndTime}");
                 }
-                new MBox("Base schedule has been set.").ShowDialog();
+                new MBox("Base schedule has been set.", Sound.NoSound).ShowDialog();
             }
         }
 

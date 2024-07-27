@@ -56,6 +56,30 @@ namespace Schedio_Application.MVVM.View.Windows
             this.Owner = Application.Current.MainWindow;
 
             _Schedule = baseSchedule;
+
+            if (baseSchedule.DailyTimeframe != null)
+            {
+                // Update
+                IsConstant = baseSchedule.IsConstant;
+
+                if (IsConstant)
+                {
+                    foreach (var item in sp_ConstTime.Children)
+                    {
+                        if (item.GetType() == typeof(TimeInput))
+                        {
+                            TimeInput ti = (TimeInput) item;
+                            SetTimeframe(ti, baseSchedule);
+                        }
+                    }
+
+                    SetAvailableDays(baseSchedule, sp_DaysContainer);;
+                }
+                else
+                {
+
+                }
+            }
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -68,6 +92,46 @@ namespace Schedio_Application.MVVM.View.Windows
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        private void SetAvailableDays(BaseSchedule baseSchedule, StackPanel container)
+        {
+            foreach (Grid dayContainer in container.Children)
+            {
+                CheckBox? cbox = dayContainer.Children.OfType<CheckBox>().FirstOrDefault();
+
+                if (cbox != null)
+                {
+                    DayOfWeek day;
+                    
+                    if (Enum.TryParse<DayOfWeek>(cbox.Content.ToString(), out day))
+                    {
+                        if (baseSchedule.DailyTimeframe.ContainsKey(day))
+                        {
+                            cbox.IsChecked = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void SetTimeframe(TimeInput ti, BaseSchedule baseSchedule)
+        {
+            foreach (KeyValuePair<DayOfWeek, TimeFrame> kvp in baseSchedule.DailyTimeframe)
+            {
+                if (kvp.Value != null)
+                {
+                    if (ti.IsStart == true)
+                    {
+                        ti.SetTime(kvp.Value.StartTime);
+                    }
+                    else
+                    {
+                        ti.SetTime(kvp.Value.EndTime);
+                    }
+                    return;
+                }
             }
         }
 
@@ -93,10 +157,11 @@ namespace Schedio_Application.MVVM.View.Windows
         private void CheckBox_Day_Checked(object sender, RoutedEventArgs e)
         {
             // To not affect constant timeframe mode
-            if (chb_ConstantTime.IsChecked == true)
+            if (IsConstant)
             {
                 return;
             }
+
 
             ((Grid)((CheckBox)sender).Parent).Children.OfType<StackPanel>().ToList().ForEach((stackPanel) =>
             {
