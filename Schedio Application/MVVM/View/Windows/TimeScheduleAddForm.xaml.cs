@@ -57,29 +57,31 @@ namespace Schedio_Application.MVVM.View.Windows
 
             _Schedule = baseSchedule;
 
-            if (baseSchedule.DailyTimeframe != null)
-            {
-                // Update
-                IsConstant = baseSchedule.IsConstant;
-
-                if (IsConstant)
+            Loaded += (sender, e) => {
+                if (baseSchedule.DailyTimeframe != null)
                 {
-                    foreach (var item in sp_ConstTime.Children)
+                    // Update
+                    IsConstant = baseSchedule.IsConstant;
+
+                    if (IsConstant)
                     {
-                        if (item.GetType() == typeof(TimeInput))
+                        foreach (var item in sp_ConstTime.Children)
                         {
-                            TimeInput ti = (TimeInput) item;
-                            SetTimeframe(ti, baseSchedule);
+                            if (item.GetType() == typeof(TimeInput))
+                            {
+                                TimeInput ti = (TimeInput)item;
+                                SetTimeframe(ti, baseSchedule);
+                            }
                         }
-                    }
 
-                    SetAvailableDays(baseSchedule, sp_DaysContainer);
+                        SetAvailableDays(baseSchedule, sp_DaysContainer);
+                    }
+                    else
+                    {
+                        SetAvailableDays(baseSchedule, sp_DaysContainer);
+                    }
                 }
-                else
-                {
-                    SetAvailableDays(baseSchedule, sp_DaysContainer);
-                }
-            }
+            };
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -411,7 +413,6 @@ namespace Schedio_Application.MVVM.View.Windows
                 }
 
                 _Schedule.DailyTimeframe = dailyTimeframe;
-                _Schedule.IsConstant = true;
             }
             else
             {
@@ -488,6 +489,7 @@ namespace Schedio_Application.MVVM.View.Windows
             {
                 _Schedule.DailyTimeframe = dailyTimeframe;
             }
+            _Schedule.IsConstant = IsConstant;
             DialogResult = true;
         }
     }

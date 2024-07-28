@@ -146,7 +146,7 @@ namespace Schedio_Application.MVVM.View.UserControls
                 Min = Int32.Parse(timeSplit[0][4].ToString());
 
                 Period = timeSplit[1].ToUpper();
-
+                Trace.WriteLine(Period);
                 return true;
             } 
             catch (FormatException ex)
@@ -161,6 +161,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             this.DataContext = this;
 
             _Time = "";
+            Period = "AM";
 
             Loaded += (sender, e) =>
             {
@@ -169,9 +170,6 @@ namespace Schedio_Application.MVVM.View.UserControls
                 textboxes[1] = tb_Hour;
                 textboxes[2] = tb_MinTenths;
                 textboxes[3] = tb_Min;
-
-                Period = "AM";
-
             };
 
         }

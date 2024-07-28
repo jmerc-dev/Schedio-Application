@@ -241,8 +241,7 @@ namespace Schedio_Application.MVVM.View.Windows
                 return;
             }
 
-            // Assign available days
-            SetAvailableDays();
+            
 
             // Set name
             _person.Name = tb_Name.Text;
@@ -273,6 +272,8 @@ namespace Schedio_Application.MVVM.View.Windows
                     return;
                 }
             }
+            // Assign available days
+            SetAvailableDays();
             DialogResult = true;
         }
 

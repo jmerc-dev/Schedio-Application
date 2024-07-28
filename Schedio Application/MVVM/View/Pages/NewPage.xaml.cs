@@ -154,9 +154,10 @@ namespace Schedio_Application.MVVM.View.Pages
                 TimeScheduleAddForm form = new TimeScheduleAddForm(BaseSched);
                 if (form.ShowDialog() == true)
                 {
-                    foreach (KeyValuePair<DayOfWeek, TimeFrame> kvp in BaseSched.DailyTimeframe)
+                    Trace.WriteLine($"IsConstant: {form.Schedule.IsConstant}");
+                    foreach (KeyValuePair<DayOfWeek, TimeFrame> kvp in form.Schedule.DailyTimeframe)
                     {
-                        Trace.WriteLine($"{kvp.Key} : {kvp.Value.StartTime} - {kvp.Value.EndTime}");
+                        Trace.WriteLine($"{kvp.Key.ToString()}: {kvp.Value.StartTime} => {kvp.Value.EndTime}");
                     }
                     new MBox("Base schedule has been set.", Sound.NoSound).ShowDialog();
                 }
