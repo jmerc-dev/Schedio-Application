@@ -37,7 +37,8 @@
                        Stretch="Uniform"
                        Height="70"
                        VerticalAlignment="Center"/>
-                <TextBox Text="Section Name"
+                <TextBox Text="{Binding SectionName}"
+                         Name="tb_Name"
                          Style="{StaticResource TitleTextBox}"
                          FontSize="22"
                          VerticalAlignment="Center"/>
@@ -85,8 +86,10 @@
                 </Grid>
                 <ScrollViewer Style="{StaticResource MainScrollViewer}"
                               Grid.Row="1">
-                    <StackPanel Orientation="Vertical"
-                                Name="sp_SubjectList">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Vertical" Height="auto" Name="sp_SubjectList">
+                            
+                        </StackPanel>
                         <Button Style="{StaticResource ExtraWideButton}"
                                 Height="50"
                                 Name="btn_AddSubject"
@@ -111,7 +114,9 @@
                         Content="Save"
                         MinWidth="90"
                         FontSize="15"
-                        Margin="10,0"/>
+                        Margin="10,0"
+                        Name="btn_Save"
+                        Click="btn_Save_Click"/>
             </StackPanel>
         </Grid>
     </Border>

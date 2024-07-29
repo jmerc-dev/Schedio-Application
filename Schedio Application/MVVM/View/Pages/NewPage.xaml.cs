@@ -37,16 +37,21 @@ namespace Schedio_Application.MVVM.View.Pages
         private ObservableCollection<Person> Personnel;
         private ObservableCollection<Person> TempPersonnel;
 
+        private ObservableCollection<ClassSection> Sections;
+        private ObservableCollection<ClassSection> TempSections;
+
         private WarningConfirmation? warningModal;
 
         public NewPage()
         {
             this.Rooms = new ObservableCollection<Room>();
             this.Personnel = new ObservableCollection<Person>();
+            this.Sections = new ObservableCollection<ClassSection>();
             InitializeComponent();
             
             lv_RoomsList.ItemsSource = this.Rooms;
             lv_PersonnelList.ItemsSource = this.Personnel;
+            lv_SectionList.ItemsSource = this.Sections;
             this.DataContext = this;
         }
         
@@ -137,10 +142,13 @@ namespace Schedio_Application.MVVM.View.Pages
 
         private void btn_AddSections_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            SectionAddForm form = new SectionAddForm();
-            form.ShowInTaskbar = false;
-            form.Owner = Application.Current.MainWindow;
-            form.ShowDialog();
+            SectionAddForm form = new SectionAddForm(new ClassSection(), Personnel, RoomTypes);
+
+            if (form.ShowDialog() == true)
+            {
+                this.Sections.Add(form._Section);
+                Trace.WriteLine(form._Section.Name);
+            }
         }
 
         private void btn_BaseSchedule_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,9 +24,34 @@ namespace Schedio_Application.MVVM.View.UserControls
     /// </summary>
     public partial class SubjectItem : UserControl
     {
-        public SubjectItem()
+
+        private Subject _Subject; 
+
+
+        public int MyProperty { get; set; }
+
+        // Implement binding here for easy retrieval of data
+        public SubjectItem(Subject subject, ObservableCollection<Person> people, ObservableCollection<string> roomTypes)
         {
             InitializeComponent();
+
+            Loaded += (sender, e) =>
+            {
+                cbox_Personnel.ItemsSource = people;
+                cbox_RoomType.ItemsSource = roomTypes;
+            };
+        }
+
+        public SubjectItem(ObservableCollection<string> people, ObservableCollection<string> roomTypes)
+        {
+            InitializeComponent();
+
+            Loaded += (sender, e) =>
+            {
+                cbox_Personnel.ItemsSource = people;
+                cbox_RoomType.ItemsSource = roomTypes;
+
+            };
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

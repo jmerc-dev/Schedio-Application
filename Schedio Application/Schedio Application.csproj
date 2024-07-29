@@ -16,6 +16,7 @@
     <None Remove="Resources\Images\arrow-right.png" />
     <None Remove="Resources\Images\arrow-up.png" />
     <None Remove="Resources\Images\back.png" />
+    <None Remove="Resources\Images\book.png" />
     <None Remove="Resources\Images\change-disabled.png" />
     <None Remove="Resources\Images\change.png" />
     <None Remove="Resources\Images\clocksetting-disabled.png" />
@@ -49,6 +50,7 @@
     <None Remove="Resources\Images\time-filled.png" />
     <None Remove="Resources\Images\time-inversed.png" />
     <None Remove="Resources\Images\time.png" />
+    <None Remove="Resources\Images\totaltime.png" />
     <None Remove="Resources\Images\trash-inversed.png" />
     <None Remove="Resources\Images\trash.png" />
     <None Remove="Resources\Images\update-inversed.png" />
@@ -62,6 +64,7 @@
     <Resource Include="Resources\Images\arrow-right.png" />
     <Resource Include="Resources\Images\arrow-up.png" />
     <Resource Include="Resources\Images\back.png" />
+    <Resource Include="Resources\Images\book.png" />
     <Resource Include="Resources\Images\change-disabled.png" />
     <Resource Include="Resources\Images\change.png" />
   </ItemGroup>
@@ -106,6 +109,7 @@
     <Resource Include="Resources\Images\time-filled.png" />
     <Resource Include="Resources\Images\time-inversed.png" />
     <Resource Include="Resources\Images\time.png" />
+    <Resource Include="Resources\Images\totaltime.png" />
     <Resource Include="Resources\Images\trash-inversed.png" />
     <Resource Include="Resources\Images\trash.png" />
     <Resource Include="Resources\Images\update-inversed.png" />

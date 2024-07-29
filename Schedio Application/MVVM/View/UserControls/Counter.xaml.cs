@@ -27,17 +27,18 @@ namespace Schedio_Application.MVVM.View.UserControls
 
         private int oldValue = 0;
 
-        private int _Number;
+
+        private static readonly DependencyProperty _Number =
+            DependencyProperty.Register("Number", typeof(int), typeof(Counter), new PropertyMetadata(null));
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public int Number
         {
-            get { return _Number; }
+            get { return (int)GetValue(_Number); }
             set 
-            { 
-                _Number = value;
-                NotifyPropertyChanged(); 
+            {
+                SetValue(_Number, value);
             }
         }
 
@@ -70,6 +71,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             {
                 Number -= 1;
             }
+            Trace.WriteLine(Number);
         }
 
         private void tb_Num_TextChanged(object sender, TextChangedEventArgs e)
