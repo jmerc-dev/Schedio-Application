@@ -184,6 +184,7 @@ namespace Schedio_Application.MVVM.View.Pages
                 case 2:
                     if (DeleteItemFrom(lv_SectionList, typeof(ClassSection)))
                     {
+                        tb_SearchSection.Text = String.Empty;
                         break;
                     };
                     break;
@@ -329,6 +330,26 @@ namespace Schedio_Application.MVVM.View.Pages
                 else
                 {
                     lv_PersonnelList.ItemsSource = Personnel;
+                }
+            }
+            else if (searchBox.Name.Equals("tb_SearchSection"))
+            {
+                TempSections = new ObservableCollection<ClassSection>();
+                if (!searchBox.Text.Equals(String.Empty))
+                {
+                    foreach (ClassSection section in Sections)
+                    {
+                        if (section.Name.StartsWith(searchBox.Text, StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            TempSections.Add(section);
+                        }
+                    }
+
+                    lv_SectionList.ItemsSource = TempSections;
+                }
+                else
+                {
+                    lv_SectionList.ItemsSource = Sections;
                 }
             }
         }
