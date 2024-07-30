@@ -147,7 +147,16 @@ namespace Schedio_Application.MVVM.View.Pages
             if (form.ShowDialog() == true)
             {
                 this.Sections.Add(form._Section);
-                Trace.WriteLine(form._Section.Name);
+            }
+
+            foreach (ClassSection cs in Sections)
+            {
+                Trace.WriteLine(cs.Name);
+                foreach (Subject s in cs.Subjects)
+                {
+                    Trace.WriteLine($"\t{s.Name} - {s.RoomType} - {s.Units} - {s.AssignedPerson.Name}");
+                }
+                
             }
         }
 
@@ -396,6 +405,9 @@ namespace Schedio_Application.MVVM.View.Pages
             if (RoomTypes == null)
             {
                 RoomTypes = new ObservableCollection<string>();
+                RoomTypes.Add("Classic");
+                RoomTypes.Add("Court");
+                RoomTypes.Add("Lab");
             }
 
             rts = new RoomTypeSetup(RoomTypes, Rooms);

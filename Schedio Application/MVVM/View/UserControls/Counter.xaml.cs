@@ -45,16 +45,8 @@ namespace Schedio_Application.MVVM.View.UserControls
         public Counter()
         {
             InitializeComponent();
-            this.DataContext = this;
         }
 
-        private void NotifyPropertyChanged([CallerMemberName] string PropertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(PropertyName));
-            }
-        }
 
         private void btn_Add_Click(object sender, RoutedEventArgs e)
         {
@@ -71,7 +63,6 @@ namespace Schedio_Application.MVVM.View.UserControls
             {
                 Number -= 1;
             }
-            Trace.WriteLine(Number);
         }
 
         private void tb_Num_TextChanged(object sender, TextChangedEventArgs e)

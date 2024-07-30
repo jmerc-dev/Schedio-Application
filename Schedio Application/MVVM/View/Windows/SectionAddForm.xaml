@@ -11,7 +11,8 @@
         ShowInTaskbar="False"
         Icon="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
         Background="Transparent"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Window.Resources>
         <Style TargetType="TextBlock" x:Key="Title">
             <Setter Property="FontSize" Value="17"/>

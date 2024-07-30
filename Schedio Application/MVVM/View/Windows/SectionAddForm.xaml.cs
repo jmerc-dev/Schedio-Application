@@ -24,40 +24,52 @@ namespace Schedio_Application.MVVM.View.Windows
     public partial class SectionAddForm : Window
     {
         public ClassSection _Section;
-        private ObservableCollection<string> _People;
+        private ObservableCollection<Person> _People;
         private ObservableCollection<string> _RoomTypes;
+        private string _SectionName;
 
         // TODO: Adding subjects
-        private string _Name;
         public string SectionName
         {
-            get { return _Name; }
-            set { _Name = value; }
+            get { return _SectionName; }
+            set { _SectionName = value; }
         }
 
         public SectionAddForm(ClassSection section, ObservableCollection<Person> people, ObservableCollection<string> roomTypes)
         {
             InitializeComponent();
-            this.DataContext = this;
-            _People = new ObservableCollection<string>();
+            _Section = section;
             this.Owner = Application.Current.MainWindow;
             this.ShowInTaskbar = false;
+
+            _People = people;
             _Section = section;
             _RoomTypes = roomTypes;
 
-            foreach(Person person in people)
-            {
-                _People.Add(person.Name);
-            }
+
+            tb_Name.Focus();
         }
 
         private void btn_AddSubject_Click(object sender, RoutedEventArgs e)
-        {
-            sp_SubjectList.Children.Add(new SubjectItem(_People, _RoomTypes)) ;
+        {   
+            sp_SubjectList.Children.Add(new SubjectItem(new Subject(), _People, _RoomTypes)) ;
         }
 
         private void btn_Save_Click(object sender, RoutedEventArgs e)
         {
+            _Section.Subjects.Clear();
+            foreach (SubjectItem subitem in sp_SubjectList.Children)
+            {
+
+                if (subitem.ValidateEntries())
+                {
+                    _Section.Subjects.Add(subitem.Subject);
+                }
+                else
+                {
+                    return;
+                }
+            }
             _Section.Name = SectionName;
             DialogResult = true;
         }
