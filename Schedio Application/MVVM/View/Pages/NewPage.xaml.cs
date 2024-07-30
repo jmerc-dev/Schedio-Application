@@ -90,29 +90,6 @@ namespace Schedio_Application.MVVM.View.Pages
             }
         }
 
-        // Add button will be manipulated according to selected Tab Item
-        private void ChangeAddButton(SecondaryButton button)
-        {
-            TabItem[] tabItems = { tabItem_Personnel, tabItem_Rooms, tabItem_Sections};
-
-            for (int i = 0;i < tabItems.Length;i++)
-            {
-                String tabItemName = tabItems[i].Name.ToString().Substring(8, tabItems[i].Name.Length - 8);
-       
-                if (tabItems[i].IsSelected)
-                {
-                    if (tabItemName.Equals("Time"))
-                    {
-                        button.Visibility = Visibility.Collapsed;
-                    }
-                    else
-                    {
-                        button.Visibility = Visibility.Visible;
-                    }
-                }
-            }
-        }
-
 
         private void btn_AddPersonnel_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -205,6 +182,10 @@ namespace Schedio_Application.MVVM.View.Pages
                     };
                     break;
                 case 2:
+                    if (DeleteItemFrom(lv_SectionList, typeof(ClassSection)))
+                    {
+                        break;
+                    };
                     break;
                 default:
                     MessageBox.Show("No tab selected.");
@@ -240,8 +221,13 @@ namespace Schedio_Application.MVVM.View.Pages
                     objectsToBeRemoved.Add(item.Name);
                 }
             }
-            // TODO: section elseif
-
+            else if (itemType == typeof(ClassSection))
+            {
+                foreach (ClassSection item in lv.SelectedItems)
+                {
+                    objectsToBeRemoved.Add(item.Name);
+                }
+            }
 
             // Warning
             warningModal = new WarningConfirmation(specificType, objectsToBeRemoved);;
@@ -257,6 +243,10 @@ namespace Schedio_Application.MVVM.View.Pages
                 else if (itemType == typeof(Room))
                 {
                     return RemoveItems<Room>(Rooms, lv.SelectedItems);
+                }
+                else if (itemType == typeof(ClassSection))  
+                {
+                    return RemoveItems<ClassSection>(Sections, lv.SelectedItems);
                 }
             }
             return false;

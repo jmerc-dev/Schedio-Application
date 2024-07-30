@@ -83,7 +83,7 @@ namespace Schedio_Application.MVVM.View.UserControls
 
         public bool ValidateEntries()
         {
-            if (Subject.Name.Equals(String.Empty))
+            if (Subject.Name == null || Subject.Name.Equals(String.Empty))
             {
                 new MBox("Name cannot be empty").ShowDialog();
                 return false;

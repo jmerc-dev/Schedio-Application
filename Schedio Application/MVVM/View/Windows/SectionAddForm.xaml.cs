@@ -55,7 +55,7 @@ namespace Schedio_Application.MVVM.View.Windows
             sp_SubjectList.Children.Add(new SubjectItem(new Subject(), _People, _RoomTypes)) ;
         }
 
-        private void btn_Save_Click(object sender, RoutedEventArgs e)
+        private void btn_Save_Click(object sender, RoutedEventArgs e)   
         {
             _Section.Subjects.Clear();
             foreach (SubjectItem subitem in sp_SubjectList.Children)
