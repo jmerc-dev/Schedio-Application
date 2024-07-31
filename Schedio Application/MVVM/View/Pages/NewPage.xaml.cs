@@ -119,22 +119,22 @@ namespace Schedio_Application.MVVM.View.Pages
 
         private void btn_AddSections_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            SectionAddForm form = new SectionAddForm(new ClassSection(), Personnel, RoomTypes);
+            SectionAddForm form = new SectionAddForm(new ClassSection(), Personnel, RoomTypes, Sections);
 
             if (form.ShowDialog() == true)
             {
                 this.Sections.Add(form._Section);
             }
 
-            foreach (ClassSection cs in Sections)
-            {
-                Trace.WriteLine(cs.Name);
-                foreach (Subject s in cs.Subjects)
-                {
-                    Trace.WriteLine($"\t{s.Name} - {s.RoomType} - {s.Units} - {s.AssignedPerson.Name}");
-                }
+            //foreach (ClassSection cs in Sections)
+            //{
+            //    Trace.WriteLine(cs.Name);
+            //    foreach (Subject s in cs.Subjects)
+            //    {
+            //        Trace.WriteLine($"\t{s.Name} - {s.RoomType} - {s.Units} - {s.AssignedPerson.Name}");
+            //    } 
                 
-            }
+            //}
         }
 
         private void btn_BaseSchedule_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -187,6 +187,12 @@ namespace Schedio_Application.MVVM.View.Pages
                         tb_SearchSection.Text = String.Empty;
                         break;
                     };
+                    ClassSection cs = (ClassSection)lv_SectionList.SelectedItem;
+                    Trace.WriteLine($"{cs.Name}");
+                    foreach (Subject s in cs.Subjects)
+                    {
+                        Trace.WriteLine($"{s.Name} - {s.RoomType} - {s.Units} - {s.AssignedPerson.Name}");
+                    }
                     break;
                 default:
                     MessageBox.Show("No tab selected.");
@@ -402,6 +408,24 @@ namespace Schedio_Application.MVVM.View.Pages
                     }
                     break;
                 case 2:
+                    if (lv_SectionList.SelectedItems.Count == 0)
+                    {
+                        new MBox("Please select an item.").ShowDialog();
+                    }
+                    else if (lv_SectionList.SelectedItems.Count != 1)
+                    {
+                        new MBox("Editing is unavailable for multiple items.").ShowDialog();
+                    }
+                    else
+                    {
+                        // Update
+                        ClassSection section = (ClassSection)lv_SectionList.SelectedItem;
+                        SectionAddForm updateForm = new SectionAddForm(section, Personnel, RoomTypes, Sections);
+                        if (updateForm.ShowDialog() == true)
+                        {
+                            
+                        }
+                    }
                     break;
                 default:
                     new MBox("No Tab selected").ShowDialog();

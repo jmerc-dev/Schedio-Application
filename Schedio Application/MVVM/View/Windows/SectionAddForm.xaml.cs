@@ -3,8 +3,10 @@ using Schedio_Application.MVVM.ViewModel.ScheduleElements;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,23 +23,39 @@ namespace Schedio_Application.MVVM.View.Windows
     /// <summary>
     /// Interaction logic for SectionAddForm.xaml
     /// </summary>
-    public partial class SectionAddForm : Window
+    public partial class SectionAddForm : Window, INotifyPropertyChanged
     {
         public ClassSection _Section;
         private ObservableCollection<Person> _People;
+        private ObservableCollection<ClassSection> _Sections;
         private ObservableCollection<string> _RoomTypes;
         private string _SectionName;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         // TODO: Adding subjects
         public string SectionName
         {
             get { return _SectionName; }
-            set { _SectionName = value; }
+            set 
+            { 
+                _SectionName = value;
+                OnPropertyChanged();
+            }
         }
 
-        public SectionAddForm(ClassSection section, ObservableCollection<Person> people, ObservableCollection<string> roomTypes)
+        public void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        public SectionAddForm(ClassSection section, ObservableCollection<Person> people, ObservableCollection<string> roomTypes, ObservableCollection<ClassSection> sections)
         {
             InitializeComponent();
+            _Sections = sections;
             _Section = section;
             this.Owner = Application.Current.MainWindow;
             this.ShowInTaskbar = false;
@@ -45,9 +63,20 @@ namespace Schedio_Application.MVVM.View.Windows
             _People = people;
             _Section = section;
             _RoomTypes = roomTypes;
-
-
             tb_Name.Focus();
+
+            Loaded += (sender, e) =>
+            {
+                if (_Section.Name != null)
+                {
+                    SectionName = _Section.Name;
+
+                    foreach (Subject sub in _Section.Subjects)
+                    {
+                        sp_SubjectList.Children.Add(new SubjectItem(new Subject(sub), _People, _RoomTypes));
+                    }
+                }
+            };
         }
 
         private void btn_AddSubject_Click(object sender, RoutedEventArgs e)
@@ -55,8 +84,36 @@ namespace Schedio_Application.MVVM.View.Windows
             sp_SubjectList.Children.Add(new SubjectItem(new Subject(), _People, _RoomTypes)) ;
         }
 
+        private bool IsNameExist(string name)
+        {
+            foreach (ClassSection cs in _Sections)
+            {
+                if (cs.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void btn_Save_Click(object sender, RoutedEventArgs e)   
         {
+            // Validations
+            if (_Section.Name != null && !_Section.Name.Equals(SectionName))
+            {
+                if (IsNameExist(SectionName))
+                {
+                    new MBox("Name already exist.").ShowDialog();
+                    return;
+                }
+            }
+
+            if (SectionName.Equals(String.Empty))
+            {
+                new MBox("Name cannot be empty.").ShowDialog();
+                return;
+            }
+
             _Section.Subjects.Clear();
             foreach (SubjectItem subitem in sp_SubjectList.Children)
             {
