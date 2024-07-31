@@ -427,5 +427,10 @@ namespace Schedio_Application.MVVM.View.Pages
             rts = new RoomTypeSetup(RoomTypes, Rooms, Sections);
             rts.ShowDialog();
         }
+
+        private void btn_Confirm_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: Data reliability testing
+        }
     }
 }

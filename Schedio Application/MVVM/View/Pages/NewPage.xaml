@@ -294,7 +294,7 @@
                 <Button Grid.Column="0" Margin="20" FontSize="15" MaxHeight="70" MinWidth="100" Style="{StaticResource CancelButton}">
                     <TextBlock Margin="10 0 10 0">Clear Settings</TextBlock>
                 </Button>
-                <Button Grid.Column="2" Margin="20" FontSize="15" MaxHeight="70" MinWidth="100" Style="{StaticResource ConfirmButton}">Confirm</Button>
+                <Button Grid.Column="2" Margin="20" FontSize="15" MaxHeight="70" MinWidth="100" Style="{StaticResource ConfirmButton}" Name="btn_Confirm" Click="btn_Confirm_Click">Confirm</Button>
             </Grid>
 
         </Grid>
