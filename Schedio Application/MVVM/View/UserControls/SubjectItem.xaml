@@ -85,6 +85,7 @@
                       VerticalContentAlignment="Center"
                       Name="cbox_RoomType"
                       Width="150"
+                      DisplayMemberPath="Name"
                       SelectedItem="{Binding RoomType}">
             </ComboBox>
 

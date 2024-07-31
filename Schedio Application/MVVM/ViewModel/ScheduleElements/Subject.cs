@@ -11,7 +11,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
     {
         private string _Name;
         private Person _AssignedPerson;
-        private string _RoomType;
+        private RoomType _RoomType;
         private int _Units;
 
         public string Name 
@@ -34,7 +34,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
-        public string RoomType
+        public RoomType RoomType
         {
             get { return _RoomType; }
             set 
@@ -54,7 +54,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
-        public Subject(string Name, Person assignedPerson, string roomType, int units)
+        public Subject(string Name, Person assignedPerson, RoomType roomType, int units)
         {
             _Name = Name;
             _AssignedPerson = assignedPerson;

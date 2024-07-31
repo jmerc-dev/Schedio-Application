@@ -14,7 +14,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
     public class Room : PropertyNotification
     {
         private string _name;
-        private string _type;
+        private RoomType _type;
 
         public string Name 
         { 
@@ -25,7 +25,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 OnPropertyChanged();
             } 
         }
-        public string Type 
+        public RoomType Type 
         {
             get { return _type; }
             set 
@@ -35,7 +35,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
-        public Room(string name, string type)
+        public Room(string name, RoomType type)
         {
             this._name = name;
             this._type = type;

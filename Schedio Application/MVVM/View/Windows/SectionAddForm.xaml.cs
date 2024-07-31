@@ -28,7 +28,7 @@ namespace Schedio_Application.MVVM.View.Windows
         public ClassSection _Section;
         private ObservableCollection<Person> _People;
         private ObservableCollection<ClassSection> _Sections;
-        private ObservableCollection<string> _RoomTypes;
+        private ObservableCollection<RoomType> _RoomTypes;
         private string _SectionName;
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -52,7 +52,7 @@ namespace Schedio_Application.MVVM.View.Windows
             }
         }
 
-        public SectionAddForm(ClassSection section, ObservableCollection<Person> people, ObservableCollection<string> roomTypes, ObservableCollection<ClassSection> sections)
+        public SectionAddForm(ClassSection section, ObservableCollection<Person> people, ObservableCollection<RoomType> roomTypes, ObservableCollection<ClassSection> sections)
         {
             InitializeComponent();
             _Sections = sections;

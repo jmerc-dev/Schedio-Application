@@ -46,7 +46,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
         // Updating
         public PersonnelCustomTime(Dictionary<string, bool> availableDays, Dictionary<DayOfWeek, List<TimeFrame>> dtf)
-        {
+        {   
             InitializeComponent();
             dailyTimeframe = dtf;
             DisableDaysExpander(availableDays);

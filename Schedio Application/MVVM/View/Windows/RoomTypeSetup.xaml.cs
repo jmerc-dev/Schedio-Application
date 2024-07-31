@@ -23,9 +23,18 @@ namespace Schedio_Application.MVVM.View.Windows
     /// </summary>
     public partial class RoomTypeSetup : Window
     {
-        ObservableCollection<string> RoomTypes;
+        ObservableCollection<RoomType> RoomTypes;
         ObservableCollection<Room> Rooms;
-        public RoomTypeSetup(ObservableCollection<string> types, ObservableCollection<Room> rooms)
+        ObservableCollection<ClassSection> Sections;
+
+        private RoomType _type;
+        public RoomType Type
+        {
+            get { return _type; }
+            set { _type = value; }
+        }
+
+        public RoomTypeSetup(ObservableCollection<RoomType> types, ObservableCollection<Room> rooms, ObservableCollection<ClassSection> sections)
         {
             InitializeComponent();
             this.DataContext = this;
@@ -34,6 +43,7 @@ namespace Schedio_Application.MVVM.View.Windows
             RoomTypes = types;
             cbox_TypeNames.ItemsSource = RoomTypes;
             Rooms = rooms;
+            Sections = sections;
         }
 
         public bool UpdateRoomCategory(string oldValue, string newValue)
@@ -42,7 +52,7 @@ namespace Schedio_Application.MVVM.View.Windows
             {
                 if (Rooms[i].Type.Equals(oldValue))
                 {
-                    Rooms[i].Type = newValue;
+                    Rooms[i].Type.Name = newValue;
                 }
             }
             return true;
@@ -55,9 +65,9 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private bool TypeExist(string type)
         {
-            foreach (string item in RoomTypes)
+            foreach (RoomType item in RoomTypes)
             {
-                if (type.Equals(item, StringComparison.CurrentCultureIgnoreCase)) 
+                if (type.Equals(item.Name, StringComparison.CurrentCultureIgnoreCase)) 
                 {
                     return true;
                 }
@@ -76,7 +86,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
             if (!TypeExist(item))
             {
-                RoomTypes.Add(tb_ItemAdd.Text);
+                RoomTypes.Add(new RoomType(tb_ItemAdd.Text));   
                 new MBox($"{item} is added", Sound.NoSound).ShowDialog();
                 tb_ItemAdd.Clear();
             }
@@ -89,7 +99,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Delete_Click(object sender, RoutedEventArgs e)
         {
-            string? selectedItem = cbox_TypeNames.SelectedValue.ToString();
+            RoomType selectedItem = (RoomType) cbox_TypeNames.SelectedItem;
 
             if (selectedItem == null)
             {
@@ -99,9 +109,9 @@ namespace Schedio_Application.MVVM.View.Windows
 
             foreach (Room room in Rooms)
             {
-                if (room.Type.Equals(selectedItem))
+                if (room.Type == selectedItem)
                 {
-                    new MBox($"The {selectedItem} is currently being referenced by room items.").ShowDialog();
+                    new MBox($"The {selectedItem.Name} is currently being referenced by room items.").ShowDialog();
                     return;
                 }
             }
@@ -109,18 +119,20 @@ namespace Schedio_Application.MVVM.View.Windows
             if (RoomTypes.Contains(selectedItem))
             {
                 RoomTypes.Remove(selectedItem);
-                new MBox($"{selectedItem} was successfully deleted", Sound.NoSound).ShowDialog();
+                new MBox($"{selectedItem.Name} was successfully deleted", Sound.NoSound).ShowDialog();
             }
         }
 
         private void btn_Update_Click(object sender, RoutedEventArgs e)
         {
-            string? selectedItem = cbox_TypeNames.SelectedValue.ToString();
+            ObservableCollection <ClassSection> sectionz = Sections;
+            RoomType? selectedItem = (RoomType) cbox_TypeNames.SelectedItem;
             if (selectedItem == null)
             {
                 new MBox("Please choose an item to update").ShowDialog();
                 return;
             }
+            
 
             string newValue = tb_ItemNewValue.Text;
             if (newValue.Equals(String.Empty))
@@ -137,26 +149,25 @@ namespace Schedio_Application.MVVM.View.Windows
             // Warning
             if (Rooms.Count > 0)
             {
-                if (new MBox($"This will affect all occurences of {selectedItem}.", MBoxType.CancelOrOK).ShowDialog() == false)
+                if (new MBox($"This will affect all occurences of {selectedItem.Name}.", MBoxType.CancelOrOK).ShowDialog() == false)
                 {
                     return;
                 }
             }
 
+
+
             for (int i = 0; i < RoomTypes.Count; i++)
             {
                 if (RoomTypes[i].Equals(selectedItem))
                 {
-                    RoomTypes[i] = newValue;
+                    RoomTypes[i].Name = newValue;
                     break;
                 }
             }
+            new MBox($"Successfylly updated all occurences of {selectedItem.Name}.").ShowDialog();
+            tb_ItemNewValue.Clear();
 
-            if (UpdateRoomCategory(selectedItem, newValue))
-            {
-                new MBox($"Successfylly updated all occurences of {selectedItem}.").ShowDialog();
-                tb_ItemNewValue.Clear();
-            }
 
         }
     }

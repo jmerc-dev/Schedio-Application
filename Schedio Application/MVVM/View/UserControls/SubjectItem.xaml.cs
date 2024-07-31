@@ -54,17 +54,17 @@ namespace Schedio_Application.MVVM.View.UserControls
         }
 
         // TODO: Bind to counter
-        public SubjectItem(Subject subject, ObservableCollection<Person> people, ObservableCollection<string> roomTypes)
+        public SubjectItem(Subject subject, ObservableCollection<Person> people, ObservableCollection<RoomType> roomTypes)
         {
             InitializeComponent();
             _Subject = subject;
             this.DataContext = subject;
             cbox_Personnel.ItemsSource = people;
+            cbox_RoomType.ItemsSource = roomTypes;
 
             Loaded += (sender, e) =>
             {
                 ctr_Units.DataContext = subject;
-                cbox_RoomType.ItemsSource = roomTypes;
                 tb_Name.Focus();
             };
         }

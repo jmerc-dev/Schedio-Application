@@ -3,8 +3,10 @@ using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,23 +24,38 @@ namespace Schedio_Application.MVVM.View.Windows
     /// <summary>
     /// Interaction logic for RoomAddForm.xaml
     /// </summary>
-    public partial class RoomAddForm : Window
+    public partial class RoomAddForm : Window, INotifyPropertyChanged
     {
         private string _RoomName;
-        private string _ChosenRoomType;
+        private RoomType _ChosenRoomType;
         private ObservableCollection<Room> _Rooms;
-        
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         public string RoomName
         {
             get => _RoomName;
         }
 
-        public string RoomType
+        public RoomType RoomType
         {
             get => _ChosenRoomType;
+            set
+            {
+                _ChosenRoomType = value;
+                OnPropertyChanged();
+            }
         }
 
-        public RoomAddForm(ObservableCollection<string> types, ObservableCollection<Room> rooms) 
+        public void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        public RoomAddForm(ObservableCollection<RoomType> types, ObservableCollection<Room> rooms) 
         {
             InitializeComponent();
             this.ShowInTaskbar = false;
@@ -49,19 +66,21 @@ namespace Schedio_Application.MVVM.View.Windows
             cb_Type.ItemsSource = types;
         }
 
-        public RoomAddForm(Room room, ObservableCollection<string> types, ObservableCollection<Room> rooms)
+        public RoomAddForm(Room room, ObservableCollection<RoomType> types, ObservableCollection<Room> rooms)
         {
             InitializeComponent();
+            this.DataContext = this;
             this.ShowInTaskbar = false;
             this.Owner = Application.Current.MainWindow;
             _Rooms = rooms;
-
             _RoomName = room.Name;
-            _ChosenRoomType = room.Type;
 
             cb_Type.ItemsSource = types;
             tbx_Name.Text = room.Name;
-            cb_Type.Text = room.Type;
+            Loaded += (sender, e) =>
+            {
+                RoomType = room.Type;
+            };
         }
 
         private bool isNameExists(string name)
@@ -89,15 +108,15 @@ namespace Schedio_Application.MVVM.View.Windows
                 return;
             }
 
-            string selectedType = cb_Type.SelectedItem.ToString();
+            RoomType selectedType = (RoomType) cb_Type.SelectedItem;
             if (tbx_Name.Text.Equals(String.Empty))
             {
-                MessageBox.Show("Please fill up the Name field.");
+                new MBox("Please fill up the Name field.").ShowDialog();
                 return;
             }
-            else if (selectedType.Equals(null) || selectedType.Equals("Choose a value..."))
+            else if (selectedType == null || selectedType.Equals("Choose a value..."))
             {
-                MessageBox.Show("Please select a type.");
+                new MBox("Please select a type.").ShowDialog();
                 return;
             }
 

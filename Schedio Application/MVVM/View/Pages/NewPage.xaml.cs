@@ -32,7 +32,7 @@ namespace Schedio_Application.MVVM.View.Pages
 
         private ObservableCollection<Room> Rooms;
         private ObservableCollection<Room> TempRooms;
-        private ObservableCollection<string> RoomTypes;
+        private ObservableCollection<RoomType> RoomTypes;
 
         private ObservableCollection<Person> Personnel;
         private ObservableCollection<Person> TempPersonnel;
@@ -125,16 +125,6 @@ namespace Schedio_Application.MVVM.View.Pages
             {
                 this.Sections.Add(form._Section);
             }
-
-            //foreach (ClassSection cs in Sections)
-            //{
-            //    Trace.WriteLine(cs.Name);
-            //    foreach (Subject s in cs.Subjects)
-            //    {
-            //        Trace.WriteLine($"\t{s.Name} - {s.RoomType} - {s.Units} - {s.AssignedPerson.Name}");
-            //    } 
-                
-            //}
         }
 
         private void btn_BaseSchedule_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -148,11 +138,6 @@ namespace Schedio_Application.MVVM.View.Pages
                 TimeScheduleAddForm form = new TimeScheduleAddForm(BaseSched);
                 if (form.ShowDialog() == true)
                 {
-                    Trace.WriteLine($"IsConstant: {form.Schedule.IsConstant}");
-                    foreach (KeyValuePair<DayOfWeek, TimeFrame> kvp in form.Schedule.DailyTimeframe)
-                    {
-                        Trace.WriteLine($"{kvp.Key.ToString()}: {kvp.Value.StartTime} => {kvp.Value.EndTime}");
-                    }
                     new MBox("Base schedule has been set.", Sound.NoSound).ShowDialog();
                 }
             }
@@ -187,12 +172,6 @@ namespace Schedio_Application.MVVM.View.Pages
                         tb_SearchSection.Text = String.Empty;
                         break;
                     };
-                    ClassSection cs = (ClassSection)lv_SectionList.SelectedItem;
-                    Trace.WriteLine($"{cs.Name}");
-                    foreach (Subject s in cs.Subjects)
-                    {
-                        Trace.WriteLine($"{s.Name} - {s.RoomType} - {s.Units} - {s.AssignedPerson.Name}");
-                    }
                     break;
                 default:
                     MessageBox.Show("No tab selected.");
@@ -439,13 +418,13 @@ namespace Schedio_Application.MVVM.View.Pages
 
             if (RoomTypes == null)
             {
-                RoomTypes = new ObservableCollection<string>();
-                RoomTypes.Add("Classic");
-                RoomTypes.Add("Court");
-                RoomTypes.Add("Lab");
+                RoomTypes = new ObservableCollection<RoomType>();
+                RoomTypes.Add(new RoomType("Classic"));
+                RoomTypes.Add(new RoomType("Court"));
+                RoomTypes.Add(new RoomType("Lab"));
             }
 
-            rts = new RoomTypeSetup(RoomTypes, Rooms);
+            rts = new RoomTypeSetup(RoomTypes, Rooms, Sections);
             rts.ShowDialog();
         }
     }

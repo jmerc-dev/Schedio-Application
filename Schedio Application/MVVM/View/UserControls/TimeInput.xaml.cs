@@ -146,7 +146,6 @@ namespace Schedio_Application.MVVM.View.UserControls
                 Min = Int32.Parse(timeSplit[0][4].ToString());
 
                 Period = timeSplit[1].ToUpper();
-                Trace.WriteLine(Period);
                 return true;
             } 
             catch (FormatException ex)
