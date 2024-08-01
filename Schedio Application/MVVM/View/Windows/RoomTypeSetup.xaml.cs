@@ -116,6 +116,18 @@ namespace Schedio_Application.MVVM.View.Windows
                 }
             }
 
+            foreach (ClassSection cs in Sections)
+            {
+                foreach (Subject s in cs.Subjects)
+                {
+                    if (s.RoomType == selectedItem)
+                    {
+                        new MBox($"{selectedItem.Name} is currently being referenced by Section: {cs.Name}, Subject: {s.Name}").ShowDialog();
+                        return;
+                    }
+                }
+            }
+
             if (RoomTypes.Contains(selectedItem))
             {
                 RoomTypes.Remove(selectedItem);

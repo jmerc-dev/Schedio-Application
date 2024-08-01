@@ -119,6 +119,17 @@ namespace Schedio_Application.MVVM.View.Pages
 
         private void btn_AddSections_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (RoomTypes == null || RoomTypes.Count == 0)
+            {
+                new MBox("Please setup the room types first").ShowDialog();
+                return;
+            }
+            if (Personnel.Count == 0)
+            {
+                new MBox("Setup personnel first").ShowDialog();
+                return;
+            }
+
             SectionAddForm form = new SectionAddForm(new ClassSection(), Personnel, RoomTypes, Sections);
 
             if (form.ShowDialog() == true)
@@ -153,6 +164,17 @@ namespace Schedio_Application.MVVM.View.Pages
             switch (tabCntrl_NewPage.SelectedIndex)
             {
                 case 0:
+                    // Check for references in sections
+                    foreach (ClassSection cs in Sections)
+                    {
+                        foreach (Subject s in cs.Subjects)
+                        {
+                            if (lv_PersonnelList.SelectedItems.Contains(s.AssignedPerson)) {
+                                new MBox($"{s.AssignedPerson.Name} was currently being referenced by Section: {cs.Name}, Subject: {s.Name}").ShowDialog();
+                                return;
+                            }
+                        }
+                    }
                     if (DeleteItemFrom(lv_PersonnelList, typeof(Person))) 
                     {
                         tb_SearchPersonnel.Text = String.Empty;
@@ -174,7 +196,7 @@ namespace Schedio_Application.MVVM.View.Pages
                     };
                     break;
                 default:
-                    MessageBox.Show("No tab selected.");
+                    new MBox("No tab selected.").ShowDialog();
                     return;
             }
         }
@@ -419,9 +441,6 @@ namespace Schedio_Application.MVVM.View.Pages
             if (RoomTypes == null)
             {
                 RoomTypes = new ObservableCollection<RoomType>();
-                RoomTypes.Add(new RoomType("Classic"));
-                RoomTypes.Add(new RoomType("Court"));
-                RoomTypes.Add(new RoomType("Lab"));
             }
 
             rts = new RoomTypeSetup(RoomTypes, Rooms, Sections);
@@ -431,6 +450,83 @@ namespace Schedio_Application.MVVM.View.Pages
         private void btn_Confirm_Click(object sender, RoutedEventArgs e)
         {
             // TODO: Data reliability testing
+
+            // Base Schedule
+
+            if (BaseSched == null || BaseSched.DailyTimeframe == null)
+            {
+                new MBox("Please setup the base schedule.").ShowDialog();
+                return;
+            }
+            
+            Trace.WriteLine($"Base Schedule [{BaseSched.IsConstant}]:");
+            foreach (KeyValuePair<DayOfWeek, TimeFrame> kvp in BaseSched.DailyTimeframe)
+            {
+                Trace.WriteLine($"\t{kvp.Key.ToString()}: {kvp.Value.StartTime} => {kvp.Value.EndTime}");
+            }
+
+            // Personnel
+            if (Personnel.Count == 0)
+            {
+                if (new MBox("It is recommended to setup the personnel first, do you want to continue?", MBoxType.CancelOrOK).ShowDialog() == false)
+                {
+                    return;
+                }
+            }
+            Trace.WriteLine($"Personnel");
+            foreach (Person p in Personnel)
+            {
+                Trace.WriteLine($"\t{p.Name}");
+                if (p.IsConstant)
+                {
+                    Trace.WriteLine($"\t\t{p.ConstTime_Start} => {p.ConstTime_End}");
+                    foreach (Day d in p.Days)
+                    {
+                        Trace.WriteLine($"\t\t{d.Name.ToString()}: {d.IsAvailable}");
+                    }
+                }
+                else
+                {
+                    foreach(Day d in p.Days)
+                    {
+                        Trace.WriteLine($"\t\t{d.Name.ToString()}: {d.IsAvailable}");
+                        foreach (TimeFrame tf in d.CustomTimeframe)
+                        {
+                            Trace.WriteLine($"\t\t\t{tf.StartTime} => {tf.EndTime}");
+                        }
+                    }
+                }
+            }
+
+            // Rooms
+            if (Rooms.Count == 0)
+            {
+                if (new MBox("It is recommended to setup the room first, do you want to continue?", MBoxType.CancelOrOK).ShowDialog() == false)
+                {
+                    return;
+                }
+            }
+            foreach (Room room in Rooms)
+            {
+                Trace.WriteLine($"{room.Name}: {room.Type.Name}");
+            }
+
+            // Sections
+            if (Sections.Count == 0)
+            {
+                if (new MBox("It is recommended to setup the sections first, do you want to continue?", MBoxType.CancelOrOK).ShowDialog() == false)
+                {
+                    return;
+                }
+            }
+            foreach (ClassSection section in Sections)
+            {
+                Trace.WriteLine($"{section.Name}");
+                foreach (Subject s in section.Subjects)
+                {
+                    Trace.WriteLine($"\t{s.Name}: {s.RoomType.Name} - {s.Units} - {s.AssignedPerson.Name}");
+                }
+            }
         }
     }
 }

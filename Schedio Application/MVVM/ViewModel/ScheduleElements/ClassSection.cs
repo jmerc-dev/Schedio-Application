@@ -11,17 +11,24 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
     {
         private string _Name;
         private List<Subject> _Subjects;
+        private int _TotalSubjects;
+        private int _TotalUnits;
 
         public int TotalSubjects
         {
-            get { return Subjects.Count; }
+            get { return _TotalSubjects; }
+            set
+            {
+                _TotalSubjects = value;
+                OnPropertyChanged();
+            }
         }
 
         public string Name
         {
             get { return _Name; }
-            set 
-            { 
+            set
+            {
                 _Name = value;
                 OnPropertyChanged();
             }
@@ -29,23 +36,22 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         public int TotalUnits
         {
-            get 
-            { 
-                int totalUnits = 0;
-                foreach (Subject subject in Subjects)
-                {
-                    totalUnits += subject.Units;
-                }
-                return totalUnits;
+            get { return _TotalUnits; }
+            set
+            {
+                _TotalUnits = value;
+                OnPropertyChanged();
             }
         }
 
         public List<Subject> Subjects
         {
             get { return _Subjects; }
-            set 
-            { 
+            set
+            {
                 _Subjects = value;
+                TotalSubjects = Subjects.Count;
+                TotalUnits = GetTotalUnits();
                 OnPropertyChanged();
             }
         }
@@ -54,6 +60,16 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         {
             _Subjects = new List<Subject>();
             _Name = string.Empty;
+        }
+
+        public int GetTotalUnits()
+        {
+            int total = 0;
+            foreach (Subject s in Subjects)
+            {
+                total += s.Units;
+            }
+            return total;
         }
     }
 }

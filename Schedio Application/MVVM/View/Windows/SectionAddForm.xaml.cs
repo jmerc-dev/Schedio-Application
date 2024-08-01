@@ -98,6 +98,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Save_Click(object sender, RoutedEventArgs e)   
         {
+            List<Subject> newSubjects = new List<Subject>();
             // Validations
             if (_Section.Name != null && !_Section.Name.Equals(SectionName))
             {
@@ -114,19 +115,21 @@ namespace Schedio_Application.MVVM.View.Windows
                 return;
             }
 
-            _Section.Subjects.Clear();
+            
             foreach (SubjectItem subitem in sp_SubjectList.Children)
             {
 
                 if (subitem.ValidateEntries())
                 {
-                    _Section.Subjects.Add(subitem.Subject);
+                    newSubjects.Add(subitem.Subject);
                 }
                 else
                 {
                     return;
                 }
             }
+
+            _Section.Subjects = newSubjects;
             _Section.Name = SectionName;
             DialogResult = true;
         }

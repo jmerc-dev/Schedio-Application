@@ -48,6 +48,7 @@ namespace Schedio_Application.MVVM.View.Windows
             SystemSounds.Asterisk.Play();
 
             tb_Message.Text = message;
+            btn_OK.Focus();
         }
 
         public MBox(string message, Sound sound)
@@ -62,6 +63,7 @@ namespace Schedio_Application.MVVM.View.Windows
             }
 
             tb_Message.Text = message;
+            btn_OK.Focus();
         }
 
         public MBox(string message, MBoxType type)
@@ -80,6 +82,7 @@ namespace Schedio_Application.MVVM.View.Windows
             }
 
             tb_Message.Text = message;
+            btn_OK.Focus();
         }
 
         public MBox(string message, MBoxImage image)
@@ -100,6 +103,7 @@ namespace Schedio_Application.MVVM.View.Windows
                 default:
                     break;
             }
+            btn_OK.Focus();
         }
 
         protected override void OnSourceInitialized(EventArgs e)

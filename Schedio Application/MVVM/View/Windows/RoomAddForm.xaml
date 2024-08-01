@@ -36,7 +36,7 @@
             </Grid>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="btn_Cancel" Style="{StaticResource CancelButton}" FontSize="13" Margin="8" Width="80" Content="Cancel" Click="btn_Cancel_Click"/>
+                <Button x:Name="btn_Cancel" Style="{StaticResource CancelButton}" FontSize="13" Margin="8" Width="80" Content="Cancel" Click="btn_Cancel_Click" Padding="5,0"/>
                 <Button x:Name="btn_Save" Style="{StaticResource ConfirmButton}" FontSize="13" Margin="8" Width="90" Content="Save" Click="btn_Save_Click"/>
             </StackPanel>
         </Grid>
