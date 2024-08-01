@@ -11,7 +11,8 @@
         ShowInTaskbar="False"
         Icon="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
         Background="Transparent"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Window.Resources>
         <Style TargetType="TextBlock" x:Key="Title">
             <Setter Property="FontSize" Value="17"/>
@@ -37,7 +38,8 @@
                        Stretch="Uniform"
                        Height="70"
                        VerticalAlignment="Center"/>
-                <TextBox Text="Section Name"
+                <TextBox Text="{Binding SectionName}"
+                         Name="tb_Name"
                          Style="{StaticResource TitleTextBox}"
                          FontSize="22"
                          VerticalAlignment="Center"/>
@@ -85,8 +87,10 @@
                 </Grid>
                 <ScrollViewer Style="{StaticResource MainScrollViewer}"
                               Grid.Row="1">
-                    <StackPanel Orientation="Vertical"
-                                Name="sp_SubjectList">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Vertical" Height="auto" Name="sp_SubjectList">
+                            
+                        </StackPanel>
                         <Button Style="{StaticResource ExtraWideButton}"
                                 Height="50"
                                 Name="btn_AddSubject"
@@ -111,7 +115,9 @@
                         Content="Save"
                         MinWidth="90"
                         FontSize="15"
-                        Margin="10,0"/>
+                        Margin="10,0"
+                        Name="btn_Save"
+                        Click="btn_Save_Click"/>
             </StackPanel>
         </Grid>
     </Border>

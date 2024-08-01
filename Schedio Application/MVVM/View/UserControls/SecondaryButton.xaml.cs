@@ -20,11 +20,14 @@ namespace Schedio_Application.MVVM.View.UserControls
     /// Interaction logic for SecondaryButton.xaml
     /// </summary>
     
+
+    // FIX this
     
     public partial class SecondaryButton : UserControl
     {
         // Holds filename in format: 'filename' no extensions
         private string? OriginalImageFileName;
+        private string _ImageSource;
 
         // Colors Resource Dictionary
         ResourceDictionary rd = new ResourceDictionary
@@ -35,13 +38,10 @@ namespace Schedio_Application.MVVM.View.UserControls
         // Image Source
         public string ImageSource
         {
-            get { return (string)GetValue(_ImageSource); }
-            set { SetValue(_ImageSource, value); }
+            get { return _ImageSource; }
+            set { _ImageSource = value; }
         }
-
-        public static readonly DependencyProperty _ImageSource =
-        DependencyProperty.Register("ImageSource", typeof(string), typeof(SecondaryButton), new PropertyMetadata(null));
-
+        
         // Text
         public string Text
         {
@@ -56,7 +56,7 @@ namespace Schedio_Application.MVVM.View.UserControls
         {
             InitializeComponent();
             this.DataContext = this;
-
+            
             Loaded += (sender, e) =>
             {
 
@@ -64,16 +64,21 @@ namespace Schedio_Application.MVVM.View.UserControls
                 try
                 {
                     OriginalImageFileName = findImageFilename(ImageSource.ToString());
+                    img_Content.Source = new BitmapImage(new Uri(ImageSource));
+                    if (!this.IsEnabled)
+                    {
+                        SetButtonState('d');
+                    }
                 }
                 catch (Exception ex)
                 {
+                    
                     OriginalImageFileName = "";
                     MessageBox.Show(ex.Message);
                 }
             };
-
-            
         }
+
 
         private void SecondaryButton_Loaded(object sender, RoutedEventArgs e)
         {
@@ -136,7 +141,7 @@ namespace Schedio_Application.MVVM.View.UserControls
                     string NewImageFileName = OriginalImageFileName;
                     string PrevImageFileName = findImageFilename(ImageSource.ToString());
                     string newFileNamePath = newImagePath(ImageSource.ToString(), PrevImageFileName, NewImageFileName);
-                    SetValue(_ImageSource, newFileNamePath);
+                    img_Content.Source = new BitmapImage(new Uri(newFileNamePath));
                     break;
 
                 // hovered state
@@ -145,7 +150,7 @@ namespace Schedio_Application.MVVM.View.UserControls
                     string imageFileName = findImageFilename(ImageSource.ToString());
                     string imageFileNameWithExtension = AddFileNameExtension(findImageFilename(ImageSource.ToString()), "inversed");
                     string newFileNamePath1 = newImagePath(ImageSource.ToString(), imageFileName, imageFileNameWithExtension);
-                    SetValue(_ImageSource, newFileNamePath1);
+                    img_Content.Source = new BitmapImage(new Uri(newFileNamePath1));
                     break;
 
                 // disabled state
@@ -154,7 +159,7 @@ namespace Schedio_Application.MVVM.View.UserControls
                     string imageFileName1 = findImageFilename(ImageSource.ToString());
                     string imageFileNameWithExtension_Disabled = AddFileNameExtension(findImageFilename(ImageSource.ToString()), "disabled");
                     string newFileNamePath_Disabled = newImagePath(ImageSource.ToString(), imageFileName1, imageFileNameWithExtension_Disabled);
-                    SetValue(_ImageSource, newFileNamePath_Disabled);
+                    img_Content.Source = new BitmapImage(new Uri(newFileNamePath_Disabled));
                     break;
                 default:
                     Trace.WriteLine("Failed to change state of button");

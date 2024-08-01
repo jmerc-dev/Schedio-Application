@@ -17,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace Schedio_Application.MVVM.View.Windows
 {
@@ -28,14 +29,10 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private Person _person;
         private PersonnelCustomTime form;
+        private ObservableCollection<Person> _people;
         public Dictionary<DayOfWeek, List<TimeFrame>> dailyTimeframe;
 
         // Properties
-        public string PersonName
-        { 
-            get { return _person.Name; } 
-            set { _person.Name = value; } 
-        }
 
         public Person Person
         {
@@ -43,26 +40,37 @@ namespace Schedio_Application.MVVM.View.Windows
             set { _person = value; }
         }
 
-        public bool IsConstant
-        {
-            get { return _person.IsConstant; }
-            set { _person.IsConstant = value; }
-        }
-
-        public PersonnelAddForm(Person person)
+        public PersonnelAddForm(Person person, ObservableCollection<Person> people)
         {
             _person = person;
+            _people = people;
             InitializeComponent();
 
             this.DataContext = this;
             this.Owner = Application.Current.MainWindow;
             this.ShowInTaskbar = false;
-
-            // Setting datacontexts
-            wp_Days.DataContext = _person;
-            sp_ConstTimeFrame.DataContext = _person;
-
             tb_Name.Focus();
+
+            // Update
+            Loaded += (sender, e) =>
+            {
+                if (person.Name != null)
+                {
+                    // populate
+                    UpdateName(person.Name);
+                    UpdateIsConstant(person.IsConstant);
+                    UpdateDayAvailable(person.Days);
+                    if (person.IsConstant) 
+                    {
+                        UpdateConstTimeframe(person.ConstTime_Start, person.ConstTime_End);
+                    }
+                    else
+                    {
+                        UpdateCustomTime();
+                    }
+                }
+            };
+            
         }
 
         private void tb_Name_GotKeyboardFocus(object sender, KeyboardEventArgs e)
@@ -95,17 +103,16 @@ namespace Schedio_Application.MVVM.View.Windows
         {
             if (btn_TimeframeSetter.IsChecked != null)
             {
-                if ((bool) btn_TimeframeSetter.IsChecked)
+                if ((bool)btn_TimeframeSetter.IsChecked)
                 {
-                    btn_CustomTime.IsEnabled = false;
-                    sp_ConstTimeFrame.IsEnabled = true;
-                    img_ArrowRight.Source = new BitmapImage(new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/arrow-right.png"));
+                    
+
                 }
                 else
                 {
                     btn_CustomTime.IsEnabled = true;
                     sp_ConstTimeFrame.IsEnabled = false;
-                    img_ArrowRight.Source = new BitmapImage(new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/arrow-right-disabled.png"));
+
                 }
             }
         }
@@ -141,6 +148,18 @@ namespace Schedio_Application.MVVM.View.Windows
                 chb_SelectAll.IsChecked = AllChecked;
             }
             
+        }
+
+        private bool IsNameExists(string name)
+        {
+            foreach (Person person in _people)
+            {
+                if (person.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private bool DaySelectExists()
@@ -196,72 +215,130 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Save_Click(object sender, RoutedEventArgs e)
         {
+            string oldName = _person.Name;
+            string newName = tb_Name.Text;
+
+            if (oldName == null)
+            {
+                if (IsNameExists(newName))
+                {
+                    new MBox("Name already exists.").ShowDialog();
+                    return;
+                }
+            }
+            else
+            {
+                if (!oldName.Equals(newName, StringComparison.CurrentCultureIgnoreCase) && IsNameExists(newName))
+                {
+                    new MBox("Name already exists.").ShowDialog();
+                    return;
+                }
+            }
+
             if (!DaySelectExists())
             {
                 new MBox("No selected day").ShowDialog();
                 return;
             }
 
-            // Assign available days
-            SetAvailableDays();
+            
 
             // Set name
             _person.Name = tb_Name.Text;
-            // Set schedule
-            if (_person.IsConstant)
-            {
-                TimeFrame tf;
-                // Validate time
-                try
-                {
-                    tf = new TimeFrame(ti_TimeStart.Time, ti_TimeEnd.Time);
-                }
-                catch (InvalidTimeFrameException ex)
-                {
-                    new MBox(ex.Message).ShowDialog();
-                    return;
-                }
 
-                _person.IsConstant = true;
-                _person.ConstTime_Start = tf.StartTime;
-                _person.ConstTime_End = tf.EndTime;
+            // Set schedule
+            bool ConstantTf;
+            if (btn_TimeframeSetter.IsChecked != null)
+            {
+                ConstantTf = (bool) btn_TimeframeSetter.IsChecked;
             }
             else
             {
-                // add custom timeframe
-                _person.IsConstant = false;
+                new MBox("isConstant is null").ShowDialog();
+                return;
+            }
 
-                if (dailyTimeframe == null)
+            if (ConstantTf)
+            {
+                if (!SetConstantTimeframe())
                 {
-                    new MBox("Please setup the custom timeframe first.").ShowDialog();
                     return;
                 }
-
-                foreach (KeyValuePair<DayOfWeek, List<TimeFrame>> keyValuePair in dailyTimeframe)
-                {
-                    // Locate where to put items
-                    for (int i = 0; i < _person.Days.Length; i++)
-                    {
-                        if (keyValuePair.Key == _person.Days[i].Name)
-                        {
-                            _person.Days[i].CustomTimeframe = keyValuePair.Value;
-                        }
-                    }
-                }
             }
-
-            for (int i = 0; i < _person.Days.Length; i++)
+            else
             {
-                Trace.WriteLine(_person.Days[i].Name.ToString() + " : " + _person.Days[i].IsAvailable);
-                if (_person.Days[i].IsAvailable)
+                if (!SetCustomTimeframe())
                 {
-                    foreach(TimeFrame tf in _person.Days[i].CustomTimeframe)
+                    return;
+                }
+            }
+            // Assign available days
+            SetAvailableDays();
+            DialogResult = true;
+        }
+
+        private bool SetConstantTimeframe()
+        {
+            TimeFrame tf;
+            // Validate time
+            try
+            {
+                tf = new TimeFrame(ti_TimeStart.Time, ti_TimeEnd.Time);
+            }
+            catch (InvalidTimeFrameException ex)
+            {
+                new MBox(ex.Message).ShowDialog();
+                return false;
+            }
+
+            _person.IsConstant = true;
+            _person.ConstTime_Start = tf.StartTime;
+            _person.ConstTime_End = tf.EndTime;
+            return true;
+        }
+
+        private bool SetCustomTimeframe()
+        {
+            // add custom timeframe
+            _person.IsConstant = false;
+
+            if (dailyTimeframe == null)
+            {
+                new MBox("Please setup the custom timeframe first.").ShowDialog();
+                return false;
+            }
+
+            // Check if available days are populated with timeframe/s
+            foreach (CheckBox cb in wp_Days.Children)
+            {
+                if (cb.IsChecked == true)
+                {
+                    DayOfWeek day;
+                    if (!Enum.TryParse(cb.Content.ToString(), out day))
                     {
-                        Trace.WriteLine(tf.StartTime, tf.EndTime);
+                        new MBox($"Unable to parse {cb.Content}").ShowDialog();
+                        return false;
+                    }
+                    if (dailyTimeframe[day] == null || dailyTimeframe[day].Count == 0)
+                    {
+                        new MBox($"Day: {cb.Content} is empty").ShowDialog();
+                        return false;
                     }
                 }
             }
-            DialogResult = true;
+
+            foreach (KeyValuePair<DayOfWeek, List<TimeFrame>> keyValuePair in dailyTimeframe)
+            {
+                // Locate where to put items
+                for (int i = 0; i < _person.Days.Length; i++)
+                {
+                    if (keyValuePair.Key == _person.Days[i].Name)
+                    {
+                        _person.Days[i].CustomTimeframe = keyValuePair.Value;
+                    }
+                }
+            }
+            return true;
         }
 
         private void SetAvailableDays()
@@ -279,6 +356,76 @@ namespace Schedio_Application.MVVM.View.Windows
                 }
                 index++;
             }
+
+            _person.UpdateFormattedDays();
+        }
+
+        // Update Methods
+
+        private void UpdateName(string name)
+        {
+            tb_Name.Text = name;
+        }
+
+        private void UpdateIsConstant(bool constanttf)
+        {
+            btn_TimeframeSetter.IsChecked = constanttf;
+        }
+
+        private void UpdateDayAvailable(Day[] days)
+        {
+            foreach(CheckBox cb in wp_Days.Children)
+            {
+                string name = cb.Content.ToString();
+
+                for (int i = 0; i < days.Length; i++)
+                {
+                    if (days[i].Name.ToString().Equals(name))
+                    {
+                        cb.IsChecked = days[i].IsAvailable;
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void UpdateConstTimeframe(string start, string end)
+        {
+            ti_TimeStart.SetTime(start);
+            ti_TimeEnd.SetTime(end);
+        }
+
+        private void UpdateCustomTime()
+        {
+            dailyTimeframe = new Dictionary<DayOfWeek, List<TimeFrame>>();
+            for (int i = 0; i < _person.Days.Length; i++)
+            {
+                dailyTimeframe.Add(_person.Days[i].Name, new List<TimeFrame>(_person.Days[i].CustomTimeframe));
+            }
+        }
+
+        private void img_ArrowRight_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Image img = (Image)sender;
+            
+            if (img.IsEnabled)
+            {
+                img_ArrowRight.Source = new BitmapImage(new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/arrow-right.png"));
+            }
+            else
+            {
+                img_ArrowRight.Source = new BitmapImage(new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/arrow-right-disabled.png"));
+            }
+        }
+
+        private void btn_TimeframeSetter_Checked(object sender, RoutedEventArgs e)
+        {
+            btn_CustomTime.IsEnabled = false;
+        }
+
+        private void btn_TimeframeSetter_Unchecked(object sender, RoutedEventArgs e)
+        {
+            btn_CustomTime.IsEnabled = true;
         }
     }
 }

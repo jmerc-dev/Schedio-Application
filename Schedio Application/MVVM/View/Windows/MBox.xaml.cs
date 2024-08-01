@@ -27,21 +27,69 @@ namespace Schedio_Application.MVVM.View.Windows
         Information,
         Warning
     }
+
+    public enum Sound
+    {
+        NoSound
+    }
+
+    public enum MBoxType
+    {
+        OK,
+        CancelOrOK
+    }
     public partial class MBox : Window
     {
         public MBox(string message)
         {
             InitializeComponent();
             this.ShowInTaskbar = false;
+            this.Owner = Application.Current.MainWindow;
             SystemSounds.Asterisk.Play();
 
             tb_Message.Text = message;
+            btn_OK.Focus();
+        }
+
+        public MBox(string message, Sound sound)
+        {
+            InitializeComponent();
+            this.ShowInTaskbar = false;
+            this.Owner = Application.Current.MainWindow;
+            switch (sound) 
+            {
+                case Sound.NoSound:
+                    break;
+            }
+
+            tb_Message.Text = message;
+            btn_OK.Focus();
+        }
+
+        public MBox(string message, MBoxType type)
+        {
+            InitializeComponent();
+            this.ShowInTaskbar = false;
+            this.Owner = Application.Current.MainWindow;
+            switch (type)
+            {
+                case MBoxType.CancelOrOK:
+                    btn_Cancel.Visibility = Visibility.Visible;
+                    btn_OK.IsCancel = false;
+                    break;
+                case MBoxType.OK:
+                    break;
+            }
+
+            tb_Message.Text = message;
+            btn_OK.Focus();
         }
 
         public MBox(string message, MBoxImage image)
         {
             InitializeComponent();
             this.ShowInTaskbar = false;
+            this.Owner = Application.Current.MainWindow;
 
             tb_Message.Text = message;
             switch (image)
@@ -55,11 +103,17 @@ namespace Schedio_Application.MVVM.View.Windows
                 default:
                     break;
             }
+            btn_OK.Focus();
         }
 
         protected override void OnSourceInitialized(EventArgs e)
         {
             IconHelper.RemoveIcon(this);
+        }
+
+        private void btn_OK_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
         }
     }
 }

@@ -90,7 +90,8 @@
                                                       Width="150"
                                                       HorizontalAlignment="Right"
                                                       x:Name="btn_CustomTime"
-                                                      PreviewMouseLeftButtonDown="btn_CustomTime_MouseDown"/>
+                                                      PreviewMouseLeftButtonDown="btn_CustomTime_MouseDown">
+                    </SecondaryButtons:SecondaryButton>
                 </Grid>
 
 
@@ -110,8 +111,8 @@
                         <ToggleButton Name="btn_TimeframeSetter" 
                                       Style="{DynamicResource PrimaryToggleButton}"
                                       HorizontalAlignment="Left"
-                                      IsChecked="{Binding IsConstant, Mode=TwoWay}"
-                                      Click="btn_TimeframeSetter_Click"></ToggleButton>
+                                      Checked="btn_TimeframeSetter_Checked"
+                                      Unchecked="btn_TimeframeSetter_Unchecked"></ToggleButton>
                         <TextBlock VerticalAlignment="Center" 
                                    FontWeight="Normal"
                                    FontSize="15"
@@ -122,7 +123,7 @@
                                 Grid.Row="1" 
                                 Orientation="Horizontal" 
                                 Margin="20,0,0,0"
-                                IsEnabled="False">
+                                IsEnabled="{Binding ElementName=btn_TimeframeSetter, Path=IsChecked}">
                         <TimeTextBox:TimeInput x:Name="ti_TimeStart"
                                                FontHeight="16"
                                                ButtonHeight="20"
@@ -133,6 +134,7 @@
                                Stretch="Uniform"
                                Height="20"
                                Margin="20,0"
+                               IsEnabledChanged="img_ArrowRight_IsEnabledChanged"
                                Name="img_ArrowRight"/>
                         
                         <TimeTextBox:TimeInput x:Name="ti_TimeEnd"

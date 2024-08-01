@@ -89,18 +89,29 @@
                                 <TextBlock FontSize="20" Margin="20,5,5,5" FontWeight="Light" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1">List of Persons</TextBlock>
                             </StackPanel>
 
-                            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="20,0,0,0" HorizontalAlignment="Right" Height="30">
+                            <Grid Grid.Row="1" Margin="20,0,0,0" HorizontalAlignment="Right" Height="30">
                                 <TextBox Width="200"
                                          FontSize="16"
                                          Margin="12,0"
                                          VerticalContentAlignment="Center"
-                                         TextBlock.TextAlignment="Left"/>
-                                <Button Style="{StaticResource ConfirmButton}"
-                                        FontSize="15"
-                                        Width="80">
-                                    Search
-                                </Button>
-                            </StackPanel>
+                                         TextBlock.TextAlignment="Left"
+                                         Name="tb_SearchPersonnel"
+                                         TextChanged="TextBox_Search_TextChanged"
+                                         Padding="5,0">
+                                </TextBox>
+                                <TextBlock IsHitTestVisible="False" Text="Search..." VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" Foreground="DarkGray" FontSize="15">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=tb_SearchPersonnel}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
 
                             <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,1,0,0" Grid.Row="2" Margin="20,0,0,0">
                                 <ScrollViewer CanContentScroll="True" Grid.Row="1" BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}"  HorizontalScrollBarVisibility="Disabled">
@@ -129,7 +140,17 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <TextBlock FontSize="30" Margin="20,10" FontWeight="Thin" VerticalAlignment="Center" HorizontalAlignment="Left">Room Management</TextBlock>
-
+                            <Button Name="btn_SetupRoomTypes"
+                                    Width="50"
+                                    Height="50"
+                                    Style="{StaticResource ImageButton}"
+                                    HorizontalAlignment="Right"
+                                    ToolTip="Setup Room Types"
+                                    Click="btn_SetupRoomTypes_Click">
+                                <Image Margin="5"
+                                       Stretch="Uniform"
+                                       Source="pack://application:,,,/Schedio Application;component/Resources/Images/settings.png"/>
+                            </Button>
                             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="20,0" HorizontalAlignment="Left">
                                 <Button 
                                         MaxHeight="50"
@@ -211,28 +232,33 @@
                                 <TextBlock FontSize="20" Margin="20,5,5,5" FontWeight="Light" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1">List of Sections</TextBlock>
                             </StackPanel>
 
-                            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="20,0,0,0" HorizontalAlignment="Right" Height="30">
+                            <Grid Grid.Row="1" Margin="20,0,0,0" HorizontalAlignment="Right" Height="30">
                                 <TextBox Width="200"
                                          FontSize="16"
                                          Margin="12,0"
                                          VerticalContentAlignment="Center"
-                                         TextBlock.TextAlignment="Left"/>
-                                <Button Style="{StaticResource ConfirmButton}"
-                                        FontSize="15"
-                                        Width="80">
-                                    Search
-                                </Button>
-                            </StackPanel>
+                                         TextBlock.TextAlignment="Left"
+                                         Name="tb_SearchSection"
+                                         TextChanged="TextBox_Search_TextChanged"
+                                         Padding="5,0">
+                                </TextBox>
+                                <TextBlock IsHitTestVisible="False" Text="Search..." VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" Foreground="DarkGray" FontSize="15">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=tb_SearchSection}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
 
                             <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,1,0,0" Grid.Row="2" Margin="20,0,0,0">
                                 <ScrollViewer CanContentScroll="True" Grid.Row="1" BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}">
-                                    <!--<ListView x:Name="lv_SectionsList">
-
-
-                                    </ListView>-->
-
-                                    <ListView Name="lv_SectionList">
-                                    </ListView>
+                                    <ListView x:Name="lv_SectionList" ItemTemplate="{StaticResource dt_SectionList}" HorizontalContentAlignment="Stretch"/>
                                 </ScrollViewer>
                             </Border>
                         </Grid>
@@ -268,7 +294,7 @@
                 <Button Grid.Column="0" Margin="20" FontSize="15" MaxHeight="70" MinWidth="100" Style="{StaticResource CancelButton}">
                     <TextBlock Margin="10 0 10 0">Clear Settings</TextBlock>
                 </Button>
-                <Button Grid.Column="2" Margin="20" FontSize="15" MaxHeight="70" MinWidth="100" Style="{StaticResource ConfirmButton}">Confirm</Button>
+                <Button Grid.Column="2" Margin="20" FontSize="15" MaxHeight="70" MinWidth="100" Style="{StaticResource ConfirmButton}" Name="btn_Confirm" Click="btn_Confirm_Click">Confirm</Button>
             </Grid>
 
         </Grid>

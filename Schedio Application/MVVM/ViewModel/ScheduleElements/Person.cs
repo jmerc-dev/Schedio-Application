@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schedio_Application.MVVM.ViewModel.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Windows;
 
 namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
-    public class Person
+    public class Person : PropertyNotification
     {
         const int MAX_CAPACITY = 7;
 
@@ -28,19 +29,31 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public string ConstTime_Start
         {
             get { return _ConstTime_Start; }
-            set { _ConstTime_Start = value; }
+            set 
+            { 
+                _ConstTime_Start = value;
+                OnPropertyChanged();
+            }
         }
 
         public string ConstTime_End
         {
             get { return _ConstTime_End; }
-            set { _ConstTime_End = value; }
+            set 
+            { 
+                _ConstTime_End = value;
+                OnPropertyChanged();
+            }
         }
 
         public string Name
         {
             get { return _Name; } 
-            set {  _Name = value; } 
+            set 
+            {  
+                _Name = value;
+                OnPropertyChanged();
+            } 
         }
 
         public Day[] Days
@@ -48,57 +61,25 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             get { return _Days; }
         }
 
-        public bool Monday
-        {
-            get { return Days[0].IsAvailable; }
-            set { Days[0].IsAvailable = value; }
-        }
-
-        public bool Tuesday
-        {
-            get { return Days[1].IsAvailable; }
-            set { Days[1].IsAvailable = value; }
-        }
-
-        public bool Wednesday
-        {
-            get { return Days[2].IsAvailable; }
-            set { Days[2].IsAvailable = value; }
-        }
-
-        public bool Thursday
-        {
-            get { return Days[3].IsAvailable; }
-            set { Days[3].IsAvailable = value; }
-        }
-
-        public bool Friday
-        {
-            get { return Days[4].IsAvailable; }
-            set { Days[4].IsAvailable = value; }
-        }
-
-        public bool Saturday
-        {
-            get { return Days[5].IsAvailable; }
-            set { Days[5].IsAvailable = value; }
-        }
-
-        public bool Sunday
-        {
-            get { return Days[6].IsAvailable; }
-            set { Days[6].IsAvailable = value; }
-        }
-
         public bool IsConstant
         {
             get { return _IsConstant; }
-            set { _IsConstant = value; }
+            set 
+            { 
+                _IsConstant = value;
+                OnPropertyChanged();
+            }
         }
 
+        private string _AvailableDays;
         public string AvailableDays
         {
-            get { return GetAvailDaysFormatted(); }
+            get { return _AvailableDays; }
+            set 
+            { 
+                _AvailableDays = value;
+                OnPropertyChanged();
+            }
         }
 
         public Person() 
@@ -116,6 +97,11 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             {
                 _Days[i] = new Day();
             }
+        }
+
+        public void UpdateFormattedDays()
+        {
+            AvailableDays = GetAvailDaysFormatted();
         }
 
         private void SetDaysName()
@@ -165,29 +151,6 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 }
             }
             return formattedDays;
-        }
-
-        public bool SetConstantTimeframe(TimeFrame time)
-        {
-            for (int i = 0; i < MAX_CAPACITY; i++)
-            {
-                if (_Days[i].IsAvailable)
-                {
-                    _Days[i].ConstantTimeframe = time;
-                }
-            }
-            return true;
-        }
-
-        public bool AddCustomTimeFrame(TimeFrame timeFrame, DayOfWeek day)
-        {
-
-            return true;
-        }
-        
-        public Day[] GetAvailableDays()
-        {
-            return _Days;
         }
     }
 }

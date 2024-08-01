@@ -1,5 +1,7 @@
-﻿using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+﻿using Schedio_Application.MVVM.View.Windows;
+using Schedio_Application.MVVM.ViewModel.ScheduleElements;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -44,10 +46,8 @@ namespace Schedio_Application.MVVM.View.UserControls
             InitializeComponent();
             this.DataContext = this;
 
-            if (! (SetStartTime(timeFrame.StartTime) && SetEndTime(timeFrame.EndTime)) )
-            {
-                MessageBox.Show($"Cannot create {typeof(StartEndTimeInput)} object.");
-            }
+            SetStartTime(timeFrame.StartTime);
+            SetEndTime(timeFrame.EndTime);
         }
 
         public bool SetStartTime(string time)

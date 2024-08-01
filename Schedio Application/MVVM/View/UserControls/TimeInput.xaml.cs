@@ -26,14 +26,24 @@ namespace Schedio_Application.MVVM.View.UserControls
     /// <summary>
     /// Interaction logic for TimeInput.xaml
     /// </summary>
+    /// 
+
+
     public partial class TimeInput : UserControl, INotifyPropertyChanged
     {
         private TextBox[] textboxes = new TextBox[4];
         private int tbTraversalIndex;
+        private bool? _IsStart;
 
         // Time Value
         private string _Time, _Period;
         private int _HourTenths, _Hour, _MinTenths, _Min;
+
+        public bool? IsStart
+        {
+            get { return _IsStart; }
+            set { _IsStart = value; }
+        }
 
         public string Time
         {
@@ -136,7 +146,6 @@ namespace Schedio_Application.MVVM.View.UserControls
                 Min = Int32.Parse(timeSplit[0][4].ToString());
 
                 Period = timeSplit[1].ToUpper();
-
                 return true;
             } 
             catch (FormatException ex)
@@ -151,6 +160,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             this.DataContext = this;
 
             _Time = "";
+            Period = "AM";
 
             Loaded += (sender, e) =>
             {
@@ -159,9 +169,6 @@ namespace Schedio_Application.MVVM.View.UserControls
                 textboxes[1] = tb_Hour;
                 textboxes[2] = tb_MinTenths;
                 textboxes[3] = tb_Min;
-
-                Period = "AM";
-
             };
 
         }

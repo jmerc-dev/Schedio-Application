@@ -66,7 +66,7 @@
                 <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/settings.png"
                        Stretch="Uniform"
                        Margin="10,20"/>
-                <TextBlock Grid.Column="1" FontSize="15" VerticalAlignment="Center" Text="{Binding Type}" Width="250" TextWrapping="Wrap"  HorizontalAlignment="Left"/>
+                <TextBlock Grid.Column="1" FontSize="15" VerticalAlignment="Center" Text="{Binding Type.Name}" Width="250" TextWrapping="Wrap"  HorizontalAlignment="Left"/>
             </StackPanel>
         </Grid>
     </DataTemplate>
@@ -86,7 +86,10 @@
 
                 <StackPanel Orientation="Horizontal" Grid.Column="2" Width="300" Margin="2">
                     <Ellipse Name="customIndicator" Height="15" Width="15" VerticalAlignment="Center" Margin="5,0"/>
-                    <TextBlock Name="timeframe" Grid.Column="1" FontSize="15" Margin="5,0" VerticalAlignment="Center" TextWrapping="Wrap"  HorizontalAlignment="Left"/>
+                    <TextBlock Name="timeframeStart" FontSize="15" Margin="5,0" VerticalAlignment="Center" TextWrapping="Wrap"  HorizontalAlignment="Left"/>
+                    <Image x:Name="img" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3" Source="pack://application:,,,/Schedio Application;component/Resources/Images/arrow-right.png" Stretch="Uniform"/>
+                    <TextBlock Name="timeframeEnd" FontSize="15" Margin="5,0" VerticalAlignment="Center" TextWrapping="Wrap"  HorizontalAlignment="Left"/>
+                    <TextBlock Name="customText" Text="Custom" FontSize="15" Margin="5,0" VerticalAlignment="Center" TextWrapping="Wrap"  HorizontalAlignment="Left"/>
                 </StackPanel>
             </WrapPanel>
             
@@ -95,12 +98,52 @@
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding IsConstant}" Value="True">
                 <Setter TargetName="customIndicator" Property="Fill" Value="{StaticResource SecondaryColor}"/>
-                <Setter TargetName="timeframe" Property="Text" Value="{Binding Timeframe}"/>
+                <Setter TargetName="timeframeStart" Property="Text" Value="{Binding ConstTime_Start}"/>
+                <Setter TargetName="timeframeEnd" Property="Text" Value="{Binding ConstTime_End}"/>
+                <Setter TargetName="customText" Property="Visibility" Value="Collapsed"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding IsConstant}" Value="False">
                 <Setter TargetName="customIndicator" Property="Fill" Value="{StaticResource SecondaryShadeColor}"/>
-                <Setter TargetName="timeframe" Property="Text" Value="Custom"/>
+                <Setter TargetName="timeframeStart" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="timeframeEnd" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="img" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="customText" Property="Visibility" Value="Visible"/>
             </DataTrigger>
+        </DataTemplate.Triggers>
+
+    </DataTemplate>
+
+    <DataTemplate x:Key="dt_SectionList">
+        <Grid Margin="50,0,0,0" MinWidth="500">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{Binding Name}" FontSize="15" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal" Margin="50,0">
+                    <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/book.png"
+                           Stretch="Uniform"
+                           Height="30"
+                           Margin="5"
+                           SnapsToDevicePixels="True"/>
+                    <TextBlock Text="{Binding TotalSubjects}" FontSize="15" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="50,0">
+                    <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/totaltime.png"
+                           Stretch="Uniform"
+                           Height="30"
+                           SnapsToDevicePixels="True"/>
+                    <TextBlock Text="{Binding TotalUnits}" Margin="5" FontSize="15" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+                </StackPanel>
+            </StackPanel>
+            
+            
+
+        </Grid>
+
+        <DataTemplate.Triggers>
         </DataTemplate.Triggers>
 
     </DataTemplate>

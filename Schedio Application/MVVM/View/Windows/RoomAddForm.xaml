@@ -32,11 +32,11 @@
                 <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15">Type</TextBlock>
 
                 <TextBox Name="tbx_Name" Grid.Row="0" Grid.Column="1" Margin="5" Height="30" FontSize="14" VerticalContentAlignment="Center"/>
-                <ComboBox Name="cb_Type" Grid.Row="1" Grid.Column="2" Margin="5" Height="30" FontSize="14" IsEditable="True" VerticalContentAlignment="Center" Style="{StaticResource MainComboBox}"/>
+                <ComboBox Name="cb_Type" Grid.Row="1" Grid.Column="2" Margin="5" Height="30" FontSize="14" IsEditable="False" VerticalContentAlignment="Center" Style="{StaticResource MainComboBox}" DisplayMemberPath="Name" SelectedItem="{Binding RoomType}"/>
             </Grid>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="btn_Cancel" Style="{StaticResource CancelButton}" FontSize="13" Margin="8" Width="80" Content="Cancel" Click="btn_Cancel_Click"/>
+                <Button x:Name="btn_Cancel" Style="{StaticResource CancelButton}" FontSize="13" Margin="8" Width="80" Content="Cancel" Click="btn_Cancel_Click" Padding="5,0"/>
                 <Button x:Name="btn_Save" Style="{StaticResource ConfirmButton}" FontSize="13" Margin="8" Width="90" Content="Save" Click="btn_Save_Click"/>
             </StackPanel>
         </Grid>
