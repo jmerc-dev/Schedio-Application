@@ -19,14 +19,21 @@
     <None Remove="Resources\Images\book.png" />
     <None Remove="Resources\Images\change-disabled.png" />
     <None Remove="Resources\Images\change.png" />
+    <None Remove="Resources\Images\clear.png" />
     <None Remove="Resources\Images\clocksetting-disabled.png" />
     <None Remove="Resources\Images\clocksetting-inversed.png" />
     <None Remove="Resources\Images\clocksetting.png" />
+    <None Remove="Resources\Images\colorwheel.png" />
+    <None Remove="Resources\Images\expand.png" />
+    <None Remove="Resources\Images\export.png" />
+    <None Remove="Resources\Images\find.png" />
+    <None Remove="Resources\Images\hide.png" />
     <None Remove="Resources\Images\home-filled.png" />
     <None Remove="Resources\Images\home.png" />
     <None Remove="Resources\Images\info.png" />
     <None Remove="Resources\Images\logo.png" />
     <None Remove="Resources\Images\man.png" />
+    <None Remove="Resources\Images\manage.png" />
     <None Remove="Resources\Images\new-filled.png" />
     <None Remove="Resources\Images\new.png" />
     <None Remove="Resources\Images\open-filled.png" />
@@ -39,6 +46,7 @@
     <None Remove="Resources\Images\personnel.png" />
     <None Remove="Resources\Images\plus-inversed.png" />
     <None Remove="Resources\Images\plus.png" />
+    <None Remove="Resources\Images\preview.png" />
     <None Remove="Resources\Images\rooms-add.png" />
     <None Remove="Resources\Images\rooms-filled.png" />
     <None Remove="Resources\Images\rooms.png" />
@@ -46,6 +54,7 @@
     <None Remove="Resources\Images\sections-add.png" />
     <None Remove="Resources\Images\sections-filled.png" />
     <None Remove="Resources\Images\sections.png" />
+    <None Remove="Resources\Images\sequence.png" />
     <None Remove="Resources\Images\settings.png" />
     <None Remove="Resources\Images\time-filled.png" />
     <None Remove="Resources\Images\time-inversed.png" />
@@ -78,14 +87,21 @@
     <Resource Include="Resources\General\title_icon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\Images\clear.png" />
     <Resource Include="Resources\Images\clocksetting-disabled.png" />
     <Resource Include="Resources\Images\clocksetting-inversed.png" />
     <Resource Include="Resources\Images\clocksetting.png" />
+    <Resource Include="Resources\Images\colorwheel.png" />
+    <Resource Include="Resources\Images\expand.png" />
+    <Resource Include="Resources\Images\export.png" />
+    <Resource Include="Resources\Images\find.png" />
+    <Resource Include="Resources\Images\hide.png" />
     <Resource Include="Resources\Images\home-filled.png" />
     <Resource Include="Resources\Images\home.png" />
     <Resource Include="Resources\Images\info.png" />
     <Resource Include="Resources\Images\logo.png" />
     <Resource Include="Resources\Images\man.png" />
+    <Resource Include="Resources\Images\manage.png" />
     <Resource Include="Resources\Images\new-filled.png" />
     <Resource Include="Resources\Images\new.png" />
     <Resource Include="Resources\Images\open-filled.png" />
@@ -98,6 +114,7 @@
     <Resource Include="Resources\Images\personnel.png" />
     <Resource Include="Resources\Images\plus-inversed.png" />
     <Resource Include="Resources\Images\plus.png" />
+    <Resource Include="Resources\Images\preview.png" />
     <Resource Include="Resources\Images\rooms-add.png" />
     <Resource Include="Resources\Images\rooms-filled.png" />
     <Resource Include="Resources\Images\rooms.png" />
@@ -105,6 +122,7 @@
     <Resource Include="Resources\Images\sections-add.png" />
     <Resource Include="Resources\Images\sections-filled.png" />
     <Resource Include="Resources\Images\sections.png" />
+    <Resource Include="Resources\Images\sequence.png" />
     <Resource Include="Resources\Images\settings.png" />
     <Resource Include="Resources\Images\time-filled.png" />
     <Resource Include="Resources\Images\time-inversed.png" />

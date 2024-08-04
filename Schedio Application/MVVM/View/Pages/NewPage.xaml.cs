@@ -450,15 +450,17 @@ namespace Schedio_Application.MVVM.View.Pages
         private void btn_Confirm_Click(object sender, RoutedEventArgs e)
         {
             // TODO: Data reliability testing
-
             // Base Schedule
-
+            Workshop wk = new Workshop();
+            Application.Current.MainWindow.Visibility = Visibility.Collapsed;
+            wk.Show();
+            return;
             if (BaseSched == null || BaseSched.DailyTimeframe == null)
             {
                 new MBox("Please setup the base schedule.").ShowDialog();
                 return;
             }
-            
+
             Trace.WriteLine($"Base Schedule [{BaseSched.IsConstant}]:");
             foreach (KeyValuePair<DayOfWeek, TimeFrame> kvp in BaseSched.DailyTimeframe)
             {
@@ -527,6 +529,7 @@ namespace Schedio_Application.MVVM.View.Pages
                     Trace.WriteLine($"\t{s.Name}: {s.RoomType.Name} - {s.Units} - {s.AssignedPerson.Name}");
                 }
             }
+            
         }
     }
 }
