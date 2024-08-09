@@ -1,6 +1,7 @@
 ﻿using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,20 @@ namespace Schedio_Application.MVVM.View.Windows
         public Workshop()
         {
             InitializeComponent();
+        }
+
+        private void sv_Canvas_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            ScrollViewer sv = (ScrollViewer)sender;
+            recta.SetValue(Canvas.TopProperty, sv.VerticalOffset);
+            recta.SetValue(Canvas.LeftProperty, sv.HorizontalOffset);
+            Timeslot.SetValue(Canvas.LeftProperty, sv.HorizontalOffset);
+            RoomCategoriesContainer.SetValue(Canvas.TopProperty, sv.VerticalOffset);
+        }
+
+        private void entriesContainer_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            
         }
     }
 }

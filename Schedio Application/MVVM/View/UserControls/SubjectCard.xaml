@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="Schedio_Application.MVVM.View.UserControls.SubjectCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Schedio_Application.MVVM.View.UserControls"
+             xmlns:converter="clr-namespace:Schedio_Application.MVVM.ViewModel.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="220"
+             Focusable="True"
+             Background="Transparent"
+             PreviewMouseDown="UserControl_PreviewMouseDown"
+             SnapsToDevicePixels="True"
+             GotFocus="UserControl_GotFocus"
+             LostFocus="UserControl_LostFocus">
+    <UserControl.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Edit"/>
+            <MenuItem Header="Delete"/>
+        </ContextMenu>
+    </UserControl.ContextMenu>
+    <UserControl.Resources>
+        <converter:LessThanOrEqualConverter x:Key="LessThanOrEqualConverterInstance"/>
+        <Style TargetType="Border" x:Key="border">
+            <Setter Property="BorderThickness" Value="5"/>
+            <Setter Property="BorderBrush" Value="{StaticResource SecondaryShadeColor}"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                    <Setter Property="BorderBrush" Value="{StaticResource TertiaryColor}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsFocused, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                    <Setter Property="BorderBrush" Value="{StaticResource ShadedTertiaryColor}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="tb_OnHover">
+            <Setter Property="Visibility" Value="Collapsed"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="tb_Collapse">
+            <Setter Property="Visibility" Value="Visible"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource LessThanOrEqualConverterInstance}, ConverterParameter=70}" Value="True">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Border BorderThickness="1"
+            CornerRadius="3"
+            Margin="5,2"
+            Style="{StaticResource border}">
+        <Grid>
+            <Rectangle Fill="{StaticResource PrimaryBackground}"/>
+            <Rectangle Fill="{StaticResource SecondaryColor}" Height="24" VerticalAlignment="Top"/>
+            <TextBlock Text="CS501A" Foreground="AliceBlue" FontSize="13" FontFamily="Monospace" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,4"/>
+
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0">
+                <TextBlock Text="NSTP II" FontSize="15" HorizontalAlignment="Center" FontWeight="DemiBold" Style="{StaticResource tb_Collapse}"/>
+                <TextBlock Text="Sir Ugmat" FontSize="13" FontStyle="Normal" FontWeight="Normal" Foreground="{StaticResource SecondaryShadeColor}" HorizontalAlignment="Center" Style="{StaticResource tb_Collapse}"/>
+                <TextBlock Text="5:00 AM - 6:00 AM" FontSize="13" FontWeight="Normal" HorizontalAlignment="Center" Style="{StaticResource tb_OnHover}"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+    
+</UserControl>
