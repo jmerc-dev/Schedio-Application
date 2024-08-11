@@ -27,18 +27,5 @@ namespace Schedio_Application.MVVM.View.Windows
             InitializeComponent();
         }
 
-        private void sv_Canvas_ScrollChanged(object sender, ScrollChangedEventArgs e)
-        {
-            ScrollViewer sv = (ScrollViewer)sender;
-            recta.SetValue(Canvas.TopProperty, sv.VerticalOffset);
-            recta.SetValue(Canvas.LeftProperty, sv.HorizontalOffset);
-            Timeslot.SetValue(Canvas.LeftProperty, sv.HorizontalOffset);
-            RoomCategoriesContainer.SetValue(Canvas.TopProperty, sv.VerticalOffset);
-        }
-
-        private void entriesContainer_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            
-        }
     }
 }

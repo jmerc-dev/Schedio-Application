@@ -15,14 +15,14 @@
              LostFocus="UserControl_LostFocus">
     <UserControl.ContextMenu>
         <ContextMenu>
-            <MenuItem Header="Edit"/>
-            <MenuItem Header="Delete"/>
+            <MenuItem Header="Change"/>
+            <MenuItem Header="Deallocate"/>
         </ContextMenu>
     </UserControl.ContextMenu>
     <UserControl.Resources>
         <converter:LessThanOrEqualConverter x:Key="LessThanOrEqualConverterInstance"/>
         <Style TargetType="Border" x:Key="border">
-            <Setter Property="BorderThickness" Value="5"/>
+            <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="BorderBrush" Value="{StaticResource SecondaryShadeColor}"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
@@ -30,6 +30,7 @@
                 </DataTrigger>
                 <DataTrigger Binding="{Binding IsFocused, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
                     <Setter Property="BorderBrush" Value="{StaticResource ShadedTertiaryColor}"/>
+                    <Setter Property="BorderThickness" Value="2"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -55,12 +56,11 @@
         </Style>
     </UserControl.Resources>
 
-    <Border BorderThickness="1"
+    <Border
             CornerRadius="3"
             Margin="5,2"
             Style="{StaticResource border}">
         <Grid>
-            <Rectangle Fill="{StaticResource PrimaryBackground}"/>
             <Rectangle Fill="{StaticResource SecondaryColor}" Height="24" VerticalAlignment="Top"/>
             <TextBlock Text="CS501A" Foreground="AliceBlue" FontSize="13" FontFamily="Monospace" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,4"/>
 
