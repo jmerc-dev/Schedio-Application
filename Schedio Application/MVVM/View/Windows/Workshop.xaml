@@ -215,7 +215,7 @@
             <TabControl TabStripPlacement="Bottom" BorderThickness="0,1,0,0" BorderBrush="{StaticResource SecondaryShadeColor}">
                 <TabItem Header="Monday">
                     <TabItem.Content>
-                        <userControls:TimeTable/>
+                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
                     </TabItem.Content>
                 </TabItem>
                 <TabItem Header="Tuesday"/>

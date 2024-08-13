@@ -28,36 +28,62 @@ namespace Schedio_Application.MVVM.View.UserControls
         private const int ROOMHEADER_WIDTH = 200;
         private const int SUBJECTCARD_WIDTH = 200;
         private const double HOUR_HEIGHT = 120;
+        private ObservableCollection<Room> Rooms;
 
         public TimeTable()
         {
             InitializeComponent();
-            
+            Rooms = new ObservableCollection<Room>();
+
+            Rooms.Add(new Room("101", new RoomType("Lab")));
+            Rooms.Add(new Room("102", new RoomType("Lab")));
+            Rooms.Add(new Room("103", new RoomType("Classic")));
+            Rooms.Add(new Room("104", new RoomType("Lab")));
+            Rooms.Add(new Room("101", new RoomType("Lab")));
+            Rooms.Add(new Room("102", new RoomType("Lab")));
+            Rooms.Add(new Room("103", new RoomType("Classic")));
+            Rooms.Add(new Room("104", new RoomType("Lab")));
+            Rooms.Add(new Room("101", new RoomType("Lab")));
+            Rooms.Add(new Room("102", new RoomType("Lab")));
+            Rooms.Add(new Room("103", new RoomType("Classic")));
+            Rooms.Add(new Room("104", new RoomType("Lab")));
+            PopulateRooms(Rooms);
+            PopulateTimeslot();
+
             Loaded += (sender, e) =>
             {
-                SetCanvasDimension(TimeHeader.ActualWidth + RoomHeader.ActualWidth, TimeHeader.ActualHeight + Timeslot.ActualHeight);
+                double fullWidth = TimeHeader.ActualWidth + RoomHeader.ActualWidth;
+                double fullHeight = TimeHeader.ActualHeight+ Timeslot.ActualHeight;
 
-                double top = 0;
-                for (int i = 0; i < 20; i++)
-                {
-                    SubjectCard sc = new SubjectCard();
-                    sc.SetValue(Canvas.TopProperty, top);
-                    sc.Height = 120;
-                    entriesContainer.Children.Add(sc);
-                    top += 120;
-                }
+                SetControlWidth(fullWidth);
+                SetControlHeight(fullHeight);
             };
         }
 
-        private void SetCanvasDimension(double width, double height)
+        private void SetControlWidth(double width)
         {
             cv_Container.Width = width;
-            cv_Container.Height = height;
         }
+
+        private void SetControlHeight(double height)
+        {
+            cv_Container.Height = height;
+        } 
 
         private void PopulateRooms(ObservableCollection<Room> rooms)
         {
+            foreach (Room room in rooms)
+            {
+                sp_RoomHeader.Children.Add(new TextBlock { Text = room.Name });
+            }
+        }
 
+        private void PopulateTimeslot()
+        {
+            foreach (string t in BaseSchedule.TimeBreakpoints)
+            {
+                sp_TimeHeader.Children.Add(new TextBlock { Text = t });
+            }
         }
 
         private void sv_Canvas_ScrollChanged(object sender, ScrollChangedEventArgs e)

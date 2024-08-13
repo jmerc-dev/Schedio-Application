@@ -4,10 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Schedio_Application.MVVM.View.UserControls"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800" PreviewMouseLeftButtonDown="UserControl_MouseLeftButtonDown">
     <ScrollViewer Name="sv_Canvas" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" ScrollChanged="sv_Canvas_ScrollChanged" Style="{StaticResource MainScrollViewer}" Background="Transparent">
-        <Canvas Name="cv_Container" Background="AliceBlue" SnapsToDevicePixels="True">
+        <Canvas Name="cv_Container" Background="{StaticResource PrimaryBackground}" SnapsToDevicePixels="True" HorizontalAlignment="Left">
             <Canvas Name="HorizontalLineContainer" Canvas.ZIndex="1" Canvas.Top="50" Canvas.Left="100" Height="200" Width="200" Margin="0,60,0,0">
                 <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="9"/>
                 <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="129"/>
@@ -42,10 +42,11 @@
                         <Setter Property="Width" Value="200"/>
                     </Style>
                 </Canvas.Resources>
+                <local:SubjectCard Height="120"/>
                 <Canvas Name="cv_FocusHolder" Height="50" Width="50" Canvas.Left="200" Background="Transparent"/>
             </Canvas>
             <Border Name="RoomHeader" Canvas.ZIndex="500" BorderThickness="0,0,0,1" BorderBrush="{StaticResource PrimaryShadeColor}" Height="50" Width="auto" Background="AliceBlue" Canvas.Left="{Binding ElementName=TimeHeader, Path=Width}">
-                <StackPanel Orientation="Horizontal" Margin="5,0">
+                <StackPanel Name="sp_RoomHeader" Orientation="Horizontal" Margin="5,0">
                     <StackPanel.Resources>
                         <Style TargetType="TextBlock">
                             <Setter Property="Width" Value="200"/>
@@ -54,22 +55,10 @@
                             <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
                         </Style>
                     </StackPanel.Resources>
-                    <TextBlock Text="101"/>
-                    <TextBlock Text="102"/>
-                    <TextBlock Text="103"/>
-                    <TextBlock Text="104"/>
-                    <TextBlock Text="105"/>
-                    <TextBlock Text="106"/>
-                    <TextBlock Text="107"/>
-                    <TextBlock Text="108"/>
-                    <TextBlock Text="109"/>
-                    <TextBlock Text="110"/>
-                    <TextBlock Text="Court"/>
-                    <TextBlock Text="Lab"/>
                 </StackPanel>
             </Border>
             <Border Name="Timeslot" Background="AliceBlue" Canvas.ZIndex="500" Height="auto" Width="100"  Canvas.Top="{Binding ElementName=TimeHeader, Path=Height}">
-                <StackPanel Margin="5,60,5,0">
+                <StackPanel Name="sp_TimeHeader" Margin="5,60,5,0">
                     <StackPanel.Resources>
                         <Style TargetType="TextBlock">
                             <Setter Property="Height" Value="120"/>
@@ -78,24 +67,9 @@
                             <Setter Property="Foreground" Value="{StaticResource SecondaryShadeColor}"/>
                         </Style>
                     </StackPanel.Resources>
-                    <TextBlock Text="5:00 AM"/>
-                    <TextBlock Text="6:00 AM"/>
-                    <TextBlock Text="7:00 AM"/>
-                    <TextBlock Text="8:00 AM"/>
-                    <TextBlock Text="9:00 AM"/>
-                    <TextBlock Text="10:00 AM"/>
-                    <TextBlock Text="11:00 AM"/>
-                    <TextBlock Text="12:00 PM"/>
-                    <TextBlock Text="1:00 PM"/>
-                    <TextBlock Text="2:00 PM"/>
-                    <TextBlock Text="3:00 PM"/>
-                    <TextBlock Text="4:00 PM"/>
-                    <TextBlock Text="5:00 PM"/>
-                    <TextBlock Text="6:00 PM"/>
-                    <TextBlock Text="7:00 PM"/>
                 </StackPanel>
             </Border>
-            <Border Name="TimeHeader" BorderThickness="0,0,0,1" BorderBrush="{StaticResource TertiaryColor}" Canvas.ZIndex="500" Height="50" Width="100" Background="AliceBlue">
+            <Border Name="TimeHeader" BorderThickness="0,0,0,1" BorderBrush="{StaticResource TertiaryColor}" Canvas.Left="0" Canvas.ZIndex="500" Height="50" Width="100" Background="AliceBlue">
                 <TextBlock Text="Time" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
         </Canvas>
