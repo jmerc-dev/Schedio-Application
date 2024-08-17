@@ -25,6 +25,10 @@ namespace Schedio_Application.MVVM.View.Windows
         public Workshop()
         {
             InitializeComponent();
+            Closing += (sender, e) =>
+            {
+                Application.Current.MainWindow.Visibility = Visibility.Visible;
+            };
         }
 
     }

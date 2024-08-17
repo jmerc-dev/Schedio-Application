@@ -27,6 +27,27 @@ namespace Schedio_Application.MVVM.View.UserControls
     public partial class SubjectItem : UserControl, INotifyPropertyChanged
     {
         private Subject _Subject;
+        private double _XPosition, _YPosition;
+
+        public double XPosition
+        {
+            get { return _XPosition; }
+            set 
+            { 
+                _XPosition = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public double YPosition
+        {
+            get { return _YPosition; }
+            set 
+            { 
+                _YPosition = value;
+                OnPropertyChanged();
+            }
+        }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

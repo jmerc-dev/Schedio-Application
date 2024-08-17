@@ -23,6 +23,7 @@
     <None Remove="Resources\Images\clocksetting-disabled.png" />
     <None Remove="Resources\Images\clocksetting-inversed.png" />
     <None Remove="Resources\Images\clocksetting.png" />
+    <None Remove="Resources\Images\close.png" />
     <None Remove="Resources\Images\colorwheel.png" />
     <None Remove="Resources\Images\expand.png" />
     <None Remove="Resources\Images\export.png" />
@@ -34,8 +35,12 @@
     <None Remove="Resources\Images\logo.png" />
     <None Remove="Resources\Images\man.png" />
     <None Remove="Resources\Images\manage.png" />
+    <None Remove="Resources\Images\maximize.png" />
+    <None Remove="Resources\Images\minimize.png" />
     <None Remove="Resources\Images\new-filled.png" />
     <None Remove="Resources\Images\new.png" />
+    <None Remove="Resources\Images\open-file-inversed.png" />
+    <None Remove="Resources\Images\open-file.png" />
     <None Remove="Resources\Images\open-filled.png" />
     <None Remove="Resources\Images\open.png" />
     <None Remove="Resources\Images\pen-inversed.png" />
@@ -47,6 +52,7 @@
     <None Remove="Resources\Images\plus-inversed.png" />
     <None Remove="Resources\Images\plus.png" />
     <None Remove="Resources\Images\preview.png" />
+    <None Remove="Resources\Images\restore-down.png" />
     <None Remove="Resources\Images\rooms-add.png" />
     <None Remove="Resources\Images\rooms-filled.png" />
     <None Remove="Resources\Images\rooms.png" />
@@ -91,6 +97,7 @@
     <Resource Include="Resources\Images\clocksetting-disabled.png" />
     <Resource Include="Resources\Images\clocksetting-inversed.png" />
     <Resource Include="Resources\Images\clocksetting.png" />
+    <Resource Include="Resources\Images\close.png" />
     <Resource Include="Resources\Images\colorwheel.png" />
     <Resource Include="Resources\Images\expand.png" />
     <Resource Include="Resources\Images\export.png" />
@@ -102,8 +109,12 @@
     <Resource Include="Resources\Images\logo.png" />
     <Resource Include="Resources\Images\man.png" />
     <Resource Include="Resources\Images\manage.png" />
+    <Resource Include="Resources\Images\maximize.png" />
+    <Resource Include="Resources\Images\minimize.png" />
     <Resource Include="Resources\Images\new-filled.png" />
     <Resource Include="Resources\Images\new.png" />
+    <Resource Include="Resources\Images\open-file-inversed.png" />
+    <Resource Include="Resources\Images\open-file.png" />
     <Resource Include="Resources\Images\open-filled.png" />
     <Resource Include="Resources\Images\open.png" />
     <Resource Include="Resources\Images\pen-inversed.png" />
@@ -115,6 +126,7 @@
     <Resource Include="Resources\Images\plus-inversed.png" />
     <Resource Include="Resources\Images\plus.png" />
     <Resource Include="Resources\Images\preview.png" />
+    <Resource Include="Resources\Images\restore-down.png" />
     <Resource Include="Resources\Images\rooms-add.png" />
     <Resource Include="Resources\Images\rooms-filled.png" />
     <Resource Include="Resources\Images\rooms.png" />

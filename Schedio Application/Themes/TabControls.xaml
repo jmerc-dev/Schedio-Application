@@ -8,7 +8,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="TabItem">
                     <Grid Cursor="Hand">
-                        <Rectangle Name="Rectangle" Fill="{StaticResource PrimaryBackground}"/>
+                        <Rectangle Name="Rectangle" Fill="Transparent"/>
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -31,7 +31,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Panel.ZIndex" Value="100" />
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource TertiaryColor}"/>
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource SecondaryColor}"/>
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -48,5 +48,20 @@
         </Setter>
 
     </Style>
-    
+
+    <Style TargetType="TabItem" x:Key="FillerTab">
+        <Setter Property="Height" Value="70"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Grid>
+                        <ContentPresenter  HorizontalAlignment="Left" VerticalAlignment="Center" ContentSource="Header" Grid.Column="1"></ContentPresenter>
+                    </Grid>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
 </ResourceDictionary>

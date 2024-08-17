@@ -6,79 +6,129 @@
         xmlns:local="clr-namespace:Schedio_Application"
         xmlns:NavButtons="clr-namespace:Schedio_Application.MVVM.View.UserControls"
         mc:Ignorable="d"
-        ResizeMode="CanResizeWithGrip"
         Title="Schedio" Height="720" Width="1280"
         WindowStartupLocation="CenterScreen"
         MinWidth="935"
-        Icon="pack://application:,,,/Resources/General/title_icon.ico"
-        Background="{StaticResource PrimaryBackground}">
-
-<Grid>
-    <Grid.RowDefinitions>
-        <RowDefinition Height="90" />
-        <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
-
-    <Border Grid.Row="0" BorderBrush="{StaticResource PrimaryShadeColor}" BorderThickness="0, 0, 0, 1">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" MinWidth="250"/>
-                <ColumnDefinition Width="3*" MinWidth="500"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="4*"/>
-                </Grid.ColumnDefinitions>
-
-                <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/logo.png" Height="60" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                <TextBlock Grid.Column="1" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="18" FontWeight="DemiBold"  FontFamily="Aharoni">Schedio</TextBlock>
-            </Grid>
-            <Grid Grid.Column="1" FocusManager.IsFocusScope="True" FocusManager.FocusedElement="{Binding ElementName=HomeButton}">
- 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <!-- Main Navigation Buttons -->
-                <NavButtons:HomeNavButtons x:Name="HomeButton" 
-                                           Grid.Column="0" 
-                                           LabelName="Home" 
-                                           DefaultImagePath="pack://application:,,,/Schedio Application;component/Resources/Images/home.png" 
-                                           FocusedImagePath="pack://application:,,,/Schedio Application;component/Resources/Images/home-filled.png"  
-                                           PreviewMouseLeftButtonDown="HomeButton_PreviewMouseLeftButtonDown" 
-                                           GotFocus="HomeButton_GotFocus"></NavButtons:HomeNavButtons>
-                <NavButtons:HomeNavButtons x:Name="NewButton" 
-                                           Grid.Column="1" 
-                                           LabelName="New" 
-                                           DefaultImagePath="pack://application:,,,/Schedio Application;component/Resources/Images/new.png" 
-                                           FocusedImagePath="pack://application:,,,/Schedio Application;component/Resources/Images/new-filled.png" 
-                                           GotFocus="NewButton_GotFocus"></NavButtons:HomeNavButtons>
-                <NavButtons:HomeNavButtons x:Name="OpenButton" 
-                                           Grid.Column="2" 
-                                           LabelName="Open" 
-                                           DefaultImagePath="pack://application:,,,/Schedio Application;component/Resources/Images/open.png" 
-                                           FocusedImagePath="pack://application:,,,/Schedio Application;component/Resources/Images/open-filled.png" 
-                                           GotFocus="OpenButton_GotFocus"></NavButtons:HomeNavButtons>
-
-            </Grid>
-        </Grid>
-
-    </Border>
-    
-    <Grid Grid.Row="1" >
-
-        <Frame x:Name="MainContent" NavigationUIVisibility="Hidden" Navigating="MainContent_Navigating"></Frame>
-
+        WindowStyle="None"
+        Background="{StaticResource PrimaryBackground}"
+        ResizeMode="CanResizeWithGrip"
+        AllowsTransparency="True"
+        Icon="pack://application:,,,/Schedio Application;component/Resources/Images/logo.png"
+        MaxHeight="{Binding Source={x:Static SystemParameters.MaximizedPrimaryScreenHeight}}"
+        MaxWidth="{Binding Source={x:Static SystemParameters.MaximizedPrimaryScreenWidth}}">
         
+    <Grid> 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150" x:Name="SidePanel"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Rectangle Grid.Column="0" Fill="#E1E1E1" Grid.RowSpan="2"/>
+        <TextBlock Text="Schedio" FontWeight="DemiBold" HorizontalAlignment="Center" Grid.Row="1" FontSize="20" Foreground="{StaticResource ShadedSecondaryColor}" Margin="0,30"/>
+        
+        <!-- Main Content -->
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,0">
+            <TabControl Grid.RowSpan="2" Background="Transparent" TabStripPlacement="Left" BorderThickness="0">
+                <TabItem Height="70" Width="150" Background="Transparent" IsEnabled="False" Style="{StaticResource FillerTab}"/>
+
+                <TabItem Style="{StaticResource MainTabItems}" Width="135" IsSelected="True">
+                    <TabItem.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/home-filled.png" VerticalAlignment="Center"/>
+                            <TextBlock Text="Home" FontSize="14" FontWeight="Regular" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
+                        </Grid>
+                    </TabItem.Header>
+                    <TabItem.Content>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="120"/>
+                            </Grid.RowDefinitions>
+                            
+                            <!-- Recent Project section -->
+                            <Grid Grid.Row="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Text="Recent Projects" FontSize="30" FontWeight="Light" Margin="40" SnapsToDevicePixels="True"/>
+                                <!-- TODO: List of buttons -->
+                            </Grid>
+                            
+                            <!-- Project Buttons -->
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" Height="70" Margin="40,0">
+                                <Button Style="{StaticResource ConfirmButton}" Width="150" Margin="10" Name="btn_NewProject" Click="btn_NewProject_Click">
+                                    <TextBlock Text="New Project" FontSize="14"/>
+                                </Button>
+                                <Button Style="{StaticResource SecondaryButton}" Width="50" Margin="10" Name="btn_OpenProject" MouseEnter="btn_OpenProject_MouseEnter" MouseLeave="btn_OpenProject_MouseLeave">
+                                    <Image Name="img_OpenProject" Source="pack://application:,,,/Schedio Application;component/Resources/Images/open-file.png" Margin="7" Stretch="Uniform"/>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </TabItem.Content>
+                </TabItem>
+            </TabControl>
+        </Grid>
+        
+        <!-- Other Buttons -->
+        
+        <StackPanel Orientation="Vertical" Grid.Row="1" VerticalAlignment="Bottom" Margin="0,0,0,10">
+            <Button Style="{StaticResource ImageButton}" Height="50" FontSize="13" Background="Transparent">
+                <Border>
+                    <TextBlock Text="Settings" FontSize="15" FontWeight="Regular" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
+                </Border>
+            </Button>
+            <Button Style="{StaticResource ImageButton}" Height="50" FontSize="13">
+                <Grid>
+                    <TextBlock Text="Feedback" FontSize="15" FontWeight="Regular" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
+                </Grid>
+            </Button>
+            <Button Style="{StaticResource ImageButton}" Height="50" FontSize="13">
+                <Grid>
+                    <TextBlock Text="About Us" FontSize="15" FontWeight="Regular" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
+                </Grid>
+            </Button>
+        </StackPanel>
+        
+        <!-- Window Operational Buttons -->
+
+        <Grid Grid.ColumnSpan="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="132"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" MouseLeftButtonDown="Window_MouseLeftButtonDown" Background="Transparent">
+                
+            </Grid>
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1">
+                <Button Width="44" Height="35" Style="{StaticResource SystemButton}" Name="btn_MinimizeWindow" Click="btn_MinimizeWindow_Click" Background="Transparent">
+                    <Grid Background="Transparent" HorizontalAlignment="Stretch">
+                        <Rectangle Fill="Transparent" Width="44" Height="35"/>
+                        <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/minimize.png" Width="11" Margin="0,4,0,0" SnapsToDevicePixels="True"/>
+                    </Grid>
+                </Button>
+                <Button Width="44" Style="{StaticResource SystemButton}" Name="btn_MaximizeWindow" Click="btn_MaximizeWindow_Click" Background="Transparent">
+                    <Grid>
+                        <Rectangle Fill="Transparent" Width="44" Height="35"/>
+                        <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/maximize.png" Margin="0,4,0,0" Height="15" Width="15" SnapsToDevicePixels="True" Name="img_Max"/>
+                    </Grid>
+                </Button>
+                <Button Width="44" Style="{StaticResource CloseSystemButton}" Name="btn_CloseWindow" Click="btn_CloseWindow_Click" Background="Transparent">
+                    <Grid>
+                        <Rectangle Fill="Transparent" Width="44" Height="35"/>
+                        <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/close.png" Margin="0,4,0,0" Height="15" Width="15" Stretch="Uniform" SnapsToDevicePixels="True"/>
+                    </Grid>
+                </Button>
+            </StackPanel>
+        </Grid>
     </Grid>
-</Grid>
-    
-    
-
-
 </Window>

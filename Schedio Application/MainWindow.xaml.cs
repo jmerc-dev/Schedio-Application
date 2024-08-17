@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Schedio_Application.MVVM.View.Windows;
+using System.Diagnostics;
 using System.Reflection;
 using System.Text;
 using System.Windows;
@@ -23,36 +24,71 @@ namespace Schedio_Application
         public MainWindow()
         {
             InitializeComponent();
-            
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight - 8;
         }
 
-        private void HomeButton_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
-            
+            if (e.ChangedButton == MouseButton.Left)
+                if (e.ClickCount == 2)
+                {
+                    AdjustWindowSize();
+                }
+                else
+                {
+                    Application.Current.MainWindow.DragMove();
+                }
         }
 
-        private void HomeButton_GotFocus(object sender, RoutedEventArgs e)
+        private void btn_CloseWindow_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Navigate(new Uri("pack://application:,,,/Schedio Application;component/MVVM/View/Pages/HomePage.xaml"));
+            Application.Current.MainWindow.Close();
         }
 
-        private void NewButton_GotFocus(object sender, RoutedEventArgs e)
+        private void btn_MinimizeWindow_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Navigate(new Uri("pack://application:,,,/Schedio Application;component/MVVM/View/Pages/NewPage.xaml"));
+            this.WindowState = WindowState.Minimized;
         }
 
-        private void OpenButton_GotFocus(object sender, RoutedEventArgs e)
+        private void btn_MaximizeWindow_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Navigate(new Uri("pack://application:,,,/Schedio Application;component/MVVM/View/Pages/OpenPage.xaml"));
+            AdjustWindowSize();
         }
 
-        private void MainContent_Navigating(object sender, NavigatingCancelEventArgs e)
+        private void AdjustWindowSize()
         {
-            if (e.NavigationMode == NavigationMode.Back)
+            if (this.WindowState == WindowState.Maximized)
             {
-                e.Cancel = true;
+                this.WindowState = WindowState.Normal;
+                img_Max.Source = new BitmapImage(
+                    new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/maximize.png"));
             }
+            else
+            {
+                this.WindowState = WindowState.Maximized;
+                img_Max.Source = new BitmapImage(
+                    new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/restore-down.png"));
+            }
+
+        }
+
+        private void btn_OpenProject_MouseEnter(object sender, MouseEventArgs e)
+        {
+            img_OpenProject.Source = new BitmapImage(
+                new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/open-file-inversed.png"));
+        }
+
+        private void btn_OpenProject_MouseLeave(object sender, MouseEventArgs e)
+        {
+            img_OpenProject.Source = new BitmapImage(
+                new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/open-file.png"));
+        }
+
+        private void btn_NewProject_Click(object sender, RoutedEventArgs e)
+        {
+            Workshop wk = new Workshop();
+            Application.Current.MainWindow.Visibility = Visibility.Collapsed;
+            wk.Show();
         }
     }
 }
