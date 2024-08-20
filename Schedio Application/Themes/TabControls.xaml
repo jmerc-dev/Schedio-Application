@@ -46,6 +46,53 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style TargetType="TabItem" x:Key="SecondaryTabItem">
+        <Setter Property="Width" Value="200"/>
+        <Setter Property="Height" Value="70"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Grid Cursor="Hand">
+                        <Rectangle Name="Rectangle" Fill="Transparent"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="5*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border x:Name="Border" BorderThickness="1" Grid.Column="0"
+                                    CornerRadius="3,3,3,3" Width="9" Height="50" 
+                                    Background="{StaticResource PrimaryBackground}">
+                            </Border>
+                            <ContentPresenter  HorizontalAlignment="Left" VerticalAlignment="Center" ContentSource="Header" Grid.Column="1"></ContentPresenter>
+                        </Grid>
+                    </Grid>
+
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Panel.ZIndex" Value="100" />
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource SecondaryColor}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsSelected" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Rectangle" Property="Fill" Value="{StaticResource PrimaryShadeColor}"/>
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource PrimaryShadeColor}"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
 
     </Style>
 
