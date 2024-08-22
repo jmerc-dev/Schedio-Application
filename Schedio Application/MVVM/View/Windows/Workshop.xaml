@@ -18,12 +18,11 @@
     
     <Grid Margin="3">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="70"/>
+            <RowDefinition Height="30"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <!-- Menu    -->
-        <Menu Grid.Row="0" Height="20">
+        <!-- Menu -->
+        <Menu Grid.Row="0" Height="20" VerticalAlignment="Top">
             <MenuItem>
                 <MenuItem.Header>
                     <TextBlock Text="Menu"/>
@@ -63,182 +62,225 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
-
-        <!-- Controls -->
-        <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="15"/>
-            </Grid.RowDefinitions>
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="3  *"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Border Margin="2" Grid.RowSpan="2" BorderBrush="{StaticResource PrimaryShadeColor}" BorderThickness="1,0,1,0"/>
-            <Border Margin="2" Grid.RowSpan="2" BorderBrush="{StaticResource PrimaryShadeColor}" BorderThickness="1,0,1,0" Grid.Column="2"/>
-            <TextBlock Text="Edit"
-                       HorizontalAlignment="Center"
-                       FontSize="11"
-                       Grid.Row="1"
-                       Foreground="{StaticResource SecondaryShadeColor}"/>
-            <TextBlock Text="View"
-                       HorizontalAlignment="Center"
-                       FontSize="11"
-                       Grid.Row="1"
-                       Grid.Column="1"
-                       Foreground="{StaticResource SecondaryShadeColor}"/>
-            <TextBlock Text="Tools and Management"
-                       HorizontalAlignment="Center"
-                       FontSize="11"
-                       Grid.Row="1"
-                       Grid.Column="2"
-                       Foreground="{StaticResource SecondaryShadeColor}"/>
-
-            <StackPanel Orientation="Horizontal">
-                <Button Style="{StaticResource ImageButton}" Margin="10,0">
-                    <Grid Margin="5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="2*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Image Height="35" Stretch="Uniform" Source="pack://application:,,,/Resources/Images/sequence.png"/>
-                        <TextBlock Text="Room Order" Grid.Row="1" FontSize="11"/>
-                    </Grid>
-                </Button>
-                <Button Style="{StaticResource ImageButton}" Margin="10,0">
-                    <Grid Margin="4">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="2*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/colorwheel.png"/>
-                        <TextBlock Text="Colorize" Grid.Row="1" FontSize="11"/>
-                    </Grid>
-                </Button>
-                <Button Style="{StaticResource ImageButton}" Margin="10,0">
-                    <Grid Margin="4">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="2*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/clear.png"/>
-                        <TextBlock Text="Clear" Grid.Row="1" FontSize="11"/>
-                    </Grid>
-                </Button>
+        
+        <!-- Export Button -->
+        <Button Grid.Row="0" Style="{StaticResource ConfirmButton}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="13" Width="100" Height="27" Margin="10,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Image Source="pack://application:,,,/Resources/Images/export.png" Margin="7"/>
+                <TextBlock FontSize="13" Text="Export" VerticalAlignment="Center"/>
             </StackPanel>
+        </Button>
 
-            <StackPanel Orientation="Horizontal" Grid.Column="1">
-                <Button Style="{StaticResource ImageButton}" Margin="10,0">
-                    <Grid Margin="4">
+        <TabControl Name="tabControl_Main" TabStripPlacement="Bottom" Grid.Row="1"  BorderBrush="{StaticResource PrimaryShadeColor}" BorderThickness="0,0,0,1">
+            <TabControl.Resources>
+                <Style TargetType="TabPanel">
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                </Style>
+            </TabControl.Resources>
+            <TabItem Style="{StaticResource TertiaryTabItem}">
+                <TabItem.Header>
+                    <Grid>
+                        <Image Name="tableIcon" Stretch="Uniform" Source="pack://application:,,,/Resources/Images/list.png" Margin="10">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=tabControl_Main, Path=SelectedIndex}" Value="0">
+                                            <Setter Property="Source" Value="pack://application:,,,/Resources/Images/list-grey.png"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </Grid>
+                </TabItem.Header>
+            </TabItem>
+            <TabItem Style="{StaticResource TertiaryTabItem}">
+                <TabItem.Header>
+                    <Grid>
+                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/table.png" Margin="10"/>
+                    </Grid>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="70"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/hide.png"/>
-                        <TextBlock Text="Hide" Grid.Row="1" FontSize="11"/>
-                    </Grid>
-                </Button>
-                <Button Style="{StaticResource ImageButton}" Margin="10,0">
-                    <Grid Margin="4">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="2*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/preview.png"/>
-                        <TextBlock Text="Preview" Grid.Row="1" FontSize="11"/>
-                    </Grid>
-                </Button>
-            </StackPanel>
+                        <!-- Control Buttons -->
+                        <Grid Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="15"/>
+                            </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal" Grid.Column="2">
-                <Button Style="{StaticResource ImageButton}" Margin="10,0">
-                    <Grid Margin="4">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="2*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/manage.png"/>
-                        <TextBlock Text="Manage" Grid.Row="1" FontSize="11"/>
-                    </Grid>
-                </Button>
-                <Button Style="{StaticResource ImageButton}" Margin="10,0">
-                    <Grid Margin="4">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="2*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/expand.png"/>
-                        <TextBlock Text="Expand" Grid.Row="1" FontSize="11"/>   
-                    </Grid>
-                </Button>
-                <Button Style="{StaticResource ImageButton}" Margin="10,0">
-                    <Grid Margin="4">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="2*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/find.png"/>
-                        <TextBlock Text="Find" Grid.Row="1" FontSize="11"/>
-                    </Grid>
-                </Button>
-            </StackPanel>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="3  *"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-            <StackPanel Orientation="Horizontal" Grid.Column="3" HorizontalAlignment="Center">
-                <Button Style="{StaticResource ImageButton}"
-                        Margin="10,0">
-                    <Grid Margin="4">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="2*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Image Stretch="Uniform"
-                               Source="pack://application:,,,/Resources/Images/export.png"/>
-                        <TextBlock Text="Export as"
-                                   Grid.Row="1"
-                                   FontSize="11"/>
+                            <Border Margin="2" Grid.RowSpan="2" BorderBrush="{StaticResource PrimaryShadeColor}" BorderThickness="1,0,1,0"/>
+                            <Border Margin="2" Grid.RowSpan="2" BorderBrush="{StaticResource PrimaryShadeColor}" BorderThickness="1,0,1,0" Grid.Column="2"/>
+                            <TextBlock Text="Edit" HorizontalAlignment="Center" FontSize="11" Grid.Row="1" Foreground="{StaticResource SecondaryShadeColor}"/>
+                            <TextBlock Text="View" HorizontalAlignment="Center" FontSize="11" Grid.Row="1" Grid.Column="1" Foreground="{StaticResource SecondaryShadeColor}"/>
+                            <TextBlock Text="Tools and Management" HorizontalAlignment="Center" FontSize="11" Grid.Row="1" Grid.Column="2" Foreground="{StaticResource SecondaryShadeColor}"/>
+
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource ImageButton}" Margin="10,0">
+                                    <Grid Margin="5">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="2*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Image Height="35" Stretch="Uniform" Source="pack://application:,,,/Resources/Images/sequence.png"/>
+                                        <TextBlock Text="Room Order" Grid.Row="1" FontSize="11"/>
+                                    </Grid>
+                                </Button>
+                                <Button Style="{StaticResource ImageButton}" Margin="10,0">
+                                    <Grid Margin="4">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="2*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/colorwheel.png"/>
+                                        <TextBlock Text="Colorize" Grid.Row="1" FontSize="11"/>
+                                    </Grid>
+                                </Button>
+                                <Button Style="{StaticResource ImageButton}" Margin="10,0">
+                                    <Grid Margin="4">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="2*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/clear.png"/>
+                                        <TextBlock Text="Clear" Grid.Row="1" FontSize="11"/>
+                                    </Grid>
+                                </Button>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                <Button Style="{StaticResource ImageButton}" Margin="10,0">
+                                    <Grid Margin="4">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="2*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/hide.png"/>
+                                        <TextBlock Text="Hide" Grid.Row="1" FontSize="11"/>
+                                    </Grid>
+                                </Button>
+                                <Button Style="{StaticResource ImageButton}" Margin="10,0">
+                                    <Grid Margin="4">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="2*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/preview.png"/>
+                                        <TextBlock Text="Preview" Grid.Row="1" FontSize="11"/>
+                                    </Grid>
+                                </Button>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Grid.Column="2">
+                                <Button Style="{StaticResource ImageButton}" Margin="10,0">
+                                    <Grid Margin="4">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="2*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/manage.png"/>
+                                        <TextBlock Text="Manage" Grid.Row="1" FontSize="11"/>
+                                    </Grid>
+                                </Button>
+                                <Button Style="{StaticResource ImageButton}" Margin="10,0">
+                                    <Grid Margin="4">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="2*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/expand.png"/>
+                                        <TextBlock Text="Expand" Grid.Row="1" FontSize="11"/>
+                                    </Grid>
+                                </Button>
+                                <Button Style="{StaticResource ImageButton}" Margin="10,0">
+                                    <Grid Margin="4">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="2*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/find.png"/>
+                                        <TextBlock Text="Find" Grid.Row="1" FontSize="11"/>
+                                    </Grid>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                        <!-- Workspace -->
+                        <Grid Grid.Row="1" Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="250"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Tabcontrol for canvas -->
+                            <TabControl TabStripPlacement="Bottom" BorderThickness="0,1,0,0" BorderBrush="{StaticResource SecondaryShadeColor}" Grid.ColumnSpan="2">
+                                <TabItem Header="Monday" Style="{StaticResource SecondaryTabItem}">
+                                    <TabItem.Content>
+                                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
+                                    </TabItem.Content>
+                                </TabItem>
+                                <TabItem Header="Tuesday" Style="{StaticResource SecondaryTabItem}">
+                                    <TabItem.Content>
+                                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
+                                    </TabItem.Content>
+                                </TabItem>
+                                <TabItem Header="Wednesday" Style="{StaticResource SecondaryTabItem}">
+                                    <TabItem.Content>
+                                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
+                                    </TabItem.Content>
+                                </TabItem>
+                                <TabItem Header="Thursday" Style="{StaticResource SecondaryTabItem}">
+                                    <TabItem.Content>
+                                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
+                                    </TabItem.Content>
+                                </TabItem>
+                                <TabItem Header="Friday" Style="{StaticResource SecondaryTabItem}">
+                                    <TabItem.Content>
+                                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
+                                    </TabItem.Content>
+                                </TabItem>
+                                <TabItem Header="Saturday" Style="{StaticResource SecondaryTabItem}">
+                                    <TabItem.Content>
+                                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
+                                    </TabItem.Content>
+                                </TabItem>
+                                <TabItem Header="Sunday" Style="{StaticResource SecondaryTabItem}">
+                                    <TabItem.Content>
+                                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
+                                    </TabItem.Content>
+                                </TabItem>
+                            </TabControl>
+
+                            <!-- Unallocated Subjects -->
+                            <Border Grid.Column="1" Grid.Row="1" BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="1" Visibility="Collapsed">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Rectangle Fill="{StaticResource ShadedSecondaryColor}" Grid.Column="1"/>
+                                    <TextBlock Text="Unallocated Subjects"
+                       Margin="3"
+                       Foreground="{StaticResource PrimaryBackground}"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
                     </Grid>
-                </Button>
-            </StackPanel>
-        </Grid>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
 
-        <Grid Grid.Row="2" Margin="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="250"/>
-            </Grid.ColumnDefinitions>
-            
-            <!-- Tabcontrol for canvas -->
-            <TabControl TabStripPlacement="Bottom" BorderThickness="0,1,0,0" BorderBrush="{StaticResource SecondaryShadeColor}">
-                <TabItem Header="Monday">
-                    <TabItem.Content>
-                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
-                    </TabItem.Content>
-                </TabItem>
-                <TabItem Header="Tuesday"/>
-            </TabControl>
 
-            <!-- Unallocated Subjects -->
-            <Border Grid.Column="1"
-                    Grid.Row="1"
-                    BorderBrush="{StaticResource SecondaryShadeColor}"
-                    BorderThickness="1">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Rectangle Fill="{StaticResource ShadedSecondaryColor}" Grid.Column="1"/>
-                    <TextBlock Text="Unallocated Subjects"
-                               Margin="3"
-                               Foreground="{StaticResource PrimaryBackground}"/>
-                </Grid>
-            </Border>
-            
-            
-        </Grid>
+        
     </Grid>
 </Window>
