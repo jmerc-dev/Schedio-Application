@@ -97,7 +97,41 @@ namespace Schedio_Application.MVVM.View.UserControls
 
         private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            FocusManager.SetFocusedElement(entriesContainer, cv_FocusHolder);
+            
+
+
+        }
+
+        // Mouse dragging 
+        Point scrollMousePoint = new Point();
+        double hOff = 1;
+        double vOff = 1;
+        private void scrollViewer_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            scrollMousePoint = e.GetPosition(sv_Canvas);
+            hOff = sv_Canvas.HorizontalOffset;
+            vOff = sv_Canvas.VerticalOffset;
+
+            sv_Canvas.CaptureMouse();
+        }
+
+        private void scrollViewer_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (sv_Canvas.IsMouseCaptured)
+            {
+                sv_Canvas.ScrollToHorizontalOffset(hOff + (scrollMousePoint.X - e.GetPosition(sv_Canvas).X));
+                sv_Canvas.ScrollToVerticalOffset(vOff + (scrollMousePoint.Y - e.GetPosition(sv_Canvas).Y));
+            }
+        }
+
+        private void scrollViewer_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            sv_Canvas.ReleaseMouseCapture();
+        }
+
+        private void scrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            sv_Canvas.ScrollToVerticalOffset(sv_Canvas.VerticalOffset + -e.Delta);
         }
     }
 }
