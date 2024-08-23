@@ -54,7 +54,8 @@ namespace Schedio_Application.MVVM.View.Pages
             lv_SectionList.ItemsSource = this.Sections;
             this.DataContext = this;
         }
-        
+
+        // Done Copying
         private void tabCntrl_NewPage_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.Source is TabControl)
@@ -66,11 +67,14 @@ namespace Schedio_Application.MVVM.View.Pages
             changeTabImage();
         }
 
+        // Done Copying
         private void clearListViewSelectedItems(ListView lv)
         {
             lv.SelectedItems.Clear();
         }
 
+
+        // Done Copying
         private void changeTabImage()
         {
             TabItem[] tabItems = { tabItem_Personnel, tabItem_Rooms, tabItem_Sections};
@@ -90,7 +94,7 @@ namespace Schedio_Application.MVVM.View.Pages
             }
         }
 
-
+        // Done Copying
         private void btn_AddPersonnel_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Person newPerson = new Person();
@@ -102,6 +106,7 @@ namespace Schedio_Application.MVVM.View.Pages
             }
         }
 
+        // Done Copying
         private void btn_AddRooms_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (RoomTypes == null || RoomTypes.Count < 1)
@@ -117,6 +122,7 @@ namespace Schedio_Application.MVVM.View.Pages
             }
         }
 
+        // Done Copying
         private void btn_AddSections_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (RoomTypes == null || RoomTypes.Count == 0)
@@ -158,7 +164,7 @@ namespace Schedio_Application.MVVM.View.Pages
             }
             
         }
-
+        // Done Copying
         private void btn_Delete_Click(object sender, RoutedEventArgs e)
         {
             switch (tabCntrl_NewPage.SelectedIndex)
@@ -200,7 +206,7 @@ namespace Schedio_Application.MVVM.View.Pages
                     return;
             }
         }
-
+        // Done Copying
         private bool DeleteItemFrom(ListView lv, Type itemType)
         {
             if (lv.SelectedItems.Count == 0)
@@ -259,7 +265,7 @@ namespace Schedio_Application.MVVM.View.Pages
             }
             return false;
         }
-
+        // Done Copying
         private bool RemoveItems<T>(ObservableCollection<T> source, IList valuesToBeDeleted)
         {
             List<T> toBeRemoved = new List<T>();
@@ -276,24 +282,7 @@ namespace Schedio_Application.MVVM.View.Pages
             return true;
         }
 
-        private void tabItem_LostFocus(object sender, RoutedEventArgs e)
-        {
-            string name = ((TabItem)sender).Name;
-
-            if (name.Equals("tabItem_Personnel"))
-            {
-                clearListViewSelectedItems(lv_PersonnelList);
-            }
-            else if (name.Equals("tabItem_Rooms"))
-            {
-                clearListViewSelectedItems(lv_RoomsList);
-            }
-            else if (name.Equals("tabItem_Sections"))
-            {
-                clearListViewSelectedItems(lv_SectionList);
-            }
-        }
-
+        // Done copying
         private void TextBox_Search_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox searchBox = (TextBox) sender;
@@ -451,10 +440,6 @@ namespace Schedio_Application.MVVM.View.Pages
         {
             // TODO: Data reliability testing
             // Base Schedule
-            Workshop wk = new Workshop();
-            Application.Current.MainWindow.Visibility = Visibility.Collapsed;
-            wk.Show();
-            return;
             if (BaseSched == null || BaseSched.DailyTimeframe == null)
             {
                 new MBox("Please setup the base schedule.").ShowDialog();

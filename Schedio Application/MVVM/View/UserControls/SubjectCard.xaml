@@ -12,7 +12,8 @@
              PreviewMouseDown="UserControl_PreviewMouseDown"
              SnapsToDevicePixels="True"
              GotFocus="UserControl_GotFocus"
-             LostFocus="UserControl_LostFocus">
+             LostFocus="UserControl_LostFocus"
+             Cursor="Arrow">
     <UserControl.ContextMenu>
         <ContextMenu>
             <MenuItem Header="Change"/>

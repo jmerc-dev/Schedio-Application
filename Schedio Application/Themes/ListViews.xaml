@@ -13,8 +13,8 @@
     </Style>
     
     <Style TargetType="ListViewItem">
-        <Setter Property="FontSize" Value="15"/>
-        <Setter Property="Height" Value="70"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Height" Value="60"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>

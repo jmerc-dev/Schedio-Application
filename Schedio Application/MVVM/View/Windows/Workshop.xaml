@@ -77,6 +77,7 @@
                     <Setter Property="HorizontalAlignment" Value="Center"/>
                 </Style>
             </TabControl.Resources>
+            <!-- Manage Schedule Data -->
             <TabItem Style="{StaticResource TertiaryTabItem}">
                 <TabItem.Header>
                     <Grid>
@@ -93,6 +94,176 @@
                         </Image>
                     </Grid>
                 </TabItem.Header>
+                <TabItem.Content>
+                    <Grid Margin="0,0,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <TabControl TabStripPlacement="Left" Name="tabCtrl_DataManager" SelectionChanged="tabCtrl_DataManager_SelectionChanged" BorderThickness="0">
+                            <TabItem Style="{StaticResource MainTabItems}" Name="tabItem_Personnel">
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal" Height="50">
+                                        <Image Name="img_Personnel" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/personnel.png" Stretch="Uniform" Width="40" Margin="7"/>
+                                        <TextBlock VerticalAlignment="Center">Personnel</TextBlock>
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <TabItem.Content>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="80"/>
+                                            <RowDefinition Height="50"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock FontSize="25" Margin="20,10" FontWeight="Thin" VerticalAlignment="Center" HorizontalAlignment="Left">Personnel Management</TextBlock>
+
+                                        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="20,0" HorizontalAlignment="Left">
+                                            <Button MaxHeight="50" MaxWidth="60" Margin="0,10" Style="{StaticResource ImageButton}" Grid.Row="1" PreviewMouseLeftButtonDown="btn_AddPersonnel_PreviewMouseLeftButtonDown" >
+                                                <Image Stretch="Uniform" Source="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png" Margin="3"/>
+                                            </Button>
+                                            <TextBlock FontSize="15" Margin="20,5,5,5" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1">List of Persons</TextBlock>
+                                        </StackPanel>
+
+                                        <Grid Grid.Row="1" Margin="20,0,0,0" HorizontalAlignment="Right" Height="30">
+                                            <TextBox Width="200" FontSize="15" Margin="12,0" VerticalContentAlignment="Center" TextBlock.TextAlignment="Left" Name="tb_SearchPersonnel" TextChanged="TextBox_Search_TextChanged" Padding="5,0"/>
+
+                                            <TextBlock IsHitTestVisible="False" Text="Search..." VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" Foreground="DarkGray" FontSize="15">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Text, ElementName=tb_SearchPersonnel}" Value="">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+
+                                        <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,1,0,0" Grid.Row="2" Margin="20,0,0,0">
+                                            <ScrollViewer CanContentScroll="True" Grid.Row="1" BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}"  HorizontalScrollBarVisibility="Disabled">
+                                                <ListView x:Name="lv_PersonnelList" ItemTemplate="{StaticResource dt_PersonnelList}" HorizontalContentAlignment="Stretch" FontSize="13"/>
+
+                                            </ScrollViewer>
+                                        </Border>
+                                    </Grid>
+                                </TabItem.Content>
+                            </TabItem>
+                            <TabItem Style="{StaticResource MainTabItems}" Name="tabItem_Rooms">
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal" Height="50">
+                                        <Image Name="img_Rooms" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/rooms.png" Stretch="Uniform" Width="40" Margin="7"/>
+                                        <TextBlock VerticalAlignment="Center">Rooms</TextBlock>
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <TabItem.Content>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="80"/>
+                                            <RowDefinition Height="50"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock FontSize="25" Margin="20,10" FontWeight="Thin" VerticalAlignment="Center" HorizontalAlignment="Left">Room Management</TextBlock>
+                                        <Button Name="btn_SetupRoomTypes" Width="50" Height="50" Style="{StaticResource ImageButton}" HorizontalAlignment="Right" ToolTip="Setup Room Types" Click="btn_SetupRoomTypes_Click">
+                                            <Image Margin="5" Stretch="Uniform" Source="pack://application:,,,/Schedio Application;component/Resources/Images/settings.png"/>
+                                        </Button>
+                                        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="20,0" HorizontalAlignment="Left">
+                                            <Button  MaxHeight="50" MaxWidth="60" Margin="0,10" Style="{StaticResource ImageButton}" Grid.Row="1" PreviewMouseLeftButtonDown="btn_AddRooms_PreviewMouseLeftButtonDown" >
+                                                <Image Stretch="Uniform" Source="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png" Margin="3"/>
+                                            </Button>
+                                            <TextBlock FontSize="15" Margin="20,5,5,5" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1">List of Rooms</TextBlock>
+                                        </StackPanel>
+
+                                        <Grid Grid.Row="1" Margin="20,0,0,0" HorizontalAlignment="Right" Height="30">
+                                            <TextBox Width="200" FontSize="15" Margin="12,0" VerticalContentAlignment="Center" TextBlock.TextAlignment="Left" Name="tb_SearchRooms" TextChanged="TextBox_Search_TextChanged" Padding="5,0">
+                                            </TextBox>
+                                            <TextBlock IsHitTestVisible="False" Text="Search..." VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" Foreground="DarkGray" FontSize="15">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Text, ElementName=tb_SearchRooms}" Value="">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+
+                                        <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,1,0,0" Grid.Row="2" Margin="20,0,0,0">
+                                            <ScrollViewer CanContentScroll="True" Grid.Row="1" BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}">
+                                                <ListView x:Name="lv_RoomsList" ItemTemplate="{StaticResource dt_RoomsList}" HorizontalContentAlignment="Stretch">
+
+                                                </ListView>
+                                            </ScrollViewer>
+                                        </Border>
+                                    </Grid>
+                                </TabItem.Content>
+                            </TabItem>
+                            <TabItem Style="{StaticResource MainTabItems}" Name="tabItem_Sections">
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal" Height="50">
+                                        <Image Name="img_Sections" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/sections.png" Stretch="Uniform" Width="40" Margin="7"/>
+                                        <TextBlock VerticalAlignment="Center">Sections</TextBlock>
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <TabItem.Content>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="80"/>
+                                            <RowDefinition Height="50"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock FontSize="25" Margin="20,10" FontWeight="Thin" VerticalAlignment="Center" HorizontalAlignment="Left">Section Management</TextBlock>
+
+                                        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="20,0" HorizontalAlignment="Left">
+                                            <Button MaxHeight="50" MaxWidth="60" Margin="0,10" Style="{StaticResource ImageButton}" Grid.Row="1" PreviewMouseLeftButtonDown="btn_AddSections_PreviewMouseLeftButtonDown">
+                                                <Image Stretch="Uniform" Source="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png" Margin="3"/>
+                                            </Button>
+                                            <TextBlock FontSize="15" Margin="20,5,5,5" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1">List of Sections</TextBlock>
+                                        </StackPanel>
+
+                                        <Grid Grid.Row="1" Margin="20,0,0,0" HorizontalAlignment="Right" Height="30">
+                                            <TextBox Width="200" FontSize="15" Margin="12,0" VerticalContentAlignment="Center" TextBlock.TextAlignment="Left" Name="tb_SearchSection" TextChanged="TextBox_Search_TextChanged" Padding="5,0">
+                                            </TextBox>
+                                            <TextBlock IsHitTestVisible="False" Text="Search..." VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" Foreground="DarkGray" FontSize="15">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Text, ElementName=tb_SearchSection}" Value="">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+
+                                        <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,1,0,0" Grid.Row="2" Margin="20,0,0,0">
+                                            <ScrollViewer CanContentScroll="True" Grid.Row="1" BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}">
+                                                <ListView x:Name="lv_SectionList" ItemTemplate="{StaticResource dt_SectionList}" HorizontalContentAlignment="Stretch"/>
+                                            </ScrollViewer>
+                                        </Border>
+                                    </Grid>
+                                </TabItem.Content>
+                            </TabItem>
+                        </TabControl>
+                        
+                        <!-- Update/Delete Buttons -->
+                        <StackPanel Orientation="Vertical" Grid.Column="1" VerticalAlignment="Bottom">
+                            <Button Name="btn_Edit" MaxHeight="50" MaxWidth="60" Margin="0,10" Style="{StaticResource ImageButton}" Click="btn_Edit_Click">
+                                <Image Stretch="Uniform" Source="pack://application:,,,/Schedio Application;component/Resources/Images/pen.png" Margin="7"/>
+                            </Button>
+
+                            <Button Name="btn_Delete" MaxHeight="50" MaxWidth="60" Margin="0,10" Style="{StaticResource ImageButton}" Click="btn_Delete_Click">
+                                <Image Stretch="Uniform" Source="pack://application:,,,/Schedio Application;component/Resources/Images/trash.png" Margin="7"/>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </TabItem.Content>
             </TabItem>
             <TabItem Style="{StaticResource TertiaryTabItem}">
                 <TabItem.Header>
@@ -261,19 +432,20 @@
                                 </TabItem>
                             </TabControl>
 
-                            <!-- Unallocated Subjects -->
+                            <!-- Subjects -->
                             <Border Grid.Column="1" Grid.Row="1" BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="1" Visibility="Collapsed">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Rectangle Fill="{StaticResource ShadedSecondaryColor}" Grid.Column="1"/>
-                                    <TextBlock Text="Unallocated Subjects"
-                       Margin="3"
-                       Foreground="{StaticResource PrimaryBackground}"/>
+                                    <Rectangle Fill="{StaticResource PrimaryShadeColor}" Grid.Column="1"/>
+                                    <TextBlock Text="Subjects" Margin="3" Foreground="{StaticResource PrimaryBackground}"/>
                                 </Grid>
                             </Border>
+
+                            <Button Content="Show" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="1" Style="{StaticResource ImageButton}" Height="50" Width="50"/>
+
                         </Grid>
                     </Grid>
                 </TabItem.Content>
