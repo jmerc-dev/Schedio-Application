@@ -25,6 +25,7 @@
     <None Remove="Resources\Images\clocksetting.png" />
     <None Remove="Resources\Images\close.png" />
     <None Remove="Resources\Images\colorwheel.png" />
+    <None Remove="Resources\Images\double-left-arrow.png" />
     <None Remove="Resources\Images\expand.png" />
     <None Remove="Resources\Images\export.png" />
     <None Remove="Resources\Images\find.png" />
@@ -103,6 +104,7 @@
     <Resource Include="Resources\Images\clocksetting.png" />
     <Resource Include="Resources\Images\close.png" />
     <Resource Include="Resources\Images\colorwheel.png" />
+    <Resource Include="Resources\Images\double-left-arrow.png" />
     <Resource Include="Resources\Images\expand.png" />
     <Resource Include="Resources\Images\export.png" />
     <Resource Include="Resources\Images\find.png" />

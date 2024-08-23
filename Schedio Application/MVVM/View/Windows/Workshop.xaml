@@ -86,7 +86,7 @@
                                 <Style TargetType="Image">
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ElementName=tabControl_Main, Path=SelectedIndex}" Value="0">
-                                            <Setter Property="Source" Value="pack://application:,,,/Resources/Images/list-grey.png"/>
+                                            <Setter Property="Source" Value="pack://application:,,,/Schedio Application;component/Resources/Images/list-grey.png"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -268,7 +268,7 @@
             <TabItem Style="{StaticResource TertiaryTabItem}">
                 <TabItem.Header>
                     <Grid>
-                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/table.png" Margin="10"/>
+                        <Image Stretch="Uniform" Source="pack://application:,,,/Schedio Application;component/Resources/Images/table.png" Margin="10"/>
                     </Grid>
                 </TabItem.Header>
                 <TabItem.Content>
@@ -304,7 +304,7 @@
                                             <RowDefinition Height="2*"/>
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
-                                        <Image Height="35" Stretch="Uniform" Source="pack://application:,,,/Resources/Images/sequence.png"/>
+                                        <Image Height="35" Stretch="Uniform" Source="pack://application:,,,/Schedio Application;component/Resources/Images/sequence.png"/>
                                         <TextBlock Text="Room Order" Grid.Row="1" FontSize="11"/>
                                     </Grid>
                                 </Button>
@@ -314,7 +314,7 @@
                                             <RowDefinition Height="2*"/>
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
-                                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/colorwheel.png"/>
+                                        <Image Stretch="Uniform" Source="pack://application:,,,/Schedio Application;component/Resources/Images/colorwheel.png"/>
                                         <TextBlock Text="Colorize" Grid.Row="1" FontSize="11"/>
                                     </Grid>
                                 </Button>
@@ -324,7 +324,7 @@
                                             <RowDefinition Height="2*"/>
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
-                                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/clear.png"/>
+                                        <Image Stretch="Uniform" Source="pack://application:,,,/Schedio Application;component/Resources/Images/clear.png"/>
                                         <TextBlock Text="Clear" Grid.Row="1" FontSize="11"/>
                                     </Grid>
                                 </Button>
@@ -337,7 +337,7 @@
                                             <RowDefinition Height="2*"/>
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
-                                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/hide.png"/>
+                                        <Image Stretch="Uniform" Source="pack://application:,,,/Schedio Application;component/Resources/Images/hide.png"/>
                                         <TextBlock Text="Hide" Grid.Row="1" FontSize="11"/>
                                     </Grid>
                                 </Button>
@@ -347,7 +347,7 @@
                                             <RowDefinition Height="2*"/>
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
-                                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/preview.png"/>
+                                        <Image Stretch="Uniform" Source="pack://application:,,,/Schedio Application;component/Resources/Images/preview.png"/>
                                         <TextBlock Text="Preview" Grid.Row="1" FontSize="11"/>
                                     </Grid>
                                 </Button>
@@ -360,7 +360,7 @@
                                             <RowDefinition Height="2*"/>
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
-                                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/manage.png"/>
+                                        <Image Stretch="Uniform" Source="pack://application:,,,/Schedio Application;component/Resources/Images/manage.png"/>
                                         <TextBlock Text="Manage" Grid.Row="1" FontSize="11"/>
                                     </Grid>
                                 </Button>
@@ -370,7 +370,7 @@
                                             <RowDefinition Height="2*"/>
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
-                                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/expand.png"/>
+                                        <Image Stretch="Uniform" Source="pack://application:,,,/Schedio Application;component/Resources/Images/expand.png"/>
                                         <TextBlock Text="Expand" Grid.Row="1" FontSize="11"/>
                                     </Grid>
                                 </Button>
@@ -380,7 +380,7 @@
                                             <RowDefinition Height="2*"/>
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
-                                        <Image Stretch="Uniform" Source="pack://application:,,,/Resources/Images/find.png"/>
+                                        <Image Stretch="Uniform" Source="pack://application:,,,/Schedio Application;component/Resources/Images/find.png"/>
                                         <TextBlock Text="Find" Grid.Row="1" FontSize="11"/>
                                     </Grid>
                                 </Button>
@@ -432,19 +432,33 @@
                                 </TabItem>
                             </TabControl>
 
-                            <!-- Subjects -->
-                            <Border Grid.Column="1" Grid.Row="1" BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="1" Visibility="Collapsed">
+                            <!-- Subjects --> 
+                            <Border Name="border_Subjects" Cursor="Arrow" Grid.Column="1" Grid.Row="1" BorderBrush="{StaticResource SecondaryShadeColor}" Background="{StaticResource PrimaryBackground}" BorderThickness="1" Margin="10" Visibility="Collapsed">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="#D2D2D2" BlurRadius="10" ShadowDepth="5"/>
+                                </Border.Effect>
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
                                     <Rectangle Fill="{StaticResource PrimaryShadeColor}" Grid.Column="1"/>
-                                    <TextBlock Text="Subjects" Margin="3" Foreground="{StaticResource PrimaryBackground}"/>
+                                    <TextBlock Text="Subjects" Margin="7,3" Foreground="{StaticResource PrimaryTextColor}"/>
+                                    <Button Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource ImageButton}" Name="btn_HideSubjects" Click="btn_HideSubjects_Click">
+                                        <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/double-left-arrow.png" Height="20" Margin="2">
+                                            <Image.LayoutTransform>
+                                                <TransformGroup>
+                                                    <RotateTransform Angle="180" />
+                                                </TransformGroup>
+                                            </Image.LayoutTransform>
+                                        </Image>
+                                    </Button>
                                 </Grid>
                             </Border>
 
-                            <Button Content="Show" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="1" Style="{StaticResource ImageButton}" Height="50" Width="50"/>
+                            <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="1" Style="{StaticResource ImageButton}" Height="30" Width="30" Name="btn_ShowSubjects" Click="btn_ShowSubjects_Click">
+                                <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/double-left-arrow.png" Width="20"/>
+                            </Button>
 
                         </Grid>
                     </Grid>

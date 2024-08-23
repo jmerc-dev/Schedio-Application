@@ -42,7 +42,19 @@ namespace Schedio_Application.MVVM.View.Windows
                 Application.Current.MainWindow.Visibility = Visibility.Visible;
             };
         }
-        
+
+        // Subjects panel
+        private void btn_ShowSubjects_Click(object sender, RoutedEventArgs e)
+        {
+            border_Subjects.Visibility = Visibility.Visible;
+            btn_ShowSubjects.Visibility = Visibility.Collapsed;
+        }
+
+        private void btn_HideSubjects_Click(object sender, RoutedEventArgs e)
+        {
+            border_Subjects.Visibility = Visibility.Collapsed;
+            btn_ShowSubjects.Visibility = Visibility.Visible;
+        }
     }
 
     // Schedule Data Management
