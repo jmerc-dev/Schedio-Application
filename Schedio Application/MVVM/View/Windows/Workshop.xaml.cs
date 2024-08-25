@@ -1,35 +1,65 @@
-﻿using Schedio_Application.MVVM.View.UserControls;
-using Schedio_Application.MVVM.View.Windows;
-using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+﻿using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Ribbon;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Schedio_Application.MVVM.View.Pages
+namespace Schedio_Application.MVVM.View.Windows
 {
     /// <summary>
-    /// Interaction logic for NewPage.xaml
+    /// Interaction logic for Workshop.xaml
     /// </summary>
-    /// 
-    public partial class NewPage : Page
+    public partial class Workshop : Window
     {
-        private BaseSchedule BaseSched;
+        public Workshop()
+        {
+            InitializeComponent();
 
+            Rooms = new ObservableCollection<Room>();
+            Personnel = new ObservableCollection<Person>();
+            Sections = new ObservableCollection<ClassSection>();
+
+            lv_RoomsList.ItemsSource = this.Rooms;
+            lv_PersonnelList.ItemsSource = this.Personnel;
+            lv_SectionList.ItemsSource = this.Sections;
+
+            Closing += (sender, e) =>
+            {
+                Application.Current.MainWindow.Visibility = Visibility.Visible;
+            };
+        }
+
+        // Subjects panel
+        private void btn_ShowSubjects_Click(object sender, RoutedEventArgs e)
+        {
+            border_Subjects.Visibility = Visibility.Visible;
+            btn_ShowSubjects.Visibility = Visibility.Collapsed;
+        }
+
+        private void btn_HideSubjects_Click(object sender, RoutedEventArgs e)
+        {
+            border_Subjects.Visibility = Visibility.Collapsed;
+            btn_ShowSubjects.Visibility = Visibility.Visible;
+        }
+    }
+
+    // Schedule Data Management
+    public partial class Workshop : Window
+    {
         private ObservableCollection<Room> Rooms;
         private ObservableCollection<Room> TempRooms;
         private ObservableCollection<RoomType> RoomTypes;
@@ -42,42 +72,25 @@ namespace Schedio_Application.MVVM.View.Pages
 
         private WarningConfirmation? warningModal;
 
-        public NewPage()
+        private void tabCtrl_DataManager_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.Rooms = new ObservableCollection<Room>();
-            this.Personnel = new ObservableCollection<Person>();
-            this.Sections = new ObservableCollection<ClassSection>();
-            InitializeComponent();
-            
-            lv_RoomsList.ItemsSource = this.Rooms;
-            lv_PersonnelList.ItemsSource = this.Personnel;
-            lv_SectionList.ItemsSource = this.Sections;
-            this.DataContext = this;
-        }
-
-        // Done Copying
-        private void tabCntrl_NewPage_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+            changeTabImage();
             if (e.Source is TabControl)
             {
                 clearListViewSelectedItems(lv_PersonnelList);
                 clearListViewSelectedItems(lv_RoomsList);
                 clearListViewSelectedItems(lv_SectionList);
             }
-            changeTabImage();
         }
 
-        // Done Copying
         private void clearListViewSelectedItems(ListView lv)
         {
             lv.SelectedItems.Clear();
         }
 
-
-        // Done Copying
         private void changeTabImage()
         {
-            TabItem[] tabItems = { tabItem_Personnel, tabItem_Rooms, tabItem_Sections};
+            TabItem[] tabItems = { tabItem_Personnel, tabItem_Rooms, tabItem_Sections };
 
             for (int i = 0; i < tabItems.Length; i++)
             {
@@ -94,7 +107,7 @@ namespace Schedio_Application.MVVM.View.Pages
             }
         }
 
-        // Done Copying
+        // Personnel Related Functions
         private void btn_AddPersonnel_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Person newPerson = new Person();
@@ -106,7 +119,20 @@ namespace Schedio_Application.MVVM.View.Pages
             }
         }
 
-        // Done Copying
+        // Rooms Related Functions
+        private void btn_SetupRoomTypes_Click(object sender, RoutedEventArgs e)
+        {
+            RoomTypeSetup rts;
+
+            if (RoomTypes == null)
+            {
+                RoomTypes = new ObservableCollection<RoomType>();
+            }
+
+            rts = new RoomTypeSetup(RoomTypes, Rooms, Sections);
+            rts.ShowDialog();
+        }
+
         private void btn_AddRooms_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (RoomTypes == null || RoomTypes.Count < 1)
@@ -122,7 +148,7 @@ namespace Schedio_Application.MVVM.View.Pages
             }
         }
 
-        // Done Copying
+        // Section Related Functions
         private void btn_AddSections_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (RoomTypes == null || RoomTypes.Count == 0)
@@ -144,148 +170,10 @@ namespace Schedio_Application.MVVM.View.Pages
             }
         }
 
-        private void btn_BaseSchedule_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                if (BaseSched == null)
-                {
-                    BaseSched = new BaseSchedule();
-                }
-                TimeScheduleAddForm form = new TimeScheduleAddForm(BaseSched);
-                if (form.ShowDialog() == true)
-                {
-                    new MBox("Base schedule has been set.", Sound.NoSound).ShowDialog();
-                }
-            }
-            catch (Exception ex)
-            {
-                new MBox(ex.Message).ShowDialog();
-            }
-            
-        }
-        // Done Copying
-        private void btn_Delete_Click(object sender, RoutedEventArgs e)
-        {
-            switch (tabCntrl_NewPage.SelectedIndex)
-            {
-                case 0:
-                    // Check for references in sections
-                    foreach (ClassSection cs in Sections)
-                    {
-                        foreach (Subject s in cs.Subjects)
-                        {
-                            if (lv_PersonnelList.SelectedItems.Contains(s.AssignedPerson)) {
-                                new MBox($"{s.AssignedPerson.Name} was currently being referenced by Section: {cs.Name}, Subject: {s.Name}").ShowDialog();
-                                return;
-                            }
-                        }
-                    }
-                    if (DeleteItemFrom(lv_PersonnelList, typeof(Person))) 
-                    {
-                        tb_SearchPersonnel.Text = String.Empty;
-                    }
-                    
-                    break;
-                case 1:
-                    if (DeleteItemFrom(lv_RoomsList, typeof(Room)))
-                    {
-                        tb_SearchRooms.Text = String.Empty;
-                        break;
-                    };
-                    break;
-                case 2:
-                    if (DeleteItemFrom(lv_SectionList, typeof(ClassSection)))
-                    {
-                        tb_SearchSection.Text = String.Empty;
-                        break;
-                    };
-                    break;
-                default:
-                    new MBox("No tab selected.").ShowDialog();
-                    return;
-            }
-        }
-        // Done Copying
-        private bool DeleteItemFrom(ListView lv, Type itemType)
-        {
-            if (lv.SelectedItems.Count == 0)
-            {
-                return false;
-            }
-
-            // Type
-            string[] fullType = itemType.ToString().Split(".");
-            string specificType = fullType[fullType.Length - 1];
-
-            // Prepare list of objects to be removed
-            List<string> objectsToBeRemoved = new List<string>();
-
-            if (itemType == typeof(Person))
-            {
-                foreach (Person item in lv.SelectedItems)
-                {
-                    objectsToBeRemoved.Add(item.Name);
-                }
-            }
-            else if (itemType == typeof(Room))
-            {
-                foreach (Room item in lv.SelectedItems)
-                {
-                    objectsToBeRemoved.Add(item.Name);
-                }
-            }
-            else if (itemType == typeof(ClassSection))
-            {
-                foreach (ClassSection item in lv.SelectedItems)
-                {
-                    objectsToBeRemoved.Add(item.Name);
-                }
-            }
-
-            // Warning
-            warningModal = new WarningConfirmation(specificType, objectsToBeRemoved);;
-            warningModal.Owner = Application.Current.MainWindow;
-
-            // Remove
-            if (warningModal.ShowDialog() == true)
-            {
-                if (itemType == typeof(Person))
-                {
-                    return RemoveItems<Person>(Personnel, lv.SelectedItems);
-                }
-                else if (itemType == typeof(Room))
-                {
-                    return RemoveItems<Room>(Rooms, lv.SelectedItems);
-                }
-                else if (itemType == typeof(ClassSection))  
-                {
-                    return RemoveItems<ClassSection>(Sections, lv.SelectedItems);
-                }
-            }
-            return false;
-        }
-        // Done Copying
-        private bool RemoveItems<T>(ObservableCollection<T> source, IList valuesToBeDeleted)
-        {
-            List<T> toBeRemoved = new List<T>();
-            foreach (T item in valuesToBeDeleted)
-            {
-                toBeRemoved.Add(item);
-            }
-
-            foreach (T item in toBeRemoved)
-            {
-                source.Remove(item);
-            }
-
-            return true;
-        }
-
-        // Done copying
+        // Search function
         private void TextBox_Search_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TextBox searchBox = (TextBox) sender;
+            TextBox searchBox = (TextBox)sender;
             if (searchBox.Name.Equals("tb_SearchRooms"))
             {
                 TempRooms = new ObservableCollection<Room>();
@@ -350,9 +238,129 @@ namespace Schedio_Application.MVVM.View.Pages
             }
         }
 
+        // Deletion
+        private void btn_Delete_Click(object sender, RoutedEventArgs e)
+        {
+            switch (tabCtrl_DataManager.SelectedIndex)
+            {
+                case 0:
+                    // Check for references in sections
+                    foreach (ClassSection cs in Sections)
+                    {
+                        foreach (Subject s in cs.Subjects)
+                        {
+                            if (lv_PersonnelList.SelectedItems.Contains(s.AssignedPerson))
+                            {
+                                new MBox($"{s.AssignedPerson.Name} was currently being referenced by Section: {cs.Name}, Subject: {s.Name}").ShowDialog();
+                                return;
+                            }
+                        }
+                    }
+                    if (DeleteItemFrom(lv_PersonnelList, typeof(Person)))
+                    {
+                        tb_SearchPersonnel.Text = String.Empty;
+                    }
+
+                    break;
+                case 1:
+                    if (DeleteItemFrom(lv_RoomsList, typeof(Room)))
+                    {
+                        tb_SearchRooms.Text = String.Empty;
+                        break;
+                    };
+                    break;
+                case 2:
+                    if (DeleteItemFrom(lv_SectionList, typeof(ClassSection)))
+                    {
+                        tb_SearchSection.Text = String.Empty;
+                        break;
+                    };
+                    break;
+                default:
+                    new MBox("No tab selected.").ShowDialog();
+                    return;
+            }
+        }
+
+        private bool DeleteItemFrom(ListView lv, Type itemType)
+        {
+            if (lv.SelectedItems.Count == 0)
+            {
+                return false;
+            }
+
+            // Type
+            string[] fullType = itemType.ToString().Split(".");
+            string specificType = fullType[fullType.Length - 1];
+
+            // Prepare list of objects to be removed
+            List<string> objectsToBeRemoved = new List<string>();
+
+            if (itemType == typeof(Person))
+            {
+                foreach (Person item in lv.SelectedItems)
+                {
+                    objectsToBeRemoved.Add(item.Name);
+                }
+            }
+            else if (itemType == typeof(Room))
+            {
+                foreach (Room item in lv.SelectedItems)
+                {
+                    objectsToBeRemoved.Add(item.Name);
+                }
+            }
+            else if (itemType == typeof(ClassSection))
+            {
+                foreach (ClassSection item in lv.SelectedItems)
+                {
+                    objectsToBeRemoved.Add(item.Name);
+                }
+            }
+
+            // Warning
+            warningModal = new WarningConfirmation(specificType, objectsToBeRemoved); ;
+            warningModal.Owner = Application.Current.MainWindow;
+
+            // Remove
+            if (warningModal.ShowDialog() == true)
+            {
+                if (itemType == typeof(Person))
+                {
+                    return RemoveItems<Person>(Personnel, lv.SelectedItems);
+                }
+                else if (itemType == typeof(Room))
+                {
+                    return RemoveItems<Room>(Rooms, lv.SelectedItems);
+                }
+                else if (itemType == typeof(ClassSection))
+                {
+                    return RemoveItems<ClassSection>(Sections, lv.SelectedItems);
+                }
+            }
+            return false;
+        }
+
+        private bool RemoveItems<T>(ObservableCollection<T> source, IList valuesToBeDeleted)
+        {
+            List<T> toBeRemoved = new List<T>();
+            foreach (T item in valuesToBeDeleted)
+            {
+                toBeRemoved.Add(item);
+            }
+
+            foreach (T item in toBeRemoved)
+            {
+                source.Remove(item);
+            }
+
+            return true;
+        }
+
+        // Editing
         private void btn_Edit_Click(object sender, RoutedEventArgs e)
         {
-            switch (tabCntrl_NewPage.SelectedIndex)
+            switch (tabCtrl_DataManager.SelectedIndex)
             {
                 case 0:
                     // Personnel
@@ -413,7 +421,7 @@ namespace Schedio_Application.MVVM.View.Pages
                         SectionAddForm updateForm = new SectionAddForm(section, Personnel, RoomTypes, Sections);
                         if (updateForm.ShowDialog() == true)
                         {
-                            
+
                         }
                     }
                     break;
@@ -421,100 +429,6 @@ namespace Schedio_Application.MVVM.View.Pages
                     new MBox("No Tab selected").ShowDialog();
                     return;
             }
-        }
-
-        private void btn_SetupRoomTypes_Click(object sender, RoutedEventArgs e)
-        {
-            RoomTypeSetup rts;
-
-            if (RoomTypes == null)
-            {
-                RoomTypes = new ObservableCollection<RoomType>();
-            }
-
-            rts = new RoomTypeSetup(RoomTypes, Rooms, Sections);
-            rts.ShowDialog();
-        }
-
-        private void btn_Confirm_Click(object sender, RoutedEventArgs e)
-        {
-            // TODO: Data reliability testing
-            // Base Schedule
-            if (BaseSched == null || BaseSched.DailyTimeframe == null)
-            {
-                new MBox("Please setup the base schedule.").ShowDialog();
-                return;
-            }
-
-            Trace.WriteLine($"Base Schedule [{BaseSched.IsConstant}]:");
-            foreach (KeyValuePair<DayOfWeek, TimeFrame> kvp in BaseSched.DailyTimeframe)
-            {
-                Trace.WriteLine($"\t{kvp.Key.ToString()}: {kvp.Value.StartTime} => {kvp.Value.EndTime}");
-            }
-
-            // Personnel
-            if (Personnel.Count == 0)
-            {
-                if (new MBox("It is recommended to setup the personnel first, do you want to continue?", MBoxType.CancelOrOK).ShowDialog() == false)
-                {
-                    return;
-                }
-            }
-            Trace.WriteLine($"Personnel");
-            foreach (Person p in Personnel)
-            {
-                Trace.WriteLine($"\t{p.Name}");
-                if (p.IsConstant)
-                {
-                    Trace.WriteLine($"\t\t{p.ConstTime_Start} => {p.ConstTime_End}");
-                    foreach (Day d in p.Days)
-                    {
-                        Trace.WriteLine($"\t\t{d.Name.ToString()}: {d.IsAvailable}");
-                    }
-                }
-                else
-                {
-                    foreach(Day d in p.Days)
-                    {
-                        Trace.WriteLine($"\t\t{d.Name.ToString()}: {d.IsAvailable}");
-                        foreach (TimeFrame tf in d.CustomTimeframe)
-                        {
-                            Trace.WriteLine($"\t\t\t{tf.StartTime} => {tf.EndTime}");
-                        }
-                    }
-                }
-            }
-
-            // Rooms
-            if (Rooms.Count == 0)
-            {
-                if (new MBox("It is recommended to setup the room first, do you want to continue?", MBoxType.CancelOrOK).ShowDialog() == false)
-                {
-                    return;
-                }
-            }
-            foreach (Room room in Rooms)
-            {
-                Trace.WriteLine($"{room.Name}: {room.Type.Name}");
-            }
-
-            // Sections
-            if (Sections.Count == 0)
-            {
-                if (new MBox("It is recommended to setup the sections first, do you want to continue?", MBoxType.CancelOrOK).ShowDialog() == false)
-                {
-                    return;
-                }
-            }
-            foreach (ClassSection section in Sections)
-            {
-                Trace.WriteLine($"{section.Name}");
-                foreach (Subject s in section.Subjects)
-                {
-                    Trace.WriteLine($"\t{s.Name}: {s.RoomType.Name} - {s.Units} - {s.AssignedPerson.Name}");
-                }
-            }
-            
         }
     }
 }

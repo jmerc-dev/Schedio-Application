@@ -9,8 +9,7 @@
         Height="auto" Width="auto"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize"
-        ShowInTaskbar="False">
+        ResizeMode="NoResize">
     <Grid Margin="10,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

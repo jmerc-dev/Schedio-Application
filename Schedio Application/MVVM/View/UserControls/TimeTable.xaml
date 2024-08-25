@@ -1,0 +1,94 @@
+﻿<UserControl x:Class="Schedio_Application.MVVM.View.UserControls.TimeTable"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Schedio_Application.MVVM.View.UserControls"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800" PreviewMouseLeftButtonDown="UserControl_MouseLeftButtonDown">
+    <ScrollViewer Name="sv_Canvas" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" ScrollChanged="sv_Canvas_ScrollChanged" Style="{StaticResource NoThumbScrollViewer}" Background="Transparent" PreviewMouseMove="scrollViewer_PreviewMouseMove" PreviewMouseLeftButtonUp="scrollViewer_PreviewMouseLeftButtonUp" PreviewMouseLeftButtonDown="scrollViewer_PreviewMouseLeftButtonDown" PreviewMouseWheel="scrollViewer_PreviewMouseWheel">
+        <Canvas Name="cv_Container" Background="{StaticResource PrimaryBackground}" SnapsToDevicePixels="True" HorizontalAlignment="Left">
+            <Canvas Name="HorizontalLineContainer" Canvas.ZIndex="1" Canvas.Top="50" Canvas.Left="100" Height="200" Width="200" Margin="0,60,0,0">
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="9"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="129"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="249"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="369"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="489"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="609"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="729"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="849"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="969"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="1089"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="1209"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="1329"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="1449"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="1569"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="1689"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="1809"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="1929"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="2049"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="2169"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="2289"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="2409"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="2529"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="2649"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="2769"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="2889"/>
+
+            </Canvas>
+            <Canvas Name="VerticalLineContainer" Canvas.ZIndex="1" Canvas.Top="50" Canvas.Left="100" Height="200" Width="200">
+                <Canvas.Resources>
+                    <Style TargetType="Rectangle">
+                        <Setter Property="Height" Value="{Binding ElementName=Timeslot, Path=ActualHeight}"/>
+                        <Setter Property="Width" Value="1"/>
+                    </Style>
+                </Canvas.Resources>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Width="1" Canvas.Left="205"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Width="1" Canvas.Left="405"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Width="1" Canvas.Left="605"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Width="1" Canvas.Left="805"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Width="1" Canvas.Left="1005"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Width="1" Canvas.Left="1205"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Width="1" Canvas.Left="1405"/>
+                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Width="1" Canvas.Left="1605"/>
+            </Canvas>
+
+            <Canvas Name="entriesContainer" Canvas.ZIndex="50" Canvas.Top="120" Canvas.Left="105" Height="200" Width="200" FocusManager.IsFocusScope="True" Background="Transparent">
+                <Canvas.Resources>
+                    <Style TargetType="local:SubjectCard">
+                        <Setter Property="Width" Value="200"/>
+                    </Style>
+                </Canvas.Resources>
+                <Canvas Name="cv_FocusHolder" Height="50" Width="50" Canvas.Left="200" Background="Transparent"/>
+            </Canvas>
+            <Border Name="RoomHeader" Canvas.ZIndex="500" BorderThickness="0,0,0,1" BorderBrush="{StaticResource PrimaryShadeColor}" Height="50" Width="auto" Background="AliceBlue" Canvas.Left="{Binding ElementName=TimeHeader, Path=Width}">
+                <StackPanel Name="sp_RoomHeader" Orientation="Horizontal" Margin="5,0">
+                    <StackPanel.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Width" Value="200"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="TextAlignment" Value="Center"/>
+                            <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
+                        </Style>
+                    </StackPanel.Resources>
+                </StackPanel>
+            </Border>
+            <Border Name="Timeslot" Background="AliceBlue" Canvas.ZIndex="500" Height="auto" Width="100"  Canvas.Top="{Binding ElementName=TimeHeader, Path=Height}">
+                <StackPanel Name="sp_TimeHeader" Margin="5,60,5,0">
+                    <StackPanel.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Height" Value="120"/>
+                            <Setter Property="HorizontalAlignment" Value="Right"/>
+                            <Setter Property="TextAlignment" Value="Center"/>
+                            <Setter Property="Foreground" Value="{StaticResource SecondaryShadeColor}"/>
+                        </Style>
+                    </StackPanel.Resources>
+                </StackPanel>
+            </Border>
+            <Border Name="TimeHeader" BorderThickness="0,0,0,1" BorderBrush="{StaticResource TertiaryColor}" Canvas.Left="0" Canvas.ZIndex="500" Height="50" Width="100" Background="AliceBlue">
+                <TextBlock Text="Time" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+        </Canvas>
+    </ScrollViewer>
+</UserControl>
+
