@@ -110,7 +110,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-
+    
     <Style x:Key="NoThumbScrollViewer" TargetType="{x:Type ScrollViewer}">
         <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
         <Setter Property="Template">
