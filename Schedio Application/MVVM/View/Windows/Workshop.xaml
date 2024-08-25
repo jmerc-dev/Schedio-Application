@@ -453,6 +453,55 @@
                                             </Image.LayoutTransform>
                                         </Image>
                                     </Button>
+
+                                    <Grid Grid.Row="1" Margin="0,10">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Grid.Row="0" Margin="11,0">
+                                            <ComboBox Grid.Column="1" IsEditable="True" Margin="3" FontSize="13" Style="{StaticResource MainComboBox}" Name="cbox_SectionPicker" Padding="5,2">
+                                                <ComboBoxItem Content="asdasd"/>
+                                                <ComboBoxItem Content="qweqwe"/>
+                                                <ComboBoxItem Content="Fdf"/>
+                                            </ComboBox>
+                                            <TextBlock IsHitTestVisible="False" Text="Choose Section" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="11,0,0,0" Foreground="DarkGray" FontSize="13">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Text, ElementName=cbox_SectionPicker}" Value="">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+
+                                        <Grid Grid.Row="1" Height="25" VerticalAlignment="Center" Margin="0,5">
+                                            <TextBox Width="200" FontSize="13" VerticalContentAlignment="Center" TextBlock.TextAlignment="Left" Name="tb_SearchSubject" TextChanged="TextBox_Search_TextChanged" Padding="5,0">
+                                            </TextBox>
+                                            <TextBlock IsHitTestVisible="False" Text="Search..." VerticalAlignment="Center" HorizontalAlignment="Left" Margin="23,0,0,0" Foreground="DarkGray" FontSize="13">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Text, ElementName=tb_SearchSubject}" Value="">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+
+                                        
+
+                                    </Grid>
+                                    
                                 </Grid>
                             </Border>
 
