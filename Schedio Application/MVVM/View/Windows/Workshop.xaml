@@ -390,7 +390,7 @@
                         <Grid Grid.Row="1" Margin="5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="250"/>
+                                <ColumnDefinition Width="300"/>
                             </Grid.ColumnDefinitions>
 
                             <!-- Tabcontrol for canvas -->
@@ -461,45 +461,28 @@
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
 
-                                        <Grid Grid.Row="0" Margin="11,0">
-                                            <ComboBox Grid.Column="1" IsEditable="True" Margin="3" FontSize="13" Style="{StaticResource MainComboBox}" Name="cbox_SectionPicker" Padding="5,2">
-                                                <ComboBoxItem Content="asdasd"/>
-                                                <ComboBoxItem Content="qweqwe"/>
-                                                <ComboBoxItem Content="Fdf"/>
-                                            </ComboBox>
-                                            <TextBlock IsHitTestVisible="False" Text="Choose Section" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="11,0,0,0" Foreground="DarkGray" FontSize="13">
-                                                <TextBlock.Style>
-                                                    <Style TargetType="{x:Type TextBlock}">
-                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Text, ElementName=cbox_SectionPicker}" Value="">
-                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
+                                        <Grid Grid.Row="0" Margin="11,0" Height="30">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,0,0,1" Margin="10,0">
+                                                <TextBlock IsHitTestVisible="False" Text="No Chosen Section" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="11,0,0,0" Foreground="DarkGray" FontSize="13" TextTrimming="CharacterEllipsis">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="{x:Type TextBlock}">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                            <!--<Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Text, ElementName=cbox_SectionPicker}" Value="">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>-->
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Border>
+                                            
+                                            <Button Grid.Column="1" Width="70" Style="{StaticResource ConfirmButton}" Content="Browse"/>
                                         </Grid>
-
-                                        <Grid Grid.Row="1" Height="25" VerticalAlignment="Center" Margin="0,5">
-                                            <TextBox Width="200" FontSize="13" VerticalContentAlignment="Center" TextBlock.TextAlignment="Left" Name="tb_SearchSubject" TextChanged="TextBox_Search_TextChanged" Padding="5,0">
-                                            </TextBox>
-                                            <TextBlock IsHitTestVisible="False" Text="Search..." VerticalAlignment="Center" HorizontalAlignment="Left" Margin="23,0,0,0" Foreground="DarkGray" FontSize="13">
-                                                <TextBlock.Style>
-                                                    <Style TargetType="{x:Type TextBlock}">
-                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Text, ElementName=tb_SearchSubject}" Value="">
-                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-                                        </Grid>
-
-                                        
-
                                     </Grid>
                                     
                                 </Grid>
