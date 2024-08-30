@@ -18,11 +18,12 @@
     
     <Grid Margin="3">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <!-- Menu -->
-        <Menu Grid.Row="0" Height="20" VerticalAlignment="Top">
+
+        <Menu Grid.Row="0" VerticalAlignment="Top" Width="100" HorizontalAlignment="Left">
             <MenuItem>
                 <MenuItem.Header>
                     <TextBlock Text="Menu"/>
@@ -38,7 +39,6 @@
                         <TextBlock Text="Open"/>
                     </MenuItem.Header>
                 </MenuItem>
-                <Separator/>
                 <MenuItem>
                     <MenuItem.Header>
                         <TextBlock Text="Save"/>
@@ -49,7 +49,6 @@
                         <TextBlock Text="Save as"/>
                     </MenuItem.Header>
                 </MenuItem>
-                <Separator/>
                 <MenuItem>
                     <MenuItem.Header>
                         <TextBlock Text="Help"/>
@@ -62,7 +61,8 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
-        
+
+
         <!-- Export Button -->
         <Button Grid.Row="0" Style="{StaticResource ConfirmButton}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="13" Width="100" Height="27" Margin="10,0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
