@@ -23,10 +23,20 @@
         </Grid.RowDefinitions>
         <!-- Menu -->
 
-        <Menu Grid.Row="0" VerticalAlignment="Top" Width="100" HorizontalAlignment="Left">
-            <MenuItem>
+        <Menu Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <MenuItem Width="70">
                 <MenuItem.Header>
-                    <TextBlock Text="Menu"/>
+                    <Border>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Menu" Grid.Column="0"/>
+                            <Path Grid.Column="1" Data="F1 M 0,0 L 2.667,2.66665 L 5.3334,0 L 5.3334,-1.78168 L 2.6667,0.88501 L0,-1.78168 L0,0 Z" Fill="{StaticResource ComboBox.Static.Glyph}" Stretch="Uniform" HorizontalAlignment="Center" Margin="1" Height="7" Width="10" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
                 </MenuItem.Header>
 
                 <MenuItem>
