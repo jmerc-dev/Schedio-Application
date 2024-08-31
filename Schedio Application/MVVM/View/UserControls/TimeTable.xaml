@@ -62,7 +62,21 @@
                 <Canvas Name="cv_FocusHolder" Height="50" Width="50" Canvas.Left="200" Background="Transparent"/>
             </Canvas>
             <Border Name="RoomHeader" Canvas.ZIndex="500" BorderThickness="0,0,0,1" BorderBrush="{StaticResource PrimaryShadeColor}" Height="50" Width="auto" Background="AliceBlue" Canvas.Left="{Binding ElementName=TimeHeader, Path=Width}">
-                <StackPanel Name="sp_RoomHeader" Orientation="Horizontal" Margin="5,0">
+                <ListView Name="lv_RoomHeader" Margin="5" DisplayMemberPath="Name">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.Resources>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Width" Value="200"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        </Style>
+                    </ListView.Resources>
+                </ListView>
+                
+                <!--<StackPanel Name="sp_RoomHeader" Orientation="Horizontal" Margin="5,0">
                     <StackPanel.Resources>
                         <Style TargetType="TextBlock">
                             <Setter Property="Width" Value="200"/>
@@ -71,7 +85,7 @@
                             <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
                         </Style>
                     </StackPanel.Resources>
-                </StackPanel>
+                </StackPanel>-->
             </Border>
             <Border Name="Timeslot" Background="AliceBlue" Canvas.ZIndex="500" Height="auto" Width="100"  Canvas.Top="{Binding ElementName=TimeHeader, Path=Height}">
                 <StackPanel Name="sp_TimeHeader" Margin="5,60,5,0">

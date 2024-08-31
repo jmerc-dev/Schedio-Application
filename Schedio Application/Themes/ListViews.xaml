@@ -138,9 +138,6 @@
                     <TextBlock Text="{Binding TotalUnits}" Margin="5" FontSize="15" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Left"/>
                 </StackPanel>
             </StackPanel>
-            
-            
-
         </Grid>
 
         <DataTemplate.Triggers>

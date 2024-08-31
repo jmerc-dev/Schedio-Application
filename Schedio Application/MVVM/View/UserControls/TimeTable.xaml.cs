@@ -26,6 +26,7 @@ namespace Schedio_Application.MVVM.View.UserControls
     public partial class TimeTable : UserControl
     {
         private const int ROOMHEADER_WIDTH = 200;
+        private const int ROOMHEADER_HORIZONTAL_OFFSET = 5;
         private const int SUBJECTCARD_WIDTH = 200;
         private const double HOUR_HEIGHT = 120;
         private ObservableCollection<Room> Rooms;
@@ -34,9 +35,9 @@ namespace Schedio_Application.MVVM.View.UserControls
         {
             InitializeComponent();
             Rooms = new ObservableCollection<Room>();
-
-            //Rooms.Add(new Room("101", new RoomType("Lab")));
-            //Rooms.Add(new Room("102", new RoomType("Lab")));
+            lv_RoomHeader.ItemsSource = Rooms;
+            Rooms.Add(new Room("101", new RoomType("Lab")));
+            Rooms.Add(new Room("102", new RoomType("Lab")));
             Rooms.Add(new Room("103", new RoomType("Classic")));
             Rooms.Add(new Room("104", new RoomType("Lab")));
             Rooms.Add(new Room("101", new RoomType("Lab")));
@@ -74,7 +75,7 @@ namespace Schedio_Application.MVVM.View.UserControls
         {
             foreach (Room room in rooms)
             {
-                sp_RoomHeader.Children.Add(new TextBlock { Text = room.Name });
+                //sp_RoomHeader.Children.Add(new TextBlock { Text = room.Name });
             }
         }
 
