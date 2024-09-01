@@ -1,11 +1,15 @@
-﻿using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+﻿using Schedio_Application.MVVM.View.UserControls;
+using Schedio_Application.MVVM.ViewModel.ScheduleElements;
 using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -25,17 +29,20 @@ namespace Schedio_Application.MVVM.View.Windows
     /// </summary>
     public partial class Workshop : Window
     {
+
         public Workshop()
         {
-            InitializeComponent();
-
-            Rooms = new ObservableCollection<Room>();
+            this.DataContext = this;
+            _Rooms = new ObservableCollection<Room>();
             Personnel = new ObservableCollection<Person>();
             Sections = new ObservableCollection<ClassSection>();
 
+            InitializeComponent();
             lv_RoomsList.ItemsSource = this.Rooms;
             lv_PersonnelList.ItemsSource = this.Personnel;
             lv_SectionList.ItemsSource = this.Sections;
+
+            Rooms.CollectionChanged += new NotifyCollectionChangedEventHandler(room_CollectionChanged);
 
             Closing += (sender, e) =>
             {
@@ -55,14 +62,28 @@ namespace Schedio_Application.MVVM.View.Windows
             border_Subjects.Visibility = Visibility.Collapsed;
             btn_ShowSubjects.Visibility = Visibility.Visible;
         }
+
+        private void btn_Export_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (Room room in Rooms)
+            {
+                Trace.WriteLine(room.Name);
+            }
+        }
     }
 
     // Schedule Data Management
     public partial class Workshop : Window
     {
-        private ObservableCollection<Room> Rooms;
+        private ObservableCollection<Room> _Rooms;
         private ObservableCollection<Room> TempRooms;
         private ObservableCollection<RoomType> RoomTypes;
+
+        public ObservableCollection<Room> Rooms 
+        { 
+            get { return _Rooms; }
+            set { _Rooms = value; }
+        }
 
         private ObservableCollection<Person> Personnel;
         private ObservableCollection<Person> TempPersonnel;
@@ -145,6 +166,34 @@ namespace Schedio_Application.MVVM.View.Windows
             if (form.ShowDialog() == true)
             {
                 this.Rooms.Add(new Room(form.RoomName, form.RoomType));
+            }
+        }
+
+        private void room_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                // Add vertical lines
+                foreach (TabItem tabItem in tabCtrl_DayTimeTableContainer.Items)
+                {
+                    if (tabItem.Content.GetType() == typeof(TimeTable))
+                    {
+                        TimeTable timeTable = (TimeTable)tabItem.Content;
+                        timeTable.addVerticalLine();
+                    }
+                }
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                // Remove vertical lines
+                foreach (TabItem tabItem in tabCtrl_DayTimeTableContainer.Items)
+                {
+                    if (tabItem.Content.GetType() == typeof(TimeTable))
+                    {
+                        TimeTable timeTable = (TimeTable)tabItem.Content;
+                        timeTable.removeVerticalLine();
+                    }
+                }
             }
         }
 

@@ -16,7 +16,7 @@
         </Style>
     </Window.Resources>
     
-    <Grid Margin="3">
+    <Grid Margin="3" Name="grid_Container">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition/>
@@ -39,42 +39,18 @@
                     </Border>
                 </MenuItem.Header>
 
-                <MenuItem>
-                    <MenuItem.Header>
-                        <TextBlock Text="New"/>
-                    </MenuItem.Header>
-                </MenuItem>
-                <MenuItem>
-                    <MenuItem.Header>
-                        <TextBlock Text="Open"/>
-                    </MenuItem.Header>
-                </MenuItem>
-                <MenuItem>
-                    <MenuItem.Header>
-                        <TextBlock Text="Save"/>
-                    </MenuItem.Header>
-                </MenuItem>
-                <MenuItem>
-                    <MenuItem.Header>
-                        <TextBlock Text="Save as"/>
-                    </MenuItem.Header>
-                </MenuItem>
-                <MenuItem>
-                    <MenuItem.Header>
-                        <TextBlock Text="Help"/>
-                    </MenuItem.Header>
-                </MenuItem>
-                <MenuItem>
-                    <MenuItem.Header>
-                        <TextBlock Text="About Us"/>
-                    </MenuItem.Header>
-                </MenuItem>
+                <MenuItem Header="New"/>
+                <MenuItem Header="Open"/>
+                <MenuItem Header="Save"/>
+                <MenuItem Header="Save as"/>
+                <MenuItem Header="Help"/>
+                <MenuItem Header="About Us"/>
             </MenuItem>
         </Menu>
 
 
         <!-- Export Button -->
-        <Button Grid.Row="0" Style="{StaticResource ConfirmButton}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="13" Width="100" Height="27" Margin="10,0">
+        <Button Name="btn_Export" Grid.Row="0" Style="{StaticResource ConfirmButton}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="13" Width="100" Height="27" Margin="10,0" Click="btn_Export_Click">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Image Source="pack://application:,,,/Resources/Images/export.png" Margin="7"/>
                 <TextBlock FontSize="13" Text="Export" VerticalAlignment="Center"/>
@@ -404,40 +380,40 @@
                             </Grid.ColumnDefinitions>
 
                             <!-- Tabcontrol for canvas -->
-                            <TabControl TabStripPlacement="Bottom" BorderThickness="0,1,0,0" BorderBrush="{StaticResource SecondaryShadeColor}" Grid.ColumnSpan="2">
+                            <TabControl Name="tabCtrl_DayTimeTableContainer" TabStripPlacement="Bottom" BorderThickness="0,1,0,0" BorderBrush="{StaticResource SecondaryShadeColor}" Grid.ColumnSpan="2">
                                 <TabItem Header="Monday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
+                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Tuesday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
+                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Wednesday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
+                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Thursday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
+                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Friday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
+                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Saturday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
+                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Sunday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
+                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                             </TabControl>

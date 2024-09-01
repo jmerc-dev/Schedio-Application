@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Schedio_Application.MVVM.View.UserControls"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800" PreviewMouseLeftButtonDown="UserControl_MouseLeftButtonDown">
-    <ScrollViewer Name="sv_Canvas" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" ScrollChanged="sv_Canvas_ScrollChanged" Style="{StaticResource NoThumbScrollViewer}" Background="Transparent" PreviewMouseMove="scrollViewer_PreviewMouseMove" PreviewMouseLeftButtonUp="scrollViewer_PreviewMouseLeftButtonUp" PreviewMouseLeftButtonDown="scrollViewer_PreviewMouseLeftButtonDown" PreviewMouseWheel="scrollViewer_PreviewMouseWheel">
+    <ScrollViewer Name="sv_Canvas" DataContext="{Binding RelativeSource={RelativeSource Self}}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" ScrollChanged="sv_Canvas_ScrollChanged" Style="{StaticResource NoThumbScrollViewer}" Background="Transparent" PreviewMouseMove="scrollViewer_PreviewMouseMove" PreviewMouseLeftButtonUp="scrollViewer_PreviewMouseLeftButtonUp" PreviewMouseLeftButtonDown="scrollViewer_PreviewMouseLeftButtonDown" PreviewMouseWheel="scrollViewer_PreviewMouseWheel">
         <Canvas Name="cv_Container" Background="{StaticResource PrimaryBackground}" SnapsToDevicePixels="True" HorizontalAlignment="Left">
             <Canvas Name="HorizontalLineContainer" Canvas.ZIndex="1" Canvas.Top="50" Canvas.Left="100" Height="200" Width="200" Margin="0,60,0,0">
                 <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="9"/>
@@ -36,21 +36,14 @@
                 <Rectangle Fill="{StaticResource PrimaryShadeColor}" Height="1" Width="2500" Canvas.Top="2889"/>
 
             </Canvas>
-            <Canvas Name="VerticalLineContainer" Canvas.ZIndex="1" Canvas.Top="50" Canvas.Left="100" Height="200" Width="200">
+            <Canvas Name="VerticalLineContainer" Canvas.ZIndex="1" Canvas.Top="50" Canvas.Left="105" Height="200" Width="200">
                 <Canvas.Resources>
                     <Style TargetType="Rectangle">
                         <Setter Property="Height" Value="{Binding ElementName=Timeslot, Path=ActualHeight}"/>
                         <Setter Property="Width" Value="1"/>
+                        <Setter Property="Fill" Value="{StaticResource PrimaryShadeColor}"/>
                     </Style>
                 </Canvas.Resources>
-                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Width="1" Canvas.Left="205"/>
-                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Width="1" Canvas.Left="405"/>
-                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Width="1" Canvas.Left="605"/>
-                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Width="1" Canvas.Left="805"/>
-                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Width="1" Canvas.Left="1005"/>
-                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Width="1" Canvas.Left="1205"/>
-                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Width="1" Canvas.Left="1405"/>
-                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Width="1" Canvas.Left="1605"/>
             </Canvas>
 
             <Canvas Name="entriesContainer" Canvas.ZIndex="50" Canvas.Top="120" Canvas.Left="105" Height="200" Width="200" FocusManager.IsFocusScope="True" Background="Transparent">
@@ -61,8 +54,8 @@
                 </Canvas.Resources>
                 <Canvas Name="cv_FocusHolder" Height="50" Width="50" Canvas.Left="200" Background="Transparent"/>
             </Canvas>
-            <Border Name="RoomHeader" Canvas.ZIndex="500" BorderThickness="0,0,0,1" BorderBrush="{StaticResource PrimaryShadeColor}" Height="50" Width="auto" Background="AliceBlue" Canvas.Left="{Binding ElementName=TimeHeader, Path=Width}">
-                <ListView Name="lv_RoomHeader" Margin="5" DisplayMemberPath="Name">
+            <Border Name="RoomHeader" Canvas.ZIndex="500" BorderThickness="0,0,1,1" BorderBrush="{StaticResource PrimaryShadeColor}" Height="50" Width="auto" Background="AliceBlue" Canvas.Left="{Binding ElementName=TimeHeader, Path=Width}">
+                <ListView Name="lv_RoomHeader" Margin="5,0,0,0" DisplayMemberPath="Name">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal"/>

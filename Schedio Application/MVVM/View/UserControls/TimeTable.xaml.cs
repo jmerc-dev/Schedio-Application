@@ -3,6 +3,7 @@ using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -29,36 +30,61 @@ namespace Schedio_Application.MVVM.View.UserControls
         private const int ROOMHEADER_HORIZONTAL_OFFSET = 5;
         private const int SUBJECTCARD_WIDTH = 200;
         private const double HOUR_HEIGHT = 120;
-        private ObservableCollection<Room> Rooms;
+
+        public static readonly DependencyProperty _Rooms = DependencyProperty.Register(
+            "Rooms",
+            typeof(ObservableCollection<Room>),
+            typeof(TimeTable),
+            new PropertyMetadata(null));
+
+        public ObservableCollection<Room> Rooms
+        {
+            get { return (ObservableCollection<Room>) GetValue(_Rooms); }
+            set { SetValue(_Rooms, value); }
+        }
 
         public TimeTable()
         {
             InitializeComponent();
-            Rooms = new ObservableCollection<Room>();
-            lv_RoomHeader.ItemsSource = Rooms;
-            Rooms.Add(new Room("101", new RoomType("Lab")));
-            Rooms.Add(new Room("102", new RoomType("Lab")));
-            Rooms.Add(new Room("103", new RoomType("Classic")));
-            Rooms.Add(new Room("104", new RoomType("Lab")));
-            Rooms.Add(new Room("101", new RoomType("Lab")));
-            Rooms.Add(new Room("102", new RoomType("Lab")));
-            Rooms.Add(new Room("103", new RoomType("Classic")));
-            Rooms.Add(new Room("104", new RoomType("Lab")));
-            Rooms.Add(new Room("101", new RoomType("Lab")));
-            Rooms.Add(new Room("102", new RoomType("Lab")));
-            Rooms.Add(new Room("103", new RoomType("Classic")));
-            Rooms.Add(new Room("104", new RoomType("Lab")));
-            PopulateRooms(Rooms);
+            //Rooms.Add(new Room("101", new RoomType("Lab")));
+            //Rooms.Add(new Room("102", new RoomType("Lab")));
+            //Rooms.Add(new Room("103", new RoomType("Classic")));
+            //Rooms.Add(new Room("104", new RoomType("Lab")));
+            //Rooms.Add(new Room("101", new RoomType("Lab")));
+            //Rooms.Add(new Room("102", new RoomType("Lab")));
+            //Rooms.Add(new Room("103", new RoomType("Classic")));
+            //Rooms.Add(new Room("104", new RoomType("Lab")));
+            //Rooms.Add(new Room("101", new RoomType("Lab")));
+            //Rooms.Add(new Room("102", new RoomType("Lab")));
+            //Rooms.Add(new Room("103", new RoomType("Classic")));
+            //Rooms.Add(new Room("104", new RoomType("Lab")));
             PopulateTimeslot();
+
+            
 
             Loaded += (sender, e) =>
             {
+                lv_RoomHeader.ItemsSource = Rooms;
+                
+
                 double fullWidth = TimeHeader.ActualWidth + RoomHeader.ActualWidth;
                 double fullHeight = TimeHeader.ActualHeight+ Timeslot.ActualHeight;
 
                 SetControlWidth(fullWidth);
                 SetControlHeight(fullHeight);
             };
+        }
+
+        public void addVerticalLine()
+        {
+            Rectangle rect = new Rectangle();
+            rect.SetValue(Canvas.LeftProperty, (double) SUBJECTCARD_WIDTH * Rooms.Count);
+            VerticalLineContainer.Children.Add(rect);
+        }
+
+        public void removeVerticalLine()
+        {
+            VerticalLineContainer.Children.RemoveAt(VerticalLineContainer.Children.Count - 1);
         }
 
         private void SetControlWidth(double width)
@@ -100,7 +126,6 @@ namespace Schedio_Application.MVVM.View.UserControls
         {
             
 
-
         }
 
         // Mouse dragging 
@@ -109,6 +134,7 @@ namespace Schedio_Application.MVVM.View.UserControls
         double vOff = 1;
         private void scrollViewer_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+
             scrollMousePoint = e.GetPosition(sv_Canvas);
             hOff = sv_Canvas.HorizontalOffset;
             vOff = sv_Canvas.VerticalOffset;
