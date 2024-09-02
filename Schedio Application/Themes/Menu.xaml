@@ -9,11 +9,9 @@
                 <ControlTemplate TargetType="{x:Type MenuItem}">
                     <Border x:Name="border" BorderBrush="{StaticResource PrimaryBackground}" Background="{StaticResource PrimaryBackground}" BorderThickness="1" SnapsToDevicePixels="True">
                         <Grid SnapsToDevicePixels="true">
-                            <DockPanel>
-                                <ContentPresenter x:Name="Icon" ContentSource="Icon" Margin="4,0,6,0" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
-                                <Path x:Name="GlyphPanel" Fill="{TemplateBinding Foreground}" FlowDirection="LeftToRight" Margin="7,0,0,0" Visibility="Collapsed" VerticalAlignment="Center"/>
+                            <Grid>
                                 <ContentPresenter x:Name="content" ContentSource="Header" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                            </DockPanel>
+                            </Grid>
                             <Popup x:Name="PART_Popup" AllowsTransparency="true" Focusable="false" HorizontalOffset="1" IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}" Placement="Bottom" VerticalOffset="-1">
                                 <Border BorderThickness="1" BorderBrush="{StaticResource SecondaryShadeColor}" Background="{TemplateBinding Background}">
                                     <ScrollViewer x:Name="SubMenuScrollViewer" CanContentScroll="true" Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">

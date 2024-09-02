@@ -419,7 +419,7 @@
                             </TabControl>
 
                             <!-- Subjects --> 
-                            <Border Name="border_Subjects" Cursor="Arrow" Grid.Column="1" Grid.Row="1" BorderBrush="{StaticResource SecondaryShadeColor}" Background="{StaticResource PrimaryBackground}" BorderThickness="1" Margin="10" Visibility="Collapsed">
+                            <Border Name="border_Subjects" Cursor="Arrow" SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="1" BorderBrush="{StaticResource SecondaryShadeColor}" Background="{StaticResource PrimaryBackground}" BorderThickness="1" Margin="10" Visibility="Collapsed">
                                 <Border.Effect>
                                     <DropShadowEffect Color="#D2D2D2" BlurRadius="10" ShadowDepth="5"/>
                                 </Border.Effect>
@@ -467,7 +467,7 @@
                                                 </TextBlock>
                                             </Border>
                                             
-                                            <Button Grid.Column="1" Width="70" Style="{StaticResource ConfirmButton}" Content="Browse"/>
+                                            <Button Grid.Column="1" Width="70" Style="{StaticResource ConfirmButton}" Content="Browse" Name="btn_BrowseSectionExplorer" Click="btn_BrowseSectionExplorer_Click"/>
                                         </Grid>
                                     </Grid>
                                     

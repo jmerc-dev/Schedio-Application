@@ -70,6 +70,12 @@ namespace Schedio_Application.MVVM.View.Windows
                 Trace.WriteLine(room.Name);
             }
         }
+
+        private void btn_BrowseSectionExplorer_Click(object sender, RoutedEventArgs e)
+        {
+            SectionExplorer sectionExplorer = new SectionExplorer(Sections);
+            sectionExplorer.ShowDialog();
+        }
     }
 
     // Schedule Data Management
