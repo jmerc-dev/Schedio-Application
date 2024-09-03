@@ -22,6 +22,7 @@ namespace Schedio_Application.MVVM.View.Windows
     public partial class SectionExplorer : Window
     {
         ObservableCollection<ClassSection> Sections;
+        public ClassSection SelectedSection;
         public SectionExplorer(ObservableCollection<ClassSection> sections)
         {
             InitializeComponent();
@@ -40,6 +41,19 @@ namespace Schedio_Application.MVVM.View.Windows
                 {
                     this.DragMove();
                 }
+        }
+
+        private void btn_Select_Click(object sender, RoutedEventArgs e)
+        {
+            if (lv_SectionSimpleList.SelectedItems.Count == 1)
+            {
+                SelectedSection = (ClassSection) lv_SectionSimpleList.SelectedItem;
+                DialogResult = true;
+            }
+            else
+            {
+                new MBox("Select only one (1) section.").ShowDialog();
+            }
         }
     }
 }

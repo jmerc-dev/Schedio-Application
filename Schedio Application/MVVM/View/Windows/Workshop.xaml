@@ -419,7 +419,7 @@
                             </TabControl>
 
                             <!-- Subjects --> 
-                            <Border Name="border_Subjects" Cursor="Arrow" SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="1" BorderBrush="{StaticResource SecondaryShadeColor}" Background="{StaticResource PrimaryBackground}" BorderThickness="1" Margin="10" Visibility="Collapsed">
+                            <Border Name="border_Subjects" Cursor="Arrow" SnapsToDevicePixels="True" UseLayoutRounding="True" Grid.Column="1" Grid.Row="1" BorderBrush="{StaticResource SecondaryShadeColor}" Background="{StaticResource PrimaryBackground}" BorderThickness="1" Margin="10" Visibility="Collapsed">
                                 <Border.Effect>
                                     <DropShadowEffect Color="#D2D2D2" BlurRadius="10" ShadowDepth="5"/>
                                 </Border.Effect>
@@ -430,7 +430,7 @@
                                     </Grid.RowDefinitions>
                                     <Rectangle Fill="{StaticResource PrimaryShadeColor}" Grid.Column="1"/>
                                     <TextBlock Text="Subjects" Margin="7,3" Foreground="{StaticResource PrimaryTextColor}"/>
-                                    <Button Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource ImageButton}" Name="btn_HideSubjects" Click="btn_HideSubjects_Click">
+                                    <Button Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Style="{StaticResource ImageButton}" Name="btn_HideSubjects" Click="btn_HideSubjects_Click">
                                         <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/double-left-arrow.png" Height="20" Margin="2">
                                             <Image.LayoutTransform>
                                                 <TransformGroup>
@@ -469,6 +469,13 @@
                                             
                                             <Button Grid.Column="1" Width="70" Style="{StaticResource ConfirmButton}" Content="Browse" Name="btn_BrowseSectionExplorer" Click="btn_BrowseSectionExplorer_Click"/>
                                         </Grid>
+
+                                        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" Margin="10">
+                                            <ToggleButton Style="{StaticResource PrimaryToggleButton}" Margin="5,0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="Show Completed" VerticalAlignment="Center" Margin="5,0" Height="20" SnapsToDevicePixels="True"/>
+                                        </StackPanel>
+
+                                        <TextBlock Text="{Binding SelectedSection}" Grid.Row="3"/>
                                     </Grid>
                                     
                                 </Grid>

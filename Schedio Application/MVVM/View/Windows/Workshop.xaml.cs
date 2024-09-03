@@ -27,8 +27,30 @@ namespace Schedio_Application.MVVM.View.Windows
     /// <summary>
     /// Interaction logic for Workshop.xaml
     /// </summary>
-    public partial class Workshop : Window
+    public partial class Workshop : Window, INotifyPropertyChanged
     {
+
+        private ClassSection? SelectedSection;
+
+        public ClassSection ClassSection 
+        {
+            get { return SelectedSection; }
+            set 
+            { 
+                SelectedSection = value;
+                OnPropertyChanged();
+            } 
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
 
         public Workshop()
         {
@@ -65,18 +87,24 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Export_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Room room in Rooms)
-            {
-                Trace.WriteLine(room.Name);
-            }
+            Trace.WriteLine(SelectedSection.Name);
         }
 
         private void btn_BrowseSectionExplorer_Click(object sender, RoutedEventArgs e)
         {
             SectionExplorer sectionExplorer = new SectionExplorer(Sections);
-            sectionExplorer.ShowDialog();
+            
+            if (sectionExplorer.ShowDialog() == true)
+            {
+                // Save selected Section
+                SelectedSection = sectionExplorer.SelectedSection;
+            }
+
         }
     }
+
+
+
 
     // Schedule Data Management
     public partial class Workshop : Window

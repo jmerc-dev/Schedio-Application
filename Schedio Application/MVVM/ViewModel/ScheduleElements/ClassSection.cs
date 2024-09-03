@@ -13,7 +13,9 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private List<Subject> _Subjects;
         private int _TotalSubjects;
         private int _TotalUnits;
-
+        private int _UnallocatedSubjects;
+        private double _UnallocatedUnits;
+        
         public int TotalSubjects
         {
             get { return _TotalSubjects; }
@@ -60,6 +62,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         {
             _Subjects = new List<Subject>();
             _Name = string.Empty;
+            
         }
 
         public int GetTotalUnits()
