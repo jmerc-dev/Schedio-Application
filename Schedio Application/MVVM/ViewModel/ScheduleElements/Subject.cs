@@ -13,6 +13,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private Person _AssignedPerson;
         private RoomType _RoomType;
         private int _Units;
+
         private double _UnitsRemaining;
         private bool IsAllocated;
 

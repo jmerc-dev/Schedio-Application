@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        ShowInTaskbar="False" Height="250" Width="500">
+        Height="250" Width="500">
     <Grid Margin="20,5">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>

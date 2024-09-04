@@ -30,16 +30,21 @@ namespace Schedio_Application.MVVM.View.Windows
     public partial class Workshop : Window, INotifyPropertyChanged
     {
 
-        private ClassSection? SelectedSection;
+        private ClassSection? _SelectedSection;
 
-        public ClassSection ClassSection 
+        public ClassSection? SelectedSection
         {
-            get { return SelectedSection; }
+            get { return _SelectedSection; }
             set 
             { 
-                SelectedSection = value;
+                _SelectedSection = value;
                 OnPropertyChanged();
             } 
+        }
+        
+        public string SelectedSectionNull
+        {
+            get { return "No Chosen Section"; }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -54,7 +59,6 @@ namespace Schedio_Application.MVVM.View.Windows
 
         public Workshop()
         {
-            this.DataContext = this;
             _Rooms = new ObservableCollection<Room>();
             Personnel = new ObservableCollection<Person>();
             Sections = new ObservableCollection<ClassSection>();
@@ -65,6 +69,13 @@ namespace Schedio_Application.MVVM.View.Windows
             lv_SectionList.ItemsSource = this.Sections;
 
             Rooms.CollectionChanged += new NotifyCollectionChangedEventHandler(room_CollectionChanged);
+
+            Loaded += (sender, e) =>
+            {
+                this.DataContext = this;
+            };
+
+            Sections.CollectionChanged += new NotifyCollectionChangedEventHandler(section_CollectionChanged);
 
             Closing += (sender, e) =>
             {
@@ -87,7 +98,12 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Export_Click(object sender, RoutedEventArgs e)
         {
-            Trace.WriteLine(SelectedSection.Name);
+            foreach (ClassSection section in Sections)
+            {
+                Trace.WriteLine($"{section.Name} = {SelectedSection.Name} : {section == SelectedSection}");
+            }
+
+            SelectedSection = null;
         }
 
         private void btn_BrowseSectionExplorer_Click(object sender, RoutedEventArgs e)
@@ -99,6 +115,8 @@ namespace Schedio_Application.MVVM.View.Windows
                 // Save selected Section
                 SelectedSection = sectionExplorer.SelectedSection;
             }
+
+
 
         }
     }
@@ -250,6 +268,23 @@ namespace Schedio_Application.MVVM.View.Windows
             if (form.ShowDialog() == true)
             {
                 this.Sections.Add(form._Section);
+            }
+        }
+
+        private void section_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            // Removed
+            if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                foreach (ClassSection s in Sections)
+                {
+                    if (s == SelectedSection)
+                    {
+                        return;
+                    }
+                }
+
+                SelectedSection = null;
             }
         }
 

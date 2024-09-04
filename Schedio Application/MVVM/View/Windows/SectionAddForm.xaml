@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Add Section" Height="550" Width="900"
         WindowStartupLocation="CenterScreen"
-        ShowInTaskbar="False"
+        ShowInTaskbar="True"
         Icon="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
         Background="Transparent"
         ResizeMode="NoResize"

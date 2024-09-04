@@ -453,15 +453,16 @@
                                                 <ColumnDefinition Width="auto"/>
                                             </Grid.ColumnDefinitions>
                                             <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,0,0,1" Margin="10,0">
-                                                <TextBlock IsHitTestVisible="False" Text="No Chosen Section" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="11,0,0,0" Foreground="DarkGray" FontSize="13" TextTrimming="CharacterEllipsis">
+                                                <TextBlock IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="11,0,0,0" Foreground="DarkGray" FontSize="13" TextTrimming="CharacterEllipsis">
                                                     <TextBlock.Style>
-                                                        <Style TargetType="{x:Type TextBlock}">
-                                                            <Setter Property="Visibility" Value="Visible"/>
-                                                            <!--<Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Text, ElementName=cbox_SectionPicker}" Value="">
-                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="DataContext" Value="{Binding SelectedSection}"/>
+                                                            <Setter Property="Text" Value="{Binding Path=Name}"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding}" Value="{x:Null}">
+                                                                    <Setter Property="Text" Value="No Chosen Section"/>
                                                                 </DataTrigger>
-                                                            </Style.Triggers>-->
+                                                            </Style.Triggers>
                                                         </Style>
                                                     </TextBlock.Style>
                                                 </TextBlock>
@@ -474,8 +475,6 @@
                                             <ToggleButton Style="{StaticResource PrimaryToggleButton}" Margin="5,0" VerticalAlignment="Center"/>
                                             <TextBlock Text="Show Completed" VerticalAlignment="Center" Margin="5,0" Height="20" SnapsToDevicePixels="True"/>
                                         </StackPanel>
-
-                                        <TextBlock Text="{Binding SelectedSection}" Grid.Row="3"/>
                                     </Grid>
                                     
                                 </Grid>
