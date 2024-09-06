@@ -99,7 +99,7 @@
     <Style TargetType="ListViewItem" x:Key="lvSubjectViewer">
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="Height" Value="25"/>
-        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Cursor" Value="Arrow"/>
         <Setter Property="ContextMenu">
             <Setter.Value>
                 <ContextMenu>
@@ -266,13 +266,13 @@
     </DataTemplate>
 
     <DataTemplate x:Key="dt_SectionListStatusSimplified">
-        <Grid Margin="15,0,0,0">
+        <Grid Margin="15,0,30,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock Margin="15,0,0,0" TextTrimming="CharacterEllipsis" Grid.Column="0" FontSize="14" VerticalAlignment="Center" Text="{Binding Name}" MaxWidth="200"  TextWrapping="Wrap" HorizontalAlignment="Left"/>
-            <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/close-red.png" Margin="5" Grid.Column="1"/>
+            <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/close-red.png" Margin="3" Grid.Column="1"/>
         </Grid>
         <DataTemplate.Triggers>
             <!-- Change image to check-green if all subjects are fully allocated -->

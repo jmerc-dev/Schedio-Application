@@ -417,71 +417,74 @@
                                 </TabItem>
                             </TabControl>
 
-                            <!-- Subjects --> 
-                            <Border Name="border_Subjects" Cursor="Arrow" SnapsToDevicePixels="True" UseLayoutRounding="True" Grid.Column="1" Grid.Row="1" BorderBrush="{StaticResource SecondaryShadeColor}" Background="{StaticResource PrimaryBackground}" BorderThickness="1" Margin="10" Visibility="Collapsed">
-                                <Border.Effect>
-                                    <DropShadowEffect Color="#D2D2D2" BlurRadius="10" ShadowDepth="5"/>
-                                </Border.Effect>
-                                <Grid>
+                            <!-- Subjects -->
+
+                            <Grid Background="{StaticResource PrimaryBackground}" Grid.Column="1" Margin="10" x:Name="grid_SubjectsContainer" Visibility="Collapsed">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Border Name="border_Subjects" Grid.RowSpan="2" Cursor="Arrow" BorderBrush="{StaticResource SecondaryShadeColor}" Background="{StaticResource PrimaryBackground}" BorderThickness="1">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="#D2D2D2" BlurRadius="10" ShadowDepth="5"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Grid.Column="1" Margin="1"/>
+                                <TextBlock Text="Subjects" Margin="7,3" FontSize="14"  Foreground="{StaticResource PrimaryTextColor}"/>
+                                <Button Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Style="{StaticResource ImageButton}" Name="btn_HideSubjects" Click="btn_HideSubjects_Click">
+                                    <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/double-left-arrow.png" Height="20" Margin="2">
+                                        <Image.LayoutTransform>
+                                            <TransformGroup>
+                                                <RotateTransform Angle="180" />
+                                            </TransformGroup>
+                                        </Image.LayoutTransform>
+                                    </Image>
+                                </Button>
+
+                                <Grid Grid.Row="1" Margin="0,10">
                                     <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Rectangle Fill="{StaticResource PrimaryShadeColor}" Grid.Column="1"/>
-                                    <TextBlock Text="Subjects" Margin="7,3" Foreground="{StaticResource PrimaryTextColor}"/>
-                                    <Button Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Style="{StaticResource ImageButton}" Name="btn_HideSubjects" Click="btn_HideSubjects_Click">
-                                        <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/double-left-arrow.png" Height="20" Margin="2">
-                                            <Image.LayoutTransform>
-                                                <TransformGroup>
-                                                    <RotateTransform Angle="180" />
-                                                </TransformGroup>
-                                            </Image.LayoutTransform>
-                                        </Image>
-                                    </Button>
 
-                                    <Grid Grid.Row="1" Margin="0,10">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto"/>
-                                            <RowDefinition Height="auto"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0" Margin="11,0" Height="30">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,0,0,1" Margin="10,0">
+                                            <TextBlock IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="11,0,0,0" Foreground="DarkGray" FontSize="13" TextTrimming="CharacterEllipsis">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="DataContext" Value="{Binding SelectedSection}"/>
+                                                        <Setter Property="Text" Value="{Binding Path=Name}"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding}" Value="{x:Null}">
+                                                                <Setter Property="Text" Value="No Chosen Section"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Border>
 
-                                        <Grid Grid.Row="0" Margin="11,0" Height="30">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition Width="auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,0,0,1" Margin="10,0">
-                                                <TextBlock IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="11,0,0,0" Foreground="DarkGray" FontSize="13" TextTrimming="CharacterEllipsis">
-                                                    <TextBlock.Style>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="DataContext" Value="{Binding SelectedSection}"/>
-                                                            <Setter Property="Text" Value="{Binding Path=Name}"/>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding}" Value="{x:Null}">
-                                                                    <Setter Property="Text" Value="No Chosen Section"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </TextBlock.Style>
-                                                </TextBlock>
-                                            </Border>
+                                        <Button Grid.Column="1" Width="70" Style="{StaticResource ConfirmButton}" Content="Browse" Name="btn_BrowseSectionExplorer" Click="btn_BrowseSectionExplorer_Click"/>
+                                    </Grid>
 
-                                            <Button Grid.Column="1" Width="70" Style="{StaticResource ConfirmButton}" Content="Browse" Name="btn_BrowseSectionExplorer" Click="btn_BrowseSectionExplorer_Click"/>
-                                        </Grid>
+                                    <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" Margin="10">
+                                        <ToggleButton Style="{StaticResource PrimaryToggleButton}" Margin="5,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Show Completed" VerticalAlignment="Center" Margin="5,0" Height="20" SnapsToDevicePixels="True"/>
+                                    </StackPanel>
 
-                                        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" Margin="10">
-                                            <ToggleButton Style="{StaticResource PrimaryToggleButton}" Margin="5,0" VerticalAlignment="Center"/>
-                                            <TextBlock Text="Show Completed" VerticalAlignment="Center" Margin="5,0" Height="20" SnapsToDevicePixels="True"/>
-                                        </StackPanel>
-
-                                        <Grid Grid.Row="2">
-                                            <ListView Margin="5" Name="lv_SelectedSectionSubjects" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource dt_SectionListStatusSimplified}" ItemContainerStyle="{StaticResource lvSubjectViewer}" SelectionMode="Single">
-                                            </ListView>
-                                        </Grid>
+                                    <Grid Grid.Row="2">
+                                        <ListView Margin="5" DataContext="{Binding SelectedSection}" ItemsSource="{Binding Subjects}" Name="lv_SelectedSectionSubjects" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource dt_SectionListStatusSimplified}" ItemContainerStyle="{StaticResource lvSubjectViewer}" SelectionMode="Single">
+                                        </ListView>
                                     </Grid>
                                 </Grid>
-                            </Border>
+                            </Grid>
 
                             <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="1" Style="{StaticResource ImageButton}" Height="30" Width="30" Name="btn_ShowSubjects" Click="btn_ShowSubjects_Click">
                                 <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/double-left-arrow.png" Width="20"/>

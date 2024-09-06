@@ -133,24 +133,19 @@ namespace Schedio_Application.MVVM.View.Windows
         // Subjects panel
         private void btn_ShowSubjects_Click(object sender, RoutedEventArgs e)
         {
-            border_Subjects.Visibility = Visibility.Visible;
+            grid_SubjectsContainer.Visibility = Visibility.Visible;
             btn_ShowSubjects.Visibility = Visibility.Collapsed;
         }
 
         private void btn_HideSubjects_Click(object sender, RoutedEventArgs e)
         {
-            border_Subjects.Visibility = Visibility.Collapsed;
+            grid_SubjectsContainer.Visibility = Visibility.Collapsed;
             btn_ShowSubjects.Visibility = Visibility.Visible;
         }
 
         private void btn_Export_Click(object sender, RoutedEventArgs e)
         {
-            foreach (ClassSection section in Sections)
-            {
-                Trace.WriteLine($"{section.Name} = {SelectedSection.Name} : {section == SelectedSection}");
-            }
 
-            SelectedSection = null;
         }
 
         private void btn_BrowseSectionExplorer_Click(object sender, RoutedEventArgs e)
@@ -161,9 +156,7 @@ namespace Schedio_Application.MVVM.View.Windows
             {
                 // Save selected Section
                 SelectedSection = sectionExplorer.SelectedSection;
-
-                if (lv_SelectedSectionSubjects.ItemsSource == null)
-                    lv_SelectedSectionSubjects.ItemsSource = SelectedSection.Subjects;
+                //lv_SelectedSectionSubjects.ItemsSource = SelectedSection.Subjects;
             }
         }
     }
