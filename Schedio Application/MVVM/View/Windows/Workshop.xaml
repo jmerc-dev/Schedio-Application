@@ -7,7 +7,6 @@
         xmlns:userControls="clr-namespace:Schedio_Application.MVVM.View.UserControls"
         mc:Ignorable="d" Height="720" Width="1280" MinWidth="800"
         WindowStartupLocation="CenterScreen"
-        Title="Schedio Workshop"
         Icon="pack://application:,,,/Resources/General/title_icon.ico"
         Background="{StaticResource PrimaryBackground}">
     <Window.Resources>
@@ -475,6 +474,13 @@
                                             <ToggleButton Style="{StaticResource PrimaryToggleButton}" Margin="5,0" VerticalAlignment="Center"/>
                                             <TextBlock Text="Show Completed" VerticalAlignment="Center" Margin="5,0" Height="20" SnapsToDevicePixels="True"/>
                                         </StackPanel>
+
+                                        <ListView x:Name="lv_SelectedSectionSubjects" Grid.Row="2">
+                                            <ListViewItem >This</ListViewItem>
+                                            <ListViewItem>is</ListViewItem>
+                                            <ListViewItem Visibility="Collapsed">collapsed</ListViewItem>
+                                            <ListViewItem>!</ListViewItem>
+                                        </ListView>
                                     </Grid>
                                     
                                 </Grid>

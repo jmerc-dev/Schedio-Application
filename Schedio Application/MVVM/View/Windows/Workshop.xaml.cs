@@ -73,6 +73,7 @@ namespace Schedio_Application.MVVM.View.Windows
             Loaded += (sender, e) =>
             {
                 this.DataContext = this;
+                AddDummyData();
             };
 
             Sections.CollectionChanged += new NotifyCollectionChangedEventHandler(section_CollectionChanged);
@@ -81,6 +82,52 @@ namespace Schedio_Application.MVVM.View.Windows
             {
                 Application.Current.MainWindow.Visibility = Visibility.Visible;
             };
+        }
+
+        // Dummy Data
+        private void AddDummyData()
+        {
+            RoomTypes = new ObservableCollection<RoomType>();
+            RoomTypes.Add(new RoomType("Classic"));
+            RoomTypes.Add(new RoomType("Lab"));
+            RoomTypes.Add(new RoomType("Court"));
+
+            Rooms.Add(new Room("101", RoomTypes[0]));
+            Rooms.Add(new Room("101", RoomTypes[1]));
+            Rooms.Add(new Room("101", RoomTypes[2]));
+
+            Person person = new Person
+            {
+                Name = "Jose Protacio Rizal",
+                IsConstant = true,
+                ConstTime_Start = "12:00 AM",
+                ConstTime_End = "01:00 PM"
+            };
+
+            person.SetAvailableDay(DayOfWeek.Saturday, true);
+            person.SetAvailableDay(DayOfWeek.Wednesday, true);
+
+            Personnel.Add(person);
+
+            ClassSection section = new ClassSection();
+            section.Name = "CS401A";
+            section.Subjects.Add(new Subject 
+            { 
+                Name = "NSTP II",
+                AssignedPerson = person,
+                RoomType = RoomTypes[0],
+                Units = 3
+            });
+
+            section.Subjects.Add(new Subject
+            {
+                Name = "Computer Programmin 3",
+                AssignedPerson = person,
+                RoomType = RoomTypes[1],
+                Units = 7
+            });
+
+            Sections.Add(section);
         }
 
         // Subjects panel
@@ -231,7 +278,7 @@ namespace Schedio_Application.MVVM.View.Windows
                     if (tabItem.Content.GetType() == typeof(TimeTable))
                     {
                         TimeTable timeTable = (TimeTable)tabItem.Content;
-                        timeTable.addVerticalLine();
+                        //timeTable.addVerticalLine();
                     }
                 }
             }

@@ -194,7 +194,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Margin="15,0,0,0" TextTrimming="CharacterEllipsis" Grid.Column="0" FontSize="14" VerticalAlignment="Center" Text="{Binding Name}" MaxWidth="200"  TextWrapping="Wrap" HorizontalAlignment="Left"/>
+            <TextBlock Margin="15,0,0,0" TextTrimming="CharacterEllipsis" Grid.Column="0" FontSize="14" ContextMenu="{Binding Name}" VerticalAlignment="Center" Text="{Binding Name}" MaxWidth="160"  TextWrapping="Wrap" HorizontalAlignment="Left"/>
             <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
                 <TextBlock Text="0" VerticalAlignment="Center"/>
                 <TextBlock Text="/" VerticalAlignment="Center"/>

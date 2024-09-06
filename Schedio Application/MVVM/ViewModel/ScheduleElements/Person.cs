@@ -1,4 +1,4 @@
-﻿using Schedio_Application.MVVM.ViewModel.Utilities;
+﻿ using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -117,7 +117,10 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         public void SetAvailableDay(DayOfWeek day, bool isChecked)
         {
-            _Days[(int)day].IsAvailable = isChecked;
+            if ((int) day == 0)
+                _Days[6].IsAvailable = isChecked;
+            else
+                _Days[(int)day - 1].IsAvailable = isChecked;
         }
 
         public string GetAvailDaysFormatted()

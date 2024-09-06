@@ -62,7 +62,6 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         {
             _Subjects = new List<Subject>();
             _Name = string.Empty;
-            
         }
 
         public int GetTotalUnits()
