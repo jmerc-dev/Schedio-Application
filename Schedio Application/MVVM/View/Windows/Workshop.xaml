@@ -466,7 +466,7 @@
                                                     </TextBlock.Style>
                                                 </TextBlock>
                                             </Border>
-                                            
+
                                             <Button Grid.Column="1" Width="70" Style="{StaticResource ConfirmButton}" Content="Browse" Name="btn_BrowseSectionExplorer" Click="btn_BrowseSectionExplorer_Click"/>
                                         </Grid>
 
@@ -475,14 +475,11 @@
                                             <TextBlock Text="Show Completed" VerticalAlignment="Center" Margin="5,0" Height="20" SnapsToDevicePixels="True"/>
                                         </StackPanel>
 
-                                        <ListView x:Name="lv_SelectedSectionSubjects" Grid.Row="2">
-                                            <ListViewItem >This</ListViewItem>
-                                            <ListViewItem>is</ListViewItem>
-                                            <ListViewItem Visibility="Collapsed">collapsed</ListViewItem>
-                                            <ListViewItem>!</ListViewItem>
-                                        </ListView>
+                                        <Grid Grid.Row="2">
+                                            <ListView Margin="5" Name="lv_SelectedSectionSubjects" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource dt_SectionListStatusSimplified}" ItemContainerStyle="{StaticResource lvSubjectViewer}" SelectionMode="Single">
+                                            </ListView>
+                                        </Grid>
                                     </Grid>
-                                    
                                 </Grid>
                             </Border>
 

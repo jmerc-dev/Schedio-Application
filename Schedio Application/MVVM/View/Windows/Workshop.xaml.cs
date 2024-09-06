@@ -161,10 +161,10 @@ namespace Schedio_Application.MVVM.View.Windows
             {
                 // Save selected Section
                 SelectedSection = sectionExplorer.SelectedSection;
+
+                if (lv_SelectedSectionSubjects.ItemsSource == null)
+                    lv_SelectedSectionSubjects.ItemsSource = SelectedSection.Subjects;
             }
-
-
-
         }
     }
 

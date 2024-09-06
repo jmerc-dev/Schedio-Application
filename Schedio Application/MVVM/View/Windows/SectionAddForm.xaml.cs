@@ -98,7 +98,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Save_Click(object sender, RoutedEventArgs e)   
         {
-            List<Subject> newSubjects = new List<Subject>();
+            ObservableCollection<Subject> newSubjects = new ObservableCollection<Subject>();
             // Validations
             if (_Section.Name != null && !_Section.Name.Equals(SectionName))
             {
