@@ -266,7 +266,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="dt_SectionListStatusSimplified">
-        <Grid Margin="15,0,30,0">
+        <Grid Margin="15,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="auto"/>
