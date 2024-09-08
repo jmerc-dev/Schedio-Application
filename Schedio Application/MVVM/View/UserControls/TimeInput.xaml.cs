@@ -263,6 +263,18 @@ namespace Schedio_Application.MVVM.View.UserControls
             }
         }
 
+        private void TimeLabel_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Period.Equals("AM"))
+            {
+                Period = "PM";
+            }
+            else
+            {
+                Period = "AM";
+            }
+        }
+
         private void tb_GotFocus(object sender, RoutedEventArgs e)
         {
             string tbName = ((TextBox)sender).Name;

@@ -145,7 +145,8 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Export_Click(object sender, RoutedEventArgs e)
         {
-
+            SubjectAllocation allocation = new SubjectAllocation();
+            allocation.ShowDialog();
         }
 
         private void btn_BrowseSectionExplorer_Click(object sender, RoutedEventArgs e)

@@ -23,6 +23,8 @@ namespace Schedio_Application.MVVM.View.Windows
     /// <summary>
     /// Interaction logic for SectionAddForm.xaml
     /// </summary>
+    /// 
+    //TODO: Redesign & fix binding  
     public partial class SectionAddForm : Window, INotifyPropertyChanged
     {
         public ClassSection _Section;

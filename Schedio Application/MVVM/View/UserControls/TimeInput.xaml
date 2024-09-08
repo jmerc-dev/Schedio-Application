@@ -126,8 +126,11 @@
                          Text="{Binding Period}"
                          VerticalAlignment="Center"
                          IsReadOnly="True"
+                         Cursor="Hand"
+                         SelectionLength="0"
                          HorizontalAlignment="Center"
                          Width="30"
+                         PreviewMouseLeftButtonDown="TimeLabel_PreviewMouseLeftButtonDown"
                          Foreground="{StaticResource TertiaryShadeColor}"/>
                 <Button Name="button"
                         Grid.Column="1"

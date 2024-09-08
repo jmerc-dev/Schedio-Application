@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"
+        xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"       
         xmlns:userControls="clr-namespace:Schedio_Application.MVVM.View.UserControls"
         mc:Ignorable="d" Height="720" Width="1280" MinWidth="800"
         WindowStartupLocation="CenterScreen"
@@ -492,7 +492,7 @@
                                             <TextBlock Text="Name" Foreground="{StaticResource GreyColor}" HorizontalAlignment="Left" Margin="25,0"/>
                                             <TextBlock Grid.Column="1" Text="Status" Foreground="{StaticResource GreyColor}" HorizontalAlignment="Center"/>
                                         </Grid>
-                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Style="{StaticResource MainScrollViewer}">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Style="{StaticResource MainScrollViewer}" Margin="15,0,0,0">
                                             <ListView Margin="5" Grid.Row="1" DataContext="{Binding SelectedSection}" ItemsSource="{Binding Subjects}" Name="lv_SelectedSectionSubjects" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource dt_SectionListStatusSimplified}" ItemContainerStyle="{StaticResource lvSubjectViewer}" SelectionMode="Single">
                                             </ListView>
                                         </ScrollViewer>
