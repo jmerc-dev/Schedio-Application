@@ -1,6 +1,8 @@
-﻿using Schedio_Application.MVVM.ViewModel.Utilities;
+﻿using Schedio_Application.MVVM.ViewModel.Commands;
+using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +18,8 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         private double _UnitsRemaining;
         private bool IsAllocated;
+
+        public RelayCommand AllocSubjectCommand => new RelayCommand(execute => AllocSubject());
 
         public string Name 
         { 
@@ -76,6 +80,11 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             this.RoomType = subject.RoomType;
             this.AssignedPerson = subject.AssignedPerson;
             this.Units = subject.Units;
+        }
+
+        private void AllocSubject()
+        {
+            Trace.WriteLine("Working properly");
         }
     }
 }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"
         xmlns:userControl="clr-namespace:Schedio_Application.MVVM.View.UserControls"
         mc:Ignorable="d"
-        Title="SubjectAllocation" Height="350" Width="550"
+        Title="SubjectAllocation" Height="350" Width="600"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
@@ -57,25 +57,25 @@
                         </TextBlock>
                     </Grid>
 
-                    <TextBlock Text="Section:" FontSize="14" Grid.Row="1" Margin="0,0,0,5" VerticalAlignment="Center"/>
-                    <TextBlock Text="CS501A" FontSize="14" Grid.Row="1" Grid.Column="1" Style="{StaticResource UneditableText}" Margin="0,0,0,5" VerticalAlignment="Center"/>
+                    <TextBlock Text="Section:" FontSize="15" Grid.Row="1" Margin="0,0,0,5" VerticalAlignment="Center"/>
+                    <TextBlock Text="CS501A" FontSize="15" Grid.Row="1" Grid.Column="1" Style="{StaticResource UneditableText}" Margin="0,0,0,5" VerticalAlignment="Center"/>
                     
-                    <TextBlock Text="Subject:" FontSize="14" Grid.Row="2" Margin="0,5"/>
-                    <TextBlock Text="Computer Programming 1" Grid.Row="2" Grid.Column="1" Style="{StaticResource UneditableText}" FontSize="14" Margin="0,5"/>
+                    <TextBlock Text="Subject:" FontSize="15" Grid.Row="2" Margin="0,5"/>
+                    <TextBlock Text="Computer Programming 1" Grid.Row="2" Grid.Column="1" Style="{StaticResource UneditableText}" FontSize="15" Margin="0,5"/>
                     
-                    <TextBlock Text="Room:" FontSize="14" Grid.Row="3" Margin="0,5"/>
-                    <TextBlock Text="101" Grid.Row="3" Grid.Column="1" Style="{StaticResource UneditableText}" FontSize="14" Margin="0,5"/>
+                    <TextBlock Text="Room:" FontSize="15" Grid.Row="3" Margin="0,5"/>
+                    <ComboBox Style="{StaticResource MainComboBox}" Grid.Column="1" Grid.Row="3" Width="203" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"/>
 
-                    <TextBlock Text="Start Time:" FontSize="14" Grid.Row="1"  Grid.Column="2" Margin="0,0,0,5" VerticalAlignment="Center"/>
-                    <userControl:TimeInput Grid.Row="1" Grid.Column="3" Width="130" Height="25" Margin="20,0,0,5" HorizontalAlignment="Left" FontHeight="14" ButtonHeight="13"/>
+                    <TextBlock Text="Start Time:" FontSize="15" Grid.Row="1"  Grid.Column="2" Margin="0,0,0,5" VerticalAlignment="Center"/>
+                    <userControl:TimeInput Grid.Row="1" Grid.Column="3" Width="130" Height="27" Margin="20,0,0,5" HorizontalAlignment="Left" FontHeight="15" ButtonHeight="13"/>
 
-                    <TextBlock Text="Units:" FontSize="14" Grid.Row="2" Grid.Column="2" Margin="0,5"/>
+                    <TextBlock Text="Units:" FontSize="15" Grid.Row="2" Grid.Column="2" Margin="0,5"/>
                     <ComboBox Style="{StaticResource MainComboBox}" Grid.Column="3" Grid.Row="2" Width="40" HorizontalAlignment="Left" Margin="20,0,0,5"/>
                 </Grid>
 
                 <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button Style="{StaticResource CancelButton}" Content="Close" Width="100" Margin="5" FontSize="13" IsCancel="True"/>
-                    <Button Style="{StaticResource ConfirmButton}" Content="Select" Width="100" Margin="5" FontSize="13" Name="btn_Select"/>
+                    <Button Style="{StaticResource ConfirmButton}" Content="Select" Width="100" Margin="5" FontSize="13" Name="btn_Select" Click="btn_Select_Click"/>
                 </StackPanel>
             </Grid>
         </Grid>

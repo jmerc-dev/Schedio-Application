@@ -1,4 +1,5 @@
 ﻿using Schedio_Application.MVVM.View.UserControls;
+using Schedio_Application.MVVM.ViewModel.Commands;
 using Schedio_Application.MVVM.ViewModel.ScheduleElements;
 using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
@@ -84,6 +85,9 @@ namespace Schedio_Application.MVVM.View.Windows
             };
         }
 
+        // Subject allocation CRUD
+        
+
         // Dummy Data
         private void AddDummyData()
         {
@@ -145,8 +149,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Export_Click(object sender, RoutedEventArgs e)
         {
-            SubjectAllocation allocation = new SubjectAllocation();
-            allocation.ShowDialog();
+            
         }
 
         private void btn_BrowseSectionExplorer_Click(object sender, RoutedEventArgs e)

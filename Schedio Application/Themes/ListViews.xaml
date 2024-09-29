@@ -103,7 +103,7 @@
         <Setter Property="ContextMenu">
             <Setter.Value>
                 <ContextMenu>
-                    <MenuItem Header="Allocate"/>
+                    <MenuItem Header="Allocate" Command="{Binding AllocSubjectCommand}"/>
                 </ContextMenu>
             </Setter.Value>
         </Setter>

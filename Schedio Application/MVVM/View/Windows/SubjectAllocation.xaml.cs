@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,13 @@ namespace Schedio_Application.MVVM.View.Windows
     /// </summary>
     public partial class SubjectAllocation : Window
     {
-        public SubjectAllocation()
+        private SubjectEntry entry;
+
+        public SubjectAllocation(Subject subject)
         {
             InitializeComponent();
+
+            entry = new SubjectEntry(subject);
         }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -35,6 +40,11 @@ namespace Schedio_Application.MVVM.View.Windows
                 {
                     this.DragMove();
                 }
+        }
+
+        private void btn_Select_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

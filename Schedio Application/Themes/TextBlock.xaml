@@ -7,12 +7,12 @@
     </Style>
 
     <Style TargetType="TextBlock" x:Key="NormalText">
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontSize" Value="15"/>
     </Style>
 
     <Style TargetType="TextBlock" x:Key="UneditableText">
         <Setter Property="FontFamily" Value="Aharoni"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontSize" Value="15"/>
         <Setter Property="Foreground" Value="{StaticResource SecondaryShadeColor}"/>
         <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
     </Style>
