@@ -42,7 +42,15 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.ColumnSpan="2">
-                        <ComboBox Style="{StaticResource MainComboBox}" Name="cb_Day" Height="30" VerticalAlignment="Top"/>
+                        <ComboBox Style="{StaticResource MainComboBox}" Name="cb_Day" Height="30" VerticalAlignment="Top" VerticalContentAlignment="Center">
+                            <ComboBoxItem Content="Monday"/>
+                            <ComboBoxItem Content="Tuesday"/>
+                            <ComboBoxItem Content="Wednesday"/>
+                            <ComboBoxItem Content="Thursday"/>
+                            <ComboBoxItem Content="Friday"/>
+                            <ComboBoxItem Content="Saturday"/>
+                            <ComboBoxItem Content="Sunday"/>
+                        </ComboBox>
                         <TextBlock IsHitTestVisible="False" Text="Day" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="8,5,0,0" Foreground="DarkGray" FontSize="13">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">

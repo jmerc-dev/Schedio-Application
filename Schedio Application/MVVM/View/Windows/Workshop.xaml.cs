@@ -65,7 +65,7 @@ namespace Schedio_Application.MVVM.View.Windows
             Sections = new ObservableCollection<ClassSection>();
 
             InitializeComponent();
-            lv_RoomsList.ItemsSource = this.Rooms;
+            lv_RoomsList.ItemsSource = Workshop.Rooms;
             lv_PersonnelList.ItemsSource = this.Personnel;
             lv_SectionList.ItemsSource = this.Sections;
 
@@ -171,14 +171,13 @@ namespace Schedio_Application.MVVM.View.Windows
     // Schedule Data Management
     public partial class Workshop : Window
     {
-        private ObservableCollection<Room> _Rooms;
+        private static ObservableCollection<Room> _Rooms;
         private ObservableCollection<Room> TempRooms;
         private ObservableCollection<RoomType> RoomTypes;
 
-        public ObservableCollection<Room> Rooms 
+        public static ObservableCollection<Room> Rooms 
         { 
             get { return _Rooms; }
-            set { _Rooms = value; }
         }
 
         private ObservableCollection<Person> Personnel;
@@ -261,7 +260,7 @@ namespace Schedio_Application.MVVM.View.Windows
             RoomAddForm form = new RoomAddForm(RoomTypes, Rooms);
             if (form.ShowDialog() == true)
             {
-                this.Rooms.Add(new Room(form.RoomName, form.RoomType));
+                Workshop.Rooms.Add(new Room(form.RoomName, form.RoomType));
             }
         }
 

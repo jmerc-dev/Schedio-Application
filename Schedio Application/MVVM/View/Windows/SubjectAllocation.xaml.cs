@@ -44,7 +44,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Select_Click(object sender, RoutedEventArgs e)
         {
-
+            DialogResult = true;
         }
     }
 }

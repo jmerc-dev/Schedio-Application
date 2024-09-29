@@ -103,7 +103,7 @@
         <Setter Property="ContextMenu">
             <Setter.Value>
                 <ContextMenu>
-                    <MenuItem Header="Allocate" Command="{Binding AllocSubjectCommand}"/>
+                    <MenuItem Header="Allocate" Command="{Binding AllocSubjectCommand}" CommandParameter="{Binding ElementName=lv_RoomsList, Path=ItemsSource}"/>
                 </ContextMenu>
             </Setter.Value>
         </Setter>
