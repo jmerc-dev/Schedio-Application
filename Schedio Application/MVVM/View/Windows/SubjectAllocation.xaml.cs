@@ -49,7 +49,8 @@ namespace Schedio_Application.MVVM.View.Windows
                 }
         }
 
-        // TODO: Pass section name into subject allocation
+        // TODO: Fix Subject Card
+        // 10-02-2024
 
         private DayOfWeek GetChosenDay(string dayName)
         {
