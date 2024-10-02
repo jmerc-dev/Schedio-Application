@@ -54,6 +54,98 @@
         </Setter>
     </Style>
 
+    <Style TargetType="ListViewItem" x:Key="lvExplorer">
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Height" Value="60"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="0, 0, 0, 3" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource PrimaryShadeColor}"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Selector.IsSelectionActive" Value="False"/>
+                                <Condition Property="IsSelected" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource PrimaryShadeColor}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource PrimaryShadeColor}"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Selector.IsSelectionActive" Value="True"/>
+                                <Condition Property="IsSelected" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource PrimaryShadeColor}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource SecondaryShadeColor}"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="TextElement.Foreground" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ListViewItem" x:Key="lvSubjectViewer">
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Height" Value="25"/>
+        <Setter Property="Cursor" Value="Arrow"/>
+        <Setter Property="ContextMenu">
+            <Setter.Value>
+                <ContextMenu>
+                    <MenuItem Header="Allocate" Command="{Binding AllocSubjectCommand}" CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={
+                RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
+                </ContextMenu>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="1" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource PrimaryShadeColor}"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Selector.IsSelectionActive" Value="False"/>
+                                <Condition Property="IsSelected" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource PrimaryShadeColor}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource PrimaryShadeColor}"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Selector.IsSelectionActive" Value="True"/>
+                                <Condition Property="IsSelected" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource PrimaryShadeColor}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource GreyColor}"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="TextElement.Foreground" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <DataTemplate x:Key="dt_RoomsList">
         <Grid Margin="50,0,0,0" MinWidth="700">
             <Grid.ColumnDefinitions>
@@ -138,14 +230,54 @@
                     <TextBlock Text="{Binding TotalUnits}" Margin="5" FontSize="15" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Left"/>
                 </StackPanel>
             </StackPanel>
-            
-            
-
         </Grid>
 
         <DataTemplate.Triggers>
         </DataTemplate.Triggers>
 
+    </DataTemplate>
+
+    <DataTemplate x:Key="dt_SectionListUsing">
+        <Grid Margin="15,0,0,0" MinWidth="700">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Margin="15,0,0,0" TextTrimming="CharacterEllipsis" Grid.Column="0" FontSize="14" VerticalAlignment="Center" Text="{Binding Name}" MaxWidth="160"  TextWrapping="Wrap" HorizontalAlignment="Left"/>
+            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
+                <TextBlock Text="0" VerticalAlignment="Center"/>
+                <TextBlock Text="/" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding TotalSubjects}" VerticalAlignment="Center"/>
+            </StackPanel>
+            <Button x:Name="copyName" Visibility="Collapsed" Style="{StaticResource DarkerImageButton}" HorizontalAlignment="Right" Height="25" Width="50">
+                <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/copy.png" Margin="3"/>
+            </Button>
+            <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Center">
+                <TextBlock Text="0" VerticalAlignment="Center"/>
+                <TextBlock Text="/" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding TotalUnits}" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=IsMouseOver}" Value="True">
+                <Setter TargetName="copyName" Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <DataTemplate x:Key="dt_SectionListStatusSimplified">
+        <Grid Margin="15,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Margin="15,0,0,0" TextTrimming="CharacterEllipsis" Grid.Column="0" FontSize="14" VerticalAlignment="Center" Text="{Binding Name}" MaxWidth="200"  TextWrapping="Wrap" HorizontalAlignment="Left"/>
+            <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/close-red.png" Margin="3" Grid.Column="1"/>
+        </Grid>
+        <DataTemplate.Triggers>
+            <!-- Change image to check-green if all subjects are fully allocated -->
+        </DataTemplate.Triggers>
     </DataTemplate>
 
 </ResourceDictionary>

@@ -1,6 +1,8 @@
 ﻿using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,10 +12,12 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
     public class ClassSection : PropertyNotification
     {
         private string _Name;
-        private List<Subject> _Subjects;
+        private ObservableCollection<Subject> _Subjects;
         private int _TotalSubjects;
-        private int _TotalUnits;
-
+        private double _TotalUnits;
+        private int _UnallocatedSubjects;
+        private double _UnallocatedUnits;
+        
         public int TotalSubjects
         {
             get { return _TotalSubjects; }
@@ -34,7 +38,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
-        public int TotalUnits
+        public double TotalUnits
         {
             get { return _TotalUnits; }
             set
@@ -44,7 +48,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
-        public List<Subject> Subjects
+        public ObservableCollection<Subject> Subjects
         {
             get { return _Subjects; }
             set
@@ -58,13 +62,22 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         public ClassSection()
         {
-            _Subjects = new List<Subject>();
+            _Subjects = new ObservableCollection<Subject>();
             _Name = string.Empty;
+
+            Subjects.CollectionChanged += new NotifyCollectionChangedEventHandler(OnSubListChanged);
         }
 
-        public int GetTotalUnits()
+        private void OnSubListChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
-            int total = 0;
+            TotalSubjects = Subjects.Count;
+            TotalUnits = GetTotalUnits();
+        }
+
+
+        public double GetTotalUnits()
+        {
+            double total = 0;
             foreach (Subject s in Subjects)
             {
                 total += s.Units;

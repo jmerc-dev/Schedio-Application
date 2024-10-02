@@ -39,11 +39,18 @@ namespace Schedio_Application.MVVM.View.Windows
             InitializeComponent();
             this.DataContext = this;
             this.Owner = Application.Current.MainWindow;
+            this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
 
             RoomTypes = types;
             cbox_TypeNames.ItemsSource = RoomTypes;
             Rooms = rooms;
             Sections = sections;
+        }
+
+        private void HandleEsc(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+                Close();
         }
 
         public bool UpdateRoomCategory(string oldValue, string newValue)

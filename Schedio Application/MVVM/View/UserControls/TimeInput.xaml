@@ -74,6 +74,7 @@
                         HorizontalAlignment="Center"
                         FocusManager.IsFocusScope="True">
                 <TextBox Name="tb_HourTenths"
+                         Cursor="Arrow"
                          Text="{Binding HourTenths, UpdateSourceTrigger=PropertyChanged}"
                          VerticalAlignment="Center"
                          MaxLength="1"
@@ -85,6 +86,7 @@
                 <TextBox Name="tb_Hour"
                          Text="{Binding Hour, UpdateSourceTrigger=PropertyChanged}"
                          VerticalAlignment="Center"
+                         Cursor="Arrow"
                          MaxLength="1"
                          CaretBrush="Transparent"
                          PreviewKeyDown="tb_PreviewKeyDown"
@@ -98,6 +100,7 @@
                          Text="{Binding MinTenths, UpdateSourceTrigger=PropertyChanged}"
                          VerticalAlignment="Center"
                          MaxLength="1"
+                         Cursor="Arrow"
                          CaretBrush="Transparent"
                          PreviewKeyDown="tb_PreviewKeyDown"
                          TextChanged="tb_TextChanged"
@@ -107,6 +110,7 @@
                          Text="{Binding Min, UpdateSourceTrigger=PropertyChanged}"
                          VerticalAlignment="Center"
                          MaxLength="1"
+                         Cursor="Arrow"
                          CaretBrush="Transparent"
                          PreviewKeyDown="tb_PreviewKeyDown"
                          TextChanged="tb_TextChanged"
@@ -121,29 +125,61 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-
-                <TextBox x:Name="TimeLabel"
+                
+                <!-- TO FIX (styling) -->
+                <Button x:Name="btn" Click="btn_Click">
+                    <TextBlock Text="{Binding Period}" Name="TimeLabel"/>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="FontSize" Value="15"/>
+                            <Setter Property="Height" Value="20"/>
+                            <Setter Property="Width" Value="30"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Grid x:Name="grid">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="grid" Property="Background" Value="{StaticResource PrimaryShadeColor}"/>
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter TargetName="grid" Property="Background" Value="{StaticResource SecondaryShadeColor}"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                
+                <!--<TextBox x:Name="TimeLabel"
                          Text="{Binding Period}"
                          VerticalAlignment="Center"
                          IsReadOnly="True"
+                         Cursor="Hand"
                          HorizontalAlignment="Center"
                          Width="30"
-                         Foreground="{StaticResource TertiaryShadeColor}"/>
-                <Button Name="button"
-                        Grid.Column="1"
-                        Click="button_Click"
-                        Style="{StaticResource btnChange}"
-                        BorderThickness="0"
-                        Padding="3"
-                        HorizontalAlignment="Right"
-                        Margin="3"
-                        Cursor="Hand"
-                        Height="{Binding ButtonHeight}"
-                        IsEnabledChanged="button_IsEnabledChanged">
-                    <Image Name="btnImage"
-                           Source="pack://application:,,,/Schedio Application;component/Resources/Images/change.png"
-                           Stretch="Uniform"/>
-                </Button>
+                         PreviewMouseLeftButtonDown="TimeLabel_PreviewMouseLeftButtonDown"
+                         Foreground="{StaticResource TertiaryShadeColor}">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Width" Value="30"/>
+                            <Setter Property="FontSize" Value="15"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource PrimaryShadeColor}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>-->
             </Grid>
         </Grid>
     </Border>

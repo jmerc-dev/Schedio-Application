@@ -386,6 +386,8 @@ namespace Schedio_Application.MVVM.View.Windows
                         break;
                     }
                 }
+
+                
             }
         }
 

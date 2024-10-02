@@ -19,6 +19,8 @@
                 <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/Expander.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/ResizeGrip.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/TabControls.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/Menu.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/TextBlock.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
         </ResourceDictionary>

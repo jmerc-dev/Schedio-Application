@@ -173,32 +173,6 @@ namespace Schedio_Application.MVVM.View.UserControls
 
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            if (Period.Equals("AM"))
-            {
-                Period = "PM";
-            }
-            else
-            {
-                Period = "AM";
-            }
-        }
-
-        private void button_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (!button.IsEnabled)
-            {
-                btnImage.Source = new BitmapImage(
-                                  new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/change-disabled.png"));
-            }
-            else
-            {
-                btnImage.Source = new BitmapImage(
-                                  new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/change.png"));
-            }
-        }
-
         private void tb_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             string input;
@@ -260,6 +234,30 @@ namespace Schedio_Application.MVVM.View.UserControls
             if (!Char.IsDigit(text))
             {
                 ((TextBox)sender).Text = "0";
+            }
+        }
+
+        private void TimeLabel_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Period.Equals("AM"))
+            {
+                Period = "PM";
+            }
+            else
+            {
+                Period = "AM";
+            }
+        }
+
+        private void btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (Period.Equals("AM"))
+            {
+                Period = "PM";
+            }
+            else
+            {
+                Period = "AM";
             }
         }
 

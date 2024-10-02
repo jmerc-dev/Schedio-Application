@@ -3,11 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"
+        xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"       
         xmlns:userControls="clr-namespace:Schedio_Application.MVVM.View.UserControls"
         mc:Ignorable="d" Height="720" Width="1280" MinWidth="800"
         WindowStartupLocation="CenterScreen"
-        Title="Schedio Workshop"
         Icon="pack://application:,,,/Resources/General/title_icon.ico"
         Background="{StaticResource PrimaryBackground}">
     <Window.Resources>
@@ -16,55 +15,41 @@
         </Style>
     </Window.Resources>
     
-    <Grid Margin="3">
+    <Grid Margin="3" Name="grid_Container">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <!-- Menu -->
-        <Menu Grid.Row="0" Height="20" VerticalAlignment="Top">
-            <MenuItem>
+
+        <Menu Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <MenuItem Width="70">
                 <MenuItem.Header>
-                    <TextBlock Text="Menu"/>
+                    <Border>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Menu" Grid.Column="0"/>
+                            <Path Grid.Column="1" Data="F1 M 0,0 L 2.667,2.66665 L 5.3334,0 L 5.3334,-1.78168 L 2.6667,0.88501 L0,-1.78168 L0,0 Z" Fill="{StaticResource ComboBox.Static.Glyph}" Stretch="Uniform" HorizontalAlignment="Center" Margin="1" Height="7" Width="10" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
                 </MenuItem.Header>
 
-                <MenuItem>
-                    <MenuItem.Header>
-                        <TextBlock Text="New"/>
-                    </MenuItem.Header>
-                </MenuItem>
-                <MenuItem>
-                    <MenuItem.Header>
-                        <TextBlock Text="Open"/>
-                    </MenuItem.Header>
-                </MenuItem>
-                <Separator/>
-                <MenuItem>
-                    <MenuItem.Header>
-                        <TextBlock Text="Save"/>
-                    </MenuItem.Header>
-                </MenuItem>
-                <MenuItem>
-                    <MenuItem.Header>
-                        <TextBlock Text="Save as"/>
-                    </MenuItem.Header>
-                </MenuItem>
-                <Separator/>
-                <MenuItem>
-                    <MenuItem.Header>
-                        <TextBlock Text="Help"/>
-                    </MenuItem.Header>
-                </MenuItem>
-                <MenuItem>
-                    <MenuItem.Header>
-                        <TextBlock Text="About Us"/>
-                    </MenuItem.Header>
-                </MenuItem>
+                <MenuItem Header="New"/>
+                <MenuItem Header="Open"/>
+                <MenuItem Header="Save"/>
+                <MenuItem Header="Save as"/>
+                <MenuItem Header="Help"/>
+                <MenuItem Header="About Us"/>
             </MenuItem>
         </Menu>
-        
+
+
         <!-- Export Button -->
-        <Button Grid.Row="0" Style="{StaticResource ConfirmButton}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="13" Width="100" Height="27" Margin="10,0">
+        <Button Name="btn_Export" Grid.Row="0" Style="{StaticResource ConfirmButton}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="13" Width="100" Height="27" Margin="10,0" Click="btn_Export_Click">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Image Source="pack://application:,,,/Resources/Images/export.png" Margin="7"/>
                 <TextBlock FontSize="13" Text="Export" VerticalAlignment="Center"/>
@@ -394,99 +379,128 @@
                             </Grid.ColumnDefinitions>
 
                             <!-- Tabcontrol for canvas -->
-                            <TabControl TabStripPlacement="Bottom" BorderThickness="0,1,0,0" BorderBrush="{StaticResource SecondaryShadeColor}" Grid.ColumnSpan="2">
+                            <TabControl Name="tabCtrl_DayTimeTableContainer" TabStripPlacement="Bottom" BorderThickness="0,1,0,0" BorderBrush="{StaticResource SecondaryShadeColor}" Grid.ColumnSpan="2">
                                 <TabItem Header="Monday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
+                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Tuesday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
+                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Wednesday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
+                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Thursday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
+                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Friday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
+                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Saturday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
+                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Sunday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch"/>
+                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                             </TabControl>
 
-                            <!-- Subjects --> 
-                            <Border Name="border_Subjects" Cursor="Arrow" Grid.Column="1" Grid.Row="1" BorderBrush="{StaticResource SecondaryShadeColor}" Background="{StaticResource PrimaryBackground}" BorderThickness="1" Margin="10" Visibility="Collapsed">
-                                <Border.Effect>
-                                    <DropShadowEffect Color="#D2D2D2" BlurRadius="10" ShadowDepth="5"/>
-                                </Border.Effect>
-                                <Grid>
+                            <!-- Subjects -->
+
+                            <Grid Background="{StaticResource PrimaryBackground}" Grid.Column="1" Margin="10" x:Name="grid_SubjectsContainer" Visibility="Collapsed">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Border Name="border_Subjects" Grid.RowSpan="2" Cursor="Arrow" BorderBrush="{StaticResource SecondaryShadeColor}" Background="{StaticResource PrimaryBackground}" BorderThickness="1">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="#D2D2D2" BlurRadius="10" ShadowDepth="5"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Rectangle Fill="{StaticResource PrimaryShadeColor}" Grid.Column="1" Margin="1"/>
+                                <TextBlock Text="Subjects" Margin="7,3" FontSize="14"  Foreground="{StaticResource PrimaryTextColor}"/>
+                                <Button Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Style="{StaticResource ImageButton}" Name="btn_HideSubjects" Click="btn_HideSubjects_Click">
+                                    <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/double-left-arrow.png" Height="20" Margin="2">
+                                        <Image.LayoutTransform>
+                                            <TransformGroup>
+                                                <RotateTransform Angle="180" />
+                                            </TransformGroup>
+                                        </Image.LayoutTransform>
+                                    </Image>
+                                </Button>
+
+                                <Grid Grid.Row="1" Margin="0,10">
                                     <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Rectangle Fill="{StaticResource PrimaryShadeColor}" Grid.Column="1"/>
-                                    <TextBlock Text="Subjects" Margin="7,3" Foreground="{StaticResource PrimaryTextColor}"/>
-                                    <Button Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource ImageButton}" Name="btn_HideSubjects" Click="btn_HideSubjects_Click">
-                                        <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/double-left-arrow.png" Height="20" Margin="2">
-                                            <Image.LayoutTransform>
-                                                <TransformGroup>
-                                                    <RotateTransform Angle="180" />
-                                                </TransformGroup>
-                                            </Image.LayoutTransform>
-                                        </Image>
-                                    </Button>
 
-                                    <Grid Grid.Row="1" Margin="0,10">
+                                    <Grid Grid.Row="0" Margin="11,0" Height="30">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,0,0,1" Margin="10,0">
+                                            <TextBlock IsHitTestVisible="False" x:Name="tb_SectionName" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="11,0,0,0" Foreground="DarkGray" FontSize="13" TextTrimming="CharacterEllipsis">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="DataContext" Value="{Binding SelectedSection}"/>
+                                                        <Setter Property="Text" Value="{Binding Path=Name}"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding}" Value="{x:Null}">
+                                                                <Setter Property="Text" Value="No Chosen Section"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Border>
+
+                                        <Button Grid.Column="1" Width="70" Style="{StaticResource ConfirmButton}" Content="Browse" Name="btn_BrowseSectionExplorer" Click="btn_BrowseSectionExplorer_Click"/>
+                                    </Grid>
+
+                                    <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" Margin="10">
+                                        <ToggleButton Style="{StaticResource PrimaryToggleButton}" Margin="5,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Show Completed" VerticalAlignment="Center" Margin="5,0" Height="20" SnapsToDevicePixels="True"/>
+                                    </StackPanel>
+
+                                    <Grid Grid.Row="2" Margin="0,0,0,30" Cursor="Arrow">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto"/>
-                                            <RowDefinition Height="auto"/>
-                                            <RowDefinition Height="*"/>
+                                            <RowDefinition/>
                                         </Grid.RowDefinitions>
-
-                                        <Grid Grid.Row="0" Margin="11,0" Height="30">
+                                        <Grid Grid.Row="0" Margin="15,5">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
-                                            <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,0,0,1" Margin="10,0">
-                                                <TextBlock IsHitTestVisible="False" Text="No Chosen Section" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="11,0,0,0" Foreground="DarkGray" FontSize="13" TextTrimming="CharacterEllipsis">
-                                                    <TextBlock.Style>
-                                                        <Style TargetType="{x:Type TextBlock}">
-                                                            <Setter Property="Visibility" Value="Visible"/>
-                                                            <!--<Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Text, ElementName=cbox_SectionPicker}" Value="">
-                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>-->
-                                                        </Style>
-                                                    </TextBlock.Style>
-                                                </TextBlock>
-                                            </Border>
-                                            
-                                            <Button Grid.Column="1" Width="70" Style="{StaticResource ConfirmButton}" Content="Browse"/>
+                                            <TextBlock Text="Name" Foreground="{StaticResource GreyColor}" HorizontalAlignment="Left" Margin="25,0"/>
+                                            <TextBlock Grid.Column="1" Text="Status" Foreground="{StaticResource GreyColor}" HorizontalAlignment="Center"/>
                                         </Grid>
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Style="{StaticResource MainScrollViewer}" Margin="15,0,0,0">
+                                            <ListView Margin="5" Grid.Row="1" DataContext="{Binding SelectedSection}" ItemsSource="{Binding Subjects}" Name="lv_SelectedSectionSubjects" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource dt_SectionListStatusSimplified}" ItemContainerStyle="{StaticResource lvSubjectViewer}" SelectionMode="Single">
+     
+                                            </ListView>
+                                        </ScrollViewer>
+                                        
                                     </Grid>
-                                    
                                 </Grid>
-                            </Border>
+                            </Grid>
 
                             <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="1" Style="{StaticResource ImageButton}" Height="30" Width="30" Name="btn_ShowSubjects" Click="btn_ShowSubjects_Click">
                                 <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/double-left-arrow.png" Width="20"/>

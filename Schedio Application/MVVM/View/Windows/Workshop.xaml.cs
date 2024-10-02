@@ -1,11 +1,16 @@
-﻿using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+﻿using Schedio_Application.MVVM.View.UserControls;
+using Schedio_Application.MVVM.ViewModel.Commands;
+using Schedio_Application.MVVM.ViewModel.ScheduleElements;
 using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,19 +28,56 @@ namespace Schedio_Application.MVVM.View.Windows
     /// <summary>
     /// Interaction logic for Workshop.xaml
     /// </summary>
-    public partial class Workshop : Window
+    public partial class Workshop : Window, INotifyPropertyChanged
     {
+
+        private ClassSection? _SelectedSection;
+
+        public ClassSection? SelectedSection
+        {
+            get { return _SelectedSection; }
+            set 
+            { 
+                _SelectedSection = value;
+                OnPropertyChanged();
+            } 
+        }
+        
+        public string SelectedSectionNull
+        {
+            get { return "No Chosen Section"; }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
         public Workshop()
         {
-            InitializeComponent();
-
-            Rooms = new ObservableCollection<Room>();
+            _Rooms = new ObservableCollection<Room>();
             Personnel = new ObservableCollection<Person>();
             Sections = new ObservableCollection<ClassSection>();
 
-            lv_RoomsList.ItemsSource = this.Rooms;
+            InitializeComponent();
+            lv_RoomsList.ItemsSource = Workshop.Rooms;
             lv_PersonnelList.ItemsSource = this.Personnel;
             lv_SectionList.ItemsSource = this.Sections;
+
+            Rooms.CollectionChanged += new NotifyCollectionChangedEventHandler(room_CollectionChanged);
+
+            Loaded += (sender, e) =>
+            {
+                this.DataContext = this;
+                AddDummyData();
+            };
+
+            Sections.CollectionChanged += new NotifyCollectionChangedEventHandler(section_CollectionChanged);
 
             Closing += (sender, e) =>
             {
@@ -43,26 +85,102 @@ namespace Schedio_Application.MVVM.View.Windows
             };
         }
 
+        // Subject allocation CRUD
+        
+
+        // Dummy Data
+        private void AddDummyData()
+        {
+            RoomTypes = new ObservableCollection<RoomType>();
+            RoomTypes.Add(new RoomType("Classic"));
+            RoomTypes.Add(new RoomType("Lab"));
+            RoomTypes.Add(new RoomType("Court"));
+
+            Rooms.Add(new Room("101", RoomTypes[0]));
+            Rooms.Add(new Room("101", RoomTypes[1]));
+            Rooms.Add(new Room("101", RoomTypes[2]));
+
+            Person person = new Person
+            {
+                Name = "Jose Protacio Rizal",
+                IsConstant = true,
+                ConstTime_Start = "12:00 AM",
+                ConstTime_End = "01:00 PM"
+            };
+
+            person.SetAvailableDay(DayOfWeek.Saturday, true);
+            person.SetAvailableDay(DayOfWeek.Wednesday, true);
+
+            Personnel.Add(person);
+
+            ClassSection section = new ClassSection();
+            section.Name = "CS401A";
+            section.Subjects.Add(new Subject 
+            { 
+                Name = "NSTP II",
+                AssignedPerson = person,
+                RoomType = RoomTypes[0],
+                Units = 3,
+                OwnerSection = section
+            });
+
+            section.Subjects.Add(new Subject
+            {
+                Name = "Computer Programmin 3",
+                AssignedPerson = person,
+                RoomType = RoomTypes[1],
+                Units = 7,
+                OwnerSection = section
+            });
+
+            Sections.Add(section);
+        }
+
         // Subjects panel
         private void btn_ShowSubjects_Click(object sender, RoutedEventArgs e)
         {
-            border_Subjects.Visibility = Visibility.Visible;
+            grid_SubjectsContainer.Visibility = Visibility.Visible;
             btn_ShowSubjects.Visibility = Visibility.Collapsed;
         }
 
         private void btn_HideSubjects_Click(object sender, RoutedEventArgs e)
         {
-            border_Subjects.Visibility = Visibility.Collapsed;
+            grid_SubjectsContainer.Visibility = Visibility.Collapsed;
             btn_ShowSubjects.Visibility = Visibility.Visible;
         }
+
+        private void btn_Export_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void btn_BrowseSectionExplorer_Click(object sender, RoutedEventArgs e)
+        {
+            SectionExplorer sectionExplorer = new SectionExplorer(Sections);
+            
+            if (sectionExplorer.ShowDialog() == true)
+            {
+                // Save selected Section
+                SelectedSection = sectionExplorer.SelectedSection;
+                //lv_SelectedSectionSubjects.ItemsSource = SelectedSection.Subjects;
+            }
+        }
     }
+
+
+
 
     // Schedule Data Management
     public partial class Workshop : Window
     {
-        private ObservableCollection<Room> Rooms;
+        private static ObservableCollection<Room> _Rooms;
         private ObservableCollection<Room> TempRooms;
         private ObservableCollection<RoomType> RoomTypes;
+
+        public static ObservableCollection<Room> Rooms 
+        { 
+            get { return _Rooms; }
+        }
 
         private ObservableCollection<Person> Personnel;
         private ObservableCollection<Person> TempPersonnel;
@@ -144,7 +262,35 @@ namespace Schedio_Application.MVVM.View.Windows
             RoomAddForm form = new RoomAddForm(RoomTypes, Rooms);
             if (form.ShowDialog() == true)
             {
-                this.Rooms.Add(new Room(form.RoomName, form.RoomType));
+                Workshop.Rooms.Add(new Room(form.RoomName, form.RoomType));
+            }
+        }
+
+        private void room_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                // Add vertical lines
+                foreach (TabItem tabItem in tabCtrl_DayTimeTableContainer.Items)
+                {
+                    if (tabItem.Content.GetType() == typeof(TimeTable))
+                    {
+                        TimeTable timeTable = (TimeTable)tabItem.Content;
+                        //timeTable.addVerticalLine();
+                    }
+                }
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                // Remove vertical lines
+                foreach (TabItem tabItem in tabCtrl_DayTimeTableContainer.Items)
+                {
+                    if (tabItem.Content.GetType() == typeof(TimeTable))
+                    {
+                        TimeTable timeTable = (TimeTable)tabItem.Content;
+                        timeTable.removeVerticalLine();
+                    }
+                }
             }
         }
 
@@ -167,6 +313,23 @@ namespace Schedio_Application.MVVM.View.Windows
             if (form.ShowDialog() == true)
             {
                 this.Sections.Add(form._Section);
+            }
+        }
+
+        private void section_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            // Removed
+            if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                foreach (ClassSection s in Sections)
+                {
+                    if (s == SelectedSection)
+                    {
+                        return;
+                    }
+                }
+
+                SelectedSection = null;
             }
         }
 

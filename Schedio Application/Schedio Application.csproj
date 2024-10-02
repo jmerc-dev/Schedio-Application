@@ -19,15 +19,20 @@
     <None Remove="Resources\Images\book.png" />
     <None Remove="Resources\Images\change-disabled.png" />
     <None Remove="Resources\Images\change.png" />
+    <None Remove="Resources\Images\check-green.png" />
+    <None Remove="Resources\Images\check.png" />
     <None Remove="Resources\Images\clear.png" />
     <None Remove="Resources\Images\clocksetting-disabled.png" />
     <None Remove="Resources\Images\clocksetting-inversed.png" />
     <None Remove="Resources\Images\clocksetting.png" />
+    <None Remove="Resources\Images\close-red.png" />
     <None Remove="Resources\Images\close.png" />
     <None Remove="Resources\Images\colorwheel.png" />
+    <None Remove="Resources\Images\copy.png" />
     <None Remove="Resources\Images\double-left-arrow.png" />
     <None Remove="Resources\Images\expand.png" />
     <None Remove="Resources\Images\export.png" />
+    <None Remove="Resources\Images\filter.png" />
     <None Remove="Resources\Images\find.png" />
     <None Remove="Resources\Images\hide.png" />
     <None Remove="Resources\Images\home-filled.png" />
@@ -98,15 +103,20 @@
     <Resource Include="Resources\General\title_icon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\Images\check-green.png" />
+    <Resource Include="Resources\Images\check.png" />
     <Resource Include="Resources\Images\clear.png" />
     <Resource Include="Resources\Images\clocksetting-disabled.png" />
     <Resource Include="Resources\Images\clocksetting-inversed.png" />
     <Resource Include="Resources\Images\clocksetting.png" />
+    <Resource Include="Resources\Images\close-red.png" />
     <Resource Include="Resources\Images\close.png" />
     <Resource Include="Resources\Images\colorwheel.png" />
+    <Resource Include="Resources\Images\copy.png" />
     <Resource Include="Resources\Images\double-left-arrow.png" />
     <Resource Include="Resources\Images\expand.png" />
     <Resource Include="Resources\Images\export.png" />
+    <Resource Include="Resources\Images\filter.png" />
     <Resource Include="Resources\Images\find.png" />
     <Resource Include="Resources\Images\hide.png" />
     <Resource Include="Resources\Images\home-filled.png" />
