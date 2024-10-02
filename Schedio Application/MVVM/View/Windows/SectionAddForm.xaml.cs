@@ -75,7 +75,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
                     foreach (Subject sub in _Section.Subjects)
                     {
-                        sp_SubjectList.Children.Add(new SubjectItem(new Subject(sub), _People, _RoomTypes));
+                        sp_SubjectList.Children.Add(new SubjectItem(new Subject(sub, _Section), _People, _RoomTypes));
                     }
                 }
             };
@@ -83,7 +83,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_AddSubject_Click(object sender, RoutedEventArgs e)
         {   
-            sp_SubjectList.Children.Add(new SubjectItem(new Subject(), _People, _RoomTypes)) ;
+            sp_SubjectList.Children.Add(new SubjectItem(new Subject(_Section), _People, _RoomTypes)) ;
         }
 
         private bool IsNameExist(string name)

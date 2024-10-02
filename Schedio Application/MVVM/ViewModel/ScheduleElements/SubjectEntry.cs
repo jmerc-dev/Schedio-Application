@@ -12,6 +12,37 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private string? _StartTime;
         private double? _UnitsToAllocate;
         private Room? _Room;
+        private DayOfWeek? _DayAssigned;
+
+        public Subject SubjectInfo 
+        { 
+            get {  return _Subject; } 
+            set {  _Subject = value; }
+        }
+
+        public string? StartTime
+        {
+            get { return _StartTime; }
+            set { _StartTime = value; }
+        }
+
+        public double? UnitsToAllocate
+        {
+            get { return _UnitsToAllocate; }
+            set { _UnitsToAllocate = value; }
+        }
+
+        public Room? RoomAllocated
+        {
+            get { return _Room; }
+            set { _Room = value; }
+        }
+
+        public DayOfWeek? DayAssigned
+        {
+            get { return _DayAssigned; }
+            set { _DayAssigned = value; }
+        }
 
         public SubjectEntry(Subject subject)
         {

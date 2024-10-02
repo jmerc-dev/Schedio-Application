@@ -56,7 +56,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             get { return _Subject; } 
         }
 
-        public int Units
+        public double Units
         {
             get => Subject.Units;
             set

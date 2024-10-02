@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"
         xmlns:userControl="clr-namespace:Schedio_Application.MVVM.View.UserControls"
         mc:Ignorable="d"
-        Title="SubjectAllocation" Height="350" Width="600"
+        Title="SubjectAllocation" Height="400" Width="650"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
@@ -30,13 +30,13 @@
 
                 <Grid Grid.Row="1" Margin="0,30">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="45"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="40"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="80"/>
                         <ColumnDefinition/>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition/>
@@ -66,19 +66,39 @@
                     </Grid>
 
                     <TextBlock Text="Section:" FontSize="15" Grid.Row="1" Margin="0,0,0,5" VerticalAlignment="Center"/>
-                    <TextBlock Text="CS501A" FontSize="15" Grid.Row="1" Grid.Column="1" Style="{StaticResource UneditableText}" Margin="0,0,0,5" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding SubjectInfo.OwnerSection.Name}" FontSize="15" Grid.Row="1" Grid.Column="1" Style="{StaticResource UneditableText}" Margin="0,0,0,5" VerticalAlignment="Center"/>
                     
-                    <TextBlock Text="Subject:" FontSize="15" Grid.Row="2" Margin="0,5"/>
-                    <TextBlock Text="Computer Programming 1" Grid.Row="2" Grid.Column="1" Style="{StaticResource UneditableText}" FontSize="15" Margin="0,5"/>
-                    
-                    <TextBlock Text="Room:" FontSize="15" Grid.Row="3" Margin="0,5"/>
-                    <ComboBox Style="{StaticResource MainComboBox}" Grid.Column="1" Grid.Row="3" Width="203" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"/>
+                    <TextBlock Text="Subject:" FontSize="15" Grid.Row="2" Margin="0,5" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding SubjectInfo.Name}" Grid.Row="2" VerticalAlignment="Center" Grid.Column="1" Style="{StaticResource UneditableText}" FontSize="15" Margin="0,5"/>
 
-                    <TextBlock Text="Start Time:" FontSize="15" Grid.Row="1"  Grid.Column="2" Margin="0,0,0,5" VerticalAlignment="Center"/>
-                    <userControl:TimeInput Grid.Row="1" Grid.Column="3" Width="130" Height="27" Margin="20,0,0,5" HorizontalAlignment="Left" FontHeight="15" ButtonHeight="13"/>
+                    <TextBlock Text="Personnel:" FontSize="15" Grid.Row="3" Margin="0,5" VerticalAlignment="Top"/>
+                    <TextBlock Text="{Binding SubjectInfo.AssignedPerson.Name}" Grid.Row="3" VerticalAlignment="Top" Grid.Column="1" Style="{StaticResource UneditableText}" FontSize="15" Margin="0,5"/>
 
-                    <TextBlock Text="Units:" FontSize="15" Grid.Row="2" Grid.Column="2" Margin="0,5"/>
-                    <ComboBox Style="{StaticResource MainComboBox}" Grid.Column="3" Grid.Row="2" Width="40" HorizontalAlignment="Left" Margin="20,0,0,5"/>
+                    <TextBlock Text="Room:" FontSize="15" Grid.Row="1" Grid.Column="2" Margin="0,5"/>
+                    <ComboBox Style="{StaticResource MainComboBox}" Name="cbox_Rooms" DisplayMemberPath="Name" Grid.Column="3" IsEditable="True" Grid.Row="1" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Margin="20,0,0,0"/>
+
+                    <TextBlock Text="Start Time:" FontSize="15" Grid.Row="3"  Grid.Column="2" Margin="0,5,0,0" VerticalAlignment="Top"/>
+                    <userControl:TimeInput x:Name="ti_Start" Grid.Row="3" Grid.Column="3" Width="130" Height="27" VerticalAlignment="Top" Margin="20,0,0,5" HorizontalAlignment="Left" FontHeight="15" ButtonHeight="13"/>
+
+                    <TextBlock Text="Units:" FontSize="15" Grid.Row="2" Grid.Column="2" Margin="0,5" VerticalAlignment="Center"/>
+                    <ComboBox Style="{StaticResource MainComboBox}" Name="cbox_SelectedUnits" Grid.Column="3" Grid.Row="2" Width="50" Height="25" HorizontalAlignment="Left" Margin="20,0,0,5" VerticalContentAlignment="Center">
+                        <ComboBoxItem Content="0.5"/>
+                        <ComboBoxItem Content="1.0"/>
+                        <ComboBoxItem Content="1.5"/>
+                        <ComboBoxItem Content="2.0"/>
+                        <ComboBoxItem Content="2.5"/>
+                        <ComboBoxItem Content="3.0"/>
+                        <ComboBoxItem Content="3.5"/>
+                        <ComboBoxItem Content="4.0"/>
+                        <ComboBoxItem Content="4.5"/>
+                        <ComboBoxItem Content="5.0"/>
+                    </ComboBox>
+
+                    <StackPanel Orientation="Horizontal" Grid.Column="3" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+
+                        <TextBlock Text="Remaining Units: " Style="{StaticResource UneditableText}"/>
+                        <TextBlock Text="1.5" Style="{StaticResource UneditableText}"/>
+                    </StackPanel>
                 </Grid>
 
                 <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">

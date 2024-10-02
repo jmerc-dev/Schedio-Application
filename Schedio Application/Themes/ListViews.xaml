@@ -103,7 +103,8 @@
         <Setter Property="ContextMenu">
             <Setter.Value>
                 <ContextMenu>
-                    <MenuItem Header="Allocate" Command="{Binding AllocSubjectCommand}" CommandParameter="{Binding ElementName=lv_RoomsList, Path=ItemsSource}"/>
+                    <MenuItem Header="Allocate" Command="{Binding AllocSubjectCommand}" CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={
+                RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
                 </ContextMenu>
             </Setter.Value>
         </Setter>

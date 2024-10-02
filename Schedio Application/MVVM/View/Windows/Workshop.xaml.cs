@@ -120,7 +120,8 @@ namespace Schedio_Application.MVVM.View.Windows
                 Name = "NSTP II",
                 AssignedPerson = person,
                 RoomType = RoomTypes[0],
-                Units = 3
+                Units = 3,
+                OwnerSection = section
             });
 
             section.Subjects.Add(new Subject
@@ -128,7 +129,8 @@ namespace Schedio_Application.MVVM.View.Windows
                 Name = "Computer Programmin 3",
                 AssignedPerson = person,
                 RoomType = RoomTypes[1],
-                Units = 7
+                Units = 7,
+                OwnerSection = section
             });
 
             Sections.Add(section);

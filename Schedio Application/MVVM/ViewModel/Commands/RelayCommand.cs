@@ -1,4 +1,6 @@
-﻿using System.Windows.Input;
+﻿using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+using System.Diagnostics;
+using System.Windows.Input;
 
 namespace Schedio_Application.MVVM.ViewModel.Commands
 {
@@ -26,6 +28,8 @@ namespace Schedio_Application.MVVM.ViewModel.Commands
 
         public void Execute(object? parameter)
         {
+            Trace.WriteLine(parameter == null);
+            Trace.WriteLine(((Subject) parameter).Name);
             _execute(parameter);
         }
     }

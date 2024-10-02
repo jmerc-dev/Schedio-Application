@@ -14,7 +14,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private string _Name;
         private ObservableCollection<Subject> _Subjects;
         private int _TotalSubjects;
-        private int _TotalUnits;
+        private double _TotalUnits;
         private int _UnallocatedSubjects;
         private double _UnallocatedUnits;
         
@@ -38,7 +38,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
-        public int TotalUnits
+        public double TotalUnits
         {
             get { return _TotalUnits; }
             set
@@ -75,9 +75,9 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         }
 
 
-        public int GetTotalUnits()
+        public double GetTotalUnits()
         {
-            int total = 0;
+            double total = 0;
             foreach (Subject s in Subjects)
             {
                 total += s.Units;

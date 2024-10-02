@@ -456,7 +456,7 @@
                                             <ColumnDefinition Width="auto"/>
                                         </Grid.ColumnDefinitions>
                                         <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,0,0,1" Margin="10,0">
-                                            <TextBlock IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="11,0,0,0" Foreground="DarkGray" FontSize="13" TextTrimming="CharacterEllipsis">
+                                            <TextBlock IsHitTestVisible="False" x:Name="tb_SectionName" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="11,0,0,0" Foreground="DarkGray" FontSize="13" TextTrimming="CharacterEllipsis">
                                                 <TextBlock.Style>
                                                     <Style TargetType="TextBlock">
                                                         <Setter Property="DataContext" Value="{Binding SelectedSection}"/>
@@ -494,7 +494,7 @@
                                         </Grid>
                                         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Style="{StaticResource MainScrollViewer}" Margin="15,0,0,0">
                                             <ListView Margin="5" Grid.Row="1" DataContext="{Binding SelectedSection}" ItemsSource="{Binding Subjects}" Name="lv_SelectedSectionSubjects" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource dt_SectionListStatusSimplified}" ItemContainerStyle="{StaticResource lvSubjectViewer}" SelectionMode="Single">
-                                                
+     
                                             </ListView>
                                         </ScrollViewer>
                                         
