@@ -90,7 +90,7 @@
                                 <TabItem.Header>
                                     <StackPanel Orientation="Horizontal" Height="50">
                                         <Image Name="img_Personnel" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/personnel.png" Stretch="Uniform" Width="40" Margin="7"/>
-                                        <TextBlock VerticalAlignment="Center">Personnel</TextBlock>
+                                        <TextBlock VerticalAlignment="Center" Style="{StaticResource NormalText}">Personnel</TextBlock>
                                     </StackPanel>
                                 </TabItem.Header>
                                 <TabItem.Content>
@@ -139,7 +139,7 @@
                                 <TabItem.Header>
                                     <StackPanel Orientation="Horizontal" Height="50">
                                         <Image Name="img_Rooms" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/rooms.png" Stretch="Uniform" Width="40" Margin="7"/>
-                                        <TextBlock VerticalAlignment="Center">Rooms</TextBlock>
+                                        <TextBlock VerticalAlignment="Center" Style="{StaticResource NormalText}">Rooms</TextBlock>
                                     </StackPanel>
                                 </TabItem.Header>
                                 <TabItem.Content>
@@ -191,7 +191,7 @@
                                 <TabItem.Header>
                                     <StackPanel Orientation="Horizontal" Height="50">
                                         <Image Name="img_Sections" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/sections.png" Stretch="Uniform" Width="40" Margin="7"/>
-                                        <TextBlock VerticalAlignment="Center">Sections</TextBlock>
+                                        <TextBlock VerticalAlignment="Center" Style="{StaticResource NormalText}">Sections</TextBlock>
                                     </StackPanel>
                                 </TabItem.Header>
                                 <TabItem.Content>

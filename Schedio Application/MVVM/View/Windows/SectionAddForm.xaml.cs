@@ -17,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Schedio_Application.MVVM.View.Windows
 {
@@ -24,8 +25,7 @@ namespace Schedio_Application.MVVM.View.Windows
     /// Interaction logic for SectionAddForm.xaml
     /// </summary>
     /// 
-    //TODO: Redesign & fix binding 
-    // Make sure that editing subjects does not create new instance
+    //TODO: Empty/existing name should not be allowed when creating a new section
 
     public enum State
     {
@@ -44,7 +44,6 @@ namespace Schedio_Application.MVVM.View.Windows
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        // TODO: Adding subjects
 
         public ClassSection MySection
         {
@@ -88,12 +87,13 @@ namespace Schedio_Application.MVVM.View.Windows
             _Sections = sections;
             _Section = section;
             grid_NameContainer.DataContext = section;
-            this.Owner = Application.Current.MainWindow;
-            _People = people;
-            _Section = section;
-            _RoomTypes = roomTypes;
 
+            this.Owner = Application.Current.MainWindow;
+
+            _People = people;
+            _RoomTypes = roomTypes;
             FormState = state;
+
             Loaded += (sender, e) =>
             {
 
@@ -126,9 +126,9 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_AddSubject_Click(object sender, RoutedEventArgs e)
         {
-            Subject newSubject = new Subject(_Section);
+            Subject newSubject = new Subject(MySection);
             MySection.Subjects.Add(newSubject);
-            sp_SubjectList.Children.Add(new SubjectItem(newSubject, _People, _RoomTypes)) ;
+            sp_SubjectList.Children.Add(new SubjectItem(newSubject, _People, _RoomTypes));
         }
 
         private bool IsNameExist(string name)
@@ -145,7 +145,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Save_Click(object sender, RoutedEventArgs e)   
         {
-            ObservableCollection<Subject> newSubjects = new ObservableCollection<Subject>();
+            
             // Validations
             if (IsNameExist(tb_Name.Text) && !tb_Name.Text.Equals(MySection.Name))
             {
@@ -166,7 +166,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
                 if (subitem.ValidateEntries())
                 {
-                    newSubjects.Add(subitem.Subject);
+                    _Section.Subjects.Add(subitem.Subject);
                 }
                 else
                 {
@@ -174,7 +174,6 @@ namespace Schedio_Application.MVVM.View.Windows
                 }
             }
 
-            _Section.Subjects = newSubjects;
             DialogResult = true;
         }
 
@@ -202,20 +201,6 @@ namespace Schedio_Application.MVVM.View.Windows
                 Keyboard.ClearFocus();
                 tb_Name.IsEnabled = false;
             }
-        }
-
-        private void DisplaySubjectData_Click(object sender, RoutedEventArgs e)
-        {
-            Trace.WriteLine(MySection.Name);
-            foreach (Subject s in _Section.Subjects)
-            {
-                Trace.WriteLine(s.Name);
-                Trace.WriteLine(s.Units);
-                Trace.WriteLine(s.AssignedPerson.Name);
-                Trace.WriteLine(s.RoomType.Name);
-            }
-
-            //Trace.WriteLine(MySection.Name);
         }
 
         private void tb_Name_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)

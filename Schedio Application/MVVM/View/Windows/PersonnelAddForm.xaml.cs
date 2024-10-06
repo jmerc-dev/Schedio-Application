@@ -48,7 +48,6 @@ namespace Schedio_Application.MVVM.View.Windows
 
             this.DataContext = this;
             this.Owner = Application.Current.MainWindow;
-            this.ShowInTaskbar = false;
             tb_Name.Focus();
 
             // Update

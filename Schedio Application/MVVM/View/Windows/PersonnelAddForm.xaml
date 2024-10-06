@@ -9,41 +9,44 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
-        ShowInTaskbar="False"
+        ShowInTaskbar="True"
+        WindowStyle="None"
         ResizeMode="NoResize"
         MouseDown="Window_MouseDown"
-        Title="Personnel" Height="450" Width="800"
+        Title="Personnel" Height="500" Width="800"
         Icon="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png">
-    <Border  Background="{StaticResource PrimaryBackground}">
+    <Border  Background="{StaticResource PrimaryBackground}" BorderThickness="1" BorderBrush="{StaticResource SecondaryShadeColor}">
         <Grid Margin="20,10,20,20">
             <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="4*"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="0" 
-                        VerticalAlignment="Center" 
-                        Margin="20,0,0,0" 
-                        Orientation="Horizontal">
-                <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/person.png"
-                       Stretch="Uniform"
-                       MaxWidth="60"
-                       />
-                <TextBox Name="tb_Name"
-                         Style="{StaticResource TitleTextBox}"
-                         FontSize="21"
-                         VerticalAlignment="Center"
-                         MaxWidth="300"
-                         GotKeyboardFocus="tb_Name_GotKeyboardFocus"
-                         LostKeyboardFocus="tb_Name_LostKeyboardFocus"
-                         ToolTip="Preferred format: Last Name, First Name MI."
-                         ToolTipService.ShowDuration="8000"
-                         ToolTipService.InitialShowDelay="500"
-                         TextWrapping="Wrap"></TextBox>
-            </StackPanel>
+            <Grid Grid.Row="1" Margin="20,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Personnel" Style="{StaticResource TitleText}"/>
+                <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="20,0">
+                    <TextBlock Text="Name:" Style="{StaticResource NormalText}" VerticalAlignment="Bottom" Margin="0,0,10,0"/>
+                    <TextBox Name="tb_Name"
+                             Style="{StaticResource TitleTextBox}"
+                             FontSize="15"
+                             VerticalAlignment="Center"
+                             MaxWidth="300"
+                             GotKeyboardFocus="tb_Name_GotKeyboardFocus"
+                             LostKeyboardFocus="tb_Name_LostKeyboardFocus"
+                             ToolTip="Preferred format: Last Name, First Name MI."
+                             ToolTipService.ShowDuration="8000"
+                             ToolTipService.InitialShowDelay="500"></TextBox>
+                </StackPanel>
+                
+            </Grid>
 
-            <Grid Grid.Row="1" Margin="70,10,70,10">
+            <Grid Grid.Row="2" Margin="70,10,70,10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="8*"/>
                     <RowDefinition Height="5*"/>

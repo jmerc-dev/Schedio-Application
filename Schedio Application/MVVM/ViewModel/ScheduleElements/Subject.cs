@@ -81,6 +81,12 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                     _Units = value;
                     UnitsRemaining = value;
                 }
+
+                if (this.OwnerSection != null)
+                {
+                    this.OwnerSection.TotalUnits = this.OwnerSection.GetTotalUnits();
+                }
+                
                 OnPropertyChanged();
             }
         }

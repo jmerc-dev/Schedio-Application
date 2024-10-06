@@ -74,7 +74,7 @@ namespace Schedio_Application.MVVM.View.Windows
             Loaded += (sender, e) =>
             {
                 this.DataContext = this;
-                AddDummyData();
+                //AddDummyData();
             };
 
             Sections.CollectionChanged += new NotifyCollectionChangedEventHandler(section_CollectionChanged);
@@ -97,8 +97,8 @@ namespace Schedio_Application.MVVM.View.Windows
             RoomTypes.Add(new RoomType("Court"));
 
             Rooms.Add(new Room("101", RoomTypes[0]));
-            Rooms.Add(new Room("101", RoomTypes[1]));
-            Rooms.Add(new Room("101", RoomTypes[2]));
+            Rooms.Add(new Room("102", RoomTypes[1]));
+            Rooms.Add(new Room("103", RoomTypes[2]));
 
             Person person = new Person
             {
@@ -312,7 +312,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
             if (form.ShowDialog() == true)
             {
-                this.Sections.Add(form._Section);
+                this.Sections.Add(form.MySection);
             }
         }
 
@@ -386,6 +386,11 @@ namespace Schedio_Application.MVVM.View.Windows
                 {
                     foreach (ClassSection section in Sections)
                     {
+                        if (section.Name == null)
+                        {
+                            new MBox("A section has a null name").ShowDialog();
+                            return;
+                        }
                         if (section.Name.StartsWith(searchBox.Text, StringComparison.CurrentCultureIgnoreCase))
                         {
                             TempSections.Add(section);
