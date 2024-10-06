@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,9 +22,19 @@ namespace Schedio_Application.MVVM.View.UserControls
     public partial class SubjectCard : UserControl
     {
         private double _Height;
-        public SubjectCard()
+
+        private SubjectEntry _Entry;
+
+        public SubjectEntry Entry
+        {
+            get { return _Entry; }
+            set { _Entry = value; }
+        }
+
+        public SubjectCard(SubjectEntry entry)
         {
             InitializeComponent();
+            _Entry = entry;
         }
 
         private void UserControl_PreviewMouseDown(object sender, MouseButtonEventArgs e)

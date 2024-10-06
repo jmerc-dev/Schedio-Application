@@ -5,14 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"
         xmlns:userControls="clr-namespace:Schedio_Application.MVVM.View.UserControls"
+        xmlns:converters="clr-namespace:Schedio_Application.MVVM.ViewModel.Converters"
         mc:Ignorable="d"
         Title="Add Section" Height="550" Width="900"
         WindowStartupLocation="CenterScreen"
         ShowInTaskbar="True"
+        WindowStyle="None"
         Icon="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
         Background="Transparent"
         ResizeMode="NoResize"
-        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        Name="window">
     <Window.Resources>
         <Style TargetType="TextBlock" x:Key="Title">
             <Setter Property="FontSize" Value="17"/>
@@ -22,59 +26,90 @@
         <Style TargetType="userControls:SubjectItem">
             <Setter Property="Height" Value="70"/>
         </Style>
+        <converters:StateToVisibilityConverter x:Key="StateToVisibilityConverter"/>
+        <converters:InvertedStateToVisibilityConverter x:Key="InvertedStateToVisibilityConverter"/>
     </Window.Resources>
 
-    <Border Background="{StaticResource PrimaryBackground}">
-        <Grid Margin="20,10,20,20">
+    <Border Background="{StaticResource PrimaryBackground}" BorderThickness="1" BorderBrush="{StaticResource SecondaryShadeColor}">
+        <Grid Margin="40,10,20,20">
             <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal"
-                        Margin="20,0">
-                <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/section-1.png"
-                       Stretch="Uniform"
-                       Height="70"
-                       VerticalAlignment="Center"/>
-                <TextBox Text="{Binding SectionName}"
-                         Name="tb_Name"
-                         Style="{StaticResource TitleTextBox}"
-                         FontSize="22"
-                         VerticalAlignment="Center"/>
-            </StackPanel>
+            <Grid Grid.Row="0" MouseLeftButtonDown="Grid_MouseLeftButtonDown" Background="Transparent"/>
 
-            <Grid Grid.Row="1"
-                  Margin="40,0">
+            <TextBlock Text="Section" Style="{StaticResource TitleText}" Grid.Row="1" />
+            <StackPanel Orientation="Horizontal"
+                        Margin="20,0" Grid.Row="2">
+                <TextBlock Text="Name:" Style="{StaticResource NormalText}" VerticalAlignment="Center"/>
+                <Grid Name="grid_NameContainer">
+                    <TextBox Text="{Binding Name}"
+                             Name="tb_Name"
+                             Style="{StaticResource TitleTextBox}"
+                             FontSize="15"
+                             MinWidth="40"
+                             MaxWidth="150"
+                             Margin="5,0"
+                             VerticalAlignment="Center"
+                             LostKeyboardFocus="tb_Name_LostKeyboardFocus"
+                             LostFocus="tb_Name_LostFocus"
+                             KeyDown="tb_Name_KeyDown"/>
+                    <TextBlock IsHitTestVisible="False" Text="N/A" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="13,0,0,0" Foreground="DarkGray" FontSize="15">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=tb_Name}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+                
+                <Button Foreground="{StaticResource SecondaryColor}" Style="{StaticResource ImageButton}" Width="40" Name="btn_EditSectionName" Click="btn_EditSectionName_Click">Edit</Button>
+            </StackPanel>
+            <Button x:Name="DisplaySubjectData" Grid.Row="1" HorizontalAlignment="Right" Content="DisplaySubjectData" Height="40" Click="DisplaySubjectData_Click"/>
+            <Grid Grid.Row="2" HorizontalAlignment="Right" Margin="20,0">
+                <Button Style="{StaticResource SecondaryButton}"
+                        Width="50"
+                        Name="btn_AddSubject"
+                        Click="btn_AddSubject_Click">
+                    Add
+                </Button>
+                
+            </Grid>
+            
+            <Grid Grid.Row="3"
+                  Margin="20,20,40,0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="70"/>
-                    </Grid.ColumnDefinitions>
+                <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,0,0,1">
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="265"/>
+                            <ColumnDefinition Width="173"/>
+                            <ColumnDefinition Width="115"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="70"/>
+                        </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="0"
-                               Text="Subject"
-                               Style="{StaticResource Title}"/>
-                    <TextBlock Grid.Column="1"
-                               Text="Room Type"
-                               Style="{StaticResource Title}"/>
-                    <TextBlock Grid.Column="2"
-                               Text="Units"
-                               Style="{StaticResource Title}"/>
-                    <TextBlock Grid.Column="3"
-                               Text="Assigned Person"
-                               Style="{StaticResource Title}"/>
+                        <TextBlock Grid.Column="0" Text="Subject" Style="{StaticResource NormalText}"/>
+                        <TextBlock Grid.Column="1" Text="Room Type" Style="{StaticResource NormalText}"/>
+                        <TextBlock Grid.Column="2" Text="Units" Style="{StaticResource NormalText}"/>
+                        <TextBlock Grid.Column="3" Text="Assigned Person" Style="{StaticResource NormalText}"/>
 
-                </Grid>
+                    </Grid>
+                </Border>
+                
 
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
@@ -82,33 +117,28 @@
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="70"/>
+                        <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
                 </Grid>
                 <ScrollViewer Style="{StaticResource MainScrollViewer}"
                               Grid.Row="1">
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Vertical" Height="auto" Name="sp_SubjectList">
-                            
-                        </StackPanel>
-                        <Button Style="{StaticResource ExtraWideButton}"
-                                Height="50"
-                                Name="btn_AddSubject"
-                                Click="btn_AddSubject_Click">
-                            <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/plus.png"
-                                   Stretch="Uniform"
-                                   Margin="15"/>
-                        </Button>
-                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Height="auto" Name="sp_SubjectList">
+                        <StackPanel.Resources>
+                            <Style TargetType="userControls:SubjectItem">
+                                <Setter Property="Height" Value="50"/>
+                            </Style>
+                        </StackPanel.Resources>
+                   </StackPanel>
                 </ScrollViewer>
             </Grid>
             <StackPanel Orientation="Horizontal"
-                        Grid.Row="2"
+                        Grid.Row="4"
                         HorizontalAlignment="Right">
                 <Button Style="{StaticResource CancelButton}"
                         Content="Cancel"
                         MinWidth="90"
                         FontSize="15"
+                        Visibility="{Binding FormState, Converter={StaticResource InvertedStateToVisibilityConverter}}"
                         Margin="10,0"
                         IsCancel="True"/>
                 <Button Style="{StaticResource ConfirmButton}"
@@ -116,8 +146,17 @@
                         MinWidth="90"
                         FontSize="15"
                         Margin="10,0"
+                        Visibility="{Binding FormState, Converter={StaticResource InvertedStateToVisibilityConverter}}"
                         Name="btn_Save"
                         Click="btn_Save_Click"/>
+                <Button Style="{StaticResource ConfirmButton}"
+                        MinWidth="90"
+                        FontSize="15"
+                        Margin="10,0"
+                        Visibility="{Binding FormState, Converter={StaticResource StateToVisibilityConverter}}"
+                        Content="Close"
+                        Name="btn_Close"
+                        Click="btn_Close_Click"/>
             </StackPanel>
         </Grid>
     </Border>

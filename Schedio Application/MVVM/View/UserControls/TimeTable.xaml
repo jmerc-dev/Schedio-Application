@@ -52,7 +52,7 @@
                         <Setter Property="Width" Value="200"/>
                     </Style>
                 </Canvas.Resources>
-                <local:SubjectCard/>
+                
                 <Canvas Name="cv_FocusHolder" Height="50" Width="50" Canvas.Left="200" Background="Transparent"/>
             </Canvas>
             <Border Name="RoomHeader" Canvas.ZIndex="500" BorderThickness="0,0,1,1" BorderBrush="{StaticResource GreyColor}" Height="50" Width="auto" Background="AliceBlue" Canvas.Left="{Binding ElementName=TimeHeader, Path=Width}">

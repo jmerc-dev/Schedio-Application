@@ -308,7 +308,7 @@ namespace Schedio_Application.MVVM.View.Windows
                 return;
             }
 
-            SectionAddForm form = new SectionAddForm(new ClassSection(), Personnel, RoomTypes, Sections);
+            SectionAddForm form = new SectionAddForm(new ClassSection(), Personnel, RoomTypes, Sections, State.New);
 
             if (form.ShowDialog() == true)
             {
@@ -581,7 +581,7 @@ namespace Schedio_Application.MVVM.View.Windows
                     {
                         // Update
                         ClassSection section = (ClassSection)lv_SectionList.SelectedItem;
-                        SectionAddForm updateForm = new SectionAddForm(section, Personnel, RoomTypes, Sections);
+                        SectionAddForm updateForm = new SectionAddForm(section, Personnel, RoomTypes, Sections, State.Existing);
                         if (updateForm.ShowDialog() == true)
                         {
 

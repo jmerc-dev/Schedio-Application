@@ -9,11 +9,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
     public class Subject : PropertyNotification
     {
+        private int id;
         private string _Name;
         private Person _AssignedPerson;
         private RoomType _RoomType;
@@ -23,8 +25,15 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private double _UnitsRemaining;
         private bool IsAllocated;
 
-        private ObservableCollection<Room> _Rooms;
+        private static ObservableCollection<SubjectEntry> subjectEntries = new ObservableCollection<SubjectEntry>();
+
         public RelayCommand AllocSubjectCommand => new RelayCommand(execute => AllocSubject());
+
+        // Implement id system per subject
+        public int Id
+        {
+            get { return id; }
+        }
 
         public string Name 
         { 
@@ -61,7 +70,27 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             get { return _Units; }
             set 
             { 
-                _Units = value;
+                if (_Units > 0)
+                {
+                    double allocatedUnits = _Units - UnitsRemaining;
+                    _Units = value;
+                    UnitsRemaining = _UnitsRemaining + allocatedUnits;
+                }
+                else
+                {
+                    _Units = value;
+                    UnitsRemaining = value;
+                }
+                OnPropertyChanged();
+            }
+        }
+
+        public double UnitsRemaining
+        {
+            get { return _UnitsRemaining; }
+            set
+            {
+                _UnitsRemaining = value;
                 OnPropertyChanged();
             }
         }
@@ -74,6 +103,11 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 _ClassSection = value;
                 OnPropertyChanged();
             }
+        }
+
+        public static ObservableCollection<SubjectEntry> SubjectEntries
+        {
+            get { return subjectEntries; }
         }
 
         public Subject(string Name, Person assignedPerson, RoomType roomType, int units)
@@ -111,11 +145,9 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             SubjectAllocation subjectAllocation = new SubjectAllocation(this);
             if (subjectAllocation.ShowDialog() == true)
             {
-                Trace.WriteLine(subjectAllocation.Entry.SubjectInfo.Name);
-                Trace.WriteLine(subjectAllocation.Entry.StartTime);
-                Trace.WriteLine(subjectAllocation.Entry.RoomAllocated.Name);
-                Trace.WriteLine(subjectAllocation.Entry.UnitsToAllocate);
-                Trace.WriteLine(subjectAllocation.Entry.DayAssigned.ToString());
+                subjectEntries.Add(subjectAllocation.Entry);
+
+                UnitsRemaining -= subjectAllocation.Entry.UnitsToAllocate;
             }
         }
     }

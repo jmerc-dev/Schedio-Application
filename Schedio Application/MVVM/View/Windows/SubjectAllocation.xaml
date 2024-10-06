@@ -97,7 +97,7 @@
                     <StackPanel Orientation="Horizontal" Grid.Column="3" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Right">
 
                         <TextBlock Text="Remaining Units: " Style="{StaticResource UneditableText}"/>
-                        <TextBlock Text="1.5" Style="{StaticResource UneditableText}"/>
+                        <TextBlock Text="{Binding SubjectInfo.UnitsRemaining}" Style="{StaticResource UneditableText}"/>
                     </StackPanel>
                 </Grid>
 

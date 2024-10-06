@@ -63,6 +63,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             {
                 Number -= 1;
             }
+
         }
 
         private void tb_Num_TextChanged(object sender, TextChangedEventArgs e)

@@ -86,7 +86,6 @@ namespace Schedio_Application.MVVM.View.UserControls
             Loaded += (sender, e) =>
             {
                 ctr_Units.DataContext = subject;
-                tb_Name.Focus();
             };
         }
 
@@ -128,6 +127,7 @@ namespace Schedio_Application.MVVM.View.UserControls
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             // Delete
+            Subject.OwnerSection.Subjects.Remove(Subject);
             ((StackPanel)this.Parent).Children.Remove(this);
         }
     }

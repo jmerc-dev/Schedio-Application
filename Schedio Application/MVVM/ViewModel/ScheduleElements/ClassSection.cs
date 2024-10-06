@@ -17,6 +17,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private double _TotalUnits;
         private int _UnallocatedSubjects;
         private double _UnallocatedUnits;
+        private int idCounter;
         
         public int TotalSubjects
         {
@@ -63,7 +64,6 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public ClassSection()
         {
             _Subjects = new ObservableCollection<Subject>();
-            _Name = string.Empty;
 
             Subjects.CollectionChanged += new NotifyCollectionChangedEventHandler(OnSubListChanged);
         }
