@@ -382,37 +382,37 @@
                             <TabControl Name="tabCtrl_DayTimeTableContainer" TabStripPlacement="Bottom" BorderThickness="0,1,0,0" BorderBrush="{StaticResource SecondaryShadeColor}" Grid.ColumnSpan="2">
                                 <TabItem Header="Monday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
+                                        <userControls:TimeTable x:Name="tt_Monday" HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Tuesday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
+                                        <userControls:TimeTable x:Name="tt_Tuesday" HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Wednesday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
+                                        <userControls:TimeTable x:Name="tt_Wednesday" HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Thursday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
+                                        <userControls:TimeTable x:Name="tt_Thursday" HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Friday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
+                                        <userControls:TimeTable x:Name="tt_Friday" HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Saturday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
+                                        <userControls:TimeTable x:Name="tt_Saturday" HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Sunday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
+                                        <userControls:TimeTable x:Name="tt_Sunday" HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                             </TabControl>

@@ -102,8 +102,8 @@
                 </Grid>
 
                 <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Style="{StaticResource CancelButton}" Content="Close" Width="100" Margin="5" FontSize="13" IsCancel="True"/>
-                    <Button Style="{StaticResource ConfirmButton}" Content="Select" Width="100" Margin="5" FontSize="13" Name="btn_Select" Click="btn_Select_Click"/>
+                    <Button Style="{StaticResource CancelButton}" Content="Cancel" Width="100" Margin="5" FontSize="13" IsCancel="True"/>
+                    <Button Style="{StaticResource ConfirmButton}" Content="Add" Width="100" Margin="5" FontSize="13" Name="btn_Select" Click="btn_Select_Click"/>
                 </StackPanel>
             </Grid>
         </Grid>

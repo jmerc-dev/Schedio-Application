@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schedio_Application.MVVM.ViewModel.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
-    public class SubjectEntry
+    public class SubjectEntry : PropertyNotification
     {
         private Subject _Subject;
         private string? _StartTime;
@@ -17,31 +18,51 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public Subject SubjectInfo 
         { 
             get {  return _Subject; } 
-            set {  _Subject = value; }
+            set 
+            {  
+                _Subject = value;
+                OnPropertyChanged();
+            }
         }
 
         public string? StartTime
         {
             get { return _StartTime; }
-            set { _StartTime = value; }
+            set 
+            { 
+                _StartTime = value;
+                OnPropertyChanged();
+            }
         }
 
         public double UnitsToAllocate
         {
             get { return _UnitsToAllocate; }
-            set { _UnitsToAllocate = value; }
+            set 
+            { 
+                _UnitsToAllocate = value;
+                OnPropertyChanged();
+            }
         }
 
         public Room? RoomAllocated
         {
             get { return _Room; }
-            set { _Room = value; }
+            set 
+            { 
+                _Room = value;
+                OnPropertyChanged();
+            }
         }
 
         public DayOfWeek? DayAssigned
         {
             get { return _DayAssigned; }
-            set { _DayAssigned = value; }
+            set 
+            { 
+                _DayAssigned = value;
+                OnPropertyChanged();
+            }
         }
 
         public SubjectEntry(Subject subject)

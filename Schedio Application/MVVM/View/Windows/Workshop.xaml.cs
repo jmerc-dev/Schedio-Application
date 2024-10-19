@@ -70,11 +70,12 @@ namespace Schedio_Application.MVVM.View.Windows
             lv_SectionList.ItemsSource = this.Sections;
 
             Rooms.CollectionChanged += new NotifyCollectionChangedEventHandler(room_CollectionChanged);
+            Subject.SubjectEntries.CollectionChanged += new NotifyCollectionChangedEventHandler(SubjectEntries_CollectionChanged);
 
             Loaded += (sender, e) =>
             {
                 this.DataContext = this;
-                //AddDummyData();
+                AddDummyData();
             };
 
             Sections.CollectionChanged += new NotifyCollectionChangedEventHandler(section_CollectionChanged);
@@ -328,10 +329,55 @@ namespace Schedio_Application.MVVM.View.Windows
                         return;
                     }
                 }
-
                 SelectedSection = null;
             }
         }
+
+        // Subject entries related function
+        private void SubjectEntries_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                if (e.NewItems != null && e.NewItems.Count == 1)
+                {
+                    SubjectEntry newEntry = (SubjectEntry) e.NewItems[0];
+
+                    if (newEntry.DayAssigned == null)
+                    {
+                        new MBox("No day assigned", MBoxImage.Warning).ShowDialog();
+                        return;
+                    }
+
+                    getDayTable(newEntry.DayAssigned).addEntry(newEntry);
+
+                    Trace.WriteLine("etits" + newEntry.SubjectInfo.Name);
+                }
+            }
+        }
+
+        private TimeTable? getDayTable(DayOfWeek? day)
+        {
+            switch (day)
+            {
+                case DayOfWeek.Sunday:
+                    return tt_Sunday;
+                case DayOfWeek.Monday:
+                    return tt_Monday;
+                case DayOfWeek.Tuesday:
+                    return tt_Tuesday;
+                case DayOfWeek.Wednesday:
+                    return tt_Wednesday;
+                case DayOfWeek.Thursday:
+                    return tt_Thursday;
+                case DayOfWeek.Friday:
+                    return tt_Friday;
+                case DayOfWeek.Saturday:
+                    return tt_Saturday;
+                default: return null;
+                    
+            }
+        }
+
 
         // Search function
         private void TextBox_Search_TextChanged(object sender, TextChangedEventArgs e)

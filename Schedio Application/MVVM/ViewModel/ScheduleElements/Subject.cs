@@ -25,8 +25,13 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private double _UnitsRemaining;
         private bool IsAllocated;
 
-        private static ObservableCollection<SubjectEntry> subjectEntries = new ObservableCollection<SubjectEntry>();
+        // TODO
+        public Action<SubjectEntry, DataAction> SubjectOperation;
 
+        private static ObservableCollection<SubjectEntry> subjectEntries = new ObservableCollection<SubjectEntry>();
+        /*
+         * Inclusions: 
+         */
         public RelayCommand AllocSubjectCommand => new RelayCommand(execute => AllocSubject());
 
         // Implement id system per subject
@@ -146,6 +151,8 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
 
         // Entries CRUD
+
+        // Use delegate to add subjectCards
         private void AllocSubject()
         {
             SubjectAllocation subjectAllocation = new SubjectAllocation(this);
@@ -154,6 +161,8 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 subjectEntries.Add(subjectAllocation.Entry);
 
                 UnitsRemaining -= subjectAllocation.Entry.UnitsToAllocate;
+
+                Trace.WriteLine("Subject Entry Added");
             }
         }
     }
