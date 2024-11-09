@@ -162,7 +162,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
                 UnitsRemaining -= subjectAllocation.Entry.UnitsToAllocate;
 
-                Trace.WriteLine("Subject Entry Added");
+                //Trace.WriteLine("Subject Entry Added");
             }
         }
     }

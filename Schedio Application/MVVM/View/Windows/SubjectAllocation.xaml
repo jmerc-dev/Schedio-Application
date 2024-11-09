@@ -79,7 +79,8 @@
 
                     <TextBlock Text="Start Time:" FontSize="15" Grid.Row="3"  Grid.Column="2" Margin="0,5,0,0" VerticalAlignment="Top"/>
                     <userControl:TimeInput x:Name="ti_Start" Grid.Row="3" Grid.Column="3" Width="130" Height="27" VerticalAlignment="Top" Margin="20,0,0,5" HorizontalAlignment="Left" FontHeight="15" ButtonHeight="13"/>
-
+                    
+                    
                     <TextBlock Text="Units:" FontSize="15" Grid.Row="2" Grid.Column="2" Margin="0,5" VerticalAlignment="Center"/>
                     <ComboBox Style="{StaticResource MainComboBox}" Name="cbox_SelectedUnits" Grid.Column="3" Grid.Row="2" Width="50" Height="25" HorizontalAlignment="Left" Margin="20,0,0,5" VerticalContentAlignment="Center">
                         <ComboBoxItem Content="0.5"/>

@@ -40,7 +40,6 @@ namespace Schedio_Application.MVVM.View.UserControls
 
             this.DataContext = entry;
             this.Height = entry.UnitsToAllocate * HOUR_HEIGHT;
-            
 
             this.SetValue(Canvas.TopProperty, HourToTopPositionConverter(entry.StartTime));
 
@@ -51,7 +50,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             DateTime startTime = DateTime.Parse(time);
             TimeSpan tp = startTime.Subtract(DateTime.Parse("12:00 AM"));
 
-            Trace.WriteLine("Time difference: " + tp.TotalMinutes);
+            //Trace.WriteLine("Time difference: " + tp.TotalMinutes);
 
             return tp.TotalMinutes * 2;
         }

@@ -1,7 +1,9 @@
 ﻿using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +13,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
     {
         private Subject _Subject;
         private string? _StartTime;
+        private string? _EndTime;
         private double _UnitsToAllocate;
         private Room? _Room;
         private DayOfWeek? _DayAssigned;
@@ -31,6 +34,23 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             set 
             { 
                 _StartTime = value;
+
+                if (value != null)
+                {
+                    DateTime endTime = DateTime.Parse(value).AddHours(UnitsToAllocate);
+                    DateTime endTime1 = DateTime.Parse(value).AddHours(3);
+                    EndTime = endTime.ToString("hh:mm tt");
+                }
+                OnPropertyChanged();
+            }
+        }
+
+        public string? EndTime
+        {
+            get { return _EndTime; }
+            set
+            {
+                _EndTime = value;
                 OnPropertyChanged();
             }
         }
@@ -68,6 +88,15 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public SubjectEntry(Subject subject)
         {
             _Subject = subject;
+
+            Task.Run(() =>
+            {
+                while (true)
+                {
+                    Trace.WriteLine(UnitsToAllocate);
+                    Thread.Sleep(700);
+                }
+            });
         }
 
         public SubjectEntry(Subject subject, string startTime, double units, Room room)

@@ -77,8 +77,8 @@ namespace Schedio_Application.MVVM.View.Windows
 
             try
             {
-                _entry.StartTime = ti_Start.Time;
                 _entry.UnitsToAllocate = Double.Parse(cbox_SelectedUnits.Text);
+                _entry.StartTime = ti_Start.Time;
                 _entry.DayAssigned = GetChosenDay(cb_Day.Text);
 
                 Room? room = RoomExists(cbox_Rooms.Text);

@@ -70,7 +70,12 @@
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0">
                 <TextBlock Text="{Binding SubjectInfo.Name}" FontSize="15" HorizontalAlignment="Center" FontWeight="DemiBold" Style="{StaticResource tb_Collapse}"/>
                 <TextBlock Text="{Binding SubjectInfo.AssignedPerson.Name}" FontSize="13" FontStyle="Normal" FontWeight="Normal" Foreground="{StaticResource SecondaryShadeColor}" HorizontalAlignment="Center" Style="{StaticResource tb_Collapse}"/>
-                <TextBlock Text="5:00 AM - 6:00 AM" FontSize="13" FontWeight="Normal" HorizontalAlignment="Center" Style="{StaticResource tb_OnHover}"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding StartTime}" FontSize="13" FontWeight="Normal" HorizontalAlignment="Center" Style="{StaticResource tb_OnHover}"/>
+                    <TextBlock Text=" - " FontSize="13" FontWeight="Normal" HorizontalAlignment="Center" Style="{StaticResource tb_OnHover}"/>
+                    <TextBlock Text="{Binding EndTime}" FontSize="13" FontWeight="Normal" HorizontalAlignment="Center" Style="{StaticResource tb_OnHover}"/>
+                </StackPanel>
+               
             </StackPanel>
         </Grid>
     </Border>
