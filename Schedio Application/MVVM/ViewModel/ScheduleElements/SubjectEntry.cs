@@ -89,14 +89,6 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         {
             _Subject = subject;
 
-            Task.Run(() =>
-            {
-                while (true)
-                {
-                    Trace.WriteLine(UnitsToAllocate);
-                    Thread.Sleep(700);
-                }
-            });
         }
 
         public SubjectEntry(Subject subject, string startTime, double units, Room room)
