@@ -494,7 +494,7 @@
                                         </Grid>
                                         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Style="{StaticResource MainScrollViewer}" Margin="15,0,0,0">
                                             <ListView Margin="5" Grid.Row="1" DataContext="{Binding SelectedSection}" ItemsSource="{Binding Subjects}" Name="lv_SelectedSectionSubjects" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource dt_SectionListStatusSimplified}" ItemContainerStyle="{StaticResource lvSubjectViewer}" SelectionMode="Single">
-     
+                                                
                                             </ListView>
                                         </ScrollViewer>
                                         

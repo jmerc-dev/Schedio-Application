@@ -1,4 +1,5 @@
-﻿using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+﻿using Schedio_Application.MVVM.View.Windows;
+using Schedio_Application.MVVM.ViewModel.ScheduleElements;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -37,12 +38,12 @@ namespace Schedio_Application.MVVM.View.UserControls
         {
             InitializeComponent();
             _Entry = entry;
-
+            
             this.DataContext = entry;
             this.Height = entry.UnitsToAllocate * HOUR_HEIGHT;
 
             this.SetValue(Canvas.TopProperty, HourToTopPositionConverter(entry.StartTime));
-
+            this.SetValue(Canvas.LeftProperty, Convert.ToDouble(Workshop.Rooms.IndexOf(entry.RoomAllocated) * 200));
         }
 
         private double HourToTopPositionConverter(string time)

@@ -152,7 +152,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Export_Click(object sender, RoutedEventArgs e)
         {
-            
+            //Trace.WriteLine(Rooms.IndexOf(Rooms[1]));
         }
 
         private void btn_BrowseSectionExplorer_Click(object sender, RoutedEventArgs e)
