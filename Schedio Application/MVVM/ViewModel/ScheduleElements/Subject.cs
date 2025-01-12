@@ -158,8 +158,13 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             SubjectAllocation subjectAllocation = new SubjectAllocation(this);
             if (subjectAllocation.ShowDialog() == true)
             {
-                subjectEntries.Add(subjectAllocation.Entry);
+                if (UnitsRemaining - subjectAllocation.Entry.UnitsToAllocate < 0)
+                {
+                    new MBox("Failed to add. Units to allocate is bigger than the remaining.", MBoxImage.Information).ShowDialog();
+                    return;
+                }
 
+                subjectEntries.Add(subjectAllocation.Entry);
                 UnitsRemaining -= subjectAllocation.Entry.UnitsToAllocate;
 
                 //Trace.WriteLine("Subject Entry Added");
