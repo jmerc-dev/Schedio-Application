@@ -181,8 +181,11 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
             if (new MBox("Are you sure you want to deallocate this entry?", MBoxType.CancelOrOK).ShowDialog() == true)
             {
-                subjectEntries.Remove((SubjectEntry)entry);
-                new MBox("Subject entry deleted", MBoxImage.Information).ShowDialog();
+                SubjectEntry se = (SubjectEntry)entry;
+                se.SubjectInfo.UnitsRemaining += se.UnitsToAllocate;
+                subjectEntries.Remove(se);
+                
+                new MBox("Subject entry deallocated", MBoxImage.Information).ShowDialog();
             }
             
 
