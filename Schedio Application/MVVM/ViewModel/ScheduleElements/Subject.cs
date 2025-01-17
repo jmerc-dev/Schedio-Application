@@ -25,14 +25,13 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private double _UnitsRemaining;
         private bool IsAllocated;
 
-        // TODO
+        
         public Action<SubjectEntry, DataAction> SubjectOperation;
 
         private static ObservableCollection<SubjectEntry> subjectEntries = new ObservableCollection<SubjectEntry>();
-        /*
-         * Inclusions: 
-         */
+
         public RelayCommand AllocSubjectCommand => new RelayCommand(execute => AllocSubject());
+        public RelayCommand DeAllocSubjectCommand => new RelayCommand(execute => DeallocSubject(execute));
 
         // Implement id system per subject
         public int Id
@@ -169,6 +168,24 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
                 //Trace.WriteLine("Subject Entry Added");
             }
+        }
+
+        private void DeallocSubject(object entry)
+        {
+            try
+            {
+                SubjectEntry subjectEntry = (SubjectEntry)entry;
+            } catch (Exception ex)
+            {
+                new MBox("Cannot cast from object to subject entry").ShowDialog();
+            }
+            if (new MBox("Are you sure you want to deallocate this entry?", MBoxType.CancelOrOK).ShowDialog() == true)
+            {
+                subjectEntries.Remove((SubjectEntry)entry);
+                new MBox("Subject entry deleted", MBoxImage.Information).ShowDialog();
+            }
+            
+
         }
     }
 }

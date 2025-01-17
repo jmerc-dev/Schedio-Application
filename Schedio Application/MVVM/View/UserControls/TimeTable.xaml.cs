@@ -112,6 +112,32 @@ namespace Schedio_Application.MVVM.View.UserControls
             return true;
         }
 
+        public bool removeEntry(SubjectEntry entry)
+        {
+            //foreach (SubjectCard sc in entriesContainer.Children)
+            //{
+            //    if (sc.Entry == entry)
+            //    {
+            //        entriesContainer.Children.Remove(sc);
+            //    }
+            //}
+
+            //Trace.WriteLine(entriesContainer.Children[1]);
+            for (int i = 0; i < entriesContainer.Children.Count; i++)
+            {
+                if (entriesContainer.Children[i].GetType() == typeof(SubjectCard))
+                {
+                    SubjectCard sc = (SubjectCard) entriesContainer.Children[i];
+                    if (sc.Entry == entry)
+                    {
+                        entriesContainer.Children.Remove(sc);
+                    }
+                }
+            }
+
+            return true;
+        }
+
         public void addVerticalLine()
         {
             Rectangle rect = new Rectangle();
@@ -168,6 +194,11 @@ namespace Schedio_Application.MVVM.View.UserControls
         {
             Subject.SubjectEntries.Add(entry);
             entriesContainer.Children.Add(new SubjectCard(entry));
+        }
+
+        private void DeleteSubjectCard(SubjectEntry entry)
+        {
+
         }
 
         // Mouse dragging 

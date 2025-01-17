@@ -152,7 +152,10 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Export_Click(object sender, RoutedEventArgs e)
         {
-            //Trace.WriteLine(Rooms.IndexOf(Rooms[1]));
+            foreach (SubjectEntry se in Subject.SubjectEntries)
+            {
+                Trace.WriteLine(se.SubjectInfo.Name + ": " + se.StartTime + " => " + se.EndTime);
+            }
         }
 
         private void btn_BrowseSectionExplorer_Click(object sender, RoutedEventArgs e)
@@ -349,9 +352,21 @@ namespace Schedio_Application.MVVM.View.Windows
                     }
 
                     getDayTable(newEntry.DayAssigned).addEntry(newEntry);
-
-                    Trace.WriteLine("etits" + newEntry.SubjectInfo.Name);
                 }
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+            {   
+                if (e.OldItems.Count > 0)
+                {
+                    foreach (SubjectEntry subEntryOld in e.OldItems)
+                    {
+                        if (!Subject.SubjectEntries.Contains(subEntryOld))
+                        {
+                            getDayTable(subEntryOld.DayAssigned).removeEntry(subEntryOld);
+                        }
+                    }
+                }
+                
             }
         }
 
