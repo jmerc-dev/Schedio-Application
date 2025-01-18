@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Schedio_Application.MVVM.View.Windows;
+using Schedio_Application.MVVM.ViewModel.Commands;
+using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,11 +24,39 @@ namespace Schedio_Application.MVVM.View.UserControls
     /// </summary>
     public partial class SubjectCard : UserControl
     {
+        private const double HOUR_HEIGHT = 120.0;
+
         private double _Height;
-        public SubjectCard()
+        private SubjectEntry _Entry;
+
+        public SubjectEntry Entry
+        {
+            get { return _Entry; }
+            set { _Entry = value; }
+        }
+
+        public SubjectCard(SubjectEntry entry)
         {
             InitializeComponent();
+            _Entry = entry;
+            
+            this.DataContext = entry;
+            this.Height = entry.UnitsToAllocate * HOUR_HEIGHT;
+
+            this.SetValue(Canvas.TopProperty, HourToTopPositionConverter(entry.StartTime));
+            this.SetValue(Canvas.LeftProperty, Convert.ToDouble(Workshop.Rooms.IndexOf(entry.RoomAllocated) * 200));
         }
+
+        private double HourToTopPositionConverter(string time)
+        {
+            DateTime startTime = DateTime.Parse(time);
+            TimeSpan tp = startTime.Subtract(DateTime.Parse("12:00 AM"));
+
+            //Trace.WriteLine("Time difference: " + tp.TotalMinutes);
+
+            return tp.TotalMinutes * 2;
+        }
+
 
         private void UserControl_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {

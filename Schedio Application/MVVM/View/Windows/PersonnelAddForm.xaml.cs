@@ -48,7 +48,6 @@ namespace Schedio_Application.MVVM.View.Windows
 
             this.DataContext = this;
             this.Owner = Application.Current.MainWindow;
-            this.ShowInTaskbar = false;
             tb_Name.Focus();
 
             // Update
@@ -71,6 +70,19 @@ namespace Schedio_Application.MVVM.View.Windows
                 }
             };
             
+        }
+
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                if (e.ClickCount == 2)
+                {
+
+                }
+                else
+                {
+                    this.DragMove();
+                }
         }
 
         private void tb_Name_GotKeyboardFocus(object sender, KeyboardEventArgs e)

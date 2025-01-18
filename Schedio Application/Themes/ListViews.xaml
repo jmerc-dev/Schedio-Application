@@ -273,10 +273,13 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock Margin="15,0,0,0" TextTrimming="CharacterEllipsis" Grid.Column="0" FontSize="14" VerticalAlignment="Center" Text="{Binding Name}" MaxWidth="200"  TextWrapping="Wrap" HorizontalAlignment="Left"/>
-            <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/close-red.png" Margin="3" Grid.Column="1"/>
+            <Image Name="img_Status" Source="pack://application:,,,/Schedio Application;component/Resources/Images/close-red.png" Margin="3" Grid.Column="1"/>
         </Grid>
         <DataTemplate.Triggers>
             <!-- Change image to check-green if all subjects are fully allocated -->
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=DataContext.UnitsRemaining}" Value="0">
+                <Setter TargetName="img_Status" Property="Source" Value="pack://application:,,,/Schedio Application;component/Resources/Images/check-green.png"/>
+            </DataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>
 

@@ -17,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Schedio_Application.MVVM.View.Windows
 {
@@ -24,7 +25,14 @@ namespace Schedio_Application.MVVM.View.Windows
     /// Interaction logic for SectionAddForm.xaml
     /// </summary>
     /// 
-    //TODO: Redesign & fix binding  
+    //TODO: Empty/existing name should not be allowed when creating a new section
+
+    public enum State
+    {
+        New,
+        Existing
+    }
+
     public partial class SectionAddForm : Window, INotifyPropertyChanged
     {
         public ClassSection _Section;
@@ -32,17 +40,23 @@ namespace Schedio_Application.MVVM.View.Windows
         private ObservableCollection<ClassSection> _Sections;
         private ObservableCollection<RoomType> _RoomTypes;
         private string _SectionName;
+        private State _state;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        // TODO: Adding subjects
-        public string SectionName
+
+        public ClassSection MySection
         {
-            get { return _SectionName; }
+            get { return _Section; }
+        }
+
+        public State FormState
+        {
+            get { return _state; }
             set 
             { 
-                _SectionName = value;
-                OnPropertyChanged();
+                _state = value; 
+                OnPropertyChanged(); 
             }
         }
 
@@ -54,36 +68,67 @@ namespace Schedio_Application.MVVM.View.Windows
             }
         }
 
-        public SectionAddForm(ClassSection section, ObservableCollection<Person> people, ObservableCollection<RoomType> roomTypes, ObservableCollection<ClassSection> sections)
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                if (e.ClickCount == 2)
+                {
+
+                }
+                else
+                {
+                    this.DragMove();
+                }
+        }
+
+        public SectionAddForm(ClassSection section, ObservableCollection<Person> people, ObservableCollection<RoomType> roomTypes, ObservableCollection<ClassSection> sections, State state)
         {
             InitializeComponent();
             _Sections = sections;
             _Section = section;
+            grid_NameContainer.DataContext = section;
+
             this.Owner = Application.Current.MainWindow;
-            this.ShowInTaskbar = false;
 
             _People = people;
-            _Section = section;
             _RoomTypes = roomTypes;
-            tb_Name.Focus();
+            FormState = state;
 
             Loaded += (sender, e) =>
             {
-                if (_Section.Name != null)
-                {
-                    SectionName = _Section.Name;
 
-                    foreach (Subject sub in _Section.Subjects)
-                    {
-                        sp_SubjectList.Children.Add(new SubjectItem(new Subject(sub, _Section), _People, _RoomTypes));
-                    }
+                switch (state)
+                {
+                    case State.New:
+                        break;
+                    case State.Existing:
+                        foreach (Subject sub in _Section.Subjects)
+                        {
+                            sp_SubjectList.Children.Add(new SubjectItem(sub, _People, _RoomTypes));
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+
+                if (MySection.Name == null)
+                {
+                    tb_Name.Focus();
+                }
+                else
+                {
+                    tb_Name.IsEnabled = false;
+                    Keyboard.ClearFocus();
                 }
             };
         }
 
         private void btn_AddSubject_Click(object sender, RoutedEventArgs e)
-        {   
-            sp_SubjectList.Children.Add(new SubjectItem(new Subject(_Section), _People, _RoomTypes)) ;
+        {
+            Subject newSubject = new Subject(MySection);
+            MySection.Subjects.Add(newSubject);
+            sp_SubjectList.Children.Add(new SubjectItem(newSubject, _People, _RoomTypes));
         }
 
         private bool IsNameExist(string name)
@@ -100,18 +145,16 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Save_Click(object sender, RoutedEventArgs e)   
         {
-            ObservableCollection<Subject> newSubjects = new ObservableCollection<Subject>();
+            
             // Validations
-            if (_Section.Name != null && !_Section.Name.Equals(SectionName))
+            if (IsNameExist(tb_Name.Text) && !tb_Name.Text.Equals(MySection.Name))
             {
-                if (IsNameExist(SectionName))
-                {
-                    new MBox("Name already exist.").ShowDialog();
-                    return;
-                }
+                new MBox("Name already exist.").ShowDialog();
+                MySection.Name = string.Empty;
+                return;
             }
 
-            if (SectionName.Equals(String.Empty))
+            if (MySection.Name == null || MySection.Name.Equals(String.Empty))
             {
                 new MBox("Name cannot be empty.").ShowDialog();
                 return;
@@ -123,7 +166,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
                 if (subitem.ValidateEntries())
                 {
-                    newSubjects.Add(subitem.Subject);
+                    _Section.Subjects.Add(subitem.Subject);
                 }
                 else
                 {
@@ -131,8 +174,61 @@ namespace Schedio_Application.MVVM.View.Windows
                 }
             }
 
-            _Section.Subjects = newSubjects;
-            _Section.Name = SectionName;
+            DialogResult = true;
+        }
+
+        private void btn_EditSectionName_Click(object sender, RoutedEventArgs e)
+        {
+            tb_Name.IsEnabled = true;
+            tb_Name.Focus();
+        }
+
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Keyboard.ClearFocus();
+            tb_Name.IsEnabled = false;
+        }
+
+        private void tb_Name_LostFocus(object sender, RoutedEventArgs e)
+        {
+            tb_Name.IsEnabled = false;
+        }
+
+        private void tb_Name_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Keyboard.ClearFocus();
+                tb_Name.IsEnabled = false;
+            }
+        }
+
+        private void tb_Name_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if (IsNameExist(tb_Name.Text) && !tb_Name.Text.Equals(MySection.Name))
+            {
+                new MBox("Name already exist.").ShowDialog();
+                MySection.Name = MySection.Name;
+            }
+        }
+
+        private void btn_Close_Click(object sender, RoutedEventArgs e)
+        {
+            if (MySection.Name.Equals(String.Empty))
+            {
+                new MBox("Name cannot be empty.").ShowDialog();
+                return;
+            }
+
+            foreach (SubjectItem subitem in sp_SubjectList.Children)
+            {
+
+                if (!subitem.ValidateEntries())
+                {
+                    return;
+                }
+            }
+
             DialogResult = true;
         }
     }

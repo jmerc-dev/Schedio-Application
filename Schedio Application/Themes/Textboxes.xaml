@@ -2,14 +2,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style TargetType="TextBox" x:Key="TitleTextBox">
-        <Setter Property="FontWeight" Value="Light"/>
+        <Setter Property="FontSize" Value="15"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="MinWidth" Value="100"/>
         <Setter Property="TextAlignment" Value="Left"/>
-        <Setter Property="BorderThickness" Value="0,0,0,2"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="5"/>
+        <Setter Property="IsEnabled" Value="True"/>
 
         <Style.Triggers>
 
@@ -22,14 +21,16 @@
                 </BeginStoryboard>
             </EventTrigger>-->
             <Trigger Property="IsKeyboardFocused" Value="True">
-                <Setter Property="BorderThickness" Value="0,0,0,2"/>
-                <Setter Property="BorderBrush" Value="{StaticResource SecondaryColor}"/>
                 <Setter Property="Cursor" Value="IBeam"/>
             </Trigger>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="BorderThickness" Value="0,0,0,2"/>
+
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="BorderBrush" Value="Transparent"/>
+            </Trigger>
+
+            <Trigger Property="IsEnabled" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
                 <Setter Property="BorderBrush" Value="{StaticResource SecondaryShadeColor}"/>
-                <Setter Property="Cursor" Value="Hand"/>
             </Trigger>
 
         </Style.Triggers>

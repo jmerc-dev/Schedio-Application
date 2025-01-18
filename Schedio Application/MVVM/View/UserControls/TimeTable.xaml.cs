@@ -18,18 +18,30 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Schedio_Application.MVVM.View.UserControls
 {
     /// <summary>
     /// Interaction logic for TimeTable.xaml
     /// </summary>
+    /// 
+
+    public enum DataAction
+    {
+        Add,
+        Delete,
+        Update
+    }
+
     public partial class TimeTable : UserControl
     {
         private const int ROOMHEADER_WIDTH = 200;
         private const int ROOMHEADER_HORIZONTAL_OFFSET = 5;
         private const int SUBJECTCARD_WIDTH = 200;
         private const double HOUR_HEIGHT = 120;
+
+        private long entryIndex = 0;
 
         public static readonly DependencyProperty _Rooms = DependencyProperty.Register(
             "Rooms",
@@ -58,9 +70,8 @@ namespace Schedio_Application.MVVM.View.UserControls
             //Rooms.Add(new Room("102", new RoomType("Lab")));
             //Rooms.Add(new Room("103", new RoomType("Classic")));
             //Rooms.Add(new Room("104", new RoomType("Lab")));
-            PopulateTimeslot();
-
             
+            PopulateTimeslot();
 
             Loaded += (sender, e) =>
             {
@@ -72,7 +83,59 @@ namespace Schedio_Application.MVVM.View.UserControls
 
                 SetControlWidth(fullWidth);
                 SetControlHeight(fullHeight);
+
+                
             };
+        }
+
+        private void Entries_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) 
+        { 
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                if (e.NewItems != null && e.NewItems.Count == 1)
+                {
+                    // add control
+                    if (e.NewItems[0] != null)
+                    {
+                        SubjectEntry newEntry = (SubjectEntry)e.NewItems[0];
+
+                        SubjectCard newSubCard = new SubjectCard(newEntry);
+                        entriesContainer.Children.Add(newSubCard);
+                    }
+                }
+            }
+        }
+
+        public bool addEntry(SubjectEntry entry)
+        {
+            entriesContainer.Children.Add(new SubjectCard(entry));
+            return true;
+        }
+
+        public bool removeEntry(SubjectEntry entry)
+        {
+            //foreach (SubjectCard sc in entriesContainer.Children)
+            //{
+            //    if (sc.Entry == entry)
+            //    {
+            //        entriesContainer.Children.Remove(sc);
+            //    }
+            //}
+
+            //Trace.WriteLine(entriesContainer.Children[1]);
+            for (int i = 0; i < entriesContainer.Children.Count; i++)
+            {
+                if (entriesContainer.Children[i].GetType() == typeof(SubjectCard))
+                {
+                    SubjectCard sc = (SubjectCard) entriesContainer.Children[i];
+                    if (sc.Entry == entry)
+                    {
+                        entriesContainer.Children.Remove(sc);
+                    }
+                }
+            }
+
+            return true;
         }
 
         public void addVerticalLine()
@@ -125,6 +188,16 @@ namespace Schedio_Application.MVVM.View.UserControls
         private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             
+        }
+
+        private void AddSubjectCard(SubjectEntry entry) 
+        {
+            Subject.SubjectEntries.Add(entry);
+            entriesContainer.Children.Add(new SubjectCard(entry));
+        }
+
+        private void DeleteSubjectCard(SubjectEntry entry)
+        {
 
         }
 

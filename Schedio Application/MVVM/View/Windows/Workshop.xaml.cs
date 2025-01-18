@@ -70,6 +70,7 @@ namespace Schedio_Application.MVVM.View.Windows
             lv_SectionList.ItemsSource = this.Sections;
 
             Rooms.CollectionChanged += new NotifyCollectionChangedEventHandler(room_CollectionChanged);
+            Subject.SubjectEntries.CollectionChanged += new NotifyCollectionChangedEventHandler(SubjectEntries_CollectionChanged);
 
             Loaded += (sender, e) =>
             {
@@ -97,8 +98,8 @@ namespace Schedio_Application.MVVM.View.Windows
             RoomTypes.Add(new RoomType("Court"));
 
             Rooms.Add(new Room("101", RoomTypes[0]));
-            Rooms.Add(new Room("101", RoomTypes[1]));
-            Rooms.Add(new Room("101", RoomTypes[2]));
+            Rooms.Add(new Room("102", RoomTypes[1]));
+            Rooms.Add(new Room("103", RoomTypes[2]));
 
             Person person = new Person
             {
@@ -151,7 +152,10 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Export_Click(object sender, RoutedEventArgs e)
         {
-            
+            foreach (SubjectEntry se in Subject.SubjectEntries)
+            {
+                Trace.WriteLine(se.SubjectInfo.Name + ": " + se.StartTime + " => " + se.EndTime);
+            }
         }
 
         private void btn_BrowseSectionExplorer_Click(object sender, RoutedEventArgs e)
@@ -308,11 +312,11 @@ namespace Schedio_Application.MVVM.View.Windows
                 return;
             }
 
-            SectionAddForm form = new SectionAddForm(new ClassSection(), Personnel, RoomTypes, Sections);
+            SectionAddForm form = new SectionAddForm(new ClassSection(), Personnel, RoomTypes, Sections, State.New);
 
             if (form.ShowDialog() == true)
             {
-                this.Sections.Add(form._Section);
+                this.Sections.Add(form.MySection);
             }
         }
 
@@ -328,10 +332,67 @@ namespace Schedio_Application.MVVM.View.Windows
                         return;
                     }
                 }
-
                 SelectedSection = null;
             }
         }
+
+        // Subject entries related function
+        private void SubjectEntries_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                if (e.NewItems != null && e.NewItems.Count == 1)
+                {
+                    SubjectEntry newEntry = (SubjectEntry) e.NewItems[0];
+
+                    if (newEntry.DayAssigned == null)
+                    {
+                        new MBox("No day assigned", MBoxImage.Warning).ShowDialog();
+                        return;
+                    }
+
+                    getDayTable(newEntry.DayAssigned).addEntry(newEntry);
+                }
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+            {   
+                if (e.OldItems.Count > 0)
+                {
+                    foreach (SubjectEntry subEntryOld in e.OldItems)
+                    {
+                        if (!Subject.SubjectEntries.Contains(subEntryOld))
+                        {
+                            getDayTable(subEntryOld.DayAssigned).removeEntry(subEntryOld);
+                        }
+                    }
+                }
+                
+            }
+        }
+
+        private TimeTable? getDayTable(DayOfWeek? day)
+        {
+            switch (day)
+            {
+                case DayOfWeek.Sunday:
+                    return tt_Sunday;
+                case DayOfWeek.Monday:
+                    return tt_Monday;
+                case DayOfWeek.Tuesday:
+                    return tt_Tuesday;
+                case DayOfWeek.Wednesday:
+                    return tt_Wednesday;
+                case DayOfWeek.Thursday:
+                    return tt_Thursday;
+                case DayOfWeek.Friday:
+                    return tt_Friday;
+                case DayOfWeek.Saturday:
+                    return tt_Saturday;
+                default: return null;
+                    
+            }
+        }
+
 
         // Search function
         private void TextBox_Search_TextChanged(object sender, TextChangedEventArgs e)
@@ -386,6 +447,11 @@ namespace Schedio_Application.MVVM.View.Windows
                 {
                     foreach (ClassSection section in Sections)
                     {
+                        if (section.Name == null)
+                        {
+                            new MBox("A section has a null name").ShowDialog();
+                            return;
+                        }
                         if (section.Name.StartsWith(searchBox.Text, StringComparison.CurrentCultureIgnoreCase))
                         {
                             TempSections.Add(section);
@@ -581,7 +647,7 @@ namespace Schedio_Application.MVVM.View.Windows
                     {
                         // Update
                         ClassSection section = (ClassSection)lv_SectionList.SelectedItem;
-                        SectionAddForm updateForm = new SectionAddForm(section, Personnel, RoomTypes, Sections);
+                        SectionAddForm updateForm = new SectionAddForm(section, Personnel, RoomTypes, Sections, State.Existing);
                         if (updateForm.ShowDialog() == true)
                         {
 

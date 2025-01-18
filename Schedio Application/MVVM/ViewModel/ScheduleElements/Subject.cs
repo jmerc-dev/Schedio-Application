@@ -9,11 +9,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
     public class Subject : PropertyNotification
     {
+        private int id;
         private string _Name;
         private Person _AssignedPerson;
         private RoomType _RoomType;
@@ -23,8 +25,19 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private double _UnitsRemaining;
         private bool IsAllocated;
 
-        private ObservableCollection<Room> _Rooms;
+        
+        public Action<SubjectEntry, DataAction> SubjectOperation;
+
+        private static ObservableCollection<SubjectEntry> subjectEntries = new ObservableCollection<SubjectEntry>();
+
         public RelayCommand AllocSubjectCommand => new RelayCommand(execute => AllocSubject());
+        public RelayCommand DeAllocSubjectCommand => new RelayCommand(execute => DeallocSubject(execute));
+
+        // Implement id system per subject
+        public int Id
+        {
+            get { return id; }
+        }
 
         public string Name 
         { 
@@ -61,7 +74,33 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             get { return _Units; }
             set 
             { 
-                _Units = value;
+                if (_Units > 0)
+                {
+                    double allocatedUnits = _Units - UnitsRemaining;
+                    _Units = value;
+                    UnitsRemaining = _UnitsRemaining + allocatedUnits;
+                }
+                else
+                {
+                    _Units = value;
+                    UnitsRemaining = value;
+                }
+
+                if (this.OwnerSection != null)
+                {
+                    this.OwnerSection.TotalUnits = this.OwnerSection.GetTotalUnits();
+                }
+                
+                OnPropertyChanged();
+            }
+        }
+
+        public double UnitsRemaining
+        {
+            get { return _UnitsRemaining; }
+            set
+            {
+                _UnitsRemaining = value;
                 OnPropertyChanged();
             }
         }
@@ -74,6 +113,11 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 _ClassSection = value;
                 OnPropertyChanged();
             }
+        }
+
+        public static ObservableCollection<SubjectEntry> SubjectEntries
+        {
+            get { return subjectEntries; }
         }
 
         public Subject(string Name, Person assignedPerson, RoomType roomType, int units)
@@ -106,17 +150,45 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
 
         // Entries CRUD
+
+        // Use delegate to add subjectCards
         private void AllocSubject()
         {
             SubjectAllocation subjectAllocation = new SubjectAllocation(this);
             if (subjectAllocation.ShowDialog() == true)
             {
-                Trace.WriteLine(subjectAllocation.Entry.SubjectInfo.Name);
-                Trace.WriteLine(subjectAllocation.Entry.StartTime);
-                Trace.WriteLine(subjectAllocation.Entry.RoomAllocated.Name);
-                Trace.WriteLine(subjectAllocation.Entry.UnitsToAllocate);
-                Trace.WriteLine(subjectAllocation.Entry.DayAssigned.ToString());
+                if (UnitsRemaining - subjectAllocation.Entry.UnitsToAllocate < 0)
+                {
+                    new MBox("Failed to add. Units to allocate is bigger than the remaining.", MBoxImage.Information).ShowDialog();
+                    return;
+                }
+
+                subjectEntries.Add(subjectAllocation.Entry);
+                UnitsRemaining -= subjectAllocation.Entry.UnitsToAllocate;
+
+                //Trace.WriteLine("Subject Entry Added");
             }
+        }
+
+        private void DeallocSubject(object entry)
+        {
+            try
+            {
+                SubjectEntry subjectEntry = (SubjectEntry)entry;
+            } catch (Exception ex)
+            {
+                new MBox("Cannot cast from object to subject entry").ShowDialog();
+            }
+            if (new MBox("Are you sure you want to deallocate this entry?", MBoxType.CancelOrOK).ShowDialog() == true)
+            {
+                SubjectEntry se = (SubjectEntry)entry;
+                se.SubjectInfo.UnitsRemaining += se.UnitsToAllocate;
+                subjectEntries.Remove(se);
+                
+                new MBox("Subject entry deallocated", MBoxImage.Information).ShowDialog();
+            }
+            
+
         }
     }
 }

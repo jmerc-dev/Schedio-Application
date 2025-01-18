@@ -90,7 +90,7 @@
                                 <TabItem.Header>
                                     <StackPanel Orientation="Horizontal" Height="50">
                                         <Image Name="img_Personnel" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/personnel.png" Stretch="Uniform" Width="40" Margin="7"/>
-                                        <TextBlock VerticalAlignment="Center">Personnel</TextBlock>
+                                        <TextBlock VerticalAlignment="Center" Style="{StaticResource NormalText}">Personnel</TextBlock>
                                     </StackPanel>
                                 </TabItem.Header>
                                 <TabItem.Content>
@@ -139,7 +139,7 @@
                                 <TabItem.Header>
                                     <StackPanel Orientation="Horizontal" Height="50">
                                         <Image Name="img_Rooms" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/rooms.png" Stretch="Uniform" Width="40" Margin="7"/>
-                                        <TextBlock VerticalAlignment="Center">Rooms</TextBlock>
+                                        <TextBlock VerticalAlignment="Center" Style="{StaticResource NormalText}">Rooms</TextBlock>
                                     </StackPanel>
                                 </TabItem.Header>
                                 <TabItem.Content>
@@ -191,7 +191,7 @@
                                 <TabItem.Header>
                                     <StackPanel Orientation="Horizontal" Height="50">
                                         <Image Name="img_Sections" VerticalAlignment="Center" Source="pack://application:,,,/Schedio Application;component/Resources/Images/sections.png" Stretch="Uniform" Width="40" Margin="7"/>
-                                        <TextBlock VerticalAlignment="Center">Sections</TextBlock>
+                                        <TextBlock VerticalAlignment="Center" Style="{StaticResource NormalText}">Sections</TextBlock>
                                     </StackPanel>
                                 </TabItem.Header>
                                 <TabItem.Content>
@@ -382,37 +382,37 @@
                             <TabControl Name="tabCtrl_DayTimeTableContainer" TabStripPlacement="Bottom" BorderThickness="0,1,0,0" BorderBrush="{StaticResource SecondaryShadeColor}" Grid.ColumnSpan="2">
                                 <TabItem Header="Monday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
+                                        <userControls:TimeTable x:Name="tt_Monday" HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Tuesday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
+                                        <userControls:TimeTable x:Name="tt_Tuesday" HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Wednesday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
+                                        <userControls:TimeTable x:Name="tt_Wednesday" HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Thursday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
+                                        <userControls:TimeTable x:Name="tt_Thursday" HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Friday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
+                                        <userControls:TimeTable x:Name="tt_Friday" HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Saturday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
+                                        <userControls:TimeTable x:Name="tt_Saturday" HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                                 <TabItem Header="Sunday" Style="{StaticResource SecondaryTabItem}">
                                     <TabItem.Content>
-                                        <userControls:TimeTable HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
+                                        <userControls:TimeTable x:Name="tt_Sunday" HorizontalAlignment="Stretch" Rooms="{Binding Rooms}"/>
                                     </TabItem.Content>
                                 </TabItem>
                             </TabControl>
@@ -494,7 +494,7 @@
                                         </Grid>
                                         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Style="{StaticResource MainScrollViewer}" Margin="15,0,0,0">
                                             <ListView Margin="5" Grid.Row="1" DataContext="{Binding SelectedSection}" ItemsSource="{Binding Subjects}" Name="lv_SelectedSectionSubjects" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource dt_SectionListStatusSimplified}" ItemContainerStyle="{StaticResource lvSubjectViewer}" SelectionMode="Single">
-     
+                                                
                                             </ListView>
                                         </ScrollViewer>
                                         
