@@ -17,7 +17,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private ObservableCollection<Subject> _Subjects;
         private int _TotalSubjects;
         private double _TotalUnits;
-        private int _UnallocatedSubjects;
+        private int _AllocatedSubjects;
         private double _UnallocatedUnits;
         
         private static int idCounter;
@@ -48,6 +48,26 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             set
             {
                 _TotalUnits = value;
+                OnPropertyChanged();
+            }
+        }
+        
+        public int AllocatedSubjects
+        {
+            get { return _AllocatedSubjects; }
+            set
+            {
+                _AllocatedSubjects = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public double UnallocatedUnits
+        {
+            get { return _UnallocatedUnits; }
+            set
+            {
+                _UnallocatedUnits = value;
                 OnPropertyChanged();
             }
         }

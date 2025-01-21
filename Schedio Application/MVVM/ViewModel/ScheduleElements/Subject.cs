@@ -23,7 +23,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private ClassSection _ClassSection;
 
         private double _UnitsRemaining;
-        private bool IsAllocated;
+        private bool _IsAllocated;
 
         
         public Action<SubjectEntry, DataAction> SubjectOperation;
@@ -57,6 +57,12 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 _AssignedPerson = value;
                 OnPropertyChanged();
             }
+        }
+
+        public bool IsAllocated
+        {
+            get { return _IsAllocated; }
+            set {  _IsAllocated = value; OnPropertyChanged(); }
         }
 
         public RoomType RoomType
@@ -101,6 +107,20 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             set
             {
                 _UnitsRemaining = value;
+                //STOPPED HERE
+                if (_UnitsRemaining == 0)
+                {
+                    OwnerSection.AllocatedSubjects += 1;
+                    IsAllocated = true;
+                }
+                else
+                {
+                    if (IsAllocated)
+                    {
+                        OwnerSection.AllocatedSubjects -= 1;
+                        IsAllocated = false;
+                    }
+                }
                 OnPropertyChanged();
             }
         }
