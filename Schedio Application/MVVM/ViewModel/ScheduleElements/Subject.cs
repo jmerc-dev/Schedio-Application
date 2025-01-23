@@ -175,6 +175,13 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private void AllocSubject()
         {
             SubjectAllocation subjectAllocation = new SubjectAllocation(this);
+
+            if (this.IsAllocated)
+            {
+                new MBox("This subject has been fully allocated.", MBoxImage.Information).ShowDialog();
+                return;
+            }
+
             if (subjectAllocation.ShowDialog() == true)
             {
                 if (UnitsRemaining - subjectAllocation.Entry.UnitsToAllocate < 0)
