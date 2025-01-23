@@ -164,11 +164,7 @@ namespace Schedio_Application.MVVM.View.Windows
             foreach (SubjectItem subitem in sp_SubjectList.Children)
             {
 
-                if (subitem.ValidateEntries())
-                {
-                    _Section.Subjects.Add(subitem.Subject);
-                }
-                else
+                if (!subitem.ValidateEntries())
                 {
                     return;
                 }

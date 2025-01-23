@@ -527,6 +527,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
             if (itemType == typeof(Person))
             {
+
                 foreach (Person item in lv.SelectedItems)
                 {
                     objectsToBeRemoved.Add(item.Name);
@@ -543,7 +544,16 @@ namespace Schedio_Application.MVVM.View.Windows
             {
                 foreach (ClassSection item in lv.SelectedItems)
                 {
-                    objectsToBeRemoved.Add(item.Name);
+                    if (Subject.IsDataBeingUsed(ScheduleElement.ClassSection, item))
+                    {
+                        new MBox($"{item.Name} cannot be deleted because it is being used in the workshop.").ShowDialog();
+                        return false;
+                    }
+                    else
+                    {
+                        objectsToBeRemoved.Add(item.Name);
+                    }
+                    
                 }
             }
 

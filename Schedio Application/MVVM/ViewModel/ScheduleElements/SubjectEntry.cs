@@ -9,6 +9,15 @@ using System.Threading.Tasks;
 
 namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
+    public enum ScheduleElement
+    {
+        Person,
+        Room,
+        RoomType,
+        Subject,
+        Day,
+        ClassSection
+    }
     public class SubjectEntry : PropertyNotification
     {
         private Subject _Subject;

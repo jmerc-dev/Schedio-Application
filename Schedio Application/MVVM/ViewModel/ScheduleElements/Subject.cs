@@ -225,7 +225,35 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 new MBox("Subject entry deallocated", MBoxImage.Information).ShowDialog();
             }
             
+        }
 
+        // For section and subjects only
+        public static bool IsDataBeingUsed(ScheduleElement element, object obj)
+        {
+            switch (element)
+            {
+                case ScheduleElement.ClassSection:
+                    ClassSection cs = (ClassSection)obj;
+                    foreach (SubjectEntry se in subjectEntries)
+                    {
+                        if (se.SubjectInfo.OwnerSection == cs)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                case ScheduleElement.Subject:
+                    Subject s = (Subject)obj;
+                    foreach (SubjectEntry se in subjectEntries)
+                    {
+                        if (se.SubjectInfo == s)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                default: return false;
+            }
         }
     }
 }

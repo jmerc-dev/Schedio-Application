@@ -233,5 +233,7 @@ namespace Schedio_Application.MVVM.View.UserControls
         {
             sv_Canvas.ScrollToVerticalOffset(sv_Canvas.VerticalOffset + -e.Delta);
         }
+
+        
     }
 }
