@@ -106,8 +106,18 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             get { return _UnitsRemaining; }
             set
             {
+
+                // Updates Allocated Units Indicator
+                if (this.OwnerSection != null)
+                {
+                    this.OwnerSection.AllocatedUnits -= _Units - _UnitsRemaining;
+                    this.OwnerSection.AllocatedUnits += _Units - value;
+                }
+                
+
                 _UnitsRemaining = value;
-                //STOPPED HERE
+
+                // Updates Allocated Subjects Indicator
                 if (_UnitsRemaining == 0)
                 {
                     OwnerSection.AllocatedSubjects += 1;

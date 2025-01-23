@@ -254,7 +254,7 @@
                 <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/copy.png" Margin="3"/>
             </Button>
             <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Center">
-                <TextBlock Text="0" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding AllocatedUnits}" VerticalAlignment="Center"/>
                 <TextBlock Text="/" VerticalAlignment="Center"/>
                 <TextBlock Text="{Binding TotalUnits}" VerticalAlignment="Center"/>
             </StackPanel>

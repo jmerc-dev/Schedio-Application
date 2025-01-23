@@ -18,7 +18,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private int _TotalSubjects;
         private double _TotalUnits;
         private int _AllocatedSubjects;
-        private double _UnallocatedUnits;
+        private double _AllocatedUnits;
         
         private static int idCounter;
         
@@ -62,12 +62,12 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
-        public double UnallocatedUnits
+        public double AllocatedUnits
         {
-            get { return _UnallocatedUnits; }
+            get { return _AllocatedUnits; }
             set
             {
-                _UnallocatedUnits = value;
+                _AllocatedUnits = value;
                 OnPropertyChanged();
             }
         }
