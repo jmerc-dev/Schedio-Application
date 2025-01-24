@@ -80,23 +80,30 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             get { return _Units; }
             set 
             { 
-                if (_Units > 0)
+
+                if (value > _Units)
                 {
-                    double allocatedUnits = _Units - UnitsRemaining;
-                    _Units = value;
-                    UnitsRemaining = _UnitsRemaining + allocatedUnits;
+                    UnitsRemaining += 1;
                 }
                 else
                 {
-                    _Units = value;
-                    UnitsRemaining = value;
+                    if (UnitsRemaining - 1 < 0)
+                    {
+                        new MBox($"You cannot decrease the units because it is allocated in the workshop.").ShowDialog();
+                        return;
+                    }
+                    UnitsRemaining -= 1;
                 }
+                _Units = value;
+
 
                 if (this.OwnerSection != null)
                 {
                     this.OwnerSection.TotalUnits = this.OwnerSection.GetTotalUnits();
                 }
-                
+
+                //Trace.WriteLine($"{this.Name}: Units - {this.Units}, RemUnits - {this.UnitsRemaining}");
+
                 OnPropertyChanged();
             }
         }
