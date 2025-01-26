@@ -21,6 +21,8 @@
                  MinWidth="50"
                  MaxLength="4"
                  Name="tb_Num"
+                 TextChanged="tb_Num_TextChanged"
+                 KeyDown="tb_Num_KeyDown"
                  Text="{Binding Number, UpdateSourceTrigger=LostFocus}"
                  LostFocus="tb_Num_LostFocus"/>
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schedio_Application.MVVM.View.Windows;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -68,30 +69,16 @@ namespace Schedio_Application.MVVM.View.UserControls
 
         private void tb_Num_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Validation that restricts input only for digits
-            if (tb_Num.Text.Equals(String.Empty))
+            string pattern = @"^[0-9]{0,2}([.,][5])?$";
+            Regex regex = new Regex(pattern);
+
+            if (regex.IsMatch(tb_Num.Text))
             {
-                return;
-            }
-            else if (Regex.Match(tb_Num.Text, @"^\d{1}$").Success)
-            {
-                oldValue = Convert.ToInt32(tb_Num.Text);  // "1"
-            }
-            else if (Regex.Match(tb_Num.Text, @"^\d{2}$").Success)
-            {
-                oldValue = Convert.ToInt32(tb_Num.Text);
+                Trace.WriteLine($"Matches: {tb_Num.Text}");
             }
             else
             {
-                if (tb_Num.Text.Length == 1)
-                {
-                    tb_Num.Text = "";
-                }
-                else
-                {
-                    Number = oldValue;
-                    tb_Num.CaretIndex = 1;
-                }
+                Trace.WriteLine($"Does not match");
             }
         }
 
@@ -102,13 +89,12 @@ namespace Schedio_Application.MVVM.View.UserControls
                 Number = 0;
             }
 
-            try
-            {
-                Trace.WriteLine(tb_Num.Text);
-            } catch (Exception ex)
-            {
+            
+        }
 
-            }
+        private void tb_Num_KeyDown(object sender, KeyEventArgs e)
+        {
+            
         }
     }
 }
