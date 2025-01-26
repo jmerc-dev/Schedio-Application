@@ -25,17 +25,17 @@ namespace Schedio_Application.MVVM.View.UserControls
     public partial class Counter : UserControl, INotifyPropertyChanged
     { 
 
-        private int oldValue = 0;
+        private double oldValue = 0;
 
 
         private static readonly DependencyProperty _Number =
-            DependencyProperty.Register("Number", typeof(int), typeof(Counter), new PropertyMetadata(null));
+            DependencyProperty.Register("Number", typeof(double), typeof(Counter), new PropertyMetadata(null));
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public int Number
+        public double Number
         {
-            get { return (int)GetValue(_Number); }
+            get { return (double)GetValue(_Number); }
             set 
             {
                 SetValue(_Number, value);
@@ -100,6 +100,14 @@ namespace Schedio_Application.MVVM.View.UserControls
             if (tb_Num.Text.Equals(String.Empty))
             {
                 Number = 0;
+            }
+
+            try
+            {
+                Trace.WriteLine(tb_Num.Text);
+            } catch (Exception ex)
+            {
+
             }
         }
     }

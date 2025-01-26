@@ -81,18 +81,26 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             set 
             { 
 
+                if (_Units == 0)
+                {
+                    UnitsRemaining = value;
+                    _Units = value;
+                    return;
+                }
+                
                 if (value > _Units)
                 {
-                    UnitsRemaining += 1;
+                    UnitsRemaining += value - _Units;
                 }
                 else
                 {
-                    if (UnitsRemaining - 1 < 0)
+                    if (value < _Units - UnitsRemaining)
                     {
-                        new MBox($"You cannot decrease the units because it is allocated in the workshop.").ShowDialog();
+                        new MBox($"You cannot decrease the units because it is allocated in the workshop or it will result in negative value.").ShowDialog();
                         return;
                     }
-                    UnitsRemaining -= 1;
+
+                    UnitsRemaining -= _Units - value;
                 }
                 _Units = value;
 
@@ -102,7 +110,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                     this.OwnerSection.TotalUnits = this.OwnerSection.GetTotalUnits();
                 }
 
-                //Trace.WriteLine($"{this.Name}: Units - {this.Units}, RemUnits - {this.UnitsRemaining}");
+                Trace.WriteLine($"{this.Name}: Units - {this.Units}, RemUnits - {this.UnitsRemaining}");
 
                 OnPropertyChanged();
             }
