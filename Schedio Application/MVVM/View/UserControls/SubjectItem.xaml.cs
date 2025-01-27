@@ -127,6 +127,14 @@ namespace Schedio_Application.MVVM.View.UserControls
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             // Delete
+            foreach (SubjectEntry si in Subject.SubjectEntries)
+            {
+                if (si.SubjectInfo == Subject)
+                {
+                    new MBox("This subject has been allocated in the workshop.").ShowDialog();
+                    return;
+                }
+            }
             Subject.OwnerSection.Subjects.Remove(Subject);
             ((StackPanel)this.Parent).Children.Remove(this);
         }
