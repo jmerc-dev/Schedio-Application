@@ -8,7 +8,7 @@
              d:DesignHeight="50" d:DesignWidth="100"
              DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
-    <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}">
+    <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}" Name="grid_Main">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
