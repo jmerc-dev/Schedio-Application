@@ -534,7 +534,7 @@ namespace Schedio_Application.MVVM.View.Windows
                 }
             }
             else if (itemType == typeof(Room))
-            {
+            { 
                 foreach (Room item in lv.SelectedItems)
                 {
                     objectsToBeRemoved.Add(item.Name);
@@ -545,7 +545,7 @@ namespace Schedio_Application.MVVM.View.Windows
                 foreach (ClassSection item in lv.SelectedItems)
                 {
                     if (Subject.IsDataBeingUsed(ScheduleElement.ClassSection, item))
-                    {
+                    { 
                         new MBox($"{item.Name} cannot be deleted because it is being used in the workshop.").ShowDialog();
                         return false;
                     }
