@@ -121,6 +121,21 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
+        public TimeFrame()
+        {
+            
+        }
+
+        public bool SetEndTimeFromStart(double value)
+        {
+            if (_startTime != null)
+            {
+                _endTime = _startTime.AddHours(value);
+            }
+
+            return true;
+        }
+
         public bool IsOverlap(string time)
         {
 

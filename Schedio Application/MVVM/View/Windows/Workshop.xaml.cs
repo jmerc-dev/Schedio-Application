@@ -154,7 +154,7 @@ namespace Schedio_Application.MVVM.View.Windows
         {
             foreach (SubjectEntry se in Subject.SubjectEntries)
             {
-                Trace.WriteLine(se.SubjectInfo.Name + ": " + se.StartTime + " => " + se.EndTime);
+                //Trace.WriteLine(se.SubjectInfo.Name + ": " + se.StartTime + " => " + se.EndTime);
             }
         }
 

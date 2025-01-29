@@ -43,7 +43,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             this.DataContext = entry;
             this.Height = entry.UnitsToAllocate * HOUR_HEIGHT;
 
-            this.SetValue(Canvas.TopProperty, HourToTopPositionConverter(entry.StartTime));
+            this.SetValue(Canvas.TopProperty, HourToTopPositionConverter(entry.TimeFrame.StartTime));
             this.SetValue(Canvas.LeftProperty, Convert.ToDouble(Workshop.Rooms.IndexOf(entry.RoomAllocated) * 200));
         }
 

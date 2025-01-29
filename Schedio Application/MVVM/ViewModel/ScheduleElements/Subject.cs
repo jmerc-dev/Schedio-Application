@@ -209,16 +209,29 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
             if (subjectAllocation.ShowDialog() == true)
             {
-                if (UnitsRemaining - subjectAllocation.Entry.UnitsToAllocate < 0)
+                
+                foreach (SubjectEntry entry in Subject.subjectEntries)
                 {
-                    new MBox("Failed to add. Units to allocate is bigger than the remaining.", MBoxImage.Information).ShowDialog();
-                    return;
+                    if ((subjectAllocation.Entry.DayAssigned == entry.DayAssigned) && (subjectAllocation.Entry.RoomAllocated == entry.RoomAllocated))
+                    {
+                        Trace.WriteLine($"{subjectAllocation.Entry.SubjectInfo.Name}: {subjectAllocation.Entry}");
+                        if (subjectAllocation.Entry.TimeFrame.StartTime == null || subjectAllocation.Entry.TimeFrame.EndTime == null)
+                        {
+                            new MBox("StartTime or EndTime is null.").ShowDialog();
+                            return;
+                        }
+
+                        if (entry.TimeFrame.IsOverlap(subjectAllocation.Entry.TimeFrame.StartTime) || entry.TimeFrame.IsOverlap(subjectAllocation.Entry.TimeFrame.EndTime) || entry.TimeFrame.WillBeEatenBy(subjectAllocation.Entry.TimeFrame))
+                        {
+                            new MBox($"You cannot allocate this subject because it is conflicting with:\n{entry.SubjectInfo.OwnerSection.Name}: {entry.TimeFrame.StartTime} => {entry.TimeFrame.EndTime} in {entry.DayAssigned.ToString()}").ShowDialog();
+                            return;
+                        }
+                    }
                 }
 
                 subjectEntries.Add(subjectAllocation.Entry);
                 UnitsRemaining -= subjectAllocation.Entry.UnitsToAllocate;
 
-                //Trace.WriteLine("Subject Entry Added");
             }
         }
 

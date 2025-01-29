@@ -75,10 +75,18 @@ namespace Schedio_Application.MVVM.View.Windows
                 return;
             }
 
+            if (Entry.SubjectInfo.UnitsRemaining < Double.Parse(cbox_SelectedUnits.Text))
+            {
+                new MBox("The selected units to allocate is greater than the units remaining.").ShowDialog();
+                return;
+            }
+
             try
             {
+
                 _entry.UnitsToAllocate = Double.Parse(cbox_SelectedUnits.Text);
-                _entry.StartTime = ti_Start.Time;
+                _entry.TimeFrame.StartTime = ti_Start.Time;
+                _entry.TimeFrame.EndTime = DateTime.Parse(ti_Start.Time).AddHours(_entry.UnitsToAllocate).ToString("hh:mm tt");
                 _entry.DayAssigned = GetChosenDay(cb_Day.Text);
 
                 Room? room = RoomExists(cbox_Rooms.Text);
