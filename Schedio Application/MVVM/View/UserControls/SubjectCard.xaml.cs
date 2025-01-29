@@ -25,7 +25,7 @@ namespace Schedio_Application.MVVM.View.UserControls
     public partial class SubjectCard : UserControl
     {
         private const double HOUR_HEIGHT = 120.0;
-
+        private int _HorizontalIndex;
         private double _Height;
         private SubjectEntry _Entry;
 
@@ -35,6 +35,14 @@ namespace Schedio_Application.MVVM.View.UserControls
             set { _Entry = value; }
         }
 
+        public int HorizontalIndex
+        {
+            get => _HorizontalIndex;
+            set
+            {
+                _HorizontalIndex = value;
+            }
+        }
         public SubjectCard(SubjectEntry entry)
         {
             InitializeComponent();

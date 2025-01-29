@@ -1,4 +1,5 @@
-﻿using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+﻿using Schedio_Application.MVVM.View.Windows;
+using Schedio_Application.MVVM.ViewModel.ScheduleElements;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
@@ -147,8 +148,26 @@ namespace Schedio_Application.MVVM.View.UserControls
 
         public void removeVerticalLine()
         {
-            Trace.WriteLine(VerticalLineContainer.Children.Count);
+            //Trace.WriteLine(VerticalLineContainer.Children.Count);
             VerticalLineContainer.Children.RemoveAt(VerticalLineContainer.Children.Count - 1);
+        }
+
+        public bool RefreshCardsHorizontalPositions()
+        {
+            foreach (var card in entriesContainer.Children)
+            {
+                SubjectCard subCard = (SubjectCard)card;
+                if (subCard.Entry.RoomAllocated == null)
+                {
+                    new MBox("There is an error when refresshing Subject Cards positions").ShowDialog();
+                    return false;
+                }
+                else
+                {
+                    subCard.SetValue(Canvas.LeftProperty, Convert.ToDouble(Workshop.Rooms.IndexOf(subCard.Entry.RoomAllocated) * 200));
+                }
+            }
+            return true;
         }
 
         private void SetControlWidth(double width)

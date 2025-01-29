@@ -292,7 +292,7 @@ namespace Schedio_Application.MVVM.View.Windows
                     if (tabItem.Content.GetType() == typeof(TimeTable))
                     {
                         TimeTable timeTable = (TimeTable)tabItem.Content;
-                        //timeTable.removeVerticalLine();
+                        timeTable.RefreshCardsHorizontalPositions();
                     }
                 }
             }
@@ -534,7 +534,7 @@ namespace Schedio_Application.MVVM.View.Windows
                 }
             }
             else if (itemType == typeof(Room))
-            { 
+            {
                 
 
                 foreach (Room item in lv.SelectedItems)
