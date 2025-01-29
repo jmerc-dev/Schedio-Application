@@ -121,6 +121,21 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
+        public TimeFrame()
+        {
+            
+        }
+
+        public bool SetEndTimeFromStart(double value)
+        {
+            if (_startTime != null)
+            {
+                _endTime = _startTime.AddHours(value);
+            }
+
+            return true;
+        }
+
         public bool IsOverlap(string time)
         {
 
@@ -130,6 +145,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 TimeSpan endTime = TimeSpan.Parse(DateTime.Parse(EndTime).ToString("HH:mm"));
                 TimeSpan timeToCompare = TimeSpan.Parse(DateTime.Parse(time).ToString("HH:mm"));
 
+                // Checks for normal overlap
                 if ((timeToCompare >= startTime) && (timeToCompare < endTime))
                 {
                     return true;
@@ -141,6 +157,41 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 return false;
             }
 
+            return false;
+        }
+
+        public bool WillBeEatenBy(TimeFrame timeFrame)
+        {
+            try
+            {
+                //TimeSpan startTime = TimeSpan.Parse(DateTime.Parse(StartTime).ToString("HH:mm"));
+                //TimeSpan endTime = TimeSpan.Parse(DateTime.Parse(EndTime).ToString("HH:mm"));
+                //TimeSpan timeToCompare = TimeSpan.Parse(DateTime.Parse(sourceEndTime).ToString("HH:mm"));
+
+                //// Checks for eating overlap
+                //if ((timeToCompare >= startTime) && (timeToCompare < endTime))
+                //{
+                //    return true;
+                //}
+
+                TimeSpan startTime = TimeSpan.Parse(DateTime.Parse(StartTime).ToString("HH:mm"));
+                TimeSpan endTime = TimeSpan.Parse(DateTime.Parse(EndTime).ToString("HH:mm"));
+                TimeSpan timeToCompareStart = TimeSpan.Parse(DateTime.Parse(timeFrame.StartTime).ToString("HH:mm"));
+                TimeSpan timeToCompareEnd = TimeSpan.Parse(DateTime.Parse(timeFrame.EndTime).ToString("HH:mm"));
+
+                if (!IsOverlap(timeFrame.StartTime))
+                {
+                    if (timeToCompareStart <= startTime && timeToCompareEnd >= endTime)
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show($"Cannot parse timeframe values to timespan.");
+                return false;
+            }
             return false;
         }
     }

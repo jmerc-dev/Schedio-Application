@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schedio_Application.MVVM.View.Windows;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -25,19 +26,19 @@ namespace Schedio_Application.MVVM.View.UserControls
     public partial class Counter : UserControl, INotifyPropertyChanged
     { 
 
-        private int oldValue = 0;
-
-
         private static readonly DependencyProperty _Number =
-            DependencyProperty.Register("Number", typeof(int), typeof(Counter), new PropertyMetadata(null));
+            DependencyProperty.Register("Number", typeof(double), typeof(Counter), new PropertyMetadata(null));
 
         public event PropertyChangedEventHandler? PropertyChanged;
+        private double oldValue;
 
-        public int Number
+
+        public double Number
         {
-            get { return (int)GetValue(_Number); }
+            get { return (double)GetValue(_Number); }
             set 
             {
+                
                 SetValue(_Number, value);
             }
         }
@@ -51,6 +52,11 @@ namespace Schedio_Application.MVVM.View.UserControls
         private void btn_Add_Click(object sender, RoutedEventArgs e)
         {
 
+            if (Number + 1 > 99)
+            {
+                return;
+            }
+
             if (Number < 99)
             {
                 Number += 1;
@@ -59,6 +65,11 @@ namespace Schedio_Application.MVVM.View.UserControls
 
         private void btn_Sub_Click(object sender, RoutedEventArgs e)
         {
+            if (Number - 1 < 0)
+            {
+                return;
+            }
+
             if (Number > 0)
             {
                 Number -= 1;
@@ -68,39 +79,57 @@ namespace Schedio_Application.MVVM.View.UserControls
 
         private void tb_Num_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Validation that restricts input only for digits
-            if (tb_Num.Text.Equals(String.Empty))
+            try
             {
-                return;
-            }
-            else if (Regex.Match(tb_Num.Text, @"^\d{1}$").Success)
-            {
-                oldValue = Convert.ToInt32(tb_Num.Text);  // "1"
-            }
-            else if (Regex.Match(tb_Num.Text, @"^\d{2}$").Success)
-            {
-                oldValue = Convert.ToInt32(tb_Num.Text);
-            }
-            else
-            {
-                if (tb_Num.Text.Length == 1)
+                if (tb_Num.Text.Equals(String.Empty))
                 {
-                    tb_Num.Text = "";
+                    
+                    return;
                 }
-                else
-                {
-                    Number = oldValue;
-                    tb_Num.CaretIndex = 1;
-                }
+                Convert.ToDouble(tb_Num.Text);
+            } catch (Exception ex)
+            {
+                new MBox("Invalid input").ShowDialog();
+                tb_Num.Clear();
             }
+
         }
 
         private void tb_Num_LostFocus(object sender, RoutedEventArgs e)
         {
             if (tb_Num.Text.Equals(String.Empty))
             {
+                Trace.WriteLine("empty string");
                 Number = 0;
+                tb_Num.Text = "0";
             }
         }
+
+        private void tb_Num_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Keypress
+            string key = e.Key.ToString();
+            string pattern = @"^[D][0-9]$";
+            string pattern2 = @"^NumPad[0-9]$";
+            if (new Regex(pattern).IsMatch(key) || new Regex(pattern2).IsMatch(key) || key.Equals("Decimal") || key.Equals("OemPeriod"))
+            {
+                // DO nothing
+                
+            }
+            else if (key.Equals("Return") || key.Equals("Escape"))
+            {
+                // TODO: Upon pressing enter, the values here should save
+                // Fix tomorrow
+                //Keyboard.ClearFocus();
+            }
+            else
+            {
+                
+                e.Handled = true;
+                return;
+            }
+        }
+
+        
     }
 }

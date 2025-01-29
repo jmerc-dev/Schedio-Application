@@ -23,7 +23,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private ClassSection _ClassSection;
 
         private double _UnitsRemaining;
-        private bool IsAllocated;
+        private bool _IsAllocated;
 
         
         public Action<SubjectEntry, DataAction> SubjectOperation;
@@ -59,6 +59,12 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
+        public bool IsAllocated
+        {
+            get { return _IsAllocated; }
+            set {  _IsAllocated = value; OnPropertyChanged(); }
+        }
+
         public RoomType RoomType
         {
             get { return _RoomType; }
@@ -74,23 +80,38 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             get { return _Units; }
             set 
             { 
-                if (_Units > 0)
+
+                if (_Units == 0)
                 {
-                    double allocatedUnits = _Units - UnitsRemaining;
+                    UnitsRemaining = value;
                     _Units = value;
-                    UnitsRemaining = _UnitsRemaining + allocatedUnits;
+                    return;
+                }
+                
+                if (value > _Units)
+                {
+                    UnitsRemaining += value - _Units;
                 }
                 else
                 {
-                    _Units = value;
-                    UnitsRemaining = value;
+                    if (value < _Units - UnitsRemaining)
+                    {
+                        new MBox($"You cannot decrease the units because it is allocated in the workshop or it will result in negative value.").ShowDialog();
+                        return;
+                    }
+
+                    UnitsRemaining -= _Units - value;
                 }
+                _Units = value;
+
 
                 if (this.OwnerSection != null)
                 {
                     this.OwnerSection.TotalUnits = this.OwnerSection.GetTotalUnits();
                 }
-                
+
+                Trace.WriteLine($"{this.Name}: Units - {this.Units}, RemUnits - {this.UnitsRemaining}");
+
                 OnPropertyChanged();
             }
         }
@@ -100,7 +121,31 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             get { return _UnitsRemaining; }
             set
             {
+
+                // Updates Allocated Units Indicator
+                if (this.OwnerSection != null)
+                {
+                    this.OwnerSection.AllocatedUnits -= _Units - _UnitsRemaining;
+                    this.OwnerSection.AllocatedUnits += _Units - value;
+                }
+                
+
                 _UnitsRemaining = value;
+
+                // Updates Allocated Subjects Indicator
+                if (_UnitsRemaining == 0)
+                {
+                    OwnerSection.AllocatedSubjects += 1;
+                    IsAllocated = true;
+                }
+                else
+                {
+                    if (IsAllocated)
+                    {
+                        OwnerSection.AllocatedSubjects -= 1;
+                        IsAllocated = false;
+                    }
+                }
                 OnPropertyChanged();
             }
         }
@@ -155,18 +200,38 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private void AllocSubject()
         {
             SubjectAllocation subjectAllocation = new SubjectAllocation(this);
+
+            if (this.IsAllocated)
+            {
+                new MBox("This subject has been fully allocated.", MBoxImage.Information).ShowDialog();
+                return;
+            }
+
             if (subjectAllocation.ShowDialog() == true)
             {
-                if (UnitsRemaining - subjectAllocation.Entry.UnitsToAllocate < 0)
+                
+                foreach (SubjectEntry entry in Subject.subjectEntries)
                 {
-                    new MBox("Failed to add. Units to allocate is bigger than the remaining.", MBoxImage.Information).ShowDialog();
-                    return;
+                    if ((subjectAllocation.Entry.DayAssigned == entry.DayAssigned) && (subjectAllocation.Entry.RoomAllocated == entry.RoomAllocated))
+                    {
+                        Trace.WriteLine($"{subjectAllocation.Entry.SubjectInfo.Name}: {subjectAllocation.Entry}");
+                        if (subjectAllocation.Entry.TimeFrame.StartTime == null || subjectAllocation.Entry.TimeFrame.EndTime == null)
+                        {
+                            new MBox("StartTime or EndTime is null.").ShowDialog();
+                            return;
+                        }
+
+                        if (entry.TimeFrame.IsOverlap(subjectAllocation.Entry.TimeFrame.StartTime) || entry.TimeFrame.IsOverlap(subjectAllocation.Entry.TimeFrame.EndTime) || entry.TimeFrame.WillBeEatenBy(subjectAllocation.Entry.TimeFrame))
+                        {
+                            new MBox($"You cannot allocate this subject because it is conflicting with:\n{entry.SubjectInfo.OwnerSection.Name}: {entry.TimeFrame.StartTime} => {entry.TimeFrame.EndTime} in {entry.DayAssigned.ToString()}").ShowDialog();
+                            return;
+                        }
+                    }
                 }
 
                 subjectEntries.Add(subjectAllocation.Entry);
                 UnitsRemaining -= subjectAllocation.Entry.UnitsToAllocate;
 
-                //Trace.WriteLine("Subject Entry Added");
             }
         }
 
@@ -188,7 +253,45 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 new MBox("Subject entry deallocated", MBoxImage.Information).ShowDialog();
             }
             
+        }
 
+        // For section and subjects only
+        public static bool IsDataBeingUsed(ScheduleElement element, object obj)
+        {
+            switch (element)
+            {
+                case ScheduleElement.ClassSection:
+                    ClassSection cs = (ClassSection)obj;
+                    foreach (SubjectEntry se in subjectEntries)
+                    {
+                        if (se.SubjectInfo.OwnerSection == cs)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                case ScheduleElement.Subject:
+                    Subject s = (Subject)obj;
+                    foreach (SubjectEntry se in subjectEntries)
+                    {
+                        if (se.SubjectInfo == s)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                case ScheduleElement.Room:
+                    Room room = (Room)obj;
+                    foreach (SubjectEntry se in subjectEntries)
+                    {
+                        if (se.RoomAllocated == room)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                default: return false;
+            }
         }
     }
 }

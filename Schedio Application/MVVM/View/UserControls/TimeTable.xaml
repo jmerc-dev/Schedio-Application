@@ -53,7 +53,7 @@
                     </Style>
                 </Canvas.Resources>
                 
-                <Canvas Name="cv_FocusHolder" Height="50" Width="50" Canvas.Left="200" Background="Transparent"/>
+                <!--<Canvas Name="cv_FocusHolder" Height="50" Width="50" Canvas.Left="200" Background="Transparent"/>-->
             </Canvas>
             <Border Name="RoomHeader" Canvas.ZIndex="500" BorderThickness="0,0,1,1" BorderBrush="{StaticResource GreyColor}" Height="50" Width="auto" Background="AliceBlue" Canvas.Left="{Binding ElementName=TimeHeader, Path=Width}">
                 <ListView Name="lv_RoomHeader" Margin="5,0,0,0" DisplayMemberPath="Name">

@@ -9,11 +9,21 @@ using System.Threading.Tasks;
 
 namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
+    public enum ScheduleElement
+    {
+        Person,
+        Room,
+        RoomType,
+        Subject,
+        Day,
+        ClassSection
+    }
     public class SubjectEntry : PropertyNotification
     {
         private Subject _Subject;
         private string? _StartTime;
         private string? _EndTime;
+        private TimeFrame _TimeFrame;
         private double _UnitsToAllocate;
         private Room? _Room;
         private DayOfWeek? _DayAssigned;
@@ -26,6 +36,12 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 _Subject = value;
                 OnPropertyChanged();
             }
+        }
+
+        public TimeFrame TimeFrame
+        {
+            get => _TimeFrame;
+            set => _TimeFrame = value;
         }
 
         public string? StartTime
@@ -88,13 +104,13 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public SubjectEntry(Subject subject)
         {
             _Subject = subject;
-
+            _TimeFrame = new TimeFrame();
         }
 
-        public SubjectEntry(Subject subject, string startTime, double units, Room room)
+        public SubjectEntry(Subject subject, TimeFrame tf, double units, Room room)
         {
             _Subject = subject;
-            _StartTime = startTime;
+            _TimeFrame = tf;
             _UnitsToAllocate = units;
             _Room = room;
         }

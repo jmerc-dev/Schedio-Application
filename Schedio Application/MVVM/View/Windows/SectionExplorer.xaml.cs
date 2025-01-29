@@ -22,6 +22,8 @@ namespace Schedio_Application.MVVM.View.Windows
     public partial class SectionExplorer : Window
     {
         ObservableCollection<ClassSection> Sections;
+        ObservableCollection<ClassSection> SectionsTemp;
+
         public ClassSection SelectedSection;
         public SectionExplorer(ObservableCollection<ClassSection> sections)
         {
@@ -54,6 +56,32 @@ namespace Schedio_Application.MVVM.View.Windows
             {
                 new MBox("Select only one (1) section.").ShowDialog();
             }
+        }
+
+        private void tb_SearchSection_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (tb_SearchSection.Text.Equals(String.Empty))
+            {
+                lv_SectionSimpleList.ItemsSource = this.Sections;
+                return;
+            } 
+            else
+            {
+                SectionsTemp = new ObservableCollection<ClassSection>();
+
+                foreach (ClassSection cs in Sections)
+                {
+                    if (cs.Name.Contains(tb_SearchSection.Text, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        SectionsTemp.Add(cs);
+                    }
+                }
+
+                lv_SectionSimpleList.ItemsSource = SectionsTemp;
+
+            }
+
+
         }
     }
 }

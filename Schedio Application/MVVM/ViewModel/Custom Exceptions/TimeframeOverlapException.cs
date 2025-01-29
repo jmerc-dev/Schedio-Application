@@ -15,13 +15,13 @@ namespace Schedio_Application.MVVM.ViewModel.Custom_Exceptions
         }
 
         public TimeframeOverlapException(TimeFrame source, TimeFrame end) :
-            base($"Conflicting Timeframes:\n{source.StartTime} -> {source.EndTime}\n{end.StartTime} -> {end.EndTime}")
+            base($"Overlapping Timeframes:\n{source.StartTime} -> {source.EndTime}\n{end.StartTime} -> {end.EndTime}")
         {
             
         }
 
         public TimeframeOverlapException(TimeFrame source, TimeFrame end, string day) :
-            base($"Conflicting Timeframes in [{day}]:\n{source.StartTime} -> {source.EndTime}\n{end.StartTime} -> {end.EndTime}\n")
+            base($"Overlapping Timeframes in [{day}]:\n{source.StartTime} -> {source.EndTime}\n{end.StartTime} -> {end.EndTime}\n")
         {
 
         }

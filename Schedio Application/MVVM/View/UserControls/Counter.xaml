@@ -5,10 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Schedio_Application.MVVM.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="50"
+             d:DesignHeight="50" d:DesignWidth="100"
              DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
-    <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}">
+    <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}" Name="grid_Main">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -18,11 +18,12 @@
                  FontSize="15"
                  HorizontalContentAlignment="Center"
                  VerticalContentAlignment="Center"
-                 MinWidth="30"
-                 MaxLength="2"
+                 MinWidth="50"
+                 MaxLength="4"
                  Name="tb_Num"
-                 Text="{Binding Number}"
                  TextChanged="tb_Num_TextChanged"
+                 KeyDown="tb_Num_KeyDown"
+                 Text="{Binding Number, UpdateSourceTrigger=LostFocus}"
                  LostFocus="tb_Num_LostFocus"/>
 
         <Grid Grid.Column="1">

@@ -154,7 +154,7 @@ namespace Schedio_Application.MVVM.View.Windows
         {
             foreach (SubjectEntry se in Subject.SubjectEntries)
             {
-                Trace.WriteLine(se.SubjectInfo.Name + ": " + se.StartTime + " => " + se.EndTime);
+                //Trace.WriteLine(se.SubjectInfo.Name + ": " + se.StartTime + " => " + se.EndTime);
             }
         }
 
@@ -292,7 +292,7 @@ namespace Schedio_Application.MVVM.View.Windows
                     if (tabItem.Content.GetType() == typeof(TimeTable))
                     {
                         TimeTable timeTable = (TimeTable)tabItem.Content;
-                        timeTable.removeVerticalLine();
+                        timeTable.RefreshCardsHorizontalPositions();
                     }
                 }
             }
@@ -527,6 +527,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
             if (itemType == typeof(Person))
             {
+
                 foreach (Person item in lv.SelectedItems)
                 {
                     objectsToBeRemoved.Add(item.Name);
@@ -534,8 +535,16 @@ namespace Schedio_Application.MVVM.View.Windows
             }
             else if (itemType == typeof(Room))
             {
+                
+
                 foreach (Room item in lv.SelectedItems)
                 {
+                    if (Subject.IsDataBeingUsed(ScheduleElement.Room, item))
+                    {
+                        new MBox($"{item.Name} cannot be deleted because there are subjects allocated to it.").ShowDialog();
+                        return false;
+                    }
+                    
                     objectsToBeRemoved.Add(item.Name);
                 }
             }
@@ -543,7 +552,16 @@ namespace Schedio_Application.MVVM.View.Windows
             {
                 foreach (ClassSection item in lv.SelectedItems)
                 {
-                    objectsToBeRemoved.Add(item.Name);
+                    if (Subject.IsDataBeingUsed(ScheduleElement.ClassSection, item))
+                    { 
+                        new MBox($"{item.Name} cannot be deleted because it is being used in the workshop.").ShowDialog();
+                        return false;
+                    }
+                    else
+                    {
+                        objectsToBeRemoved.Add(item.Name);
+                    }
+                    
                 }
             }
 

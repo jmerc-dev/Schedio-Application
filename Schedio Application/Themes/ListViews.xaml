@@ -246,7 +246,7 @@
             </Grid.ColumnDefinitions>
             <TextBlock Margin="15,0,0,0" TextTrimming="CharacterEllipsis" Grid.Column="0" FontSize="14" VerticalAlignment="Center" Text="{Binding Name}" MaxWidth="160"  TextWrapping="Wrap" HorizontalAlignment="Left"/>
             <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
-                <TextBlock Text="0" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding AllocatedSubjects}" VerticalAlignment="Center"/>
                 <TextBlock Text="/" VerticalAlignment="Center"/>
                 <TextBlock Text="{Binding TotalSubjects}" VerticalAlignment="Center"/>
             </StackPanel>
@@ -254,7 +254,7 @@
                 <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/copy.png" Margin="3"/>
             </Button>
             <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Center">
-                <TextBlock Text="0" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding AllocatedUnits}" VerticalAlignment="Center"/>
                 <TextBlock Text="/" VerticalAlignment="Center"/>
                 <TextBlock Text="{Binding TotalUnits}" VerticalAlignment="Center"/>
             </StackPanel>
