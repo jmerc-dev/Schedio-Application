@@ -147,6 +147,7 @@ namespace Schedio_Application.MVVM.View.UserControls
 
         public void removeVerticalLine()
         {
+            Trace.WriteLine(VerticalLineContainer.Children.Count);
             VerticalLineContainer.Children.RemoveAt(VerticalLineContainer.Children.Count - 1);
         }
 

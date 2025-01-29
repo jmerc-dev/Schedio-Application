@@ -280,6 +280,16 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                         }
                     }
                     return false;
+                case ScheduleElement.Room:
+                    Room room = (Room)obj;
+                    foreach (SubjectEntry se in subjectEntries)
+                    {
+                        if (se.RoomAllocated == room)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
                 default: return false;
             }
         }

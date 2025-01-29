@@ -292,7 +292,7 @@ namespace Schedio_Application.MVVM.View.Windows
                     if (tabItem.Content.GetType() == typeof(TimeTable))
                     {
                         TimeTable timeTable = (TimeTable)tabItem.Content;
-                        timeTable.removeVerticalLine();
+                        //timeTable.removeVerticalLine();
                     }
                 }
             }
@@ -535,8 +535,16 @@ namespace Schedio_Application.MVVM.View.Windows
             }
             else if (itemType == typeof(Room))
             { 
+                
+
                 foreach (Room item in lv.SelectedItems)
                 {
+                    if (Subject.IsDataBeingUsed(ScheduleElement.Room, item))
+                    {
+                        new MBox($"{item.Name} cannot be deleted because there are subjects allocated to it.").ShowDialog();
+                        return false;
+                    }
+                    
                     objectsToBeRemoved.Add(item.Name);
                 }
             }
