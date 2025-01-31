@@ -146,7 +146,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 TimeSpan timeToCompare = TimeSpan.Parse(DateTime.Parse(time).ToString("HH:mm"));
 
                 // Checks for normal overlap
-                if ((timeToCompare > startTime) && (timeToCompare < endTime))
+                if ((timeToCompare >= startTime) && (timeToCompare < endTime))
                 {
                     return true;
                 }
