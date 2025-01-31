@@ -91,6 +91,14 @@ namespace Schedio_Application.MVVM.View.Windows
 
                 Room? room = RoomExists(cbox_Rooms.Text);
 
+                if (!Entry.SubjectInfo.AssignedPerson.IsAvailableAt(GetChosenDay(cb_Day.Text), new TimeFrame(Entry.TimeFrame.StartTime, Entry.TimeFrame.EndTime)))
+                {
+                    if (new MBox($"{Entry.SubjectInfo.AssignedPerson.Name} is not available from {Entry.TimeFrame.StartTime} to {Entry.TimeFrame.EndTime} in {Entry.DayAssigned.ToString()}. Do you still want to continue?", MBoxType.CancelOrOK).ShowDialog() != true)
+                    {
+                        return;
+                    }
+                }
+
                 if (room == null)
                 {
                     new MBox("Room doesn't exist").ShowDialog();
@@ -107,6 +115,7 @@ namespace Schedio_Application.MVVM.View.Windows
                 return;
             }
         }
+
 
         private Room? RoomExists(string roomname)
         {

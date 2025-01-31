@@ -90,6 +90,44 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             SetDaysName();
         }
 
+        // May proc StringFormatException
+        public bool IsAvailableAt(DayOfWeek day,TimeFrame tf)
+        {
+            
+            foreach (Day personDays in Days)
+            {
+                // Checks for day availability
+                if (personDays.Name == day && personDays.IsAvailable)
+                {
+                    // Checks for custom timeframe/constant timeframe
+                    if (IsConstant)
+                    {
+                        TimeFrame personAvailableTf = new TimeFrame(ConstTime_Start, ConstTime_End);
+                        if (personAvailableTf.CanContain(tf))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        foreach (TimeFrame personTimeframe in personDays.CustomTimeframe)
+                        {
+                            if (personTimeframe.CanContain(tf))
+                            {
+                                return true;
+                            }
+                        }
+                        return false;
+                    }
+
+                }
+            }
+            return false;
+        }
 
         private void PopulateDays()
         {

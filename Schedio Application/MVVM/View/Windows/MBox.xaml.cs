@@ -43,7 +43,6 @@ namespace Schedio_Application.MVVM.View.Windows
         public MBox(string message)
         {
             InitializeComponent();
-            this.ShowInTaskbar = false;
             this.Owner = Application.Current.MainWindow;
             SystemSounds.Asterisk.Play();
 
@@ -54,7 +53,6 @@ namespace Schedio_Application.MVVM.View.Windows
         public MBox(string message, Sound sound)
         {
             InitializeComponent();
-            this.ShowInTaskbar = false;
             this.Owner = Application.Current.MainWindow;
             switch (sound) 
             {

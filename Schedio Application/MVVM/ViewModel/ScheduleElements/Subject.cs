@@ -221,7 +221,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                             return;
                         }
 
-                        if (entry.TimeFrame.IsOverlap(subjectAllocation.Entry.TimeFrame.StartTime) || entry.TimeFrame.IsOverlap(subjectAllocation.Entry.TimeFrame.EndTime) || entry.TimeFrame.WillBeEatenBy(subjectAllocation.Entry.TimeFrame))
+                        if (entry.TimeFrame.IsOverlap(subjectAllocation.Entry.TimeFrame.StartTime) || entry.TimeFrame.IsOverlap(subjectAllocation.Entry.TimeFrame.EndTime) || entry.TimeFrame.IsContainedBy(subjectAllocation.Entry.TimeFrame))
                         {
                             new MBox($"You cannot allocate this subject because it is conflicting with:\n{entry.SubjectInfo.OwnerSection.Name}: {entry.TimeFrame.StartTime} => {entry.TimeFrame.EndTime} in {entry.DayAssigned.ToString()}").ShowDialog();
                             return;
