@@ -44,32 +44,32 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             set => _TimeFrame = value;
         }
 
-        public string? StartTime
-        {
-            get { return _StartTime; }
-            set 
-            { 
-                _StartTime = value;
+        //public string? StartTime
+        //{
+        //    get { return _StartTime; }
+        //    set 
+        //    { 
+        //        _StartTime = value;
 
-                if (value != null)
-                {
-                    DateTime endTime = DateTime.Parse(value).AddHours(UnitsToAllocate);
-                    DateTime endTime1 = DateTime.Parse(value).AddHours(3);
-                    EndTime = endTime.ToString("hh:mm tt");
-                }
-                OnPropertyChanged();
-            }
-        }
+        //        if (value != null)
+        //        {
+        //            DateTime endTime = DateTime.Parse(value).AddHours(UnitsToAllocate);
+        //            DateTime endTime1 = DateTime.Parse(value).AddHours(3);
+        //            EndTime = endTime.ToString("hh:mm tt");
+        //        }
+        //        OnPropertyChanged();
+        //    }
+        //}
 
-        public string? EndTime
-        {
-            get { return _EndTime; }
-            set
-            {
-                _EndTime = value;
-                OnPropertyChanged();
-            }
-        }
+        //public string? EndTime
+        //{
+        //    get { return _EndTime; }
+        //    set
+        //    {
+        //        _EndTime = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
         public double UnitsToAllocate
         {

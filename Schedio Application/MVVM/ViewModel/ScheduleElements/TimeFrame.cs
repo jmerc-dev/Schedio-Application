@@ -108,6 +108,14 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         public TimeFrame(string startTime, string endTime) 
         {
+            TimeSpan t_start = TimeSpan.Parse(DateTime.Parse(startTime).ToString("HH:mm"));
+            TimeSpan t_end = TimeSpan.Parse(DateTime.Parse(endTime).ToString("HH:mm"));
+
+            if (t_start >= t_end)
+            {
+                throw new InvalidTimeFrameException(startTime, endTime);
+            }
+
             if (DateTime.TryParse(startTime, out _startTime) && DateTime.TryParse(endTime, out _endTime))
             {
                 if (!ValidateTimeframe(startTime, endTime))
@@ -160,19 +168,78 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             return false;
         }
 
-        public bool WillBeEatenBy(TimeFrame timeFrame)
+        public bool WillConcurWith(TimeFrame newTimeframe)
         {
             try
             {
-                //TimeSpan startTime = TimeSpan.Parse(DateTime.Parse(StartTime).ToString("HH:mm"));
-                //TimeSpan endTime = TimeSpan.Parse(DateTime.Parse(EndTime).ToString("HH:mm"));
-                //TimeSpan timeToCompare = TimeSpan.Parse(DateTime.Parse(sourceEndTime).ToString("HH:mm"));
+                TimeSpan startTime = TimeSpan.Parse(DateTime.Parse(StartTime).ToString("HH:mm"));
+                TimeSpan endTime = TimeSpan.Parse(DateTime.Parse(EndTime).ToString("HH:mm"));
+                TimeSpan timeToCompare_Start = TimeSpan.Parse(DateTime.Parse(newTimeframe.StartTime).ToString("HH:mm"));
+                TimeSpan timeToCompare_End = TimeSpan.Parse(DateTime.Parse(newTimeframe.EndTime).ToString("HH:mm"));
 
-                //// Checks for eating overlap
-                //if ((timeToCompare >= startTime) && (timeToCompare < endTime))
-                //{
-                //    return true;
-                //}
+                if (timeToCompare_Start >= timeToCompare_End)
+                    throw new InvalidTimeFrameException(newTimeframe.StartTime, newTimeframe.EndTime);
+
+                if ((timeToCompare_Start < startTime && timeToCompare_End <= startTime) || (timeToCompare_Start >= endTime && timeToCompare_End > endTime))
+                {
+                    return false;
+                }
+                return true;
+                
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show($"Cannot parse {newTimeframe.StartTime} => {newTimeframe.EndTime}.");
+                return false;
+            }
+
+            return false;
+        }
+
+        public bool IsStrictOverlap(string time)
+        {
+            try
+            {
+                TimeSpan startTime = TimeSpan.Parse(DateTime.Parse(StartTime).ToString("HH:mm"));
+                TimeSpan endTime = TimeSpan.Parse(DateTime.Parse(EndTime).ToString("HH:mm"));
+                TimeSpan timeToCompare = TimeSpan.Parse(DateTime.Parse(time).ToString("HH:mm"));
+
+                // Checks for normal overlap
+                if ((timeToCompare >= startTime) && (timeToCompare <= endTime))
+                {
+                    return true;
+                }
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show($"Cannot parse {time}.");
+                return false;
+            }
+
+            return false;
+        }
+
+        // Returns true if the timeframe argument can fit inside this object's timeframe
+        public bool CanContain(TimeFrame timeFrame)
+        {
+            TimeSpan startTime = TimeSpan.Parse(DateTime.Parse(StartTime).ToString("HH:mm"));
+            TimeSpan endTime = TimeSpan.Parse(DateTime.Parse(EndTime).ToString("HH:mm"));
+            TimeSpan timeToCompare_start = TimeSpan.Parse(DateTime.Parse(timeFrame.StartTime).ToString("HH:mm"));
+            TimeSpan timeToCompare_end = TimeSpan.Parse(DateTime.Parse(timeFrame.EndTime).ToString("HH:mm"));
+
+            if (timeToCompare_start >= startTime && timeToCompare_end <= endTime)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        // Returns true if this object's timeframe is contained by the passed timeframe.
+        public bool IsContainedBy(TimeFrame timeFrame)
+        {
+            try
+            {
 
                 TimeSpan startTime = TimeSpan.Parse(DateTime.Parse(StartTime).ToString("HH:mm"));
                 TimeSpan endTime = TimeSpan.Parse(DateTime.Parse(EndTime).ToString("HH:mm"));

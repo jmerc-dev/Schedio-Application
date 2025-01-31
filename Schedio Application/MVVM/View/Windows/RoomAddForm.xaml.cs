@@ -64,6 +64,11 @@ namespace Schedio_Application.MVVM.View.Windows
             _Rooms = rooms;
 
             cb_Type.ItemsSource = types;
+
+            if (types.Count > 0)
+            {
+                RoomType = types[0];
+            }
         }
 
         public RoomAddForm(Room room, ObservableCollection<RoomType> types, ObservableCollection<Room> rooms)

@@ -28,7 +28,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         
         public Action<SubjectEntry, DataAction> SubjectOperation;
 
-        private static ObservableCollection<SubjectEntry> subjectEntries = new ObservableCollection<SubjectEntry>();
+        public static ObservableCollection<SubjectEntry> subjectEntries = new ObservableCollection<SubjectEntry>();
 
         public RelayCommand AllocSubjectCommand => new RelayCommand(execute => AllocSubject());
         public RelayCommand DeAllocSubjectCommand => new RelayCommand(execute => DeallocSubject(execute));
@@ -209,25 +209,25 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
             if (subjectAllocation.ShowDialog() == true)
             {
-                
-                foreach (SubjectEntry entry in Subject.subjectEntries)
-                {
-                    if ((subjectAllocation.Entry.DayAssigned == entry.DayAssigned) && (subjectAllocation.Entry.RoomAllocated == entry.RoomAllocated))
-                    {
-                        Trace.WriteLine($"{subjectAllocation.Entry.SubjectInfo.Name}: {subjectAllocation.Entry}");
-                        if (subjectAllocation.Entry.TimeFrame.StartTime == null || subjectAllocation.Entry.TimeFrame.EndTime == null)
-                        {
-                            new MBox("StartTime or EndTime is null.").ShowDialog();
-                            return;
-                        }
 
-                        if (entry.TimeFrame.IsOverlap(subjectAllocation.Entry.TimeFrame.StartTime) || entry.TimeFrame.IsOverlap(subjectAllocation.Entry.TimeFrame.EndTime) || entry.TimeFrame.WillBeEatenBy(subjectAllocation.Entry.TimeFrame))
-                        {
-                            new MBox($"You cannot allocate this subject because it is conflicting with:\n{entry.SubjectInfo.OwnerSection.Name}: {entry.TimeFrame.StartTime} => {entry.TimeFrame.EndTime} in {entry.DayAssigned.ToString()}").ShowDialog();
-                            return;
-                        }
-                    }
-                }
+                //foreach (SubjectEntry entry in Subject.subjectEntries)
+                //{
+                //    if ((subjectAllocation.Entry.DayAssigned == entry.DayAssigned) && (subjectAllocation.Entry.RoomAllocated == entry.RoomAllocated))
+                //    {
+                        
+                //        if (subjectAllocation.Entry.TimeFrame.StartTime == null || subjectAllocation.Entry.TimeFrame.EndTime == null)
+                //        {
+                //            new MBox("StartTime or EndTime is null.").ShowDialog();
+                //            return;
+                //        }
+
+                //        if (entry.TimeFrame.IsOverlap(subjectAllocation.Entry.TimeFrame.StartTime) || entry.TimeFrame.IsOverlap(subjectAllocation.Entry.TimeFrame.EndTime) || entry.TimeFrame.IsContainedBy(subjectAllocation.Entry.TimeFrame))
+                //        {
+                //            new MBox($"You cannot allocate this subject because it is conflicting with:\n{entry.SubjectInfo.OwnerSection.Name}: {entry.TimeFrame.StartTime} => {entry.TimeFrame.EndTime} in {entry.DayAssigned.ToString()}").ShowDialog();
+                //            return;
+                //        }
+                //    }
+                //}
 
                 subjectEntries.Add(subjectAllocation.Entry);
                 UnitsRemaining -= subjectAllocation.Entry.UnitsToAllocate;

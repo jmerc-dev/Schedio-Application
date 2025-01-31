@@ -226,6 +226,10 @@ namespace Schedio_Application.MVVM.View.UserControls
                     textboxes[tbTraversalIndex - 1].Focus();
                 }
             }
+            else
+            {
+                e.Handled = true;
+            }
         }
 
         private void tb_TextChanged(object sender, TextChangedEventArgs e)

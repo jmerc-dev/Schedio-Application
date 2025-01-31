@@ -90,6 +90,16 @@ namespace Schedio_Application.MVVM.View.Windows
                 _entry.DayAssigned = GetChosenDay(cb_Day.Text);
 
                 Room? room = RoomExists(cbox_Rooms.Text);
+                _entry.RoomAllocated = room;
+
+                // Validations
+                if (!Entry.SubjectInfo.AssignedPerson.IsAvailableAt(GetChosenDay(cb_Day.Text), new TimeFrame(Entry.TimeFrame.StartTime, Entry.TimeFrame.EndTime)))
+                {
+                    if (new MBox($"{Entry.SubjectInfo.AssignedPerson.Name} is not available from {Entry.TimeFrame.StartTime} to {Entry.TimeFrame.EndTime} in {Entry.DayAssigned.ToString()}. Do you still want to continue?", MBoxType.CancelOrOK).ShowDialog() != true)
+                    {
+                        return;
+                    }
+                }
 
                 if (room == null)
                 {
@@ -97,7 +107,33 @@ namespace Schedio_Application.MVVM.View.Windows
                     return;
                 }
 
-                _entry.RoomAllocated = room;
+                foreach (SubjectEntry entry in Subject.subjectEntries)
+                {
+                    if ((Entry.DayAssigned == entry.DayAssigned) && (Entry.RoomAllocated == entry.RoomAllocated))
+                    {
+                        // Null Checking
+                        if (Entry.TimeFrame.StartTime == null || Entry.TimeFrame.EndTime == null)
+                        {
+                            new MBox("StartTime or EndTime is null.").ShowDialog();
+                            return;
+                        }
+                        // Timeframe already occupied by other subjects
+                        if (entry.TimeFrame.WillConcurWith(new TimeFrame(Entry.TimeFrame.StartTime, Entry.TimeFrame.EndTime)))
+                        {
+                            new MBox($"You cannot allocate this subject because it is conflicting with:\n{entry.SubjectInfo.OwnerSection.Name}: {entry.TimeFrame.StartTime} => {entry.TimeFrame.EndTime} in {entry.DayAssigned.ToString()}").ShowDialog();
+                            return;
+                        }
+                    }
+                    // Personnel parallel check
+                    if (Entry.DayAssigned == entry.DayAssigned && Entry.RoomAllocated != entry.RoomAllocated && Entry.SubjectInfo.AssignedPerson == entry.SubjectInfo.AssignedPerson)
+                    {
+                        if (entry.TimeFrame.WillConcurWith(Entry.TimeFrame))
+                        {
+                            new MBox($"{Entry.SubjectInfo.AssignedPerson.Name} is currently assigned at the timeframe: {entry.TimeFrame.StartTime} => {entry.TimeFrame.EndTime} in {entry.DayAssigned.ToString()}").ShowDialog();
+                            return;
+                        }
+                    }
+                }
 
                 DialogResult = true;
             }
@@ -107,6 +143,7 @@ namespace Schedio_Application.MVVM.View.Windows
                 return;
             }
         }
+
 
         private Room? RoomExists(string roomname)
         {
