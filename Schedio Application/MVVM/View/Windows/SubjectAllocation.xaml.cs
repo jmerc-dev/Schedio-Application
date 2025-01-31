@@ -109,20 +109,27 @@ namespace Schedio_Application.MVVM.View.Windows
 
                 foreach (SubjectEntry entry in Subject.subjectEntries)
                 {
-                    Trace.WriteLine($"{Entry.DayAssigned} = {entry.DayAssigned}");
-                    Trace.WriteLine($"{Entry.RoomAllocated} = {entry.RoomAllocated}");
                     if ((Entry.DayAssigned == entry.DayAssigned) && (Entry.RoomAllocated == entry.RoomAllocated))
                     {
-                        
+                        // Null Checking
                         if (Entry.TimeFrame.StartTime == null || Entry.TimeFrame.EndTime == null)
                         {
                             new MBox("StartTime or EndTime is null.").ShowDialog();
                             return;
                         }
-
-                        if (entry.TimeFrame.IsOverlap(Entry.TimeFrame.StartTime) || entry.TimeFrame.IsOverlap(Entry.TimeFrame.EndTime) || entry.TimeFrame.IsContainedBy(Entry.TimeFrame))
+                        // Timeframe already occupied by other subjects
+                        if (entry.TimeFrame.WillConcurWith(new TimeFrame(Entry.TimeFrame.StartTime, Entry.TimeFrame.EndTime)))
                         {
                             new MBox($"You cannot allocate this subject because it is conflicting with:\n{entry.SubjectInfo.OwnerSection.Name}: {entry.TimeFrame.StartTime} => {entry.TimeFrame.EndTime} in {entry.DayAssigned.ToString()}").ShowDialog();
+                            return;
+                        }
+                    }
+                    // Personnel parallel check
+                    if (Entry.DayAssigned == entry.DayAssigned && Entry.RoomAllocated != entry.RoomAllocated && Entry.SubjectInfo.AssignedPerson == entry.SubjectInfo.AssignedPerson)
+                    {
+                        if (entry.TimeFrame.WillConcurWith(Entry.TimeFrame))
+                        {
+                            new MBox($"{Entry.SubjectInfo.AssignedPerson.Name} is currently assigned at the timeframe: {entry.TimeFrame.StartTime} => {entry.TimeFrame.EndTime} in {entry.DayAssigned.ToString()}").ShowDialog();
                             return;
                         }
                     }

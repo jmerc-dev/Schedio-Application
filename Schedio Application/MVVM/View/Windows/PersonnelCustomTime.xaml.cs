@@ -93,7 +93,7 @@ namespace Schedio_Application.MVVM.View.Windows
                                 // Comparison
                                 foreach(TimeFrame timeFrame in dayTf)
                                 {
-                                    if (timeFrame.IsOverlap(tfEntry.StartTime) || timeFrame.IsOverlap(tfEntry.EndTime) || timeFrame.IsContainedBy(tfEntry))
+                                    if (timeFrame.WillConcurWith(new TimeFrame(tfEntry.StartTime, tfEntry.EndTime)))
                                     {
                                         throw new TimeframeOverlapException(timeFrame, tfEntry, ((TextBlock) exp.Header).Text);
                                     }

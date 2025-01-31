@@ -108,6 +108,14 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         public TimeFrame(string startTime, string endTime) 
         {
+            TimeSpan t_start = TimeSpan.Parse(DateTime.Parse(startTime).ToString("HH:mm"));
+            TimeSpan t_end = TimeSpan.Parse(DateTime.Parse(endTime).ToString("HH:mm"));
+
+            if (t_start >= t_end)
+            {
+                throw new InvalidTimeFrameException(startTime, endTime);
+            }
+
             if (DateTime.TryParse(startTime, out _startTime) && DateTime.TryParse(endTime, out _endTime))
             {
                 if (!ValidateTimeframe(startTime, endTime))
@@ -154,6 +162,34 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             catch (FormatException ex)
             {
                 MessageBox.Show($"Cannot parse {time}.");
+                return false;
+            }
+
+            return false;
+        }
+
+        public bool WillConcurWith(TimeFrame newTimeframe)
+        {
+            try
+            {
+                TimeSpan startTime = TimeSpan.Parse(DateTime.Parse(StartTime).ToString("HH:mm"));
+                TimeSpan endTime = TimeSpan.Parse(DateTime.Parse(EndTime).ToString("HH:mm"));
+                TimeSpan timeToCompare_Start = TimeSpan.Parse(DateTime.Parse(newTimeframe.StartTime).ToString("HH:mm"));
+                TimeSpan timeToCompare_End = TimeSpan.Parse(DateTime.Parse(newTimeframe.EndTime).ToString("HH:mm"));
+
+                if (timeToCompare_Start >= timeToCompare_End)
+                    throw new InvalidTimeFrameException(newTimeframe.StartTime, newTimeframe.EndTime);
+
+                if ((timeToCompare_Start < startTime && timeToCompare_End <= startTime) || (timeToCompare_Start >= endTime && timeToCompare_End > endTime))
+                {
+                    return false;
+                }
+                return true;
+                
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show($"Cannot parse {newTimeframe.StartTime} => {newTimeframe.EndTime}.");
                 return false;
             }
 
