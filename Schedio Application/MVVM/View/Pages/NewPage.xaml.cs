@@ -506,14 +506,14 @@ namespace Schedio_Application.MVVM.View.Pages
                     return;
                 }
             }
-            foreach (ClassSection section in Sections)
-            {
-                Trace.WriteLine($"{section.Name}");
-                foreach (Subject s in section.Subjects)
-                {
-                    Trace.WriteLine($"\t{s.Name}: {s.RoomType.Name} - {s.Units} - {s.AssignedPerson.Name}");
-                }
-            }
+            //foreach (ClassSection section in Sections)
+            //{
+            //    Trace.WriteLine($"{section.Name}");
+            //    foreach (Subject s in section.Subjects)
+            //    {
+            //        Trace.WriteLine($"\t{s.Name}: {s.RoomType.Name} - {s.Units} - {s.AssignedPerson.Name}");
+            //    }
+            //}
             
         }
     }

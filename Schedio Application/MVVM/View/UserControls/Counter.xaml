@@ -24,7 +24,8 @@
                  TextChanged="tb_Num_TextChanged"
                  KeyDown="tb_Num_KeyDown"
                  Text="{Binding Number, UpdateSourceTrigger=LostFocus}"
-                 LostFocus="tb_Num_LostFocus"/>
+                 LostFocus="tb_Num_LostFocus"
+                 GotFocus="tb_Num_GotFocus"/>
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>

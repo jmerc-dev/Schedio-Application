@@ -227,7 +227,7 @@ namespace Schedio_Application.MVVM.View.UserControls
         double vOff = 1;
         private void scrollViewer_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
+            sv_Canvas.Focus();
             scrollMousePoint = e.GetPosition(sv_Canvas);
             hOff = sv_Canvas.HorizontalOffset;
             vOff = sv_Canvas.VerticalOffset;

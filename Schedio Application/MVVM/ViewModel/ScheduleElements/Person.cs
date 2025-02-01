@@ -159,6 +159,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 _Days[6].IsAvailable = isChecked;
             else
                 _Days[(int)day - 1].IsAvailable = isChecked;
+            AvailableDays = GetAvailDaysFormatted();
         }
 
         public string GetAvailDaysFormatted()

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
@@ -23,6 +24,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private ClassSection _ClassSection;
 
         private double _UnitsRemaining;
+        private double _UnitsAllocated;
         private bool _IsAllocated;
 
         
@@ -80,28 +82,28 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             get { return _Units; }
             set 
             { 
-
                 if (_Units == 0)
                 {
                     UnitsRemaining = value;
-                    _Units = value;
-                    return;
-                }
-                
-                if (value > _Units)
-                {
-                    UnitsRemaining += value - _Units;
                 }
                 else
                 {
-                    if (value < _Units - UnitsRemaining)
+                    if (value > _Units)
                     {
-                        new MBox($"You cannot decrease the units because it is allocated in the workshop or it will result in negative value.").ShowDialog();
-                        return;
+                        UnitsRemaining += value - _Units;
                     }
+                    else
+                    {
+                        if (value < _Units - UnitsRemaining)
+                        {
+                            new MBox($"You cannot decrease the units because it is allocated in the workshop.").ShowDialog();
+                            return;
+                        }
 
-                    UnitsRemaining -= _Units - value;
+                        UnitsRemaining -= _Units - value;
+                    }
                 }
+                
                 _Units = value;
 
 
@@ -110,7 +112,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                     this.OwnerSection.TotalUnits = this.OwnerSection.GetTotalUnits();
                 }
 
-                Trace.WriteLine($"{this.Name}: Units - {this.Units}, RemUnits - {this.UnitsRemaining}");
+                //Trace.WriteLine($"{this.Name}: Units - {this.Units}, RemUnits - {this.UnitsRemaining}");
 
                 OnPropertyChanged();
             }
@@ -121,14 +123,10 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             get { return _UnitsRemaining; }
             set
             {
-
-                // Updates Allocated Units Indicator
-                if (this.OwnerSection != null)
+                if (_UnitsRemaining == value)
                 {
-                    this.OwnerSection.AllocatedUnits -= _Units - _UnitsRemaining;
-                    this.OwnerSection.AllocatedUnits += _Units - value;
+                    return;
                 }
-                
 
                 _UnitsRemaining = value;
 
@@ -148,6 +146,12 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 }
                 OnPropertyChanged();
             }
+        }
+
+        public double UnitsAllocated
+        {
+            get => _UnitsAllocated;
+            set => _UnitsAllocated = value;
         }
 
         public ClassSection OwnerSection
@@ -177,6 +181,15 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public Subject(ClassSection ownerSection)
         {
             OwnerSection = ownerSection;
+
+            Task.Run(() =>
+            {
+                while (true)
+                {
+                    Trace.WriteLine(this.OwnerSection.AllocatedSubjects);
+                    Thread.Sleep(500);
+                }
+            });
         }
 
         public Subject()
@@ -232,6 +245,11 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 subjectEntries.Add(subjectAllocation.Entry);
                 UnitsRemaining -= subjectAllocation.Entry.UnitsToAllocate;
 
+                // Updates Allocated Units Indicator
+                if (this.OwnerSection != null)
+                {
+                    this.OwnerSection.AllocatedUnits += subjectAllocation.Entry.UnitsToAllocate;
+                }
             }
         }
 
@@ -244,12 +262,19 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             {
                 new MBox("Cannot cast from object to subject entry").ShowDialog();
             }
+
             if (new MBox("Are you sure you want to deallocate this entry?", MBoxType.CancelOrOK).ShowDialog() == true)
             {
                 SubjectEntry se = (SubjectEntry)entry;
                 se.SubjectInfo.UnitsRemaining += se.UnitsToAllocate;
                 subjectEntries.Remove(se);
-                
+
+                // Updates Allocated Units Indicator
+                if (this.OwnerSection != null)
+                {
+                    this.OwnerSection.AllocatedUnits -= se.UnitsToAllocate;
+                }
+
                 new MBox("Subject entry deallocated", MBoxImage.Information).ShowDialog();
             }
             
