@@ -34,6 +34,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         public RelayCommand AllocSubjectCommand => new RelayCommand(execute => AllocSubject());
         public RelayCommand DeAllocSubjectCommand => new RelayCommand(execute => DeallocSubject(execute));
+        public RelayCommand AdjustSubjectCommand => new RelayCommand((execute) => AdjustSubjectCard());
 
         // Implement id system per subject
         public int Id
@@ -112,7 +113,6 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                     this.OwnerSection.TotalUnits = this.OwnerSection.GetTotalUnits();
                 }
 
-                //Trace.WriteLine($"{this.Name}: Units - {this.Units}, RemUnits - {this.UnitsRemaining}");
 
                 OnPropertyChanged();
             }
@@ -182,14 +182,6 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         {
             OwnerSection = ownerSection;
 
-            Task.Run(() =>
-            {
-                while (true)
-                {
-                    Trace.WriteLine(this.OwnerSection.AllocatedSubjects);
-                    Thread.Sleep(500);
-                }
-            });
         }
 
         public Subject()
@@ -222,25 +214,6 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
             if (subjectAllocation.ShowDialog() == true)
             {
-
-                //foreach (SubjectEntry entry in Subject.subjectEntries)
-                //{
-                //    if ((subjectAllocation.Entry.DayAssigned == entry.DayAssigned) && (subjectAllocation.Entry.RoomAllocated == entry.RoomAllocated))
-                //    {
-                        
-                //        if (subjectAllocation.Entry.TimeFrame.StartTime == null || subjectAllocation.Entry.TimeFrame.EndTime == null)
-                //        {
-                //            new MBox("StartTime or EndTime is null.").ShowDialog();
-                //            return;
-                //        }
-
-                //        if (entry.TimeFrame.IsOverlap(subjectAllocation.Entry.TimeFrame.StartTime) || entry.TimeFrame.IsOverlap(subjectAllocation.Entry.TimeFrame.EndTime) || entry.TimeFrame.IsContainedBy(subjectAllocation.Entry.TimeFrame))
-                //        {
-                //            new MBox($"You cannot allocate this subject because it is conflicting with:\n{entry.SubjectInfo.OwnerSection.Name}: {entry.TimeFrame.StartTime} => {entry.TimeFrame.EndTime} in {entry.DayAssigned.ToString()}").ShowDialog();
-                //            return;
-                //        }
-                //    }
-                //}
 
                 subjectEntries.Add(subjectAllocation.Entry);
                 UnitsRemaining -= subjectAllocation.Entry.UnitsToAllocate;
@@ -278,6 +251,11 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 new MBox("Subject entry deallocated", MBoxImage.Information).ShowDialog();
             }
             
+        }
+
+        private void AdjustSubjectCard()
+        {
+            Trace.WriteLine(this.Name);
         }
 
         // For section and subjects only

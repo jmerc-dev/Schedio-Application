@@ -42,7 +42,7 @@ namespace Schedio_Application
 
         private void btn_CloseWindow_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.MainWindow.Close();
+            Application.Current?.MainWindow?.Close();
         }
 
         private void btn_MinimizeWindow_Click(object sender, RoutedEventArgs e)
