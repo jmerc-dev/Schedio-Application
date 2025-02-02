@@ -5,11 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"
         xmlns:userControl="clr-namespace:Schedio_Application.MVVM.View.UserControls"
+        xmlns:converter="clr-namespace:Schedio_Application.MVVM.ViewModel.Converters"
+        xmlns:core="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="SubjectAllocation" Height="400" Width="650"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <converter:RemainingUnitToBoolConverter x:Key="lessThanOrEqualConverter"/>
+    </Window.Resources>
+    
     <Border BorderBrush="{StaticResource GreyColor}" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
@@ -83,16 +90,12 @@
                     
                     <TextBlock Text="Units:" FontSize="15" Grid.Row="2" Grid.Column="2" Margin="0,5" VerticalAlignment="Center"/>
                     <ComboBox Style="{StaticResource MainComboBox}" Name="cbox_SelectedUnits" Grid.Column="3" Grid.Row="2" Width="50" Height="25" HorizontalAlignment="Left" Margin="20,0,0,5" VerticalContentAlignment="Center">
-                        <ComboBoxItem Content="0.5"/>
-                        <ComboBoxItem Content="1.0"/>
-                        <ComboBoxItem Content="1.5"/>
-                        <ComboBoxItem Content="2.0"/>
-                        <ComboBoxItem Content="2.5"/>
-                        <ComboBoxItem Content="3.0"/>
-                        <ComboBoxItem Content="3.5"/>
-                        <ComboBoxItem Content="4.0"/>
-                        <ComboBoxItem Content="4.5"/>
-                        <ComboBoxItem Content="5.0"/>
+                        <!--<ComboBox.Resources>
+                            <Style TargetType="ComboBoxItem">
+                                <Setter Property="IsEnabled" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content, Converter={StaticResource lessThanOrEqualConverter}, ConverterParameter=Entry.SubjectInfo.UnitsRemaining}"/>
+                            </Style>
+                        </ComboBox.Resources>-->
+                        
                     </ComboBox>
 
                     <StackPanel Orientation="Horizontal" Grid.Column="3" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Right">

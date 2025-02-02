@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Schedio_Application.MVVM.View.Windows
 {
@@ -34,7 +35,19 @@ namespace Schedio_Application.MVVM.View.Windows
 
             cbox_Rooms.ItemsSource = Workshop.Rooms;
             this.DataContext = _entry;
+
+            AddChoices(subject.UnitsRemaining);
         }
+
+        private void AddChoices(double limit)
+        {
+            for (double i = 0.5; i <= 5.0; i += 0.5 )
+            {
+                if (i > limit)
+                    break;
+                cbox_SelectedUnits.Items.Add(i.ToString("0.0"));
+        }
+    }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
