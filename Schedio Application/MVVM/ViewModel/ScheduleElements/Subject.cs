@@ -34,7 +34,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         public RelayCommand AllocSubjectCommand => new RelayCommand(execute => AllocSubject());
         public RelayCommand DeAllocSubjectCommand => new RelayCommand(execute => DeallocSubject(execute));
-        public RelayCommand AdjustSubjectCommand => new RelayCommand((execute) => AdjustSubjectCard());
+        public RelayCommand AdjustSubjectCommand => new RelayCommand((execute) => AdjustSubjectCard(execute));
 
         // Implement id system per subject
         public int Id
@@ -204,7 +204,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         // Use delegate to add subjectCards
         private void AllocSubject()
         {
-            SubjectAllocation subjectAllocation = new SubjectAllocation(this);
+            SubjectAllocation subjectAllocation = new SubjectAllocation(this, State.New);
 
             if (this.IsAllocated)
             {
@@ -234,6 +234,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             } catch (Exception ex)
             {
                 new MBox("Cannot cast from object to subject entry").ShowDialog();
+                return;
             }
 
             if (new MBox("Are you sure you want to deallocate this entry?", MBoxType.CancelOrOK).ShowDialog() == true)
@@ -253,9 +254,34 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             
         }
 
-        private void AdjustSubjectCard()
+        private void AdjustSubjectCard(object entry)
         {
-            Trace.WriteLine(this.Name);
+            // TODO: Fix binding for SubjectAllocation Window
+            // Should pass the entry here
+            if (entry == null)
+            {
+                Trace.WriteLine("entry is null");
+                return;
+            }
+            SubjectEntry subEntry;
+            try
+            {
+                subEntry = (SubjectEntry)entry;
+            }
+            catch (Exception ex)
+            {
+                new MBox("Cannot cast from object to subject entry").ShowDialog();
+                return;
+            }
+
+            SubjectAllocation subAllocObj = new SubjectAllocation(subEntry);
+            if (subAllocObj.ShowDialog() == true)
+            {
+                Trace.WriteLine($"{subAllocObj.Entry.RoomAllocated.Name}");
+                new MBox("Success adjustment!").ShowDialog();
+
+                // TODO: Reposition subjectCard
+            }
         }
 
         // For section and subjects only

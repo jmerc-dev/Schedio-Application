@@ -16,7 +16,9 @@
              Cursor="Arrow">
     <UserControl.ContextMenu>
         <ContextMenu>
-            <MenuItem Header="Adjust" Command="{Binding SubjectInfo.AdjustSubjectCommand}"/>
+            <MenuItem Header="Adjust" Command="{Binding SubjectInfo.AdjustSubjectCommand}" CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={
+                RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
+            <MenuItem Header="Replace"/>
             <MenuItem Header="Deallocate" Command="{Binding SubjectInfo.DeAllocSubjectCommand}" CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={
                 RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
         </ContextMenu>

@@ -64,7 +64,13 @@ namespace Schedio_Application.MVVM.View.UserControls
 
             return tp.TotalMinutes * 2;
         }
-
+        
+        public bool SetPosition(TimeFrame tf, Room room)
+        {
+            this.SetValue(Canvas.TopProperty, HourToTopPositionConverter(tf.StartTime));
+            this.SetValue(Canvas.LeftProperty, Convert.ToDouble(Workshop.Rooms.IndexOf(room) * 200));
+            return true;
+        }
 
         private void UserControl_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {

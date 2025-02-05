@@ -1,4 +1,5 @@
-﻿using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+﻿using Microsoft.VisualBasic;
+using Schedio_Application.MVVM.ViewModel.ScheduleElements;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,42 +13,93 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Schedio_Application.MVVM.View.Windows
 {
+
     /// <summary>
     /// Interaction logic for SubjectAllocation.xaml
     /// </summary>
     public partial class SubjectAllocation : Window
     {
         private SubjectEntry _entry;
+        private List<string> _UnitsChoices;
+
+        public List<string> UnitsChoices 
+        {
+            get => _UnitsChoices;
+            set => _UnitsChoices = value;
+        }
+
         public SubjectEntry Entry
         {
             get { return _entry; }
         }
 
-        public SubjectAllocation(Subject subject)
+        private string[] _DaysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+        public string[] DaysOfAWeek
+        {
+            get => _DaysOfWeek;
+        }
+        public SubjectAllocation(Subject subject, State mode)
         {
             InitializeComponent();
-            _entry = new SubjectEntry(subject);
 
+            //cb_Day.ItemsSource = DaysOfAWeek;
+            _entry = new SubjectEntry(subject);
             cbox_Rooms.ItemsSource = Workshop.Rooms;
             this.DataContext = _entry;
 
-            AddChoices(subject.UnitsRemaining);
+            cbox_SelectedUnits.ItemsSource = AddChoices(subject.UnitsRemaining);
+
         }
 
-        private void AddChoices(double limit)
+        // Continue Here
+        public SubjectAllocation(SubjectEntry subEntry)
         {
+            InitializeComponent();
+
+            _entry = subEntry;
+            cbox_Rooms.ItemsSource = Workshop.Rooms;
+            this.DataContext = _entry;
+            cbox_SelectedUnits.ItemsSource = AddChoices(subEntry.SubjectInfo.UnitsRemaining + subEntry.UnitsToAllocate);
+
+            btn_Update.Visibility = Visibility.Visible;
+            btn_Select.Visibility = Visibility.Collapsed;
+            SetupValues();
+        }
+
+        private void SetupValues()
+        {
+            // DayAssigned
+            foreach (ComboBoxItem item in cb_Day.Items)
+            {
+                if (item.Content.ToString().Equals(Entry.DayAssigned.ToString()))
+                {
+                    cb_Day.SelectedItem = item;
+                }
+            }
+
+            // StartTime
+            
+        }
+
+        private List<double> AddChoices(double limit)
+        {
+            List<double> unitsChoices = new List<double>();
             for (double i = 0.5; i <= 5.0; i += 0.5 )
             {
                 if (i > limit)
                     break;
-                cbox_SelectedUnits.Items.Add(i.ToString("0.0"));
+                unitsChoices.Add(i);
+            }
+
+            return unitsChoices;
         }
-    }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -168,6 +220,11 @@ namespace Schedio_Application.MVVM.View.Windows
                 }
             }
             return null;
+        }
+
+        private void btn_Update_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
