@@ -55,6 +55,17 @@ namespace Schedio_Application.MVVM.View.UserControls
             this.SetValue(Canvas.LeftProperty, Convert.ToDouble(Workshop.Rooms.IndexOf(entry.RoomAllocated) * 200));
         }
 
+        public void UpdatePosition()
+        {
+            this.SetValue(Canvas.TopProperty, HourToTopPositionConverter(Entry.TimeFrame.StartTime));
+            this.SetValue(Canvas.LeftProperty, Convert.ToDouble(Workshop.Rooms.IndexOf(Entry.RoomAllocated) * 200));
+        }
+
+        public void UpdateDimension()
+        {
+            this.Height = Entry.UnitsToAllocate * HOUR_HEIGHT;
+        }
+
         private double HourToTopPositionConverter(string time)
         {
             DateTime startTime = DateTime.Parse(time);

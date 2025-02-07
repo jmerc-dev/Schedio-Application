@@ -60,7 +60,6 @@ namespace Schedio_Application.MVVM.View.Windows
 
         public Workshop()
         {
-            _Rooms = new ObservableCollection<Room>();
             Personnel = new ObservableCollection<Person>();
             Sections = new ObservableCollection<ClassSection>();
 
@@ -177,13 +176,12 @@ namespace Schedio_Application.MVVM.View.Windows
     // Schedule Data Management
     public partial class Workshop : Window
     {
-        private static ObservableCollection<Room> _Rooms;
         private ObservableCollection<Room> TempRooms;
         private ObservableCollection<RoomType> RoomTypes;
 
         public static ObservableCollection<Room> Rooms 
         { 
-            get { return _Rooms; }
+            get { return Room.RoomsList; }
         }
 
         private ObservableCollection<Person> Personnel;
@@ -366,7 +364,12 @@ namespace Schedio_Application.MVVM.View.Windows
                         }
                     }
                 }
-                
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Replace)
+            {
+                //getDayTable(Subject.SubjectEntries[e.NewStartingIndex].DayAssigned).UpdateEntry(Subject.SubjectEntries[e.NewStartingIndex]);
+
+                Trace.WriteLine($"an item has been replaced {e.OldStartingIndex} {e.NewStartingIndex}");
             }
         }
 

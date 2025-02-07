@@ -82,16 +82,14 @@
                     <TextBlock Text="{Binding SubjectInfo.AssignedPerson.Name}" Grid.Row="3" VerticalAlignment="Top" Grid.Column="1" Style="{StaticResource UneditableText}" FontSize="15" Margin="0,5"/>
 
                     <TextBlock Text="Room:" FontSize="15" Grid.Row="1" Grid.Column="2" Margin="0,5"/>
-                    <ComboBox Style="{StaticResource MainComboBox}" Name="cbox_Rooms" DisplayMemberPath="Name" SelectedValue="{Binding Path=RoomAllocated}" Grid.Column="3" IsEditable="True" Grid.Row="1" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Margin="20,0,0,0"/>
+                    <ComboBox Style="{StaticResource MainComboBox}" Name="cbox_Rooms" DisplayMemberPath="Name" SelectedValue="{Binding Path=RoomAllocated, Mode=OneWay}" Grid.Column="3" IsEditable="True" Grid.Row="1" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Margin="20,0,0,0"/>
 
                     <TextBlock Text="Start Time:" FontSize="15" Grid.Row="3"  Grid.Column="2" Margin="0,5,0,0" VerticalAlignment="Top"/>
                     <userControl:TimeInput x:Name="ti_Start" Grid.Row="3" Grid.Column="3" Width="130" Height="27" VerticalAlignment="Top" Margin="20,0,0,5" HorizontalAlignment="Left" FontHeight="15" ButtonHeight="13"/>
                     
                     
                     <TextBlock Text="Units:" FontSize="15" Grid.Row="2" Grid.Column="2" Margin="0,5" VerticalAlignment="Center"/>
-                    <ComboBox Style="{StaticResource MainComboBox}" Name="cbox_SelectedUnits" Grid.Column="3" Grid.Row="2" Width="50" Height="25" HorizontalAlignment="Left" Margin="20,0,0,5" VerticalContentAlignment="Center" SelectedValue="{Binding UnitsToAllocate}">
-
-                        
+                    <ComboBox Style="{StaticResource MainComboBox}" Name="cbox_SelectedUnits" Grid.Column="3" Grid.Row="2" Width="50" Height="25" HorizontalAlignment="Left" Margin="20,0,0,5" VerticalContentAlignment="Center" SelectedValue="{Binding UnitsToAllocate, Mode=OneWay}">
                     </ComboBox>
 
                     <StackPanel Orientation="Horizontal" Grid.Column="3" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Right">

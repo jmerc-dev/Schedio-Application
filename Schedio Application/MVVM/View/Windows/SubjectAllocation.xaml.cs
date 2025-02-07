@@ -27,6 +27,7 @@ namespace Schedio_Application.MVVM.View.Windows
     {
         private SubjectEntry _entry;
         private List<string> _UnitsChoices;
+        
 
         public List<string> UnitsChoices 
         {
@@ -36,15 +37,9 @@ namespace Schedio_Application.MVVM.View.Windows
 
         public SubjectEntry Entry
         {
-            get { return _entry; }
+            get => _entry;
         }
 
-        private string[] _DaysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-
-        public string[] DaysOfAWeek
-        {
-            get => _DaysOfWeek;
-        }
         public SubjectAllocation(Subject subject, State mode)
         {
             InitializeComponent();
@@ -56,9 +51,10 @@ namespace Schedio_Application.MVVM.View.Windows
 
             cbox_SelectedUnits.ItemsSource = AddChoices(subject.UnitsRemaining);
 
+            Entry.UnitsToAllocate = 0.5;
         }
 
-        // Continue Here
+
         public SubjectAllocation(SubjectEntry subEntry)
         {
             InitializeComponent();
@@ -85,7 +81,13 @@ namespace Schedio_Application.MVVM.View.Windows
             }
 
             // StartTime
-            
+            ti_Start.SetTime(Entry.TimeFrame.StartTime);
+
+            Loaded += (e, sender) =>
+            {
+                //ComboBoxItem item = (ComboBoxItem) cbox_SelectedUnits.;
+                //item.Background = Brushes.DimGray;
+            };
         }
 
         private List<double> AddChoices(double limit)
@@ -114,8 +116,6 @@ namespace Schedio_Application.MVVM.View.Windows
                 }
         }
 
-        // TODO: Fix Subject Card
-        // 10-02-2024
 
         private DayOfWeek GetChosenDay(string dayName)
         {
@@ -140,6 +140,7 @@ namespace Schedio_Application.MVVM.View.Windows
                 return;
             }
 
+
             if (Entry.SubjectInfo.UnitsRemaining < Double.Parse(cbox_SelectedUnits.Text))
             {
                 new MBox("The selected units to allocate is greater than the units remaining.").ShowDialog();
@@ -154,7 +155,8 @@ namespace Schedio_Application.MVVM.View.Windows
                 _entry.TimeFrame.EndTime = DateTime.Parse(ti_Start.Time).AddHours(_entry.UnitsToAllocate).ToString("hh:mm tt");
                 _entry.DayAssigned = GetChosenDay(cb_Day.Text);
 
-                Room? room = RoomExists(cbox_Rooms.Text);
+                Room? room = Room.RoomExists(cbox_Rooms.Text);
+
                 _entry.RoomAllocated = room;
 
                 // Validations
@@ -210,21 +212,104 @@ namespace Schedio_Application.MVVM.View.Windows
         }
 
 
-        private Room? RoomExists(string roomname)
-        {
-            foreach (Room room in Workshop.Rooms)
-            {
-                if (room.Name.Equals(roomname, StringComparison.CurrentCulture))
-                {
-                    return room;
-                }
-            }
-            return null;
-        }
-
         private void btn_Update_Click(object sender, RoutedEventArgs e)
         {
 
+            // Initialize
+            double newUnitsToAllocate = (double)cbox_SelectedUnits.SelectedValue;
+            DayOfWeek newDayAssigned = GetChosenDay(((ComboBoxItem)cb_Day.SelectedValue).Content.ToString());
+            Room newRoom = (Room)cbox_Rooms.SelectedValue;
+            TimeFrame newTimeframe = new TimeFrame(ti_Start.Time, DateTime.Parse(ti_Start.Time).AddHours(newUnitsToAllocate).ToString("hh:mm tt"));
+
+            // Null Checks
+            if (cb_Day.SelectedValue == null)
+            {
+                new MBox("Please select a day to be assigned.").ShowDialog();
+                return;
+            }
+
+            if (newRoom == null)
+            {
+                new MBox("Room doesn't exist").ShowDialog();
+                return;
+            }
+
+            if (cbox_SelectedUnits.SelectedValue == null)
+            {
+                new MBox("SelectedUnits is null").ShowDialog();
+                return;
+            }
+
+            /* Validations */
+
+            // Units Equity rule
+            if ((Entry.SubjectInfo.UnitsRemaining) + (Entry.UnitsToAllocate) < newUnitsToAllocate)
+            {
+                new MBox("The selected units to allocate is greater than the units remaining.").ShowDialog();
+                return;
+            }
+            
+            // Availability of the personnel
+            if (!Entry.SubjectInfo.AssignedPerson.IsAvailableAt(GetChosenDay(cb_Day.Text), new TimeFrame(newTimeframe.StartTime, newTimeframe.EndTime)))
+            {
+                if (new MBox($"{Entry.SubjectInfo.AssignedPerson.Name} is not available from {newTimeframe.StartTime} to {newTimeframe.EndTime} in {newDayAssigned.ToString()}. Do you still want to continue?", MBoxType.CancelOrOK).ShowDialog() != true)
+                {
+                    return;
+                }
+            }
+
+            //Availability Check
+            try
+            {
+                foreach (SubjectEntry existingEntry in Subject.subjectEntries)
+                {
+                    // Prevent comparison to itself
+                    if (Entry == existingEntry)
+                        continue;
+
+                    // Prevent overlapping with other allocated subjects
+                    if (existingEntry.DayAssigned == newDayAssigned && newRoom == existingEntry.RoomAllocated)
+                    {
+                        if (existingEntry.TimeFrame.WillConcurWith(newTimeframe))
+                        {
+                            new MBox($"You cannot allocate this subject because it is conflicting with:\n{existingEntry.SubjectInfo.OwnerSection.Name}: {existingEntry.TimeFrame.StartTime} => {existingEntry.TimeFrame.EndTime} in {existingEntry.DayAssigned.ToString()}").ShowDialog();
+                            return;
+                        }
+                    }
+
+                    // Personnel parallel check
+                    if (newDayAssigned == existingEntry.DayAssigned && newRoom != existingEntry.RoomAllocated && Entry.SubjectInfo.AssignedPerson == existingEntry.SubjectInfo.AssignedPerson)
+                    {
+                        if (existingEntry.TimeFrame.WillConcurWith(newTimeframe))
+                        {
+                            new MBox($"{Entry.SubjectInfo.AssignedPerson.Name} is currently assigned at the timeframe: {newTimeframe.StartTime} => {newTimeframe.EndTime} in {existingEntry.DayAssigned.ToString()}").ShowDialog();
+                            return;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                new MBox($"Validation error: {ex.Message}").ShowDialog();
+            }
+
+            /* Assignment */
+            try
+            {
+
+                Entry.TimeFrame = newTimeframe;
+                Entry.UnitsToAllocate = newUnitsToAllocate;
+                Entry.DayAssigned = newDayAssigned;
+                Entry.RoomAllocated = newRoom;
+                
+            }
+            catch (Exception ex)
+            {
+                new MBox(ex.Message, MBoxImage.Warning).ShowDialog();
+                return;
+            }
+
+            DialogResult = true;
         }
     }
 }

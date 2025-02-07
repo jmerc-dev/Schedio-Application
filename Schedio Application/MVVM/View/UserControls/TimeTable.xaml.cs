@@ -80,7 +80,7 @@ namespace Schedio_Application.MVVM.View.UserControls
                 
 
                 double fullWidth = TimeHeader.ActualWidth + RoomHeader.ActualWidth;
-                double fullHeight = TimeHeader.ActualHeight+ Timeslot.ActualHeight;
+                double fullHeight = TimeHeader.ActualHeight + Timeslot.ActualHeight;
 
                 SetControlWidth(fullWidth);
                 SetControlHeight(fullHeight);
@@ -115,15 +115,6 @@ namespace Schedio_Application.MVVM.View.UserControls
 
         public bool removeEntry(SubjectEntry entry)
         {
-            //foreach (SubjectCard sc in entriesContainer.Children)
-            //{
-            //    if (sc.Entry == entry)
-            //    {
-            //        entriesContainer.Children.Remove(sc);
-            //    }
-            //}
-
-            //Trace.WriteLine(entriesContainer.Children[1]);
             for (int i = 0; i < entriesContainer.Children.Count; i++)
             {
                 if (entriesContainer.Children[i].GetType() == typeof(SubjectCard))
@@ -135,9 +126,31 @@ namespace Schedio_Application.MVVM.View.UserControls
                     }
                 }
             }
-
             return true;
         }
+
+        public bool UpdateEntry(SubjectEntry entry)
+        {
+            for (int i = 0; i < entriesContainer.Children.Count; i++)
+            {
+                if (entriesContainer.Children[i].GetType() == typeof(SubjectCard))
+                {
+                    SubjectCard sc = (SubjectCard)entriesContainer.Children[i];
+                    foreach (SubjectEntry se in Subject.SubjectEntries)
+                    {
+                        if (se == sc.Entry)
+                        {
+                            sc.UpdatePosition();
+                            sc.UpdateDimension();
+                        }
+                    }
+
+                }
+            }
+            return true;
+        }
+
+        
 
         public void addVerticalLine()
         {
@@ -159,7 +172,7 @@ namespace Schedio_Application.MVVM.View.UserControls
                 SubjectCard subCard = (SubjectCard)card;
                 if (subCard.Entry.RoomAllocated == null)
                 {
-                    new MBox("There is an error when refresshing Subject Cards positions").ShowDialog();
+                    new MBox("There is an error when refreshing Subject Cards positions").ShowDialog();
                     return false;
                 }
                 else
@@ -210,16 +223,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             
         }
 
-        private void AddSubjectCard(SubjectEntry entry) 
-        {
-            Subject.SubjectEntries.Add(entry);
-            entriesContainer.Children.Add(new SubjectCard(entry));
-        }
-
-        private void DeleteSubjectCard(SubjectEntry entry)
-        {
-
-        }
+        
 
         // Mouse dragging 
         Point scrollMousePoint = new Point();

@@ -256,7 +256,6 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         private void AdjustSubjectCard(object entry)
         {
-            // TODO: Fix binding for SubjectAllocation Window
             // Should pass the entry here
             if (entry == null)
             {
@@ -274,13 +273,21 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 return;
             }
 
+            double previousUnits = subEntry.UnitsToAllocate;
+            this.OwnerSection.AllocatedUnits -= subEntry.UnitsToAllocate;
+
             SubjectAllocation subAllocObj = new SubjectAllocation(subEntry);
             if (subAllocObj.ShowDialog() == true)
             {
-                Trace.WriteLine($"{subAllocObj.Entry.RoomAllocated.Name}");
-                new MBox("Success adjustment!").ShowDialog();
-
                 // TODO: Reposition subjectCard
+                if (subAllocObj.Entry.UnitsToAllocate > previousUnits)
+                    subAllocObj.Entry.SubjectInfo.UnitsRemaining -= subAllocObj.Entry.UnitsToAllocate - previousUnits;
+                else if (subAllocObj.Entry.UnitsToAllocate < previousUnits)
+                    subAllocObj.Entry.SubjectInfo.UnitsRemaining += previousUnits - subAllocObj.Entry.UnitsToAllocate;
+
+                this.OwnerSection.AllocatedUnits += subAllocObj.Entry.UnitsToAllocate;
+
+                Subject.subjectEntries[Subject.subjectEntries.IndexOf(subEntry)] = subEntry;
             }
         }
 

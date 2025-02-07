@@ -1,4 +1,6 @@
-﻿using Schedio_Application.MVVM.ViewModel.Utilities;
+﻿using Schedio_Application.MVVM.View.Windows;
+using Schedio_Application.MVVM.ViewModel.Custom_Exceptions;
+using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -41,7 +43,11 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public TimeFrame TimeFrame
         {
             get => _TimeFrame;
-            set => _TimeFrame = value;
+            set
+            {
+                _TimeFrame = value;
+                OnPropertyChanged();
+            }
         }
 
         //public string? StartTime
@@ -101,6 +107,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
+
         public SubjectEntry(Subject subject)
         {
             _Subject = subject;
@@ -115,5 +122,51 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             _Room = room;
         }
 
+        public bool ValidateTimeframe(SubjectEntry mainEntry, SubjectEntry existingEntry)
+        {
+            if (existingEntry.DayAssigned == mainEntry.DayAssigned && mainEntry.RoomAllocated == existingEntry.RoomAllocated)
+            {
+                if (existingEntry.TimeFrame.WillConcurWith(mainEntry.TimeFrame))
+                {
+                    throw new TimeframeOverlapException(mainEntry, existingEntry);
+                }
+            }
+            return true;
+        }
+
+        public bool ValidateParallelPersonnel(SubjectEntry mainEntry, SubjectEntry existingEntry)
+        {
+            if (mainEntry.DayAssigned == existingEntry.DayAssigned && mainEntry.RoomAllocated != existingEntry.RoomAllocated && mainEntry.SubjectInfo.AssignedPerson == existingEntry.SubjectInfo.AssignedPerson)
+            {
+                if (existingEntry.TimeFrame.WillConcurWith(mainEntry.TimeFrame))
+                {
+                    new MBox($"{mainEntry.SubjectInfo.AssignedPerson.Name} is currently assigned at the timeframe: {existingEntry.TimeFrame.StartTime} => {existingEntry.TimeFrame.EndTime} in {existingEntry.DayAssigned.ToString()}").ShowDialog();
+                    throw new PersonnelOverlapException(mainEntry, existingEntry);
+                }
+            }
+            return true;
+        }
+
+        public bool ValidateAvailability()
+        {
+            foreach (SubjectEntry se in Subject.subjectEntries)
+            {
+                if (this == se)
+                    continue;
+
+                if (!ValidateTimeframe(this, se))
+                    return false;
+
+                if (!ValidateParallelPersonnel(this, se))
+                    return false;
+            }
+            return true;
+        }
+
+        public bool Update()
+        {
+
+            return true;
+        }
     }
 }

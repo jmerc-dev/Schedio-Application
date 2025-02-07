@@ -2,6 +2,7 @@
 using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
@@ -13,6 +14,13 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
     public class Room : PropertyNotification
     {
+        private static ObservableCollection<Room> _Rooms = new ObservableCollection<Room>();
+
+        public static ObservableCollection<Room> RoomsList
+        {
+            get { return _Rooms; }
+        }
+
         private string _name;
         private RoomType _type;
 
@@ -39,6 +47,18 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         {
             this._name = name;
             this._type = type;
+        }
+
+        public static Room RoomExists(string roomname) 
+        {
+            foreach (Room room in Room.RoomsList)
+            {
+                if (room.Name.Equals(roomname, StringComparison.CurrentCulture))
+                {
+                    return room;
+                }
+            }
+            return null;
         }
     }
 }
