@@ -367,7 +367,7 @@ namespace Schedio_Application.MVVM.View.Windows
             }
             else if (e.Action == NotifyCollectionChangedAction.Replace)
             {
-                //getDayTable(Subject.SubjectEntries[e.NewStartingIndex].DayAssigned).UpdateEntry(Subject.SubjectEntries[e.NewStartingIndex]);
+                getDayTable(Subject.SubjectEntries[e.NewStartingIndex].DayAssigned).UpdateEntry(Subject.SubjectEntries[e.NewStartingIndex]);
 
                 Trace.WriteLine($"an item has been replaced {e.OldStartingIndex} {e.NewStartingIndex}");
             }
