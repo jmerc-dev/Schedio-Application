@@ -279,7 +279,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             SubjectAllocation subAllocObj = new SubjectAllocation(subEntry);
             if (subAllocObj.ShowDialog() == true)
             {
-                // TODO: Reposition subjectCard
+                
                 if (subAllocObj.Entry.UnitsToAllocate > previousUnits)
                     subAllocObj.Entry.SubjectInfo.UnitsRemaining -= subAllocObj.Entry.UnitsToAllocate - previousUnits;
                 else if (subAllocObj.Entry.UnitsToAllocate < previousUnits)
@@ -288,6 +288,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 this.OwnerSection.AllocatedUnits += subAllocObj.Entry.UnitsToAllocate;
 
                 Subject.subjectEntries[Subject.subjectEntries.IndexOf(subEntry)] = subEntry;
+
             }
         }
 

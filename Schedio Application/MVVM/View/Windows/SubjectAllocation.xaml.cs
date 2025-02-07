@@ -221,6 +221,7 @@ namespace Schedio_Application.MVVM.View.Windows
             Room newRoom = (Room)cbox_Rooms.SelectedValue;
             TimeFrame newTimeframe = new TimeFrame(ti_Start.Time, DateTime.Parse(ti_Start.Time).AddHours(newUnitsToAllocate).ToString("hh:mm tt"));
 
+            SubjectEntry newEntry = new SubjectEntry(Entry.SubjectInfo, newTimeframe, newUnitsToAllocate, newRoom, newDayAssigned);
             // Null Checks
             if (cb_Day.SelectedValue == null)
             {
@@ -301,7 +302,8 @@ namespace Schedio_Application.MVVM.View.Windows
                 Entry.UnitsToAllocate = newUnitsToAllocate;
                 Entry.DayAssigned = newDayAssigned;
                 Entry.RoomAllocated = newRoom;
-                
+
+
             }
             catch (Exception ex)
             {

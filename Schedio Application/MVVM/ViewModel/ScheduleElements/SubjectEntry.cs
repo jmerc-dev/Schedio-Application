@@ -114,12 +114,13 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             _TimeFrame = new TimeFrame();
         }
 
-        public SubjectEntry(Subject subject, TimeFrame tf, double units, Room room)
+        public SubjectEntry(Subject subject, TimeFrame tf, double units, Room room, DayOfWeek day)
         {
             _Subject = subject;
             _TimeFrame = tf;
             _UnitsToAllocate = units;
             _Room = room;
+            _DayAssigned = day;
         }
 
         public bool ValidateTimeframe(SubjectEntry mainEntry, SubjectEntry existingEntry)

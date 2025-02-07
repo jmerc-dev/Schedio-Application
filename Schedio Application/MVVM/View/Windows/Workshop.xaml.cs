@@ -151,10 +151,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Export_Click(object sender, RoutedEventArgs e)
         {
-            foreach (SubjectEntry se in Subject.SubjectEntries)
-            {
-                //Trace.WriteLine(se.SubjectInfo.Name + ": " + se.StartTime + " => " + se.EndTime);
-            }
+            
         }
 
         private void btn_BrowseSectionExplorer_Click(object sender, RoutedEventArgs e)
@@ -356,21 +353,44 @@ namespace Schedio_Application.MVVM.View.Windows
             {   
                 if (e.OldItems.Count > 0)
                 {
-                    foreach (SubjectEntry subEntryOld in e.OldItems)
-                    {
-                        if (!Subject.SubjectEntries.Contains(subEntryOld))
-                        {
-                            getDayTable(subEntryOld.DayAssigned).removeEntry(subEntryOld);
-                        }
-                    }
+                    SubjectEntry se = (SubjectEntry) e.OldItems[e.OldStartingIndex];
+                    getDayTable(se.DayAssigned).removeEntry(se);
+                    
                 }
             }
             else if (e.Action == NotifyCollectionChangedAction.Replace)
             {
-                getDayTable(Subject.SubjectEntries[e.NewStartingIndex].DayAssigned).UpdateEntry(Subject.SubjectEntries[e.NewStartingIndex]);
+
+                SubjectCard? card = FindCardEntry((SubjectEntry) e.NewItems[e.NewStartingIndex]);
+
+                if (card == null)
+                {
+                    Trace.WriteLine("Cannot find entry's card");
+                }
+
+                getDayTable(card.Entry.DayAssigned).PlaceCard(card);
+
 
                 Trace.WriteLine($"an item has been replaced {e.OldStartingIndex} {e.NewStartingIndex}");
+                
             }
+        }
+
+        
+        private SubjectCard? FindCardEntry(SubjectEntry entry)
+        {
+            foreach (TabItem tabItem in tabCtrl_DayTimeTableContainer.Items)
+            {
+                TimeTable tt = (TimeTable)tabItem.Content;
+                SubjectCard? card= tt.RetrieveCardEntry(entry);
+
+                if (card != null)
+                {
+                    return card;
+                }
+            }
+
+            return null;
         }
 
         private TimeTable? getDayTable(DayOfWeek? day)

@@ -150,7 +150,26 @@ namespace Schedio_Application.MVVM.View.UserControls
             return true;
         }
 
-        
+        public SubjectCard? RetrieveCardEntry(SubjectEntry entry)
+        {
+            foreach (SubjectCard card in entriesContainer.Children)
+            {
+                if (card.Entry == entry)
+                {
+                    removeEntry(entry);
+                    return card;
+                }
+            }
+
+            return null;
+        }
+
+        public bool PlaceCard(SubjectCard card)
+        {
+            entriesContainer.Children.Add(card);
+            UpdateEntry(card.Entry);
+            return true;
+        }
 
         public void addVerticalLine()
         {
