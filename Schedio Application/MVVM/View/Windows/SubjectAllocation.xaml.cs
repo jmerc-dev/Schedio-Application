@@ -200,6 +200,16 @@ namespace Schedio_Application.MVVM.View.Windows
                             return;
                         }
                     }
+
+                    // Section parallel check
+                    if (Entry.DayAssigned == entry.DayAssigned && Entry.RoomAllocated != entry.RoomAllocated && Entry.SubjectInfo.OwnerSection == entry.SubjectInfo.OwnerSection)
+                    {
+                        if (entry.TimeFrame.WillConcurWith(Entry.TimeFrame))
+                        {
+                            new MBox($"{Entry.SubjectInfo.OwnerSection.Name} is currently assigned at the timeframe: {entry.TimeFrame.StartTime} => {entry.TimeFrame.EndTime} in {entry.DayAssigned.ToString()}").ShowDialog();
+                            return;
+                        }
+                    }
                 }
 
                 DialogResult = true;
@@ -287,6 +297,16 @@ namespace Schedio_Application.MVVM.View.Windows
                             return;
                         }
                     }
+
+                    // Section parallel check
+                    if (newDayAssigned == existingEntry.DayAssigned && newRoom != existingEntry.RoomAllocated && Entry.SubjectInfo.OwnerSection == existingEntry.SubjectInfo.OwnerSection)
+                    {
+                        if (existingEntry.TimeFrame.WillConcurWith(newTimeframe))
+                        {
+                            new MBox($"{Entry.SubjectInfo.OwnerSection.Name} is currently assigned at the timeframe: {existingEntry.TimeFrame.StartTime} => {existingEntry.TimeFrame.EndTime} in {existingEntry.DayAssigned.ToString()}").ShowDialog();
+                            return;
+                        }
+                    }
                 }
             }
             catch (Exception ex)
@@ -302,7 +322,6 @@ namespace Schedio_Application.MVVM.View.Windows
                 Entry.UnitsToAllocate = newUnitsToAllocate;
                 Entry.DayAssigned = newDayAssigned;
                 Entry.RoomAllocated = newRoom;
-
 
             }
             catch (Exception ex)

@@ -360,8 +360,9 @@ namespace Schedio_Application.MVVM.View.Windows
             }
             else if (e.Action == NotifyCollectionChangedAction.Replace)
             {
-
-                SubjectCard? card = FindCardEntry((SubjectEntry) e.NewItems[e.NewStartingIndex]);
+                Trace.WriteLine($"{Subject.SubjectEntries.Count} : {e.NewStartingIndex}");
+                // When two or more items are allocated, adjustment throws ArgumentOutOfRangeException
+                SubjectCard? card = FindCardEntry((SubjectEntry) Subject.SubjectEntries[e.NewStartingIndex]);
 
                 if (card == null)
                 {
@@ -371,7 +372,7 @@ namespace Schedio_Application.MVVM.View.Windows
                 getDayTable(card.Entry.DayAssigned).PlaceCard(card);
 
 
-                Trace.WriteLine($"an item has been replaced {e.OldStartingIndex} {e.NewStartingIndex}");
+                Trace.WriteLine($"An item has been replaced {e.OldStartingIndex} {e.NewStartingIndex}");
                 
             }
         }
