@@ -353,20 +353,18 @@ namespace Schedio_Application.MVVM.View.Windows
             {   
                 if (e.OldItems.Count > 0)
                 {
-                    SubjectEntry se = (SubjectEntry) e.OldItems[e.OldStartingIndex];
+                    SubjectEntry se = (SubjectEntry) e.OldItems[0];
                     getDayTable(se.DayAssigned).removeEntry(se);
                     
                 }
             }
             else if (e.Action == NotifyCollectionChangedAction.Replace)
             {
-                Trace.WriteLine($"{Subject.SubjectEntries.Count} : {e.NewStartingIndex}");
-                // When two or more items are allocated, adjustment throws ArgumentOutOfRangeException
                 SubjectCard? card = FindCardEntry((SubjectEntry) Subject.SubjectEntries[e.NewStartingIndex]);
 
                 if (card == null)
                 {
-                    Trace.WriteLine("Cannot find entry's card");
+                    new MBox("Cannot find card entry");
                 }
 
                 getDayTable(card.Entry.DayAssigned).PlaceCard(card);
