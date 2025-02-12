@@ -108,5 +108,10 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             return total;
         }
 
+        public void UpdateAllocatedUnits()
+        {
+            TotalUnits = GetTotalUnits();
+        }
+
     }
 }

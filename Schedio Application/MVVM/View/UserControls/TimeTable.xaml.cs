@@ -59,18 +59,6 @@ namespace Schedio_Application.MVVM.View.UserControls
         public TimeTable()
         {
             InitializeComponent();
-            //Rooms.Add(new Room("101", new RoomType("Lab")));
-            //Rooms.Add(new Room("102", new RoomType("Lab")));
-            //Rooms.Add(new Room("103", new RoomType("Classic")));
-            //Rooms.Add(new Room("104", new RoomType("Lab")));
-            //Rooms.Add(new Room("101", new RoomType("Lab")));
-            //Rooms.Add(new Room("102", new RoomType("Lab")));
-            //Rooms.Add(new Room("103", new RoomType("Classic")));
-            //Rooms.Add(new Room("104", new RoomType("Lab")));
-            //Rooms.Add(new Room("101", new RoomType("Lab")));
-            //Rooms.Add(new Room("102", new RoomType("Lab")));
-            //Rooms.Add(new Room("103", new RoomType("Classic")));
-            //Rooms.Add(new Room("104", new RoomType("Lab")));
             
             PopulateTimeslot();
 
@@ -81,6 +69,8 @@ namespace Schedio_Application.MVVM.View.UserControls
 
                 double fullWidth = TimeHeader.ActualWidth + RoomHeader.ActualWidth;
                 double fullHeight = TimeHeader.ActualHeight + Timeslot.ActualHeight;
+
+                
 
                 SetControlWidth(fullWidth);
                 SetControlHeight(fullHeight);

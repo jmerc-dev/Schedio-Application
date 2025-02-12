@@ -64,14 +64,14 @@ namespace Schedio_Application.MVVM.View.UserControls
         public void UpdateDimension()
         {
             this.Height = Entry.UnitsToAllocate * HOUR_HEIGHT;
+            _Height = Entry.UnitsToAllocate * HOUR_HEIGHT;
         }
 
         private double HourToTopPositionConverter(string time)
         {
             DateTime startTime = DateTime.Parse(time);
             TimeSpan tp = startTime.Subtract(DateTime.Parse("12:00 AM"));
-
-            //Trace.WriteLine("Time difference: " + tp.TotalMinutes);
+            
 
             return tp.TotalMinutes * 2;
         }
@@ -88,8 +88,11 @@ namespace Schedio_Application.MVVM.View.UserControls
             this.Focus();
         }
 
+        // The issue might be here: 
         private void UserControl_GotFocus(object sender, RoutedEventArgs e)
         {
+            Trace.WriteLine($"{Entry.SubjectInfo.Name} = {Entry.TimeFrame.StartTime} => {Entry.TimeFrame.EndTime}");
+            Trace.Write($"ControlHeight: {this.Height} \t CustomHeight: {_Height}");
             if (this.Height < 100)
             {
                 _Height = this.Height;

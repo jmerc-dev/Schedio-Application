@@ -99,41 +99,193 @@ namespace Schedio_Application.MVVM.View.Windows
             Rooms.Add(new Room("101", RoomTypes[0]));
             Rooms.Add(new Room("102", RoomTypes[1]));
             Rooms.Add(new Room("103", RoomTypes[2]));
+            Rooms.Add(new Room("104", RoomTypes[1]));
+            Rooms.Add(new Room("105", RoomTypes[1]));
+            Rooms.Add(new Room("106", RoomTypes[1]));
+            Rooms.Add(new Room("107", RoomTypes[1]));
+            Rooms.Add(new Room("108", RoomTypes[1]));
+            Rooms.Add(new Room("109", RoomTypes[2]));
+            Rooms.Add(new Room("110", RoomTypes[1]));
+            Rooms.Add(new Room("201", RoomTypes[2]));
+            Rooms.Add(new Room("202", RoomTypes[1]));
+            Rooms.Add(new Room("203", RoomTypes[0]));
+            Rooms.Add(new Room("204", RoomTypes[0]));
+            Rooms.Add(new Room("205", RoomTypes[0]));
 
-            Person person = new Person
+            Person[] people = [
+                new Person { Name = "Jose Protacio Rizal", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "01:00 PM"},
+                new Person { Name = "Emilio Aguinaldo", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "01:00 PM"},
+                new Person { Name = "Apolinario Mabini", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "01:00 PM"},
+                new Person { Name = "Arthur McArthur", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "01:00 PM"},
+                new Person { Name = "Andres Bonifacio", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "01:00 PM"},
+                new Person { Name = "Lapu Lapu", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "01:00 PM"},
+                new Person { Name = "Apo Whang-od", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "01:00 PM"},
+                new Person { Name = "Tomoyuki Yamashita", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "01:00 PM"},
+                new Person { Name = "Gabriela Silang", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "01:00 PM"},
+                new Person { Name = "Bong Bong Marcos", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "01:00 PM"},
+                new Person { Name = "Benigno Aquino", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "01:00 PM"}
+                ];
+
+            people[0].SetAvailableDay(DayOfWeek.Saturday, true);
+            people[0].SetAvailableDay(DayOfWeek.Monday, true);
+
+            people[1].SetAvailableDay(DayOfWeek.Monday, true);
+            people[1].SetAvailableDay(DayOfWeek.Tuesday, true);
+            people[1].SetAvailableDay(DayOfWeek.Wednesday, true);
+
+            people[2].SetAvailableDay(DayOfWeek.Tuesday, true);
+            people[2].SetAvailableDay(DayOfWeek.Wednesday, true);
+
+            people[3].SetAvailableDay(DayOfWeek.Tuesday, true);
+
+            people[4].SetAvailableDay(DayOfWeek.Thursday, true);
+            people[4].SetAvailableDay(DayOfWeek.Friday, true);
+
+            people[5].SetAvailableDay(DayOfWeek.Monday, true);
+            people[5].SetAvailableDay(DayOfWeek.Friday, true);
+
+            people[6].SetAvailableDay(DayOfWeek.Monday, true);
+            people[6].SetAvailableDay(DayOfWeek.Tuesday, true);
+            people[6].SetAvailableDay(DayOfWeek.Thursday, true);
+            people[6].SetAvailableDay(DayOfWeek.Saturday, true);
+
+            people[7].SetAvailableDay(DayOfWeek.Tuesday, true);
+            people[7].SetAvailableDay(DayOfWeek.Wednesday, true);
+            people[7].SetAvailableDay(DayOfWeek.Friday, true);
+
+            people[8].SetAvailableDay(DayOfWeek.Monday, true);
+            people[8].SetAvailableDay(DayOfWeek.Thursday, true);
+            people[8].SetAvailableDay(DayOfWeek.Saturday, true);
+
+            people[9].SetAvailableDay(DayOfWeek.Tuesday, true);
+
+            people[10].SetAvailableDay(DayOfWeek.Monday, true);
+            people[10].SetAvailableDay(DayOfWeek.Saturday, true);
+            //Person person = new Person
+            //{
+            //    Name = "Jose Protacio Rizal",
+            //    IsConstant = true,
+            //    ConstTime_Start = "12:00 AM",
+            //    ConstTime_End = "01:00 PM"
+            //};
+
+            foreach (Person person in people)
             {
-                Name = "Jose Protacio Rizal",
-                IsConstant = true,
-                ConstTime_Start = "12:00 AM",
-                ConstTime_End = "01:00 PM"
-            };
+                Personnel.Add(person);
+            }
 
-            person.SetAvailableDay(DayOfWeek.Saturday, true);
-            person.SetAvailableDay(DayOfWeek.Wednesday, true);
+            //Person person1 = new Person
+            //{
+            //    Name = "Jose Protacio Rizal",
+            //    IsConstant = true,
+            //    ConstTime_Start = "12:00 AM",
+            //    ConstTime_End = "01:00 PM"
+            //};
 
-            Personnel.Add(person);
+            //person.SetAvailableDay(DayOfWeek.Saturday, true);
+            //person.SetAvailableDay(DayOfWeek.Wednesday, true);
 
-            ClassSection section = new ClassSection();
-            section.Name = "CS401A";
-            section.Subjects.Add(new Subject 
-            { 
-                Name = "NSTP II",
-                AssignedPerson = person,
-                RoomType = RoomTypes[0],
-                Units = 3,
-                OwnerSection = section
-            });
+            //Personnel.Add(person);
 
-            section.Subjects.Add(new Subject
+            ClassSection[] DummySection = new ClassSection[10];
+            for (int i = 0; i < DummySection.Length; i++)
             {
-                Name = "Computer Programmin 3",
-                AssignedPerson = person,
-                RoomType = RoomTypes[1],
-                Units = 7,
-                OwnerSection = section
-            });
+                string[] courses = ["IT", "CS", "HRS", "CE", "P"];
+                DummySection[i] = new ClassSection();
+                if (i < 2)
+                    DummySection[i].Name =  $"{courses[0]}{i}0A";
+                else if (i < 4)
+                    DummySection[i].Name = $"{courses[1]}{i}0A";
+                else if (i < 6)
+                    DummySection[i].Name = $"{courses[2]}{i}0A";
+                else if (i < 8)
+                    DummySection[i].Name = $"{courses[3]}{i}0A";
+                else
+                    DummySection[i].Name = $"{courses[4]}{i}0A";
 
-            Sections.Add(section);
+                Random rnd = new Random();
+                
+                DummySection[i].Subjects.Add(new Subject
+                {
+                    Name = "NSTP II",
+                    AssignedPerson = people[0],
+                    RoomType = RoomTypes[0],
+                    Units = 1,
+                    OwnerSection = DummySection[i]
+                });
+
+                DummySection[i].Subjects.Add(new Subject
+                {
+                    Name = "Computer Programming",
+                    AssignedPerson = people[1],
+                    RoomType = RoomTypes[0],
+                    Units = 3,
+                    OwnerSection = DummySection[i]
+                });
+                DummySection[i].Subjects.Add(new Subject
+                {
+                    Name = "Computer Programming Lab",
+                    AssignedPerson = people[2],
+                    RoomType = RoomTypes[1],
+                    Units = 2,
+                    OwnerSection = DummySection[i]
+                });
+                DummySection[i].Subjects.Add(new Subject
+                {
+                    Name = "Entrepreneurship",
+                    AssignedPerson = people[3],
+                    RoomType = RoomTypes[0],
+                    Units = 2,
+                    OwnerSection = DummySection[i]
+                });
+                DummySection[i].Subjects.Add(new Subject
+                {
+                    Name = "Automata Theory",
+                    AssignedPerson = people[4],
+                    RoomType = RoomTypes[0],
+                    Units = 3,
+                    OwnerSection = DummySection[i]
+                });
+                DummySection[i].Subjects.Add(new Subject
+                {
+                    Name = "PE",
+                    AssignedPerson = people[5],
+                    RoomType = RoomTypes[2],
+                    Units = 2,
+                    OwnerSection = DummySection[i]
+                });
+                DummySection[i].Subjects.Add(new Subject
+                {
+                    Name = "Design and Analysis of Algorithms",
+                    AssignedPerson = people[6],
+                    RoomType = RoomTypes[0],
+                    Units = 3,
+                    OwnerSection = DummySection[i]
+                });
+                Sections.Add(DummySection[i]);
+            }
+
+            //ClassSection section = new ClassSection();
+            //section.Name = "CS401A ";
+            //section.Subjects.Add(new Subject 
+            //{ 
+            //    Name = "NSTP II",
+            //    AssignedPerson = people[0],
+            //    RoomType = RoomTypes[0],
+            //    Units = 3,
+            //    OwnerSection = section
+            //});
+
+            //section.Subjects.Add(new Subject
+            //{
+            //    Name = "Computer Programmin 3",
+            //    AssignedPerson = people[3],
+            //    RoomType = RoomTypes[1],
+            //    Units = 7,
+            //    OwnerSection = section
+            //});
+
+            //Sections.Add(section);
         }
 
         // Subjects panel
@@ -151,7 +303,10 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Export_Click(object sender, RoutedEventArgs e)
         {
-            
+            foreach (ClassSection cs in Sections)
+            {
+                Trace.WriteLine(cs.Name);
+            }
         }
 
         private void btn_BrowseSectionExplorer_Click(object sender, RoutedEventArgs e)
