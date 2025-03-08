@@ -1,0 +1,25 @@
+﻿<Window x:Class="Schedio_Application.MVVM.View.Windows.ColorSwatch"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"
+        xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
+        mc:Ignorable="d"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen"
+        Icon="pack://application:,,,/Schedio Application;component/Resources/Images/colorwheel.png"
+        Title="Color Picker" Height="450" Width="320">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ColorPicker;component/Styles/DefaultColorPickerStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Background="{StaticResource PrimaryBackground}">
+        <colorpicker:StandardColorPicker ColorChanged="StandardColorPicker_ColorChanged" Name="colorPicker" SelectedColor="{Binding SectionColor, Mode=TwoWay}"></colorpicker:StandardColorPicker>
+    </Grid>
+</Window>

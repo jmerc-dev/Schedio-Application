@@ -303,10 +303,12 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Export_Click(object sender, RoutedEventArgs e)
         {
-            foreach (ClassSection cs in Sections)
-            {
-                Trace.WriteLine(cs.Name);
-            }
+            //foreach (ClassSection cs in Sections)
+            //{
+            //    Trace.WriteLine(cs.Name);
+            //}
+
+            //new ColorSwatch().ShowDialog();
         }
 
         private void btn_BrowseSectionExplorer_Click(object sender, RoutedEventArgs e)

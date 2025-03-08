@@ -43,6 +43,8 @@ namespace Schedio_Application.MVVM.View.UserControls
                 _HorizontalIndex = value;
             }
         }
+
+
         public SubjectCard(SubjectEntry entry)
         {
             InitializeComponent();
@@ -91,8 +93,6 @@ namespace Schedio_Application.MVVM.View.UserControls
         // The issue might be here: 
         private void UserControl_GotFocus(object sender, RoutedEventArgs e)
         {
-            Trace.WriteLine($"{Entry.SubjectInfo.Name} = {Entry.TimeFrame.StartTime} => {Entry.TimeFrame.EndTime}");
-            Trace.Write($"ControlHeight: {this.Height} \t CustomHeight: {_Height}");
             if (this.Height < 100)
             {
                 _Height = this.Height;

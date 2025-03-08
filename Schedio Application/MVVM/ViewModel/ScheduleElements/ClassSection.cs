@@ -1,4 +1,6 @@
-﻿using Schedio_Application.MVVM.ViewModel.Utilities;
+﻿using Schedio_Application.MVVM.View.Windows;
+using Schedio_Application.MVVM.ViewModel.Commands;
+using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,6 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
@@ -19,15 +22,27 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private double _TotalUnits;
         private int _AllocatedSubjects;
         private double _AllocatedUnits;
-        
         private static int idCounter;
-        
+        private Color _Color;
+
+        public RelayCommand SetColorCommand => new RelayCommand(execute => SetColor(this));
+
         public int TotalSubjects
         {
             get { return _TotalSubjects; }
             set
             {
                 _TotalSubjects = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Color SectionColor
+        {
+            get => _Color;
+            set
+            {
+                _Color = value;
                 OnPropertyChanged();
             }
         }
@@ -90,6 +105,13 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             _Subjects.CollectionChanged += new NotifyCollectionChangedEventHandler(OnSubListChanged);
             this.id = ClassSection.idCounter;
             ClassSection.idCounter++;
+            SectionColor = new Color
+            {
+                R = 38,
+                G = 92,
+                B = 197,
+                A = 255
+            };
         }
 
         private void OnSubListChanged(object? sender, NotifyCollectionChangedEventArgs args)
@@ -111,6 +133,13 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public void UpdateAllocatedUnits()
         {
             TotalUnits = GetTotalUnits();
+        }
+
+        public bool SetColor(ClassSection section)
+        {
+            
+            new ColorSwatch(section).ShowDialog();
+            return true;
         }
 
     }
