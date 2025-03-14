@@ -11,15 +11,25 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
     public class Person : PropertyNotification
     {
         const int MAX_CAPACITY = 7;
+        private static int _IdCounter = 0;
 
         private string _Name;
-
-        // TODO: Make this a dictionary
+        private int _ID;
         private Day[] _Days;
         private bool _IsConstant;
 
         private string _ConstTime_Start;
         private string _ConstTime_End;
+
+        public int ID
+        {
+            get => _ID;
+        }
+
+        public static int IdCounter
+        {
+            get => _IdCounter;
+        }
 
         public string Timeframe
         {
@@ -85,7 +95,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public Person() 
         {
             _Days = new Day[MAX_CAPACITY];
-
+            this._ID = Interlocked.Increment(ref _IdCounter);
             PopulateDays();
             SetDaysName();
         }

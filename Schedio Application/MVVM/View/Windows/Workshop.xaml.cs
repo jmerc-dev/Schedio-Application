@@ -308,6 +308,13 @@ namespace Schedio_Application.MVVM.View.Windows
             //    Trace.WriteLine(cs.Name);
             //}
 
+            foreach (Person person in Personnel)
+            {
+                Trace.WriteLine($"{person.ID} : {person.Name}");
+            }
+
+            Trace.WriteLine($"Id Counter Value: {Person.IdCounter}");
+
             //new ColorSwatch().ShowDialog();
         }
 
