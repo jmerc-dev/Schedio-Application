@@ -100,6 +100,19 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             SetDaysName();
         }
 
+        // Create a constructor for loading from files
+        public Person(string name, Day[] days, bool isConstant)
+        {
+            this._Name = name;
+            if (days.Length != 7)
+            {
+                throw new Exception("Invalid day array object");
+            }
+            this.IsConstant = isConstant;
+            this._Days = days;
+            UpdateFormattedDays();
+        }
+
         // May proc StringFormatException
         public bool IsAvailableAt(DayOfWeek day,TimeFrame tf)
         {
