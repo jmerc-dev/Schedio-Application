@@ -20,9 +20,22 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         {
             get { return _Rooms; }
         }
+        private static int _IdCounter; // Auto initialize when loading a file
 
+        private int _ID;
         private string _name;
         private RoomType _type;
+
+        public int ID
+        {
+            get => _ID;
+            set => _ID = value;
+        }
+
+        public static int IDCounter
+        {
+            get => IDCounter;
+        }
 
         public string Name 
         { 
@@ -47,6 +60,14 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         {
             this._name = name;
             this._type = type;
+            this._ID = Interlocked.Increment(ref _IdCounter);
+        }
+
+        public Room(string name, RoomType type, int id)
+        {
+            this._name = name;
+            this._type = type;
+            this.ID = id;
         }
 
         public static Room RoomExists(string roomname) 

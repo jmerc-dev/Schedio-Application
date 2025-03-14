@@ -307,15 +307,18 @@ namespace Schedio_Application.MVVM.View.Windows
             //{
             //    Trace.WriteLine(cs.Name);
             //}
-
+            Trace.WriteLine($"Person::::");
             foreach (Person person in Personnel)
             {
                 Trace.WriteLine($"{person.ID} : {person.Name}");
             }
 
             Trace.WriteLine($"Id Counter Value: {Person.IdCounter}");
-
-            //new ColorSwatch().ShowDialog();
+            Trace.WriteLine($"Room::::");
+            foreach (Room room in Rooms)
+            {
+                Trace.WriteLine($"{room.ID} : {room.Name}");
+            }
         }
 
         private void btn_BrowseSectionExplorer_Click(object sender, RoutedEventArgs e)
