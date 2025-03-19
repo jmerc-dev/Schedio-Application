@@ -168,6 +168,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         {
             get { return subjectEntries; }
         }
+        
 
         public Subject(string Name, Person assignedPerson, RoomType roomType, int units)
         {

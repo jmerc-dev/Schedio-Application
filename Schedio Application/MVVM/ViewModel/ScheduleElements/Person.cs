@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -101,9 +102,10 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         }
 
         // Create a constructor for loading from files
-        public Person(string name, Day[] days, bool isConstant)
+        public Person(string name, Day[] days, bool isConstant, int id)
         {
             this._Name = name;
+            this._ID = id;
             if (days.Length != 7)
             {
                 throw new Exception("Invalid day array object");

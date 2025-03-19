@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +11,19 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
     public class RoomType : PropertyNotification
     {
         private string _Name;
+
+        private int _ID;
+        private static int _IdCounter; // Auto initialize when loading a file
+        
+        private static int IDCounter
+        {
+            get => _IdCounter;
+        }
+
+        public int ID
+        {
+            get => _ID;
+        }
 
         public string Name 
         {
@@ -24,11 +38,13 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public RoomType(string name)
         {
             _Name = name;
+            this._ID = Interlocked.Increment(ref _IdCounter);
         }
 
-        public RoomType()
+        public RoomType(string name, int id)
         {
-            _Name = "";
+            _Name = name;
+            _ID = id;
         }
     }
 }

@@ -2,6 +2,7 @@
 using Schedio_Application.MVVM.ViewModel.Commands;
 using Schedio_Application.MVVM.ViewModel.ScheduleElements;
 using Schedio_Application.MVVM.ViewModel.Utilities;
+using Schedio_Application.MVVM.ViewModel.WrapperClasses;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,6 +25,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+//using static System.Net.Mime.MediaTypeNames;
 
 namespace Schedio_Application.MVVM.View.Windows
 {
@@ -307,18 +311,27 @@ namespace Schedio_Application.MVVM.View.Windows
             //{
             //    Trace.WriteLine(cs.Name);
             //}
-            Trace.WriteLine($"Person::::");
-            foreach (Person person in Personnel)
-            {
-                Trace.WriteLine($"{person.ID} : {person.Name}");
-            }
 
-            Trace.WriteLine($"Id Counter Value: {Person.IdCounter}");
-            Trace.WriteLine($"Room::::");
-            foreach (Room room in Rooms)
+            var options = new JsonSerializerOptions
             {
-                Trace.WriteLine($"{room.ID} : {room.Name}");
-            }
+                Converters = { new SubjectConverter() },
+                WriteIndented = true
+            };
+
+            FullDataWrapper fullDataWrapper = new FullDataWrapper
+            {
+                SectionsGroup = new SectionGroup { Sections = Sections },
+                RoomTypesGroup = new RoomTypeGroup { RoomTypes = RoomTypes },
+                PeopleGroup = new PeopleGroup { People = Personnel },
+                RoomsGroup = new RoomGroup { Rooms = Rooms }
+            };
+
+            Trace.WriteLine(JsonSerializer.Serialize(fullDataWrapper, options));
+            byte[] bytes = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(fullDataWrapper, options));
+            int byteSize = bytes.Length;
+
+            Trace.WriteLine(byteSize);
+
         }
 
         private void btn_BrowseSectionExplorer_Click(object sender, RoutedEventArgs e)
