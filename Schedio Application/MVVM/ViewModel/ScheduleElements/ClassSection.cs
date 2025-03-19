@@ -15,7 +15,9 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
     public class ClassSection : PropertyNotification
     {
-        private int id;
+        private static int _IdCount;
+
+        private int _ID;
         private string? _Name;
         private ObservableCollection<Subject> _Subjects;
         private int _TotalSubjects;
@@ -26,6 +28,16 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private Color _Color;
 
         public RelayCommand SetColorCommand => new RelayCommand(execute => SetColor(this));
+
+        public int ID 
+        {
+            get => _ID;
+        }
+
+        public static int IDCount
+        {
+            get => idCounter;
+        }
 
         public int TotalSubjects
         {
@@ -103,8 +115,9 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         {
             _Subjects = new ObservableCollection<Subject>();
             _Subjects.CollectionChanged += new NotifyCollectionChangedEventHandler(OnSubListChanged);
-            this.id = ClassSection.idCounter;
-            ClassSection.idCounter++;
+            
+            this._ID = Interlocked.Increment(ref _IdCount);
+
             SectionColor = new Color
             {
                 R = 38,

@@ -20,7 +20,13 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
         {
             writer.WriteStartObject();
             writer.WriteString("Name", value.Name);
-            writer.WriteNumber("AssignedPersonnel", value.AssignedPerson.ID);
+            writer.WriteNumber("AssignedPersonnelID", value.AssignedPerson.ID);
+            writer.WriteBoolean("IsAllocated", value.IsAllocated);
+            writer.WriteNumber("RoomTypeID", value.RoomType.ID);
+            writer.WriteNumber("Units", value.Units);
+            writer.WriteNumber("UnitsRemaining", value.UnitsRemaining);
+            writer.WriteNumber("UnitsAllocated", value.UnitsAllocated);
+            writer.WriteNumber("OwnerSectionID", value.OwnerSection.ID);
             writer.WriteEndObject();
         }
     }

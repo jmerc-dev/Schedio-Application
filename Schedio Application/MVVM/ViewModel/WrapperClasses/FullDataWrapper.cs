@@ -12,5 +12,7 @@ namespace Schedio_Application.MVVM.ViewModel.WrapperClasses
         public RoomGroup? RoomsGroup { get; set; }
         public SectionGroup? SectionsGroup { get; set; }
         public RoomTypeGroup? RoomTypesGroup { get; set; }
+        public SubjectEntriesGroup? SubjectEntriesGroup { get; set; }
+
     }
 }

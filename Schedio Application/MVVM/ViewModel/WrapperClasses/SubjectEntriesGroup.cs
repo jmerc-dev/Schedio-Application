@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Schedio_Application.MVVM.ViewModel.WrapperClasses
 {
-    public class SubjectGroup
+    public class SubjectEntriesGroup
     {
-        public ObservableCollection<Subject>? Subjects { get; set; }
+        public ObservableCollection<SubjectEntry>? SubjectEntries { get; set; }
     }
 }

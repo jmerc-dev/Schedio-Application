@@ -323,7 +323,8 @@ namespace Schedio_Application.MVVM.View.Windows
                 SectionsGroup = new SectionGroup { Sections = Sections },
                 RoomTypesGroup = new RoomTypeGroup { RoomTypes = RoomTypes },
                 PeopleGroup = new PeopleGroup { People = Personnel },
-                RoomsGroup = new RoomGroup { Rooms = Rooms }
+                RoomsGroup = new RoomGroup { Rooms = Rooms },
+                SubjectEntriesGroup = new SubjectEntriesGroup { SubjectEntries = Subject.SubjectEntries }
             };
 
             Trace.WriteLine(JsonSerializer.Serialize(fullDataWrapper, options));
