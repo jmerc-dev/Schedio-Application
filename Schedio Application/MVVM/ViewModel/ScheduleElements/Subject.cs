@@ -16,7 +16,9 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
     public class Subject : PropertyNotification
     {
-        private int id;
+        private static int _IdCounter;
+
+        private int _ID;
         private string _Name;
         private Person _AssignedPerson;
         private RoomType _RoomType;
@@ -37,9 +39,14 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public RelayCommand AdjustSubjectCommand => new RelayCommand((execute) => AdjustSubjectCard(execute));
 
         // Implement id system per subject
-        public int Id
+        public int ID
         {
-            get { return id; }
+            get { return _ID; }
+        }
+
+        public static int IDCount
+        {
+            get => _IdCounter;
         }
 
         public string Name 
@@ -182,12 +189,17 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public Subject(ClassSection ownerSection)
         {
             OwnerSection = ownerSection;
-
+            this._ID = Interlocked.Increment(ref _IdCounter);
         }
 
         public Subject()
         {
+            this._ID = Interlocked.Increment(ref _IdCounter);
+        }
 
+        public Subject(ClassSection ownerSection, int id)
+        {
+            this._ID = id;
         }
 
         public Subject(Subject subject, ClassSection section)
