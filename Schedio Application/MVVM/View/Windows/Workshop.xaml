@@ -38,9 +38,9 @@
                     </Border>
                 </MenuItem.Header>
 
-                <MenuItem Header="New"/>
-                <MenuItem Header="Open"/>
-                <MenuItem Header="Save"/>
+                <!--<MenuItem Header="New"/>-->
+                <!--<MenuItem Header="Open"/>-->
+                <MenuItem Header="Save" Command="{Binding FileSaveObject.SaveCommand}" CommandParameter="{Binding FullData}"/>
                 <MenuItem Header="Save as"/>
                 <MenuItem Header="Help"/>
                 <MenuItem Header="About Us"/>

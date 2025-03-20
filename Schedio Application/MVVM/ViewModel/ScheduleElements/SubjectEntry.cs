@@ -27,7 +27,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private string? _EndTime;
         private TimeFrame _TimeFrame;
         private double _UnitsToAllocate;
-        private Room? _Room;
+        private Room _Room;
         private DayOfWeek? _DayAssigned;
 
         public Subject SubjectInfo 
@@ -50,33 +50,6 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
-        //public string? StartTime
-        //{
-        //    get { return _StartTime; }
-        //    set 
-        //    { 
-        //        _StartTime = value;
-
-        //        if (value != null)
-        //        {
-        //            DateTime endTime = DateTime.Parse(value).AddHours(UnitsToAllocate);
-        //            DateTime endTime1 = DateTime.Parse(value).AddHours(3);
-        //            EndTime = endTime.ToString("hh:mm tt");
-        //        }
-        //        OnPropertyChanged();
-        //    }
-        //}
-
-        //public string? EndTime
-        //{
-        //    get { return _EndTime; }
-        //    set
-        //    {
-        //        _EndTime = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-
         public double UnitsToAllocate
         {
             get { return _UnitsToAllocate; }
@@ -87,7 +60,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
-        public Room? RoomAllocated
+        public Room RoomAllocated
         {
             get { return _Room; }
             set 

@@ -102,10 +102,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MVVM\Model\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="PixiEditor.ColorPicker" Version="3.4.1" />
   </ItemGroup>
 
@@ -175,6 +171,10 @@
     <Resource Include="Resources\Images\update-inversed.png" />
     <Resource Include="Resources\Images\warning.png" />
     <Resource Include="Resources\Images\woman.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="MVVM\Model\" />
   </ItemGroup>
 
 </Project>

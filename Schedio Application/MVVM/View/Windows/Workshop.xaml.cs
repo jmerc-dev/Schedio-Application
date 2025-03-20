@@ -1,4 +1,5 @@
-﻿using Schedio_Application.MVVM.View.UserControls;
+﻿using Microsoft.Win32;
+using Schedio_Application.MVVM.View.UserControls;
 using Schedio_Application.MVVM.ViewModel.Commands;
 using Schedio_Application.MVVM.ViewModel.ScheduleElements;
 using Schedio_Application.MVVM.ViewModel.Utilities;
@@ -10,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -34,9 +36,12 @@ namespace Schedio_Application.MVVM.View.Windows
     /// </summary>
     public partial class Workshop : Window, INotifyPropertyChanged
     {
+        /* 
+            Menu commands 
+        */
+        
 
         private ClassSection? _SelectedSection;
-
         public ClassSection? SelectedSection
         {
             get { return _SelectedSection; }
@@ -45,6 +50,12 @@ namespace Schedio_Application.MVVM.View.Windows
                 _SelectedSection = value;
                 OnPropertyChanged();
             } 
+        }
+
+        private FileSave _FileSave = new FileSave();
+        public FileSave FileSaveObject
+        {
+            get => _FileSave;
         }
         
         public string SelectedSectionNull
@@ -66,6 +77,14 @@ namespace Schedio_Application.MVVM.View.Windows
         {
             Personnel = new ObservableCollection<Person>();
             Sections = new ObservableCollection<ClassSection>();
+            fullDataWrapper = new FullDataWrapper
+            {
+                SectionsGroup = new SectionGroup { Sections = Sections },
+                RoomTypesGroup = new RoomTypeGroup { RoomTypes = RoomTypes },
+                PeopleGroup = new PeopleGroup { People = Personnel },
+                RoomsGroup = new RoomGroup { Rooms = Rooms },
+                SubjectEntriesGroup = new SubjectEntriesGroup { SubjectEntries = Subject.SubjectEntries }
+            };
 
             InitializeComponent();
             lv_RoomsList.ItemsSource = Workshop.Rooms;
@@ -90,12 +109,11 @@ namespace Schedio_Application.MVVM.View.Windows
         }
 
         // Subject allocation CRUD
-        
 
         // Dummy Data
         private void AddDummyData()
         {
-            RoomTypes = new ObservableCollection<RoomType>();
+            //RoomTypes = new ObservableCollection<RoomType>();
             RoomTypes.Add(new RoomType("Classic"));
             RoomTypes.Add(new RoomType("Lab"));
             RoomTypes.Add(new RoomType("Court"));
@@ -165,31 +183,13 @@ namespace Schedio_Application.MVVM.View.Windows
 
             people[10].SetAvailableDay(DayOfWeek.Monday, true);
             people[10].SetAvailableDay(DayOfWeek.Saturday, true);
-            //Person person = new Person
-            //{
-            //    Name = "Jose Protacio Rizal",
-            //    IsConstant = true,
-            //    ConstTime_Start = "12:00 AM",
-            //    ConstTime_End = "01:00 PM"
-            //};
+            
 
             foreach (Person person in people)
             {
                 Personnel.Add(person);
             }
 
-            //Person person1 = new Person
-            //{
-            //    Name = "Jose Protacio Rizal",
-            //    IsConstant = true,
-            //    ConstTime_Start = "12:00 AM",
-            //    ConstTime_End = "01:00 PM"
-            //};
-
-            //person.SetAvailableDay(DayOfWeek.Saturday, true);
-            //person.SetAvailableDay(DayOfWeek.Wednesday, true);
-
-            //Personnel.Add(person);
 
             ClassSection[] DummySection = new ClassSection[10];
             for (int i = 0; i < DummySection.Length; i++)
@@ -269,27 +269,6 @@ namespace Schedio_Application.MVVM.View.Windows
                 Sections.Add(DummySection[i]);
             }
 
-            //ClassSection section = new ClassSection();
-            //section.Name = "CS401A ";
-            //section.Subjects.Add(new Subject 
-            //{ 
-            //    Name = "NSTP II",
-            //    AssignedPerson = people[0],
-            //    RoomType = RoomTypes[0],
-            //    Units = 3,
-            //    OwnerSection = section
-            //});
-
-            //section.Subjects.Add(new Subject
-            //{
-            //    Name = "Computer Programmin 3",
-            //    AssignedPerson = people[3],
-            //    RoomType = RoomTypes[1],
-            //    Units = 7,
-            //    OwnerSection = section
-            //});
-
-            //Sections.Add(section);
         }
 
         // Subjects panel
@@ -312,26 +291,25 @@ namespace Schedio_Application.MVVM.View.Windows
             //    Trace.WriteLine(cs.Name);
             //}
 
-            var options = new JsonSerializerOptions
-            {
-                Converters = { new SubjectConverter() },
-                WriteIndented = true
-            };
+            //var options = new JsonSerializerOptions
+            //{
+            //    Converters = { new SubjectConverter(), new SubjectEntryConverter() },
+            //    WriteIndented = true
+            //};
 
-            FullDataWrapper fullDataWrapper = new FullDataWrapper
-            {
-                SectionsGroup = new SectionGroup { Sections = Sections },
-                RoomTypesGroup = new RoomTypeGroup { RoomTypes = RoomTypes },
-                PeopleGroup = new PeopleGroup { People = Personnel },
-                RoomsGroup = new RoomGroup { Rooms = Rooms },
-                SubjectEntriesGroup = new SubjectEntriesGroup { SubjectEntries = Subject.SubjectEntries }
-            };
+            //string fullJsonData = JsonSerializer.Serialize(fullDataWrapper, options);
 
-            Trace.WriteLine(JsonSerializer.Serialize(fullDataWrapper, options));
-            byte[] bytes = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(fullDataWrapper, options));
-            int byteSize = bytes.Length;
+            //SaveFileDialog saveFileDialog = new SaveFileDialog
+            //{
+            //    Filter = "JSON Files (*.json)|*.json|All Files (*.*)|*.*",
+            //    DefaultExt = "json",
+            //    AddExtension = true
+            //};
 
-            Trace.WriteLine(byteSize);
+            //if (saveFileDialog.ShowDialog() == true)
+            //{
+            //    File.WriteAllText(saveFileDialog.FileName.ToString(), fullJsonData);
+            //}
 
         }
 
@@ -354,12 +332,20 @@ namespace Schedio_Application.MVVM.View.Windows
     // Schedule Data Management
     public partial class Workshop : Window
     {
+        private static string? FilePath;
+        private FullDataWrapper fullDataWrapper;
+
         private ObservableCollection<Room> TempRooms;
-        private ObservableCollection<RoomType> RoomTypes;
+        private ObservableCollection<RoomType> RoomTypes = new ObservableCollection<RoomType>();
 
         public static ObservableCollection<Room> Rooms 
         { 
             get { return Room.RoomsList; }
+        }
+
+        public FullDataWrapper FullData
+        {
+            get => fullDataWrapper;
         }
 
         private ObservableCollection<Person> Personnel;

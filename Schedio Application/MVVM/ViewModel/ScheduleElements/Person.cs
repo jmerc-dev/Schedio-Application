@@ -34,7 +34,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         public string Timeframe
         {
-            get { return ConstTime_Start + " -> " + ConstTime_End; }
+            get { return ConstTime_Start + " to " + ConstTime_End; }
         }
 
         public string ConstTime_Start

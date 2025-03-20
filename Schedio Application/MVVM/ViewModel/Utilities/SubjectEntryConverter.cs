@@ -19,7 +19,12 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
         public override void Write(Utf8JsonWriter writer, SubjectEntry value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
-            
+            writer.WriteNumber("SubjectID", value.SubjectInfo.ID);
+            writer.WritePropertyName("Timeframe");
+            writer.WriteRawValue(JsonSerializer.Serialize(value.TimeFrame));
+            writer.WriteNumber("UnitsToAllocate", value.UnitsToAllocate);
+            writer.WriteNumber("RoomAllocatedID", value.RoomAllocated.ID);
+            writer.WriteString("DayAssigned", value.DayAssigned.ToString());
             writer.WriteEndObject();
         }
     }
