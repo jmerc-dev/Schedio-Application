@@ -15,16 +15,15 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
     public class Room : PropertyNotification
     {
         private static ObservableCollection<Room> _Rooms = new ObservableCollection<Room>();
+        private static int _IdCounter; // Auto initialize when loading a file
+        private int _ID;
+        private string _name;
+        private RoomType _type;
 
         public static ObservableCollection<Room> RoomsList
         {
             get { return _Rooms; }
         }
-        private static int _IdCounter; // Auto initialize when loading a file
-
-        private int _ID;
-        private string _name;
-        private RoomType _type;
 
         public int ID
         {
@@ -74,7 +73,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             return Name;
         }
 
-        public static Room RoomExists(string roomname) 
+        public static Room? RoomExists(string roomname) 
         {
             foreach (Room room in Room.RoomsList)
             {

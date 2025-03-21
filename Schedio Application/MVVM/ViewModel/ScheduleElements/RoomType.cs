@@ -13,7 +13,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private string _Name;
 
         private int _ID;
-        private static int _IdCounter; // Auto initialize when loading a file
+        private static int _IdCounter;
         
         private static int IDCounter
         {

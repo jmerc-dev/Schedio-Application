@@ -22,6 +22,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
     }
     public class SubjectEntry : PropertyNotification
     {
+        private int _id;
         private Subject _Subject;
         private string? _StartTime;
         private string? _EndTime;
@@ -29,6 +30,8 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private double _UnitsToAllocate;
         private Room _Room;
         private DayOfWeek? _DayAssigned;
+
+        private static int _idCounter;
 
         public Subject SubjectInfo 
         { 
@@ -39,6 +42,8 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 OnPropertyChanged();
             }
         }
+
+        public static int IdCount => _idCounter;
 
         public TimeFrame TimeFrame
         {
@@ -85,6 +90,8 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         {
             _Subject = subject;
             _TimeFrame = new TimeFrame();
+            this._id = Interlocked.Increment(ref _idCounter);
+
         }
 
         public SubjectEntry(Subject subject, TimeFrame tf, double units, Room room, DayOfWeek day)
@@ -94,6 +101,16 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             _UnitsToAllocate = units;
             _Room = room;
             _DayAssigned = day;
+            this._id = Interlocked.Increment(ref _idCounter);
+        }
+        public SubjectEntry(Subject subject, TimeFrame tf, double units, Room room, DayOfWeek day, int id)
+        {
+            _Subject = subject;
+            _TimeFrame = tf;
+            _UnitsToAllocate = units;
+            _Room = room;
+            _DayAssigned = day;
+            _id = id;
         }
 
         public bool ValidateTimeframe(SubjectEntry mainEntry, SubjectEntry existingEntry)
