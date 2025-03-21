@@ -116,7 +116,8 @@
                       Width="150"
                       Name="cbox_Personnel"
                       SelectedItem="{Binding AssignedPerson}"
-                      DisplayMemberPath="Name"/>
+                      DisplayMemberPath="Name"
+                      SelectionChanged="cbox_Personnel_SelectionChanged"/>
             <Button Style="{StaticResource ImageButton}"    
                     MaxHeight="40"
                     Grid.Column="4"

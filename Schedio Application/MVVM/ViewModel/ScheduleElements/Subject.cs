@@ -185,7 +185,6 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             _Units = units;
         }
 
-
         public Subject(ClassSection ownerSection)
         {
             OwnerSection = ownerSection;
@@ -209,6 +208,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             this.AssignedPerson = subject.AssignedPerson;
             this.Units = subject.Units;
             this._ClassSection = section;
+            this._ID = Interlocked.Increment(ref _IdCounter);
         }
 
 
@@ -335,6 +335,16 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                     foreach (SubjectEntry se in subjectEntries)
                     {
                         if (se.RoomAllocated == room)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                case ScheduleElement.Person:
+                    Person person = (Person)obj;
+                    foreach (SubjectEntry se in subjectEntries)
+                    {
+                        if (se.SubjectInfo.AssignedPerson == person)
                         {
                             return true;
                         }

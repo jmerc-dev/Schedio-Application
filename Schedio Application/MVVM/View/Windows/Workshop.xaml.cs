@@ -286,30 +286,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Export_Click(object sender, RoutedEventArgs e)
         {
-            //foreach (ClassSection cs in Sections)
-            //{
-            //    Trace.WriteLine(cs.Name);
-            //}
-
-            //var options = new JsonSerializerOptions
-            //{
-            //    Converters = { new SubjectConverter(), new SubjectEntryConverter() },
-            //    WriteIndented = true
-            //};
-
-            //string fullJsonData = JsonSerializer.Serialize(fullDataWrapper, options);
-
-            //SaveFileDialog saveFileDialog = new SaveFileDialog
-            //{
-            //    Filter = "JSON Files (*.json)|*.json|All Files (*.*)|*.*",
-            //    DefaultExt = "json",
-            //    AddExtension = true
-            //};
-
-            //if (saveFileDialog.ShowDialog() == true)
-            //{
-            //    File.WriteAllText(saveFileDialog.FileName.ToString(), fullJsonData);
-            //}
+            
 
         }
 
@@ -535,7 +512,6 @@ namespace Schedio_Application.MVVM.View.Windows
                 }
 
                 getDayTable(card.Entry.DayAssigned).PlaceCard(card);
-
 
                 Trace.WriteLine($"An item has been replaced {e.OldStartingIndex} {e.NewStartingIndex}");
                 

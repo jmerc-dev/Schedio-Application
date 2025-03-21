@@ -28,6 +28,7 @@ namespace Schedio_Application.MVVM.View.UserControls
     {
         private Subject _Subject;
         private double _XPosition, _YPosition;
+        private Person _OriginalAssignedPersonnel;
 
         public double XPosition
         {
@@ -82,7 +83,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             this.DataContext = subject;
             cbox_Personnel.ItemsSource = people;
             cbox_RoomType.ItemsSource = roomTypes;
-
+            this._OriginalAssignedPersonnel = Subject.AssignedPerson;
             Loaded += (sender, e) =>
             {
                 ctr_Units.DataContext = subject;
@@ -92,6 +93,7 @@ namespace Schedio_Application.MVVM.View.UserControls
         public SubjectItem(ObservableCollection<string> people, ObservableCollection<string> roomTypes)
         {       
             InitializeComponent();
+            this._OriginalAssignedPersonnel = Subject.AssignedPerson;
 
             Loaded += (sender, e) =>
             {
@@ -122,6 +124,27 @@ namespace Schedio_Application.MVVM.View.UserControls
             }
 
             return true;
+        }
+
+        private void cbox_Personnel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // TODO: Prevent changing of Assigned Personel if the subject has units allocated in subject entries
+            if (Subject.IsDataBeingUsed(ScheduleElement.Subject, this.Subject))
+            {
+                if (e.RemovedItems.Count == 0) 
+                    return;
+
+                if (e.AddedItems.Count == 0)
+                    return;
+
+                Person newAssignedPerson = (Person)e.AddedItems[0];
+
+                if (newAssignedPerson == this._OriginalAssignedPersonnel)
+                    return;
+
+                new MBox("You need to deallocate all units of this subject to change the assigned personnel", MBoxImage.Warning).ShowDialog();
+                Subject.AssignedPerson = this._OriginalAssignedPersonnel;
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
