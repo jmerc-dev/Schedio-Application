@@ -16,6 +16,12 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
     {
         // Commands
         public RelayCommand SaveCommand => new RelayCommand(execute => Save((FullDataWrapper)execute));
+        private string? _Path;
+
+        public string? Path
+        {
+            get => _Path;
+        }
 
         // JsonOptions
         private JsonSerializerOptions options = new JsonSerializerOptions
@@ -30,9 +36,42 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
 
 
         public FileSave() { }
+        public FileSave(string path)
+        {
+            _Path = path;
+        }
 
         public bool Save(FullDataWrapper fullDataWrapper)
         {
+            string fullJsonData = JsonSerializer.Serialize(fullDataWrapper, options);
+
+            if (Path == null) 
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "JSON Files (*.json)|*.json|All Files (*.*)|*.*",
+                    DefaultExt = "json",
+                    AddExtension = true
+                };
+                
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    _Path = saveFileDialog.FileName.ToString();
+                    File.WriteAllText(saveFileDialog.FileName.ToString(), fullJsonData);
+                }
+            }
+            else
+            {
+                File.WriteAllText(Path.ToString(), fullJsonData);
+            }
+
+            return true;
+            
+        }
+
+        public bool SaveAs(FullDataWrapper fullDataWrapper)
+        {
+            // TODO: 
             SaveFileDialog saveFileDialog = new SaveFileDialog
             {
                 Filter = "JSON Files (*.json)|*.json|All Files (*.*)|*.*",
@@ -45,11 +84,6 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
                 File.WriteAllText(saveFileDialog.FileName.ToString(), fullJsonData);
             }
             return true;
-        }
-
-        public bool SaveAs()
-        {
-            // TODO: 
             return true;
         }
     }
