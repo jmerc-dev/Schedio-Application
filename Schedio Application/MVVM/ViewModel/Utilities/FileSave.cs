@@ -71,19 +71,20 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
 
         public bool SaveAs(FullDataWrapper fullDataWrapper)
         {
-            // TODO: 
+            string fullJsonData = JsonSerializer.Serialize(fullDataWrapper, options);
+
             SaveFileDialog saveFileDialog = new SaveFileDialog
             {
                 Filter = "JSON Files (*.json)|*.json|All Files (*.*)|*.*",
                 DefaultExt = "json",
                 AddExtension = true
             };
-            string fullJsonData = JsonSerializer.Serialize(fullDataWrapper, options);
+
             if (saveFileDialog.ShowDialog() == true)
             {
                 File.WriteAllText(saveFileDialog.FileName.ToString(), fullJsonData);
+                _Path = saveFileDialog.FileName.ToString();
             }
-            return true;
             return true;
         }
     }
