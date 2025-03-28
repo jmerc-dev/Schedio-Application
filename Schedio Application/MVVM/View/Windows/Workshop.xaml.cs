@@ -709,7 +709,6 @@ namespace Schedio_Application.MVVM.View.Windows
                         new MBox($"{item.Name} cannot be deleted because there are subjects allocated to it.").ShowDialog();
                         return false;
                     }
-                    
                     objectsToBeRemoved.Add(item.Name);
                 }
             }
@@ -791,7 +790,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
                         if (form.ShowDialog() == true)
                         {
-
+                            
                         }
                     }
                     break;

@@ -44,11 +44,12 @@ namespace Schedio_Application.MVVM.View.UserControls
 
         private long entryIndex = 0;
 
-        public static readonly DependencyProperty _Rooms = DependencyProperty.Register(
+        private static readonly DependencyProperty _Rooms = DependencyProperty.Register(
             "Rooms",
             typeof(ObservableCollection<Room>),
             typeof(TimeTable),
             new PropertyMetadata(null));
+
 
         public ObservableCollection<Room> Rooms
         {
@@ -64,13 +65,10 @@ namespace Schedio_Application.MVVM.View.UserControls
 
             Loaded += (sender, e) =>
             {
-                lv_RoomHeader.ItemsSource = Rooms;
+                lv_RoomHeader.ItemsSource = Workshop.Rooms;
                 
-
                 double fullWidth = TimeHeader.ActualWidth + RoomHeader.ActualWidth;
                 double fullHeight = TimeHeader.ActualHeight + Timeslot.ActualHeight;
-
-                
 
                 SetControlWidth(fullWidth);
                 SetControlHeight(fullHeight);
