@@ -7,13 +7,14 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800" PreviewMouseLeftButtonDown="UserControl_MouseLeftButtonDown">
     <ScrollViewer Name="sv_Canvas" DataContext="{Binding RelativeSource={RelativeSource Self}}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" ScrollChanged="sv_Canvas_ScrollChanged" Style="{StaticResource NoThumbScrollViewer}" Background="{StaticResource PrimaryBackground}" PreviewMouseMove="scrollViewer_PreviewMouseMove" PreviewMouseLeftButtonUp="scrollViewer_PreviewMouseLeftButtonUp" PreviewMouseLeftButtonDown="scrollViewer_PreviewMouseLeftButtonDown" PreviewMouseWheel="scrollViewer_PreviewMouseWheel">
-        <Canvas Name="cv_Container" Background="{StaticResource PrimaryBackground}" SnapsToDevicePixels="True" HorizontalAlignment="Left">
-            <Canvas Name="HorizontalLineContainer" Canvas.ZIndex="1" Canvas.Top="50" Canvas.Left="100" Height="200" Width="200" Margin="0,60,0,0">
+        <Canvas Name="cv_Container" Background="{StaticResource PrimaryBackground}" SnapsToDevicePixels="True" HorizontalAlignment="Left" >
+            <Canvas Name="HorizontalLineContainer" Canvas.ZIndex="1" Canvas.Top="50" Canvas.Left="100" Height="200" Width="200" Margin="0,60,0,0" >
                 <Canvas.Resources>
                     <Style TargetType="Rectangle">
                         <Setter Property="Fill" Value="{StaticResource PrimaryShadeColor}"/>
                         <Setter Property="Height" Value="1"/>
-                        <Setter Property="Width" Value="{Binding ElementName=RoomHeader, Path=Width}"/>
+                        <Setter Property="Width" Value="{Binding ElementName=cv_Container, Path=Width}"/>
+                        <Setter Property="SnapsToDevicePixels" Value="True"/>
                     </Style>
                 </Canvas.Resources>
                 <Rectangle Canvas.Top="9"/>
