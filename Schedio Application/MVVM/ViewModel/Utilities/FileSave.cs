@@ -44,7 +44,6 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
         public bool Save(FullDataWrapper fullDataWrapper)
         {
             string fullJsonData = JsonSerializer.Serialize(fullDataWrapper, options);
-
             if (Path == null) 
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog
@@ -64,7 +63,6 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
             {
                 File.WriteAllText(Path.ToString(), fullJsonData);
             }
-
             return true;
             
         }

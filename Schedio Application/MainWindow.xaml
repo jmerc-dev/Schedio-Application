@@ -74,7 +74,7 @@
                                     <Button Style="{StaticResource ConfirmButton}" Width="150" Margin="10" Name="btn_NewProject" Click="btn_NewProject_Click">
                                         <TextBlock Text="New Project" FontSize="14"/>
                                     </Button>
-                                    <Button Style="{StaticResource SecondaryButton}" Width="50" Margin="10" Name="btn_OpenProject" MouseEnter="btn_OpenProject_MouseEnter" MouseLeave="btn_OpenProject_MouseLeave">
+                                    <Button Style="{StaticResource SecondaryButton}" Click="btn_OpenProject_Click" Width="50" Margin="10" Name="btn_OpenProject" MouseEnter="btn_OpenProject_MouseEnter" MouseLeave="btn_OpenProject_MouseLeave">
                                         <Image Name="img_OpenProject" Source="pack://application:,,,/Schedio Application;component/Resources/Images/open-file.png" Margin="7" Stretch="Uniform"/>
                                     </Button>
                                 </StackPanel>

@@ -173,8 +173,4 @@
     <Resource Include="Resources\Images\woman.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="MVVM\Model\" />
-  </ItemGroup>
-
 </Project>

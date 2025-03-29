@@ -1,5 +1,9 @@
-﻿using Schedio_Application.MVVM.View.Windows;
+﻿using Microsoft.Win32;
+using Schedio_Application.MVVM.Model;
+using Schedio_Application.MVVM.View.Windows;
+using Schedio_Application.MVVM.ViewModel.Custom_Exceptions;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Windows;
@@ -10,7 +14,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Schedio_Application
 {
@@ -19,8 +22,6 @@ namespace Schedio_Application
     /// </summary>
     public partial class MainWindow : Window
     {
-
-
         public MainWindow()
         {
             InitializeComponent();
@@ -89,6 +90,27 @@ namespace Schedio_Application
             Workshop wk = new Workshop();
             Application.Current.MainWindow.Visibility = Visibility.Collapsed;
             wk.Show();
+        }
+
+        private void btn_OpenProject_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "JSON File (JSON)|*.json"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    FileLoader fileLoader = new FileLoader(openFileDialog.FileName);
+                }
+                catch (InvalidFileException ifex)
+                {
+                    new MBox(ifex.Message, MBoxImage.Warning).ShowDialog();
+                    return;
+                }
+            }
         }
     }
 }

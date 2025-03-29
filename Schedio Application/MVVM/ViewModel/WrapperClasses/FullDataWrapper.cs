@@ -8,6 +8,8 @@ namespace Schedio_Application.MVVM.ViewModel.WrapperClasses
 {
     public class FullDataWrapper
     {
+        public FileIdentifier Identifier { get => new FileIdentifier(); }
+
         public PeopleGroup? PeopleGroup { get; set; }
         public RoomGroup? RoomsGroup { get; set; }
         public SectionGroup? SectionsGroup { get; set; }
