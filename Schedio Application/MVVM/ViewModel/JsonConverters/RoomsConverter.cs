@@ -42,6 +42,10 @@ namespace Schedio_Application.MVVM.ViewModel.JsonConverters
                         r.Type = type;
                     }
                 }
+                else
+                {
+                    throw new KeyNotFoundException($"Room Type reference for {r.Name} cannot be found.");
+                }
             }
 
             return rooms;

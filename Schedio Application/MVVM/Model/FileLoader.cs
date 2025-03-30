@@ -52,16 +52,17 @@ namespace Schedio_Application.MVVM.Model
 
             try
             {
-                foreach (Room r in fullData.RoomsGroup.Rooms)
+                foreach (Person p in fullData.PeopleGroup.People)
                 {
-                    Trace.WriteLine($"{r.ID}, {r.Name}, {r.Type.Name}");
+                    Trace.WriteLine($"{p.ID}, {p.Name}, {p.IsConstant}, {p.AvailableDays}");
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 new MBox(ex.Message).ShowDialog();
                 return null;
             }
-            
+
 
             if (fullData.Identifier.Name != null && !fullData.Identifier.Name.Equals(FileHashKey.Key))
             {

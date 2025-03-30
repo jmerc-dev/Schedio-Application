@@ -10,6 +10,7 @@ namespace Schedio_Application.MVVM.ViewModel.WrapperClasses
 {
     public class PeopleGroup
     {
+        public int IdCounter { get; set; }
         public ObservableCollection<Person>? People { get; set; }
     }
 }

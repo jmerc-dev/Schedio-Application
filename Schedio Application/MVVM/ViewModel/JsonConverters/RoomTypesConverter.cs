@@ -25,18 +25,15 @@ namespace Schedio_Application.MVVM.ViewModel.JsonConverters
 
         public override ObservableCollection<RoomType>? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            //foreach (JsonConverter jc in options.Converters)
-            //{
-            //    Trace.WriteLine(jc.Type.);
-            //}
+            if (_context == null)
+                throw new NullReferenceException();
+
             var roomTypes = JsonSerializer.Deserialize<ObservableCollection<RoomType>>(ref reader);
 
-            foreach (RoomType rt in roomTypes) 
-            {
-                Trace.WriteLine($"{rt.ID}, {rt.Name}");
-            }
-            // Store room types in dictionary and pass it through options
-            Dictionary<int, RoomType> roomTypeMap = (Dictionary<int, RoomType>) roomTypes.ToDictionary(rt => rt.ID);
+            if (roomTypes == null)
+                throw new NullReferenceException();
+
+            Dictionary<int, RoomType> roomTypeMap = roomTypes.ToDictionary(rt => rt.ID);
             this._context.RoomTypeMap = roomTypeMap;
 
             return roomTypes;
