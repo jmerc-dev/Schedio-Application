@@ -104,10 +104,11 @@ namespace Schedio_Application
                 try
                 {
                     FileLoader fileLoader = new FileLoader(openFileDialog.FileName);
+                    fileLoader.Execute();
                 }
-                catch (InvalidFileException ifex)
+                catch (Exception ex)
                 {
-                    new MBox(ifex.Message, MBoxImage.Warning).ShowDialog();
+                    new MBox(ex.Message, MBoxImage.Warning).ShowDialog();
                     return;
                 }
             }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using Schedio_Application.MVVM.ViewModel.Commands;
+using Schedio_Application.MVVM.ViewModel.JsonConverters;
 using Schedio_Application.MVVM.ViewModel.WrapperClasses;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Schedio_Application.MVVM.ViewModel.Utilities
@@ -27,9 +29,11 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
         private JsonSerializerOptions options = new JsonSerializerOptions
         {
             Converters = 
-            { 
+            {
+                new RoomTypesConverter(),
                 new SubjectConverter(), 
-                new SubjectEntryConverter() 
+                new SubjectEntryConverter(),
+                new RoomsConverter(),
             },
             WriteIndented = true
         };

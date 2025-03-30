@@ -28,6 +28,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public int ID
         {
             get => _ID;
+            set => _ID = value;
         }
 
         public static int IDCounter
@@ -54,6 +55,10 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
+        public int RoomTypeID { get; set; }
+
+        public Room() { }
+
         public Room(string name, RoomType type)
         {
             this._name = name;
@@ -66,11 +71,6 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             this._name = name;
             this._type = type;
             this._ID = id;
-        }
-
-        public string Serialize()
-        {
-            return Name;
         }
 
         public static Room? RoomExists(string roomname) 

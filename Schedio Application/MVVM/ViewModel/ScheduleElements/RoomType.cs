@@ -23,6 +23,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public int ID
         {
             get => _ID;
+            set => _ID = value;
         }
 
         public string Name 
@@ -35,6 +36,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             } 
         }
 
+        public RoomType() { }
         public RoomType(string name)
         {
             _Name = name;

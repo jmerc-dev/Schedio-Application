@@ -79,6 +79,7 @@ namespace Schedio_Application.MVVM.View.Windows
             Sections = new ObservableCollection<ClassSection>();
             fullDataWrapper = new FullDataWrapper
             {
+                Identifier = new FileIdentifier { Name = FileHashKey.Key},
                 SectionsGroup = new SectionGroup { Sections = Sections },
                 RoomTypesGroup = new RoomTypeGroup { RoomTypes = RoomTypes },
                 PeopleGroup = new PeopleGroup { People = Personnel },
