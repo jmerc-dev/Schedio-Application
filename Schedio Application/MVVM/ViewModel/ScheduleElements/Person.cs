@@ -13,15 +13,15 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
     public class Person : PropertyNotification
     {
         const int MAX_CAPACITY = 7;
-        private static int _IdCounter = 0;
+        //private static int _IdCounter = 0;
 
-        private string _Name;
+        private string? _Name;
         private int _ID;
-        private Day[] _Days;
+        private Day[]? _Days;
         private bool _IsConstant;
 
-        private string _ConstTime_Start;
-        private string _ConstTime_End;
+        private string? _ConstTime_Start;
+        private string? _ConstTime_End;
 
         public int ID
         {
@@ -29,18 +29,18 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             set => _ID = value;
         }
 
-        public static int IdCounter
-        {
-            get => _IdCounter;
-            set => _IdCounter = value;
-        }
+        //public static int IdCounter
+        //{
+        //    get => _IdCounter;
+        //    set => _IdCounter = value;
+        //}
 
         public string Timeframe
         {
             get { return ConstTime_Start + " to " + ConstTime_End; }
         }
 
-        public string ConstTime_Start
+        public string? ConstTime_Start
         {
             get { return _ConstTime_Start; }
             set 
@@ -50,7 +50,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
-        public string ConstTime_End
+        public string? ConstTime_End
         {
             get { return _ConstTime_End; }
             set 
@@ -60,7 +60,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
-        public string Name
+        public string? Name
         {
             get { return _Name; } 
             set 
@@ -70,7 +70,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             } 
         }
 
-        public Day[] Days
+        public Day[]? Days
         {
             get { return _Days; }
         }
@@ -85,8 +85,8 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
-        private string _AvailableDays;
-        public string AvailableDays
+        private string? _AvailableDays;
+        public string? AvailableDays
         {
             get { return _AvailableDays; }
             set 
@@ -99,7 +99,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public Person(State state)
         {
             _Days = new Day[MAX_CAPACITY];
-            this._ID = Interlocked.Increment(ref _IdCounter);
+            //this._ID = Interlocked.Increment(ref _IdCounter);
             PopulateDays();
             SetDaysName();
         }
@@ -138,6 +138,9 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                     // Checks for custom timeframe/constant timeframe
                     if (IsConstant)
                     {
+                        if (ConstTime_Start == null || ConstTime_End == null)
+                            throw new NullReferenceException();
+
                         TimeFrame personAvailableTf = new TimeFrame(ConstTime_Start, ConstTime_End);
                         if (personAvailableTf.CanContain(tf))
                         {

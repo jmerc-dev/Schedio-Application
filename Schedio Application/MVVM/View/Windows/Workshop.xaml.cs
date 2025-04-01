@@ -98,7 +98,6 @@ namespace Schedio_Application.MVVM.View.Windows
             Loaded += (sender, e) =>
             {
                 this.DataContext = this;
-                ResetIdCounters();
                 AddDummyData();
             };
 
@@ -108,12 +107,6 @@ namespace Schedio_Application.MVVM.View.Windows
             {
                 Application.Current.MainWindow.Visibility = Visibility.Visible;
             };
-        }
-
-        private void ResetIdCounters()
-        {
-            Person.IdCounter = 0;
-            RoomType.IdCounter = 0;
         }
 
         // Subject allocation CRUD
@@ -143,19 +136,19 @@ namespace Schedio_Application.MVVM.View.Windows
             Rooms.Add(new Room("205", RoomTypes[0]));
 
             Person[] people = [
-                new Person { Name = "Jose Protacio Rizal", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "02:00 PM", ID = 1},
-                new Person { Name = "Emilio Aguinaldo", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "05:00 PM", ID = 2},
-                new Person { Name = "Apolinario Mabini", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "03:00 PM", ID = 3},
-                new Person { Name = "Arthur McArthur", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "01:00 PM", ID = 4},
-                new Person { Name = "Andres Bonifacio", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "07:00 PM", ID = 5},
-                new Person { Name = "Lapu Lapu", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "05:00 PM", ID = 6},
-                new Person { Name = "Apo Whang-od", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "02:00 PM", ID = 7},
-                new Person { Name = "Tomoyuki Yamashita", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "01:00 PM", ID = 8},
-                new Person { Name = "Gabriela Silang", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "09:00 PM", ID = 9},
-                new Person { Name = "Bong Bong Marcos", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "08:00 PM", ID = 10},
-                new Person { Name = "Benigno Aquino", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "03:00 PM", ID = 11}
+                new Person { Name = "Jose Protacio Rizal", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "02:00 PM"},
+                new Person { Name = "Emilio Aguinaldo", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "05:00 PM"},
+                new Person { Name = "Apolinario Mabini", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "03:00 PM"},
+                new Person { Name = "Arthur McArthur", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "01:00 PM"},
+                new Person { Name = "Andres Bonifacio", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "07:00 PM"},
+                new Person { Name = "Lapu Lapu", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "05:00 PM"},
+                new Person { Name = "Apo Whang-od", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "02:00 PM"},
+                new Person { Name = "Tomoyuki Yamashita", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "01:00 PM"},
+                new Person { Name = "Gabriela Silang", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "09:00 PM"},
+                new Person { Name = "Bong Bong Marcos", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "08:00 PM"},
+                new Person { Name = "Benigno Aquino", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "03:00 PM"}
                 ];
-            Person.IdCounter = 11;
+            //Person.IdCounter = 11;
 
             people[0].SetAvailableDay(DayOfWeek.Saturday, true);
             people[0].SetAvailableDay(DayOfWeek.Monday, true);
@@ -305,7 +298,7 @@ namespace Schedio_Application.MVVM.View.Windows
             //    Trace.WriteLine($"{p.ID}: {p.Name}");
             //}
 
-            Trace.WriteLine($"{RoomType.IdCounter}");
+            Trace.WriteLine($"{fullDataWrapper.PeopleGroup.IdCounter}");
 
         }
 
@@ -321,8 +314,6 @@ namespace Schedio_Application.MVVM.View.Windows
             }
         }
     }
-
-
 
 
     // Schedule Data Management
