@@ -298,7 +298,7 @@ namespace Schedio_Application.MVVM.View.Windows
             //    Trace.WriteLine($"{p.ID}: {p.Name}");
             //}
 
-            Trace.WriteLine($"{fullDataWrapper.PeopleGroup.IdCounter}");
+            Trace.WriteLine($"{fullDataWrapper.RoomTypesGroup.IdCounter}");
 
         }
 

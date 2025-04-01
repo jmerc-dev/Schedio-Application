@@ -10,16 +10,16 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
     public class RoomType : PropertyNotification
     {
-        private string _Name;
+        private string? _Name;
 
         private int _ID;
-        private static int _IdCounter = 0;
+        //private static int _IdCounter = 0;
         
-        public static int IdCounter
-        {
-            get => _IdCounter;
-            set => _IdCounter = value;
-        }
+        //public static int IdCounter
+        //{
+        //    get => _IdCounter;
+        //    set => _IdCounter = value;
+        //}
 
         public int ID
         {
@@ -41,7 +41,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public RoomType(string name)
         {
             _Name = name;
-            this._ID = Interlocked.Increment(ref _IdCounter);
+            //this._ID = Interlocked.Increment(ref _IdCounter);
         }
 
         public RoomType(string name, int id)

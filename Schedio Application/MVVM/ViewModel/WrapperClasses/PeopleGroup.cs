@@ -25,8 +25,9 @@ namespace Schedio_Application.MVVM.ViewModel.WrapperClasses
             set 
             {
                 _People = value;
-                if (_People != null)
-                    _People.CollectionChanged += PersonAddedInCollection;
+                if (_People == null)
+                    throw new NullReferenceException();
+                _People.CollectionChanged += PersonAddedInCollection;
             } 
         }
 
