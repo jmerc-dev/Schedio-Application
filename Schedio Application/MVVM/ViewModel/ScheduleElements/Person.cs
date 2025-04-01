@@ -1,4 +1,5 @@
-﻿ using Schedio_Application.MVVM.ViewModel.Utilities;
+﻿using Schedio_Application.MVVM.View.Windows;
+using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,11 +26,13 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public int ID
         {
             get => _ID;
+            set => _ID = value;
         }
 
         public static int IdCounter
         {
             get => _IdCounter;
+            set => _IdCounter = value;
         }
 
         public string Timeframe
@@ -93,10 +96,18 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
-        public Person() 
+        public Person(State state)
         {
             _Days = new Day[MAX_CAPACITY];
             this._ID = Interlocked.Increment(ref _IdCounter);
+            PopulateDays();
+            SetDaysName();
+        }
+
+        public Person() 
+        {
+            _Days = new Day[MAX_CAPACITY];
+            //this._ID = Interlocked.Increment(ref _IdCounter);
             PopulateDays();
             SetDaysName();
         }

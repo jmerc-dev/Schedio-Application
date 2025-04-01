@@ -97,13 +97,13 @@ namespace Schedio_Application.MVVM.View.Pages
         // Done Copying
         private void btn_AddPersonnel_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Person newPerson = new Person();
-            PersonnelAddForm form = new PersonnelAddForm(newPerson, Personnel);
+            //Person newPerson = new Person();
+            //PersonnelAddForm form = new PersonnelAddForm(newPerson, Personnel);
 
-            if (form.ShowDialog() == true)
-            {
-                this.Personnel.Add(form.Person);
-            }
+            //if (form.ShowDialog() == true)
+            //{
+            //    this.Personnel.Add(form.Person);
+            //}
         }
 
         // Done Copying

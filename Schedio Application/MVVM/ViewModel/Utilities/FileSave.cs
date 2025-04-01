@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Schedio_Application.MVVM.View.Windows;
 using Schedio_Application.MVVM.ViewModel.Commands;
 using Schedio_Application.MVVM.ViewModel.JsonConverters;
 using Schedio_Application.MVVM.ViewModel.WrapperClasses;
@@ -66,6 +67,7 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
             else
             {
                 File.WriteAllText(Path.ToString(), fullJsonData);
+                new MBox($"Successfully saved the file to {Path}");
             }
             return true;
             
