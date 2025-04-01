@@ -67,7 +67,7 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
             else
             {
                 File.WriteAllText(Path.ToString(), fullJsonData);
-                new MBox($"Successfully saved the file to {Path}");
+                new MBox($"Successfully saved the file to {Path}").ShowDialog();
             }
             return true;
             

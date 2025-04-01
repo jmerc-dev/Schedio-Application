@@ -15,8 +15,10 @@ namespace Schedio_Application.MVVM.ViewModel.WrapperClasses
         public int IdCounter 
         { 
             get => Person.IdCounter;
-            set => _idCounter = value;
+            set => Person.IdCounter = value;
         }
         public ObservableCollection<Person>? People { get; set; }
+
+        //private CollectionChan
     }
 }

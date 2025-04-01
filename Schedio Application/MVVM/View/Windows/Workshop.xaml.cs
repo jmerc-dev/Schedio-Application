@@ -98,6 +98,7 @@ namespace Schedio_Application.MVVM.View.Windows
             Loaded += (sender, e) =>
             {
                 this.DataContext = this;
+                ResetIdCounters();
                 AddDummyData();
             };
 
@@ -107,6 +108,12 @@ namespace Schedio_Application.MVVM.View.Windows
             {
                 Application.Current.MainWindow.Visibility = Visibility.Visible;
             };
+        }
+
+        private void ResetIdCounters()
+        {
+            Person.IdCounter = 0;
+            RoomType.IdCounter = 0;
         }
 
         // Subject allocation CRUD
@@ -288,6 +295,17 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Export_Click(object sender, RoutedEventArgs e)
         {
+            //foreach (RoomType rt in RoomTypes)
+            //{
+            //    Trace.WriteLine($"{rt.ID}: {rt.Name}");
+            //}
+
+            //foreach (Person p in Personnel)
+            //{
+            //    Trace.WriteLine($"{p.ID}: {p.Name}");
+            //}
+
+            Trace.WriteLine($"{RoomType.IdCounter}");
 
         }
 

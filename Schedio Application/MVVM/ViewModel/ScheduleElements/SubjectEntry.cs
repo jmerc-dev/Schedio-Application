@@ -24,8 +24,8 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
     {
         private int _id;
         private Subject _Subject;
-        private string? _StartTime;
-        private string? _EndTime;
+        //private string? _StartTime;
+        //private string? _EndTime;
         private TimeFrame _TimeFrame;
         private double _UnitsToAllocate;
         private Room _Room;

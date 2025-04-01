@@ -56,6 +56,7 @@ namespace Schedio_Application.MVVM.Model
                 {
                     Trace.WriteLine($"{p.ID}, {p.Name}, {p.IsConstant}, {p.AvailableDays}");
                 }
+                Trace.WriteLine(Person.IdCounter);
             }
             catch (Exception ex)
             {

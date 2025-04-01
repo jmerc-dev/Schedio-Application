@@ -10,6 +10,11 @@ namespace Schedio_Application.MVVM.ViewModel.WrapperClasses
 {
     public class RoomTypeGroup
     {
+        public int IdCounter
+        {
+            get => RoomType.IdCounter;
+            //set => RoomType.IDCounter = value;
+        }
         public ObservableCollection<RoomType>? RoomTypes { get; set; }
     }
 }
