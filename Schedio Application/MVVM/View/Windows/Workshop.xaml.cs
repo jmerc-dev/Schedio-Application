@@ -109,6 +109,8 @@ namespace Schedio_Application.MVVM.View.Windows
             };
         }
 
+        
+
         // Subject allocation CRUD
 
         // Dummy Data
@@ -312,6 +314,13 @@ namespace Schedio_Application.MVVM.View.Windows
                 SelectedSection = sectionExplorer.SelectedSection;
                 //lv_SelectedSectionSubjects.ItemsSource = SelectedSection.Subjects;
             }
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            Room.RoomsList.Clear();
+            Subject.SubjectEntries.Clear();
+
         }
     }
 
