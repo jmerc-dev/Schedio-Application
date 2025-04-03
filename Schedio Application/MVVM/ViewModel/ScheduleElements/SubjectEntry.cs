@@ -22,10 +22,14 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
     }
     public class SubjectEntry : PropertyNotification
     {
+
+        /*
+            TODO: Serializing Subject Entry
+                Must refer to both subject and ClassSection for deserialization
+         */
+
         private int _id;
         private Subject _Subject;
-        //private string? _StartTime;
-        //private string? _EndTime;
         private TimeFrame _TimeFrame;
         private double _UnitsToAllocate;
         private Room _Room;
@@ -42,8 +46,6 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 OnPropertyChanged();
             }
         }
-
-        public static int IdCount => _idCounter;
 
         public TimeFrame TimeFrame
         {

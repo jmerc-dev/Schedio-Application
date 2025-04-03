@@ -106,7 +106,7 @@ namespace Schedio_Application
                 {
                     FileLoader fileLoader = new FileLoader(openFileDialog.FileName);
                     FullDataWrapper? data = fileLoader.Execute();
-
+                    return;
                     if (data != null)
                     {
                         Workshop wk = new Workshop(data);

@@ -32,11 +32,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public int ID 
         {
             get => _ID;
-        }
-
-        public static int IDCount
-        {
-            get => idCounter;
+            set => _ID = value;
         }
 
         public int TotalSubjects

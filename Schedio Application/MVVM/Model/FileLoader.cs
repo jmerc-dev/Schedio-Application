@@ -24,6 +24,8 @@ namespace Schedio_Application.MVVM.Model
         private string _Path;
 
         private RoomTypesConverterContext _RoomConverterContext = new();
+        private PeopleConverterContext _PeopleConverterContext = new();
+        private SectionsConverterContext _SectionConverterContext = new();
 
         private JsonSerializerOptions options = new JsonSerializerOptions
         {
@@ -37,8 +39,14 @@ namespace Schedio_Application.MVVM.Model
             if (!Path.GetExtension(path).Equals(_FileExtension, StringComparison.CurrentCultureIgnoreCase))
                 throw new InvalidFileException(path);
 
+            // For room types reference resolving
             options.Converters.Add(new RoomTypesConverter(_RoomConverterContext));
             options.Converters.Add(new RoomsConverter(_RoomConverterContext));
+            
+            // For subject reference resolving
+            options.Converters.Add(new PeopleConverter(_PeopleConverterContext));
+            options.Converters.Add(new SectionsConverter(_SectionConverterContext));
+            options.Converters.Add(new SubjectConverter(_SectionConverterContext, _PeopleConverterContext));
 
         }
 
@@ -52,9 +60,16 @@ namespace Schedio_Application.MVVM.Model
 
             try
             {
-                foreach (Room r in fullData.RoomsGroup.Rooms)
+                foreach (ClassSection cs in fullData.SectionsGroup.Sections)
                 {
-                    Trace.WriteLine($"{r.ID}, {r.Name}, {r.Type.Name}");
+                    Trace.WriteLine($"{cs.ID}: {cs.Name}");
+
+                    foreach (Subject s in cs.Subjects)
+                    {
+                        Trace.WriteLine($"\t{s.ID}: {s.Name} Personnel: {s.PersonnelID}, OwnerSection: {s.OwnerSectionID}");
+                        Trace.WriteLineIf(s.OwnerSection == null, "\t\tNo ownersection");
+                        Trace.WriteLineIf(s.AssignedPerson == null, "\t\tNo AssignedPerson");
+                    }
                 }
             }
             catch (Exception ex)

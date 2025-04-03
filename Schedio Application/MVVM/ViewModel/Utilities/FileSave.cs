@@ -35,6 +35,7 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
                 new SubjectConverter(), 
                 new SubjectEntryConverter(),
                 new RoomsConverter(),
+                new PeopleConverter()
             },
             WriteIndented = true
         };

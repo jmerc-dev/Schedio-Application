@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -38,7 +39,9 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public RelayCommand DeAllocSubjectCommand => new RelayCommand(execute => DeallocSubject(execute));
         public RelayCommand AdjustSubjectCommand => new RelayCommand((execute) => AdjustSubjectCard(execute));
 
-        // Implement id system per subject
+        public int PersonnelID {  get; set; }
+        public int OwnerSectionID { get; set; }
+
         public int ID
         {
             get { return _ID; }
