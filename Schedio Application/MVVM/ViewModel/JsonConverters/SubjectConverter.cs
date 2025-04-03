@@ -69,6 +69,6 @@ namespace Schedio_Application.MVVM.ViewModel.JsonConverters
             writer.WriteEndObject();
         }
 
-        
+        public override bool CanConvert(Type typeToConvert) => typeToConvert == typeof(Subject);
     }
 }
