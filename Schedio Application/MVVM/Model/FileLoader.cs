@@ -52,11 +52,10 @@ namespace Schedio_Application.MVVM.Model
 
             try
             {
-                foreach (Person p in fullData.PeopleGroup.People)
+                foreach (Room r in fullData.RoomsGroup.Rooms)
                 {
-                    Trace.WriteLine($"{p.ID}, {p.Name}, {p.IsConstant}, {p.AvailableDays}");
+                    Trace.WriteLine($"{r.ID}, {r.Name}, {r.Type.Name}");
                 }
-                //Trace.WriteLine(fullData.RoomTypesGroup.IdCounter);
             }
             catch (Exception ex)
             {

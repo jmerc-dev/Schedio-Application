@@ -32,7 +32,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         
         public Action<SubjectEntry, DataAction> SubjectOperation;
 
-        public static ObservableCollection<SubjectEntry> subjectEntries = new ObservableCollection<SubjectEntry>();
+        private static ObservableCollection<SubjectEntry> _SubjectEntries = new ObservableCollection<SubjectEntry>();
 
         public RelayCommand AllocSubjectCommand => new RelayCommand(execute => AllocSubject());
         public RelayCommand DeAllocSubjectCommand => new RelayCommand(execute => DeallocSubject(execute));
@@ -173,7 +173,8 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         public static ObservableCollection<SubjectEntry> SubjectEntries
         {
-            get { return subjectEntries; }
+            get => _SubjectEntries;
+            set => _SubjectEntries = value;
         }
         
 
@@ -228,7 +229,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             if (subjectAllocation.ShowDialog() == true)
             {
 
-                subjectEntries.Add(subjectAllocation.Entry);
+                _SubjectEntries.Add(subjectAllocation.Entry);
                 UnitsRemaining -= subjectAllocation.Entry.UnitsToAllocate;
 
                 // Updates Allocated Units Indicator
@@ -254,7 +255,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             {
                 SubjectEntry se = (SubjectEntry)entry;
                 se.SubjectInfo.UnitsRemaining += se.UnitsToAllocate;
-                subjectEntries.Remove(se);
+                _SubjectEntries.Remove(se);
 
                 // Updates Allocated Units Indicator
                 if (this.OwnerSection != null)
@@ -300,7 +301,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
                 this.OwnerSection.AllocatedUnits += subAllocObj.Entry.UnitsToAllocate;
 
-                Subject.subjectEntries[Subject.subjectEntries.IndexOf(subEntry)] = subEntry;
+                Subject._SubjectEntries[Subject._SubjectEntries.IndexOf(subEntry)] = subEntry;
 
             }
         }
@@ -312,7 +313,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             {
                 case ScheduleElement.ClassSection:
                     ClassSection cs = (ClassSection)obj;
-                    foreach (SubjectEntry se in subjectEntries)
+                    foreach (SubjectEntry se in _SubjectEntries)
                     {
                         if (se.SubjectInfo.OwnerSection == cs)
                         {
@@ -322,7 +323,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                     return false;
                 case ScheduleElement.Subject:
                     Subject s = (Subject)obj;
-                    foreach (SubjectEntry se in subjectEntries)
+                    foreach (SubjectEntry se in _SubjectEntries)
                     {
                         if (se.SubjectInfo == s)
                         {
@@ -332,7 +333,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                     return false;
                 case ScheduleElement.Room:
                     Room room = (Room)obj;
-                    foreach (SubjectEntry se in subjectEntries)
+                    foreach (SubjectEntry se in _SubjectEntries)
                     {
                         if (se.RoomAllocated == room)
                         {
@@ -342,7 +343,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                     return false;
                 case ScheduleElement.Person:
                     Person person = (Person)obj;
-                    foreach (SubjectEntry se in subjectEntries)
+                    foreach (SubjectEntry se in _SubjectEntries)
                     {
                         if (se.SubjectInfo.AssignedPerson == person)
                         {

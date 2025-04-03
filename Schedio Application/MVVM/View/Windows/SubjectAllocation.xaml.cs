@@ -174,7 +174,7 @@ namespace Schedio_Application.MVVM.View.Windows
                     return;
                 }
 
-                foreach (SubjectEntry entry in Subject.subjectEntries)
+                foreach (SubjectEntry entry in Subject.SubjectEntries)
                 {
                     if ((Entry.DayAssigned == entry.DayAssigned) && (Entry.RoomAllocated == entry.RoomAllocated))
                     {
@@ -272,7 +272,7 @@ namespace Schedio_Application.MVVM.View.Windows
             //Availability Check
             try
             {
-                foreach (SubjectEntry existingEntry in Subject.subjectEntries)
+                foreach (SubjectEntry existingEntry in Subject.SubjectEntries)
                 {
                     // Prevent comparison to itself
                     if (Entry == existingEntry)

@@ -2,6 +2,7 @@
 using Schedio_Application.MVVM.Model;
 using Schedio_Application.MVVM.View.Windows;
 using Schedio_Application.MVVM.ViewModel.Custom_Exceptions;
+using Schedio_Application.MVVM.ViewModel.WrapperClasses;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -104,7 +105,19 @@ namespace Schedio_Application
                 try
                 {
                     FileLoader fileLoader = new FileLoader(openFileDialog.FileName);
-                    fileLoader.Execute();
+                    FullDataWrapper? data = fileLoader.Execute();
+
+                    if (data != null)
+                    {
+                        Workshop wk = new Workshop(data);
+                        Application.Current.MainWindow.Visibility = Visibility.Collapsed;
+                        wk.Show();
+                    }
+                    else
+                    {
+                        throw new NullReferenceException();
+                    }
+
                 }
                 catch (Exception ex)
                 {

@@ -109,7 +109,37 @@ namespace Schedio_Application.MVVM.View.Windows
             };
         }
 
-        
+        public Workshop(FullDataWrapper fdw)
+        {
+            InitializeComponent();
+
+            fullDataWrapper = fdw;
+            Personnel = fdw.PeopleGroup.People;
+            Sections = fdw.SectionsGroup.Sections;
+            Room.RoomsList = fdw.RoomsGroup.Rooms;
+            RoomTypes = fdw.RoomTypesGroup.RoomTypes;
+            Subject.SubjectEntries = fdw.SubjectEntriesGroup.SubjectEntries;
+            
+            lv_RoomsList.ItemsSource = Workshop.Rooms;
+            lv_PersonnelList.ItemsSource = this.Personnel;
+            lv_SectionList.ItemsSource = this.Sections;
+
+            Rooms.CollectionChanged += new NotifyCollectionChangedEventHandler(room_CollectionChanged);
+            Subject.SubjectEntries.CollectionChanged += new NotifyCollectionChangedEventHandler(SubjectEntries_CollectionChanged);
+            Sections.CollectionChanged += new NotifyCollectionChangedEventHandler(section_CollectionChanged);
+
+            Loaded += (sender, e) =>
+            {
+                this.DataContext = this;
+                AddDummyData();
+            };
+
+            Closing += (sender, e) =>
+            {
+                Application.Current.MainWindow.Visibility = Visibility.Visible;
+            };
+
+        }
 
         // Subject allocation CRUD
 
@@ -150,7 +180,6 @@ namespace Schedio_Application.MVVM.View.Windows
                 new Person { Name = "Bong Bong Marcos", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "08:00 PM"},
                 new Person { Name = "Benigno Aquino", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "03:00 PM"}
                 ];
-            //Person.IdCounter = 11;
 
             people[0].SetAvailableDay(DayOfWeek.Saturday, true);
             people[0].SetAvailableDay(DayOfWeek.Monday, true);

@@ -140,7 +140,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         public bool ValidateAvailability()
         {
-            foreach (SubjectEntry se in Subject.subjectEntries)
+            foreach (SubjectEntry se in Subject.SubjectEntries)
             {
                 if (this == se)
                     continue;
