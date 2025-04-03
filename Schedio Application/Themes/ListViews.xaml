@@ -146,6 +146,12 @@
         </Setter>
     </Style>
 
+    <DataTemplate x:Key="dt_RoomHeader">
+        <Grid>
+            <TextBlock Text="{Binding Name}"/>
+        </Grid>
+    </DataTemplate>
+
     <DataTemplate x:Key="dt_RoomsList">
         <Grid Margin="50,0,0,0" MinWidth="700">
             <Grid.ColumnDefinitions>

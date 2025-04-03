@@ -1,7 +1,9 @@
-﻿ using Schedio_Application.MVVM.ViewModel.Utilities;
+﻿using Schedio_Application.MVVM.View.Windows;
+using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,22 +13,34 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
     public class Person : PropertyNotification
     {
         const int MAX_CAPACITY = 7;
+        //private static int _IdCounter = 0;
 
-        private string _Name;
-
-        // TODO: Make this a dictionary
-        private Day[] _Days;
+        private string? _Name;
+        private int _ID;
+        private Day[]? _Days;
         private bool _IsConstant;
 
-        private string _ConstTime_Start;
-        private string _ConstTime_End;
+        private string? _ConstTime_Start;
+        private string? _ConstTime_End;
+
+        public int ID
+        {
+            get => _ID;
+            set => _ID = value;
+        }
+
+        //public static int IdCounter
+        //{
+        //    get => _IdCounter;
+        //    set => _IdCounter = value;
+        //}
 
         public string Timeframe
         {
-            get { return ConstTime_Start + " -> " + ConstTime_End; }
+            get { return ConstTime_Start + " to " + ConstTime_End; }
         }
 
-        public string ConstTime_Start
+        public string? ConstTime_Start
         {
             get { return _ConstTime_Start; }
             set 
@@ -36,7 +50,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
-        public string ConstTime_End
+        public string? ConstTime_End
         {
             get { return _ConstTime_End; }
             set 
@@ -46,7 +60,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
-        public string Name
+        public string? Name
         {
             get { return _Name; } 
             set 
@@ -56,7 +70,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             } 
         }
 
-        public Day[] Days
+        public Day[]? Days
         {
             get { return _Days; }
         }
@@ -71,8 +85,8 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
-        private string _AvailableDays;
-        public string AvailableDays
+        private string? _AvailableDays;
+        public string? AvailableDays
         {
             get { return _AvailableDays; }
             set 
@@ -82,12 +96,34 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
+        public Person(State state)
+        {
+            _Days = new Day[MAX_CAPACITY];
+            //this._ID = Interlocked.Increment(ref _IdCounter);
+            PopulateDays();
+            SetDaysName();
+        }
+
         public Person() 
         {
             _Days = new Day[MAX_CAPACITY];
-
+            //this._ID = Interlocked.Increment(ref _IdCounter);
             PopulateDays();
             SetDaysName();
+        }
+
+        // Create a constructor for loading from files
+        public Person(string name, Day[] days, bool isConstant, int id)
+        {
+            this._Name = name;
+            this._ID = id;
+            if (days.Length != 7)
+            {
+                throw new Exception("Invalid day array object");
+            }
+            this.IsConstant = isConstant;
+            this._Days = days;
+            UpdateFormattedDays();
         }
 
         // May proc StringFormatException
@@ -102,6 +138,9 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                     // Checks for custom timeframe/constant timeframe
                     if (IsConstant)
                     {
+                        if (ConstTime_Start == null || ConstTime_End == null)
+                            throw new NullReferenceException();
+
                         TimeFrame personAvailableTf = new TimeFrame(ConstTime_Start, ConstTime_End);
                         if (personAvailableTf.CanContain(tf))
                         {
@@ -159,6 +198,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 _Days[6].IsAvailable = isChecked;
             else
                 _Days[(int)day - 1].IsAvailable = isChecked;
+            AvailableDays = GetAvailDaysFormatted();
         }
 
         public string GetAvailDaysFormatted()

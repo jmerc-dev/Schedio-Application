@@ -5,11 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"
         xmlns:userControl="clr-namespace:Schedio_Application.MVVM.View.UserControls"
+        xmlns:converter="clr-namespace:Schedio_Application.MVVM.ViewModel.Converters"
+        xmlns:core="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="SubjectAllocation" Height="400" Width="650"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <converter:RemainingUnitToBoolConverter x:Key="lessThanOrEqualConverter"/>
+    </Window.Resources>
+    
     <Border BorderBrush="{StaticResource GreyColor}" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
@@ -75,24 +82,14 @@
                     <TextBlock Text="{Binding SubjectInfo.AssignedPerson.Name}" Grid.Row="3" VerticalAlignment="Top" Grid.Column="1" Style="{StaticResource UneditableText}" FontSize="15" Margin="0,5"/>
 
                     <TextBlock Text="Room:" FontSize="15" Grid.Row="1" Grid.Column="2" Margin="0,5"/>
-                    <ComboBox Style="{StaticResource MainComboBox}" Name="cbox_Rooms" DisplayMemberPath="Name" Grid.Column="3" IsEditable="True" Grid.Row="1" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Margin="20,0,0,0"/>
+                    <ComboBox Style="{StaticResource MainComboBox}" Name="cbox_Rooms" DisplayMemberPath="Name" SelectedValue="{Binding Path=RoomAllocated, Mode=OneWay}" Grid.Column="3" IsEditable="True" Grid.Row="1" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Margin="20,0,0,0"/>
 
                     <TextBlock Text="Start Time:" FontSize="15" Grid.Row="3"  Grid.Column="2" Margin="0,5,0,0" VerticalAlignment="Top"/>
                     <userControl:TimeInput x:Name="ti_Start" Grid.Row="3" Grid.Column="3" Width="130" Height="27" VerticalAlignment="Top" Margin="20,0,0,5" HorizontalAlignment="Left" FontHeight="15" ButtonHeight="13"/>
                     
                     
                     <TextBlock Text="Units:" FontSize="15" Grid.Row="2" Grid.Column="2" Margin="0,5" VerticalAlignment="Center"/>
-                    <ComboBox Style="{StaticResource MainComboBox}" Name="cbox_SelectedUnits" Grid.Column="3" Grid.Row="2" Width="50" Height="25" HorizontalAlignment="Left" Margin="20,0,0,5" VerticalContentAlignment="Center">
-                        <ComboBoxItem Content="0.5"/>
-                        <ComboBoxItem Content="1.0"/>
-                        <ComboBoxItem Content="1.5"/>
-                        <ComboBoxItem Content="2.0"/>
-                        <ComboBoxItem Content="2.5"/>
-                        <ComboBoxItem Content="3.0"/>
-                        <ComboBoxItem Content="3.5"/>
-                        <ComboBoxItem Content="4.0"/>
-                        <ComboBoxItem Content="4.5"/>
-                        <ComboBoxItem Content="5.0"/>
+                    <ComboBox Style="{StaticResource MainComboBox}" Name="cbox_SelectedUnits" Grid.Column="3" Grid.Row="2" Width="50" Height="25" HorizontalAlignment="Left" Margin="20,0,0,5" VerticalContentAlignment="Center" SelectedValue="{Binding UnitsToAllocate, Mode=OneWay}">
                     </ComboBox>
 
                     <StackPanel Orientation="Horizontal" Grid.Column="3" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Right">
@@ -105,6 +102,7 @@
                 <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button Style="{StaticResource CancelButton}" Content="Cancel" Width="100" Margin="5" FontSize="13" IsCancel="True"/>
                     <Button Style="{StaticResource ConfirmButton}" Content="Add" Width="100" Margin="5" FontSize="13" Name="btn_Select" Click="btn_Select_Click"/>
+                    <Button Style="{StaticResource ConfirmButton}" Content="Update" Width="100" Margin="5" FontSize="13" Name="btn_Update" Click="btn_Update_Click" Visibility="Collapsed"/>
                 </StackPanel>
             </Grid>
         </Grid>

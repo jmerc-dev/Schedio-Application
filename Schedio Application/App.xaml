@@ -21,6 +21,8 @@
                 <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/TabControls.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/Menu.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/TextBlock.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/Slider.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Schedio Application;component/Themes/ColorPicker.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
         </ResourceDictionary>

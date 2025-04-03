@@ -10,6 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="MVVM\ViewModel\Constants\**" />
+    <EmbeddedResource Remove="MVVM\ViewModel\Constants\**" />
+    <None Remove="MVVM\ViewModel\Constants\**" />
+    <Page Remove="MVVM\ViewModel\Constants\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Resources\General\title_icon.ico" />
     <None Remove="Resources\Images\arrow-down.png" />
     <None Remove="Resources\Images\arrow-right-disabled.png" />
@@ -95,8 +102,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MVVM\Model\" />
-    <Folder Include="MVVM\ViewModel\Constants\" />
+    <PackageReference Include="PixiEditor.ColorPicker" Version="3.4.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,6 @@
-﻿using Schedio_Application.MVVM.ViewModel.Utilities;
+﻿using Schedio_Application.MVVM.View.Windows;
+using Schedio_Application.MVVM.ViewModel.Custom_Exceptions;
+using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,13 +22,16 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
     }
     public class SubjectEntry : PropertyNotification
     {
+        private int _id;
         private Subject _Subject;
-        private string? _StartTime;
-        private string? _EndTime;
+        //private string? _StartTime;
+        //private string? _EndTime;
         private TimeFrame _TimeFrame;
         private double _UnitsToAllocate;
-        private Room? _Room;
+        private Room _Room;
         private DayOfWeek? _DayAssigned;
+
+        private static int _idCounter;
 
         public Subject SubjectInfo 
         { 
@@ -38,38 +43,17 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
+        public static int IdCount => _idCounter;
+
         public TimeFrame TimeFrame
         {
             get => _TimeFrame;
-            set => _TimeFrame = value;
+            set
+            {
+                _TimeFrame = value;
+                OnPropertyChanged();
+            }
         }
-
-        //public string? StartTime
-        //{
-        //    get { return _StartTime; }
-        //    set 
-        //    { 
-        //        _StartTime = value;
-
-        //        if (value != null)
-        //        {
-        //            DateTime endTime = DateTime.Parse(value).AddHours(UnitsToAllocate);
-        //            DateTime endTime1 = DateTime.Parse(value).AddHours(3);
-        //            EndTime = endTime.ToString("hh:mm tt");
-        //        }
-        //        OnPropertyChanged();
-        //    }
-        //}
-
-        //public string? EndTime
-        //{
-        //    get { return _EndTime; }
-        //    set
-        //    {
-        //        _EndTime = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
 
         public double UnitsToAllocate
         {
@@ -81,7 +65,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
-        public Room? RoomAllocated
+        public Room RoomAllocated
         {
             get { return _Room; }
             set 
@@ -101,19 +85,79 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
+
         public SubjectEntry(Subject subject)
         {
             _Subject = subject;
             _TimeFrame = new TimeFrame();
+            this._id = Interlocked.Increment(ref _idCounter);
+
         }
 
-        public SubjectEntry(Subject subject, TimeFrame tf, double units, Room room)
+        public SubjectEntry(Subject subject, TimeFrame tf, double units, Room room, DayOfWeek day)
         {
             _Subject = subject;
             _TimeFrame = tf;
             _UnitsToAllocate = units;
             _Room = room;
+            _DayAssigned = day;
+            this._id = Interlocked.Increment(ref _idCounter);
+        }
+        public SubjectEntry(Subject subject, TimeFrame tf, double units, Room room, DayOfWeek day, int id)
+        {
+            _Subject = subject;
+            _TimeFrame = tf;
+            _UnitsToAllocate = units;
+            _Room = room;
+            _DayAssigned = day;
+            _id = id;
         }
 
+        public bool ValidateTimeframe(SubjectEntry mainEntry, SubjectEntry existingEntry)
+        {
+            if (existingEntry.DayAssigned == mainEntry.DayAssigned && mainEntry.RoomAllocated == existingEntry.RoomAllocated)
+            {
+                if (existingEntry.TimeFrame.WillConcurWith(mainEntry.TimeFrame))
+                {
+                    throw new TimeframeOverlapException(mainEntry, existingEntry);
+                }
+            }
+            return true;
+        }
+
+        public bool ValidateParallelPersonnel(SubjectEntry mainEntry, SubjectEntry existingEntry)
+        {
+            if (mainEntry.DayAssigned == existingEntry.DayAssigned && mainEntry.RoomAllocated != existingEntry.RoomAllocated && mainEntry.SubjectInfo.AssignedPerson == existingEntry.SubjectInfo.AssignedPerson)
+            {
+                if (existingEntry.TimeFrame.WillConcurWith(mainEntry.TimeFrame))
+                {
+                    new MBox($"{mainEntry.SubjectInfo.AssignedPerson.Name} is currently assigned at the timeframe: {existingEntry.TimeFrame.StartTime} => {existingEntry.TimeFrame.EndTime} in {existingEntry.DayAssigned.ToString()}").ShowDialog();
+                    throw new PersonnelOverlapException(mainEntry, existingEntry);
+                }
+            }
+            return true;
+        }
+
+        public bool ValidateAvailability()
+        {
+            foreach (SubjectEntry se in Subject.SubjectEntries)
+            {
+                if (this == se)
+                    continue;
+
+                if (!ValidateTimeframe(this, se))
+                    return false;
+
+                if (!ValidateParallelPersonnel(this, se))
+                    return false;
+            }
+            return true;
+        }
+
+        public bool Update()
+        {
+
+            return true;
+        }
     }
 }

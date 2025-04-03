@@ -1,6 +1,7 @@
 ﻿using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Media;
 using System.Runtime.CompilerServices;
@@ -67,7 +68,6 @@ namespace Schedio_Application.MVVM.View.Windows
         public MBox(string message, MBoxType type)
         {
             InitializeComponent();
-            this.ShowInTaskbar = false;
             this.Owner = Application.Current.MainWindow;
             switch (type)
             {
@@ -97,11 +97,11 @@ namespace Schedio_Application.MVVM.View.Windows
                     break;
                 case MBoxImage.Warning:
                     img_Picture.Source = new BitmapImage(new Uri("pack://application:,,,/Schedio Application;component/Resources/Images/warning.png"));
+                    btn_OK.Background = new SolidColorBrush(Colors.Red);
                     break;
                 default:
                     break;
             }
-            btn_OK.Focus();
         }
 
         protected override void OnSourceInitialized(EventArgs e)

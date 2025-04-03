@@ -24,6 +24,8 @@ namespace Schedio_Application.MVVM.View.Windows
         ObservableCollection<ClassSection> Sections;
         ObservableCollection<ClassSection> SectionsTemp;
 
+        private bool _ForManaging;
+
         public ClassSection SelectedSection;
         public SectionExplorer(ObservableCollection<ClassSection> sections)
         {

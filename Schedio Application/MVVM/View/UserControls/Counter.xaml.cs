@@ -100,8 +100,8 @@ namespace Schedio_Application.MVVM.View.UserControls
             if (tb_Num.Text.Equals(String.Empty))
             {
                 Trace.WriteLine("empty string");
-                Number = 0;
-                tb_Num.Text = "0";
+                Number = oldValue;
+                tb_Num.Text = oldValue.ToString();
             }
         }
 
@@ -130,6 +130,9 @@ namespace Schedio_Application.MVVM.View.UserControls
             }
         }
 
-        
+        private void tb_Num_GotFocus(object sender, RoutedEventArgs e)
+        {
+            oldValue = Number;
+        }
     }
 }

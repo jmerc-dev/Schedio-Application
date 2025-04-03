@@ -25,5 +25,11 @@ namespace Schedio_Application.MVVM.ViewModel.Custom_Exceptions
         {
 
         }
+
+        public TimeframeOverlapException(SubjectEntry mainEntry, SubjectEntry existingEntry) :
+            base($"You cannot allocate this subject because it is conflicting with:\n{existingEntry.SubjectInfo.OwnerSection.Name}: {existingEntry.TimeFrame.StartTime} => {existingEntry.TimeFrame.EndTime} in {existingEntry.DayAssigned.ToString()}")
+        {
+
+        }
     }
 }

@@ -97,13 +97,13 @@ namespace Schedio_Application.MVVM.View.Pages
         // Done Copying
         private void btn_AddPersonnel_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Person newPerson = new Person();
-            PersonnelAddForm form = new PersonnelAddForm(newPerson, Personnel);
+            //Person newPerson = new Person();
+            //PersonnelAddForm form = new PersonnelAddForm(newPerson, Personnel);
 
-            if (form.ShowDialog() == true)
-            {
-                this.Personnel.Add(form.Person);
-            }
+            //if (form.ShowDialog() == true)
+            //{
+            //    this.Personnel.Add(form.Person);
+            //}
         }
 
         // Done Copying
@@ -506,14 +506,14 @@ namespace Schedio_Application.MVVM.View.Pages
                     return;
                 }
             }
-            foreach (ClassSection section in Sections)
-            {
-                Trace.WriteLine($"{section.Name}");
-                foreach (Subject s in section.Subjects)
-                {
-                    Trace.WriteLine($"\t{s.Name}: {s.RoomType.Name} - {s.Units} - {s.AssignedPerson.Name}");
-                }
-            }
+            //foreach (ClassSection section in Sections)
+            //{
+            //    Trace.WriteLine($"{section.Name}");
+            //    foreach (Subject s in section.Subjects)
+            //    {
+            //        Trace.WriteLine($"\t{s.Name}: {s.RoomType.Name} - {s.Units} - {s.AssignedPerson.Name}");
+            //    }
+            //}
             
         }
     }

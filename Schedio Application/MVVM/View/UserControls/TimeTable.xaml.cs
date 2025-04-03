@@ -44,11 +44,12 @@ namespace Schedio_Application.MVVM.View.UserControls
 
         private long entryIndex = 0;
 
-        public static readonly DependencyProperty _Rooms = DependencyProperty.Register(
+        private static readonly DependencyProperty _Rooms = DependencyProperty.Register(
             "Rooms",
             typeof(ObservableCollection<Room>),
             typeof(TimeTable),
             new PropertyMetadata(null));
+
 
         public ObservableCollection<Room> Rooms
         {
@@ -59,28 +60,15 @@ namespace Schedio_Application.MVVM.View.UserControls
         public TimeTable()
         {
             InitializeComponent();
-            //Rooms.Add(new Room("101", new RoomType("Lab")));
-            //Rooms.Add(new Room("102", new RoomType("Lab")));
-            //Rooms.Add(new Room("103", new RoomType("Classic")));
-            //Rooms.Add(new Room("104", new RoomType("Lab")));
-            //Rooms.Add(new Room("101", new RoomType("Lab")));
-            //Rooms.Add(new Room("102", new RoomType("Lab")));
-            //Rooms.Add(new Room("103", new RoomType("Classic")));
-            //Rooms.Add(new Room("104", new RoomType("Lab")));
-            //Rooms.Add(new Room("101", new RoomType("Lab")));
-            //Rooms.Add(new Room("102", new RoomType("Lab")));
-            //Rooms.Add(new Room("103", new RoomType("Classic")));
-            //Rooms.Add(new Room("104", new RoomType("Lab")));
             
             PopulateTimeslot();
 
             Loaded += (sender, e) =>
             {
-                lv_RoomHeader.ItemsSource = Rooms;
+                lv_RoomHeader.ItemsSource = Workshop.Rooms;
                 
-
                 double fullWidth = TimeHeader.ActualWidth + RoomHeader.ActualWidth;
-                double fullHeight = TimeHeader.ActualHeight+ Timeslot.ActualHeight;
+                double fullHeight = TimeHeader.ActualHeight + Timeslot.ActualHeight;
 
                 SetControlWidth(fullWidth);
                 SetControlHeight(fullHeight);
@@ -115,15 +103,6 @@ namespace Schedio_Application.MVVM.View.UserControls
 
         public bool removeEntry(SubjectEntry entry)
         {
-            //foreach (SubjectCard sc in entriesContainer.Children)
-            //{
-            //    if (sc.Entry == entry)
-            //    {
-            //        entriesContainer.Children.Remove(sc);
-            //    }
-            //}
-
-            //Trace.WriteLine(entriesContainer.Children[1]);
             for (int i = 0; i < entriesContainer.Children.Count; i++)
             {
                 if (entriesContainer.Children[i].GetType() == typeof(SubjectCard))
@@ -135,7 +114,48 @@ namespace Schedio_Application.MVVM.View.UserControls
                     }
                 }
             }
+            return true;
+        }
 
+        public bool UpdateEntry(SubjectEntry entry)
+        {
+            for (int i = 0; i < entriesContainer.Children.Count; i++)
+            {
+                if (entriesContainer.Children[i].GetType() == typeof(SubjectCard))
+                {
+                    SubjectCard sc = (SubjectCard)entriesContainer.Children[i];
+                    foreach (SubjectEntry se in Subject.SubjectEntries)
+                    {
+                        if (se == sc.Entry)
+                        {
+                            sc.UpdatePosition();
+                            sc.UpdateDimension();
+                        }
+                    }
+
+                }
+            }
+            return true;
+        }
+
+        public SubjectCard? RetrieveCardEntry(SubjectEntry entry)
+        {
+            foreach (SubjectCard card in entriesContainer.Children)
+            {
+                if (card.Entry == entry)
+                {
+                    removeEntry(entry);
+                    return card;
+                }
+            }
+
+            return null;
+        }
+
+        public bool PlaceCard(SubjectCard card)
+        {
+            entriesContainer.Children.Add(card);
+            UpdateEntry(card.Entry);
             return true;
         }
 
@@ -159,7 +179,7 @@ namespace Schedio_Application.MVVM.View.UserControls
                 SubjectCard subCard = (SubjectCard)card;
                 if (subCard.Entry.RoomAllocated == null)
                 {
-                    new MBox("There is an error when refresshing Subject Cards positions").ShowDialog();
+                    new MBox("There is an error when refreshing Subject Cards positions").ShowDialog();
                     return false;
                 }
                 else
@@ -210,16 +230,7 @@ namespace Schedio_Application.MVVM.View.UserControls
             
         }
 
-        private void AddSubjectCard(SubjectEntry entry) 
-        {
-            Subject.SubjectEntries.Add(entry);
-            entriesContainer.Children.Add(new SubjectCard(entry));
-        }
-
-        private void DeleteSubjectCard(SubjectEntry entry)
-        {
-
-        }
+        
 
         // Mouse dragging 
         Point scrollMousePoint = new Point();
@@ -227,7 +238,7 @@ namespace Schedio_Application.MVVM.View.UserControls
         double vOff = 1;
         private void scrollViewer_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
+            sv_Canvas.Focus();
             scrollMousePoint = e.GetPosition(sv_Canvas);
             hOff = sv_Canvas.HorizontalOffset;
             vOff = sv_Canvas.VerticalOffset;

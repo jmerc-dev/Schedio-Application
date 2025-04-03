@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Schedio_Application.MVVM.View.UserControls"
              xmlns:converter="clr-namespace:Schedio_Application.MVVM.ViewModel.Converters"
+             xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="220"
              Focusable="True"
@@ -16,12 +17,19 @@
              Cursor="Arrow">
     <UserControl.ContextMenu>
         <ContextMenu>
-            <MenuItem Header="Change"/>
+            <MenuItem Header="Adjust" Command="{Binding SubjectInfo.AdjustSubjectCommand}" CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={
+                RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
+            <MenuItem Header="Replace"/>
+            <MenuItem Header="Details"/>
+            <MenuItem Header="Section Color" Command="{Binding SubjectInfo.OwnerSection.SetColorCommand}" CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={
+                RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
+            <Separator/>
             <MenuItem Header="Deallocate" Command="{Binding SubjectInfo.DeAllocSubjectCommand}" CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={
                 RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
         </ContextMenu>
     </UserControl.ContextMenu>
     <UserControl.Resources>
+        <converter:ColorToBrushConverter x:Key="colorToBrushConverter"></converter:ColorToBrushConverter>
         <converter:LessThanOrEqualConverter x:Key="LessThanOrEqualConverterInstance"/>
         <Style TargetType="Border" x:Key="border">
             <Setter Property="BorderThickness" Value="1"/>
@@ -65,11 +73,12 @@
             Name="ParentBorder"
             Background="{StaticResource PrimaryBackground}">
         <Grid>
-            <Rectangle Fill="{StaticResource SecondaryColor}" Height="24" VerticalAlignment="Top"/>
+            <Rectangle Fill="{Binding SubjectInfo.OwnerSection.SectionColor, Converter={StaticResource colorToBrushConverter}}" Height="24" VerticalAlignment="Top"/>
+            
             <TextBlock Text="{Binding SubjectInfo.OwnerSection.Name}" Foreground="AliceBlue" FontSize="13" FontFamily="Monospace" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,4"/>
 
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0">
-                <TextBlock Text="{Binding SubjectInfo.Name}" FontSize="15" HorizontalAlignment="Center" FontWeight="DemiBold" Style="{StaticResource tb_Collapse}"/>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1">
+                <TextBlock Text="{Binding SubjectInfo.Name}" TextTrimming="WordEllipsis" FontSize="15" HorizontalAlignment="Center" FontWeight="DemiBold" Style="{StaticResource tb_Collapse}"/>
                 <TextBlock Text="{Binding SubjectInfo.AssignedPerson.Name}" FontSize="13" FontStyle="Normal" FontWeight="Normal" Foreground="{StaticResource SecondaryShadeColor}" HorizontalAlignment="Center" Style="{StaticResource tb_Collapse}"/>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{Binding TimeFrame.StartTime}" FontSize="13" FontWeight="Normal" HorizontalAlignment="Center" Style="{StaticResource tb_OnHover}"/>

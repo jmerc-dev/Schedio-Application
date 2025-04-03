@@ -43,6 +43,8 @@ namespace Schedio_Application.MVVM.View.UserControls
                 _HorizontalIndex = value;
             }
         }
+
+
         public SubjectCard(SubjectEntry entry)
         {
             InitializeComponent();
@@ -55,22 +57,40 @@ namespace Schedio_Application.MVVM.View.UserControls
             this.SetValue(Canvas.LeftProperty, Convert.ToDouble(Workshop.Rooms.IndexOf(entry.RoomAllocated) * 200));
         }
 
+        public void UpdatePosition()
+        {
+            this.SetValue(Canvas.TopProperty, HourToTopPositionConverter(Entry.TimeFrame.StartTime));
+            this.SetValue(Canvas.LeftProperty, Convert.ToDouble(Workshop.Rooms.IndexOf(Entry.RoomAllocated) * 200));
+        }
+
+        public void UpdateDimension()
+        {
+            this.Height = Entry.UnitsToAllocate * HOUR_HEIGHT;
+            _Height = Entry.UnitsToAllocate * HOUR_HEIGHT;
+        }
+
         private double HourToTopPositionConverter(string time)
         {
             DateTime startTime = DateTime.Parse(time);
             TimeSpan tp = startTime.Subtract(DateTime.Parse("12:00 AM"));
-
-            //Trace.WriteLine("Time difference: " + tp.TotalMinutes);
+            
 
             return tp.TotalMinutes * 2;
         }
-
+        
+        public bool SetPosition(TimeFrame tf, Room room)
+        {
+            this.SetValue(Canvas.TopProperty, HourToTopPositionConverter(tf.StartTime));
+            this.SetValue(Canvas.LeftProperty, Convert.ToDouble(Workshop.Rooms.IndexOf(room) * 200));
+            return true;
+        }
 
         private void UserControl_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             this.Focus();
         }
 
+        // The issue might be here: 
         private void UserControl_GotFocus(object sender, RoutedEventArgs e)
         {
             if (this.Height < 100)

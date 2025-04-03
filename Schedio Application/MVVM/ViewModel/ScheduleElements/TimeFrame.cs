@@ -245,8 +245,8 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 TimeSpan endTime = TimeSpan.Parse(DateTime.Parse(EndTime).ToString("HH:mm"));
                 TimeSpan timeToCompareStart = TimeSpan.Parse(DateTime.Parse(timeFrame.StartTime).ToString("HH:mm"));
                 TimeSpan timeToCompareEnd = TimeSpan.Parse(DateTime.Parse(timeFrame.EndTime).ToString("HH:mm"));
-
-                if (!IsOverlap(timeFrame.StartTime))
+                 
+                if (!IsOverlap(timeFrame.StartTime)) 
                 {
                     if (timeToCompareStart <= startTime && timeToCompareEnd >= endTime)
                     {
