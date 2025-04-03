@@ -35,7 +35,7 @@ namespace Schedio_Application.MVVM.ViewModel.JsonConverters
 
             Dictionary<int, Person> peopleMap = people.ToDictionary(p => p.ID);
             this._peopleContext.PeopleMap = peopleMap;
-             
+
             return people;
         }
 

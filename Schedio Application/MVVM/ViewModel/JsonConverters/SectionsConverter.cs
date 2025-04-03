@@ -3,36 +3,53 @@ using Schedio_Application.MVVM.ViewModel.ScheduleElements;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace Schedio_Application.MVVM.ViewModel.JsonConverters
 {
     public class SectionsConverter : JsonConverter<ObservableCollection<ClassSection>>
     {
-        private readonly SectionsConverterContext? _sectionsContext;
+        private readonly PeopleConverterContext? _peopleContext;
 
         public SectionsConverter() { }
-        public SectionsConverter(SectionsConverterContext sectionsContext)
+        public SectionsConverter(PeopleConverterContext peopleContext)
         {
-            this._sectionsContext = sectionsContext;
+            this._peopleContext = peopleContext;
         }
 
         public override ObservableCollection<ClassSection>? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (_sectionsContext == null)
+            if (_peopleContext == null || _peopleContext.PeopleMap == null)
                 throw new NullReferenceException();
 
             ObservableCollection<ClassSection>? sections = JsonSerializer.Deserialize<ObservableCollection<ClassSection>>(ref reader);
-            
+
             if (sections == null)
                 throw new NullReferenceException();
 
-            Dictionary<int, ClassSection> sectionMap = sections.ToDictionary(s => s.ID);
-            _sectionsContext.ClassSectionMap = sectionMap;
+            foreach (ClassSection section in sections)
+            {
+                foreach (Subject subject in section.Subjects)
+                {
+                    // Class Section reference resolve
+                    subject.OwnerSection = section;
+
+                    // Assigned personnel reference resolve
+                    if (_peopleContext.PeopleMap.TryGetValue(subject.PersonnelID, out Person? person))
+                    {
+                        if (person == null)
+                            throw new NullReferenceException();
+
+                        subject.AssignedPerson = person;
+                    }
+                }
+            }
 
             return sections;
 
