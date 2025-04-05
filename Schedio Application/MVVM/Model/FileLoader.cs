@@ -58,16 +58,9 @@ namespace Schedio_Application.MVVM.Model
 
             try
             {
-                foreach (ClassSection cs in fullData.SectionsGroup.Sections)
+                foreach (SubjectEntry se in fullData.SubjectEntriesGroup.SubjectEntries)
                 {
-                    Trace.WriteLine($"{cs.ID}: {cs.Name}");
-
-                    foreach (Subject s in cs.Subjects)
-                    {
-                        Trace.WriteLine($"\t{s.ID}: {s.Name} Personnel: {s.PersonnelID}, OwnerSection: {s.OwnerSectionID}");
-                        Trace.WriteLineIf(s.OwnerSection == null, "\t\tNo ownersection");
-                        Trace.WriteLineIf(s.AssignedPerson == null, "\t\tNo AssignedPerson");
-                    }
+                    //Trace.WriteLine($"{se.} {se.SubjectInfo.Name}");
                 }
             }
             catch (Exception ex)
