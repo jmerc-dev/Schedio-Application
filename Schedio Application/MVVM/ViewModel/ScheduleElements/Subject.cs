@@ -44,7 +44,8 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         public int ID
         {
-            get { return _ID; }
+            get => _ID;
+            set => _ID = value;
         }
 
         public static int IDCount
@@ -120,7 +121,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
                 if (this.OwnerSection != null)
                 {
-                    this.OwnerSection.TotalUnits = this.OwnerSection.GetTotalUnits();
+                    //this.OwnerSection.TotalUnits = this.OwnerSection.GetTotalUnits();
                 }
 
 
@@ -143,14 +144,14 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 // Updates Allocated Subjects Indicator
                 if (_UnitsRemaining == 0)
                 {
-                    OwnerSection.AllocatedSubjects += 1;
+                    //OwnerSection.AllocatedSubjects += 1;
                     IsAllocated = true;
                 }
                 else
                 {
                     if (IsAllocated)
                     {
-                        OwnerSection.AllocatedSubjects -= 1;
+                        //OwnerSection.AllocatedSubjects -= 1;
                         IsAllocated = false;
                     }
                 }

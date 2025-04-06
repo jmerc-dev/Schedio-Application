@@ -16,41 +16,23 @@ namespace Schedio_Application.MVVM.ViewModel.JsonConverters
 {
     public class SubjectConverter : JsonConverter<Subject>
     {
-        private SectionsConverterContext? _SectionsContext;
-        private PeopleConverterContext? _PeopleContext;
+        private SubjectsConverterContext? _SubjectConverterContext;
 
         public SubjectConverter() { }
 
-        public SubjectConverter(SectionsConverterContext sectionsConverterContext, PeopleConverterContext peopleContext)
+        public SubjectConverter(SubjectsConverterContext subjectConverterContext)
         {
-            this._SectionsContext = sectionsConverterContext;
-            this._PeopleContext = peopleContext;
+            this._SubjectConverterContext = subjectConverterContext;
         }
 
         public override Subject? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             Subject? sub = JsonSerializer.Deserialize<Subject>(ref reader);
 
-            if (sub == null || _SectionsContext == null || _PeopleContext == null)
+            if (sub == null || _SubjectConverterContext == null || _SubjectConverterContext.SubjectsMap == null)
                 throw new NullReferenceException();
 
-            if (_PeopleContext.PeopleMap == null || _SectionsContext.ClassSectionMap == null)
-                throw new NullReferenceException();
-
-            // Assigned Personnel Resolving
-            if (_PeopleContext.PeopleMap.TryGetValue(sub.PersonnelID, out Person? person))
-            {
-                if (person == null)
-                    throw new NullReferenceException();
-                sub.AssignedPerson = person;
-            }
-
-            if (_SectionsContext.ClassSectionMap.TryGetValue(sub.OwnerSectionID, out ClassSection? section))
-            {
-                if (section == null)
-                    throw new NullReferenceException();
-                sub.OwnerSection = section;
-            }
+            _SubjectConverterContext.SubjectsMap.Add(sub.ID, sub);
 
             return sub;
         }
@@ -58,6 +40,7 @@ namespace Schedio_Application.MVVM.ViewModel.JsonConverters
         public override void Write(Utf8JsonWriter writer, Subject value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
+            writer.WriteNumber("ID", value.ID);
             writer.WriteNumber("PersonnelID", value.AssignedPerson.ID);
             writer.WriteNumber("OwnerSectionID", value.OwnerSection.ID);
             writer.WriteString("Name", value.Name);

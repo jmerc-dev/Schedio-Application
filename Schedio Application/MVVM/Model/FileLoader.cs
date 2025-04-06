@@ -23,9 +23,11 @@ namespace Schedio_Application.MVVM.Model
         private string? _FileContent;
         private string _Path;
 
-        private RoomTypesConverterContext _RoomConverterContext = new();
+        private RoomTypesConverterContext _RoomTypesConverterContext = new();
         private PeopleConverterContext _PeopleConverterContext = new();
         private SectionsConverterContext _SectionConverterContext = new();
+        private SubjectsConverterContext _SubjectConverterContext = new();
+        private RoomsConverterContext _RoomsConverterContext = new();
 
         private JsonSerializerOptions options = new JsonSerializerOptions
         {
@@ -40,12 +42,15 @@ namespace Schedio_Application.MVVM.Model
                 throw new InvalidFileException(path);
 
             // For room types reference resolving
-            options.Converters.Add(new RoomTypesConverter(_RoomConverterContext));
-            options.Converters.Add(new RoomsConverter(_RoomConverterContext));
+            options.Converters.Add(new RoomTypesConverter(_RoomTypesConverterContext));
+            options.Converters.Add(new RoomsConverter(_RoomTypesConverterContext, _RoomsConverterContext));
             
             // For subject reference resolving
             options.Converters.Add(new PeopleConverter(_PeopleConverterContext));
-            options.Converters.Add(new SectionsConverter(_PeopleConverterContext));
+            options.Converters.Add(new SectionsConverter(_PeopleConverterContext, _SubjectConverterContext));
+
+            // For subject entry reference resolving
+            options.Converters.Add(new SubjectEntryConverter(_SubjectConverterContext, _RoomsConverterContext));
         }
 
         public FullDataWrapper? Execute()
@@ -56,11 +61,13 @@ namespace Schedio_Application.MVVM.Model
             if (fullData == null || fullData.Identifier == null)
                 throw new FileFormatException("File is either corrupted or invalid");
 
+            Trace.WriteLine(fullData.SubjectEntriesGroup.SubjectEntries.Count);
+
             try
             {
                 foreach (SubjectEntry se in fullData.SubjectEntriesGroup.SubjectEntries)
                 {
-                    //Trace.WriteLine($"{se.} {se.SubjectInfo.Name}");
+                    Trace.WriteLine($"{se.ID}: {se.SubjectInfo.Name} {se.DayAssigned} {se.TimeFrame.StartTime}=>{se.TimeFrame.EndTime} {se.RoomAllocated.Name} {se.SubjectInfo.AssignedPerson.Name}");
                 }
             }
             catch (Exception ex)

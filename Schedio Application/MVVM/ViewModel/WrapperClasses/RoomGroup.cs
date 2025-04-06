@@ -12,7 +12,7 @@ namespace Schedio_Application.MVVM.ViewModel.WrapperClasses
     public class RoomGroup
     {
         private int _IdCounter;
-        public ObservableCollection<Room>? _Rooms { get; set; }
+        private ObservableCollection<Room>? _Rooms { get; set; }
 
         public int IdCounter
         {

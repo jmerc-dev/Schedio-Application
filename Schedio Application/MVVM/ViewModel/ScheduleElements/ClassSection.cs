@@ -8,6 +8,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
@@ -74,7 +75,8 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 OnPropertyChanged();
             }
         }
-        
+
+        //[JsonIgnore]
         public int AllocatedSubjects
         {
             get { return _AllocatedSubjects; }
@@ -85,6 +87,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
+        //[JsonIgnore]
         public double AllocatedUnits
         {
             get { return _AllocatedUnits; }

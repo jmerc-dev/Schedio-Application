@@ -329,6 +329,14 @@ namespace Schedio_Application.MVVM.View.Windows
             //    Trace.WriteLine($"{p.ID}: {p.Name}");
             //}
 
+            foreach (ClassSection cs in Sections)
+            {
+                foreach (Subject s in cs.Subjects)
+                {
+                    Trace.WriteLine($"{cs.Name}: {s.Name} => {s.UnitsAllocated}");
+                }
+            }
+
             Trace.WriteLine($"{fullDataWrapper.RoomTypesGroup.IdCounter}");
 
         }
