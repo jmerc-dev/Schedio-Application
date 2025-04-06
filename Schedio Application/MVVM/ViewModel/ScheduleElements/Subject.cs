@@ -29,6 +29,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private double _UnitsRemaining;
         private double _UnitsAllocated;
         private bool _IsAllocated;
+        private int _RoomTypeID;
 
         
         public Action<SubjectEntry, DataAction> SubjectOperation;
@@ -79,12 +80,19 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             set {  _IsAllocated = value; OnPropertyChanged(); }
         }
 
+        public int RoomTypeID
+        {
+            get => _RoomTypeID;
+            set => _RoomTypeID = value;
+        }
+
         public RoomType RoomType
         {
             get { return _RoomType; }
             set 
             { 
                 _RoomType = value;
+                RoomTypeID = value.ID;
                 OnPropertyChanged();
             }
         }

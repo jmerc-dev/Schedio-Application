@@ -47,7 +47,7 @@ namespace Schedio_Application.MVVM.Model
             
             // For subject reference resolving
             options.Converters.Add(new PeopleConverter(_PeopleConverterContext));
-            options.Converters.Add(new SectionsConverter(_PeopleConverterContext, _SubjectConverterContext));
+            options.Converters.Add(new SectionsConverter(_PeopleConverterContext, _SubjectConverterContext, _RoomTypesConverterContext));
 
             // For subject entry reference resolving
             options.Converters.Add(new SubjectEntryConverter(_SubjectConverterContext, _RoomsConverterContext));
@@ -61,13 +61,12 @@ namespace Schedio_Application.MVVM.Model
             if (fullData == null || fullData.Identifier == null)
                 throw new FileFormatException("File is either corrupted or invalid");
 
-            Trace.WriteLine(fullData.SubjectEntriesGroup.SubjectEntries.Count);
-
             try
             {
-                foreach (SubjectEntry se in fullData.SubjectEntriesGroup.SubjectEntries)
+                Trace.WriteLine(fullData.PeopleGroup._People[0].Name);
+                foreach (Day d in fullData.PeopleGroup._People[0].Days)
                 {
-                    Trace.WriteLine($"{se.ID}: {se.SubjectInfo.Name} {se.DayAssigned} {se.TimeFrame.StartTime}=>{se.TimeFrame.EndTime} {se.RoomAllocated.Name} {se.SubjectInfo.AssignedPerson.Name}");
+                    Trace.WriteLine($"{d.Name} : {d.IsAvailable}");
                 }
             }
             catch (Exception ex)

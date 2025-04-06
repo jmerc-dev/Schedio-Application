@@ -17,20 +17,22 @@ namespace Schedio_Application.MVVM.ViewModel.JsonConverters
     {
         private readonly PeopleConverterContext? _peopleContext;
         private readonly SubjectsConverterContext? _subjectsContext;
-        // TODO: subjects context should be here
+        private readonly RoomTypesConverterContext? _roomTypesContext;
 
         public SectionsConverter() { }
-        public SectionsConverter(PeopleConverterContext peopleContext, SubjectsConverterContext subjectsContext)
+        public SectionsConverter(PeopleConverterContext peopleContext, SubjectsConverterContext subjectsContext, RoomTypesConverterContext roomTypesConverterContext)
         {
             this._peopleContext = peopleContext;
             this._subjectsContext = subjectsContext;
+            this._roomTypesContext = roomTypesConverterContext;
 
             this._subjectsContext.SubjectsMap = new Dictionary<int, Subject>();
         }
 
         public override ObservableCollection<ClassSection>? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (_peopleContext == null || _peopleContext.PeopleMap == null || _subjectsContext == null || _subjectsContext.SubjectsMap == null)
+            if (_peopleContext == null || _peopleContext.PeopleMap == null || _subjectsContext == null || _subjectsContext.SubjectsMap == null
+                || _roomTypesContext == null || _roomTypesContext.RoomTypeMap == null)
                 throw new NullReferenceException();
 
             ObservableCollection<ClassSection>? sections = JsonSerializer.Deserialize<ObservableCollection<ClassSection>>(ref reader);
@@ -52,8 +54,19 @@ namespace Schedio_Application.MVVM.ViewModel.JsonConverters
                             throw new NullReferenceException();
 
                         subject.AssignedPerson = person;
-                        _subjectsContext.SubjectsMap.Add(subject.ID, subject);
+                        
                     }
+
+                    // Assign room type
+                    if (_roomTypesContext.RoomTypeMap.TryGetValue(subject.RoomTypeID, out RoomType? roomType))
+                    {
+                        if (roomType == null)
+                            throw new NullReferenceException();
+
+                        subject.RoomType = roomType;
+                    }
+
+                    _subjectsContext.SubjectsMap.Add(subject.ID, subject);
                 }
             }
 

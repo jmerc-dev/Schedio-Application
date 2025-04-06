@@ -131,7 +131,7 @@ namespace Schedio_Application.MVVM.View.Windows
             Loaded += (sender, e) =>
             {
                 this.DataContext = this;
-                AddDummyData();
+                //AddDummyData();
             };
 
             Closing += (sender, e) =>
@@ -180,6 +180,11 @@ namespace Schedio_Application.MVVM.View.Windows
                 new Person { Name = "Bong Bong Marcos", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "08:00 PM"},
                 new Person { Name = "Benigno Aquino", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "03:00 PM"}
                 ];
+
+            foreach (Person p in people)
+            {
+                p.Initialize();
+            }
 
             people[0].SetAvailableDay(DayOfWeek.Saturday, true);
             people[0].SetAvailableDay(DayOfWeek.Monday, true);
