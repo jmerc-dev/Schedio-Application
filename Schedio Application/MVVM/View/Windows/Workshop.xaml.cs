@@ -120,7 +120,7 @@ namespace Schedio_Application.MVVM.View.Windows
             RoomTypes = fdw.RoomTypesGroup.RoomTypes;
             Subject.SubjectEntries = fdw.SubjectEntriesGroup.SubjectEntries;
             
-            lv_RoomsList.ItemsSource = Workshop.Rooms;
+            lv_RoomsList.ItemsSource = Rooms;
             lv_PersonnelList.ItemsSource = this.Personnel;
             lv_SectionList.ItemsSource = this.Sections;
 
@@ -131,6 +131,7 @@ namespace Schedio_Application.MVVM.View.Windows
             Loaded += (sender, e) =>
             {
                 this.DataContext = this;
+                LoadEntries(Subject.SubjectEntries);
                 //AddDummyData();
             };
 
@@ -139,6 +140,15 @@ namespace Schedio_Application.MVVM.View.Windows
                 Application.Current.MainWindow.Visibility = Visibility.Visible;
             };
 
+        }
+
+        // Load SubjectEntries
+        private bool LoadEntries(ObservableCollection<SubjectEntry> entries)
+        {
+            foreach (SubjectEntry entry in entries)
+                getDayTable(entry.DayAssigned).addEntry(entry);
+
+            return true;
         }
 
         // Subject allocation CRUD
@@ -324,25 +334,8 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Export_Click(object sender, RoutedEventArgs e)
         {
-            //foreach (RoomType rt in RoomTypes)
-            //{
-            //    Trace.WriteLine($"{rt.ID}: {rt.Name}");
-            //}
+            
 
-            //foreach (Person p in Personnel)
-            //{
-            //    Trace.WriteLine($"{p.ID}: {p.Name}");
-            //}
-
-            foreach (ClassSection cs in Sections)
-            {
-                foreach (Subject s in cs.Subjects)
-                {
-                    Trace.WriteLine($"{cs.Name}: {s.Name} => {s.UnitsAllocated}");
-                }
-            }
-
-            Trace.WriteLine($"{fullDataWrapper.RoomTypesGroup.IdCounter}");
 
         }
 

@@ -34,7 +34,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private Room? _Room;
         private int _RoomID;
 
-        private DayOfWeek? _DayAssigned;
+        private DayOfWeek _DayAssigned;
 
         public Subject SubjectInfo 
         { 
@@ -76,7 +76,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
-        public DayOfWeek? DayAssigned
+        public DayOfWeek DayAssigned
         {
             get { return _DayAssigned; }
             set 
@@ -162,10 +162,5 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             return true;
         }
 
-        public bool Update()
-        {
-
-            return true;
-        }
     }
 }

@@ -129,7 +129,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
                 if (this.OwnerSection != null)
                 {
-                    //this.OwnerSection.TotalUnits = this.OwnerSection.GetTotalUnits();
+                    this.OwnerSection.TotalUnits = this.OwnerSection.GetTotalUnits();
                 }
 
 
@@ -146,20 +146,19 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 {
                     return;
                 }
-
+                
                 _UnitsRemaining = value;
-
                 // Updates Allocated Subjects Indicator
                 if (_UnitsRemaining == 0)
                 {
-                    //OwnerSection.AllocatedSubjects += 1;
+                    OwnerSection.AllocatedSubjects += 1;
                     IsAllocated = true;
                 }
                 else
                 {
                     if (IsAllocated)
                     {
-                        //OwnerSection.AllocatedSubjects -= 1;
+                        OwnerSection.AllocatedSubjects -= 1;
                         IsAllocated = false;
                     }
                 }
@@ -169,7 +168,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         public double UnitsAllocated
         {
-            get => _UnitsAllocated;
+            get => _Units - _UnitsRemaining;
             set => _UnitsAllocated = value;
         }
 

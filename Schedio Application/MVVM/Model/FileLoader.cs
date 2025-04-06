@@ -61,19 +61,19 @@ namespace Schedio_Application.MVVM.Model
             if (fullData == null || fullData.Identifier == null)
                 throw new FileFormatException("File is either corrupted or invalid");
 
-            try
-            {
-                Trace.WriteLine(fullData.PeopleGroup._People[0].Name);
-                foreach (Day d in fullData.PeopleGroup._People[0].Days)
-                {
-                    Trace.WriteLine($"{d.Name} : {d.IsAvailable}");
-                }
-            }
-            catch (Exception ex)
-            {
-                new MBox(ex.Message).ShowDialog();
-                return null;
-            }
+            //try
+            //{
+            //    Trace.WriteLine(fullData.PeopleGroup._People[0].Name);
+            //    foreach (Day d in fullData.PeopleGroup._People[0].Days)
+            //    {
+            //        Trace.WriteLine($"{d.Name} : {d.IsAvailable}");
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    new MBox(ex.Message).ShowDialog();
+            //    return null;
+            //}
 
 
             if (fullData.Identifier.Name != null && !fullData.Identifier.Name.Equals(FileHashKey.Key))
