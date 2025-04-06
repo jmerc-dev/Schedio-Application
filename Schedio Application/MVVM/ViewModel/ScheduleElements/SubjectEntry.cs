@@ -22,16 +22,19 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
     }
     public class SubjectEntry : PropertyNotification
     {
+
         private int _id;
+
         private Subject _Subject;
-        //private string? _StartTime;
-        //private string? _EndTime;
+        private int _SubjectID;
+
         private TimeFrame _TimeFrame;
         private double _UnitsToAllocate;
-        private Room _Room;
-        private DayOfWeek? _DayAssigned;
 
-        private static int _idCounter;
+        private Room? _Room;
+        private int _RoomID;
+
+        private DayOfWeek _DayAssigned;
 
         public Subject SubjectInfo 
         { 
@@ -42,8 +45,6 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 OnPropertyChanged();
             }
         }
-
-        public static int IdCount => _idCounter;
 
         public TimeFrame TimeFrame
         {
@@ -65,7 +66,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
-        public Room RoomAllocated
+        public Room? RoomAllocated
         {
             get { return _Room; }
             set 
@@ -75,7 +76,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
-        public DayOfWeek? DayAssigned
+        public DayOfWeek DayAssigned
         {
             get { return _DayAssigned; }
             set 
@@ -85,12 +86,29 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
         }
 
+        public int ID
+        {
+            get => _id;
+            set => _id = value;
+        }
 
+        public int SubjectID
+        {
+            get => _SubjectID;
+            set => _SubjectID = value;
+        }
+
+        public int RoomID
+        {
+            get => _RoomID;
+            set => _RoomID = value;
+        }
+
+        public SubjectEntry() { }
         public SubjectEntry(Subject subject)
         {
             _Subject = subject;
             _TimeFrame = new TimeFrame();
-            this._id = Interlocked.Increment(ref _idCounter);
 
         }
 
@@ -101,16 +119,6 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             _UnitsToAllocate = units;
             _Room = room;
             _DayAssigned = day;
-            this._id = Interlocked.Increment(ref _idCounter);
-        }
-        public SubjectEntry(Subject subject, TimeFrame tf, double units, Room room, DayOfWeek day, int id)
-        {
-            _Subject = subject;
-            _TimeFrame = tf;
-            _UnitsToAllocate = units;
-            _Room = room;
-            _DayAssigned = day;
-            _id = id;
         }
 
         public bool ValidateTimeframe(SubjectEntry mainEntry, SubjectEntry existingEntry)
@@ -154,10 +162,5 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             return true;
         }
 
-        public bool Update()
-        {
-
-            return true;
-        }
     }
 }

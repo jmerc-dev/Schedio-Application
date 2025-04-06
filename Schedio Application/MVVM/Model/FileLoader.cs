@@ -23,7 +23,11 @@ namespace Schedio_Application.MVVM.Model
         private string? _FileContent;
         private string _Path;
 
-        private RoomTypesConverterContext _RoomConverterContext = new();
+        private RoomTypesConverterContext _RoomTypesConverterContext = new();
+        private PeopleConverterContext _PeopleConverterContext = new();
+        private SectionsConverterContext _SectionConverterContext = new();
+        private SubjectsConverterContext _SubjectConverterContext = new();
+        private RoomsConverterContext _RoomsConverterContext = new();
 
         private JsonSerializerOptions options = new JsonSerializerOptions
         {
@@ -37,9 +41,16 @@ namespace Schedio_Application.MVVM.Model
             if (!Path.GetExtension(path).Equals(_FileExtension, StringComparison.CurrentCultureIgnoreCase))
                 throw new InvalidFileException(path);
 
-            options.Converters.Add(new RoomTypesConverter(_RoomConverterContext));
-            options.Converters.Add(new RoomsConverter(_RoomConverterContext));
+            // For room types reference resolving
+            options.Converters.Add(new RoomTypesConverter(_RoomTypesConverterContext));
+            options.Converters.Add(new RoomsConverter(_RoomTypesConverterContext, _RoomsConverterContext));
+            
+            // For subject reference resolving
+            options.Converters.Add(new PeopleConverter(_PeopleConverterContext));
+            options.Converters.Add(new SectionsConverter(_PeopleConverterContext, _SubjectConverterContext, _RoomTypesConverterContext));
 
+            // For subject entry reference resolving
+            options.Converters.Add(new SubjectEntryConverter(_SubjectConverterContext, _RoomsConverterContext));
         }
 
         public FullDataWrapper? Execute()
@@ -50,18 +61,19 @@ namespace Schedio_Application.MVVM.Model
             if (fullData == null || fullData.Identifier == null)
                 throw new FileFormatException("File is either corrupted or invalid");
 
-            try
-            {
-                foreach (Room r in fullData.RoomsGroup.Rooms)
-                {
-                    Trace.WriteLine($"{r.ID}, {r.Name}, {r.Type.Name}");
-                }
-            }
-            catch (Exception ex)
-            {
-                new MBox(ex.Message).ShowDialog();
-                return null;
-            }
+            //try
+            //{
+            //    Trace.WriteLine(fullData.PeopleGroup._People[0].Name);
+            //    foreach (Day d in fullData.PeopleGroup._People[0].Days)
+            //    {
+            //        Trace.WriteLine($"{d.Name} : {d.IsAvailable}");
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    new MBox(ex.Message).ShowDialog();
+            //    return null;
+            //}
 
 
             if (fullData.Identifier.Name != null && !fullData.Identifier.Name.Equals(FileHashKey.Key))
@@ -71,5 +83,6 @@ namespace Schedio_Application.MVVM.Model
 
             return fullData;
         }
+        
     }
 }

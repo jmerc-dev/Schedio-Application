@@ -28,7 +28,7 @@ namespace Schedio_Application.MVVM.ViewModel.JsonConverters
             if (_context == null)
                 throw new NullReferenceException();
 
-            var roomTypes = JsonSerializer.Deserialize<ObservableCollection<RoomType>>(ref reader);
+            ObservableCollection<RoomType>? roomTypes = JsonSerializer.Deserialize<ObservableCollection<RoomType>>(ref reader);
 
             if (roomTypes == null)
                 throw new NullReferenceException();

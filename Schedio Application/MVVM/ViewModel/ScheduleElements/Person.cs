@@ -72,7 +72,8 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         public Day[]? Days
         {
-            get { return _Days; }
+            get => _Days; 
+            set => _Days = value;
         }
 
         public bool IsConstant
@@ -98,16 +99,27 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         public Person(State state)
         {
-            _Days = new Day[MAX_CAPACITY];
-            //this._ID = Interlocked.Increment(ref _IdCounter);
-            PopulateDays();
-            SetDaysName();
+            if (state == State.New)
+            {
+                _Days = new Day[MAX_CAPACITY];
+                PopulateDays();
+                SetDaysName();
+            }
+            
         }
 
         public Person() 
         {
+            //_Days = new Day[MAX_CAPACITY];
+
+            // TODO: 
+            //PopulateDays();
+            //SetDaysName();
+        }
+
+        public void Initialize()
+        {
             _Days = new Day[MAX_CAPACITY];
-            //this._ID = Interlocked.Increment(ref _IdCounter);
             PopulateDays();
             SetDaysName();
         }

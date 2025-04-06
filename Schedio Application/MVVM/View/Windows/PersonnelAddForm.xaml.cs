@@ -50,6 +50,7 @@ namespace Schedio_Application.MVVM.View.Windows
             this.Owner = Application.Current.MainWindow;
             tb_Name.Focus();
 
+
             // Update
             Loaded += (sender, e) =>
             {

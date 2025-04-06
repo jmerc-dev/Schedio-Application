@@ -80,6 +80,7 @@
                                Grid.Row="2" 
                                Orientation="Horizontal" 
                                Margin="20,5,20,5">
+                        <!--IsChecked="{Binding Person.Days[0].IsAvailable}-->
                         <CheckBox Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Monday</CheckBox>
                         <CheckBox Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Tuesday</CheckBox>
                         <CheckBox Template="{DynamicResource PrimaryCheckBox}" FontSize="15" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,30,0" Unchecked="chb_Day_Unchecked" Checked="chb_Day_Checked">Wednesday</CheckBox>

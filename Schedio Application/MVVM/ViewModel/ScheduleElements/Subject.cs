@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -28,6 +29,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private double _UnitsRemaining;
         private double _UnitsAllocated;
         private bool _IsAllocated;
+        private int _RoomTypeID;
 
         
         public Action<SubjectEntry, DataAction> SubjectOperation;
@@ -38,10 +40,13 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public RelayCommand DeAllocSubjectCommand => new RelayCommand(execute => DeallocSubject(execute));
         public RelayCommand AdjustSubjectCommand => new RelayCommand((execute) => AdjustSubjectCard(execute));
 
-        // Implement id system per subject
+        public int PersonnelID {  get; set; }
+        public int OwnerSectionID { get; set; }
+
         public int ID
         {
-            get { return _ID; }
+            get => _ID;
+            set => _ID = value;
         }
 
         public static int IDCount
@@ -75,12 +80,19 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             set {  _IsAllocated = value; OnPropertyChanged(); }
         }
 
+        public int RoomTypeID
+        {
+            get => _RoomTypeID;
+            set => _RoomTypeID = value;
+        }
+
         public RoomType RoomType
         {
             get { return _RoomType; }
             set 
             { 
                 _RoomType = value;
+                RoomTypeID = value.ID;
                 OnPropertyChanged();
             }
         }
@@ -134,9 +146,8 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 {
                     return;
                 }
-
+                
                 _UnitsRemaining = value;
-
                 // Updates Allocated Subjects Indicator
                 if (_UnitsRemaining == 0)
                 {
@@ -157,7 +168,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         public double UnitsAllocated
         {
-            get => _UnitsAllocated;
+            get => _Units - _UnitsRemaining;
             set => _UnitsAllocated = value;
         }
 

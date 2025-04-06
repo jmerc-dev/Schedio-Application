@@ -120,7 +120,7 @@ namespace Schedio_Application.MVVM.View.Windows
             RoomTypes = fdw.RoomTypesGroup.RoomTypes;
             Subject.SubjectEntries = fdw.SubjectEntriesGroup.SubjectEntries;
             
-            lv_RoomsList.ItemsSource = Workshop.Rooms;
+            lv_RoomsList.ItemsSource = Rooms;
             lv_PersonnelList.ItemsSource = this.Personnel;
             lv_SectionList.ItemsSource = this.Sections;
 
@@ -131,7 +131,8 @@ namespace Schedio_Application.MVVM.View.Windows
             Loaded += (sender, e) =>
             {
                 this.DataContext = this;
-                AddDummyData();
+                LoadEntries(Subject.SubjectEntries);
+                //AddDummyData();
             };
 
             Closing += (sender, e) =>
@@ -139,6 +140,15 @@ namespace Schedio_Application.MVVM.View.Windows
                 Application.Current.MainWindow.Visibility = Visibility.Visible;
             };
 
+        }
+
+        // Load SubjectEntries
+        private bool LoadEntries(ObservableCollection<SubjectEntry> entries)
+        {
+            foreach (SubjectEntry entry in entries)
+                getDayTable(entry.DayAssigned).addEntry(entry);
+
+            return true;
         }
 
         // Subject allocation CRUD
@@ -180,6 +190,11 @@ namespace Schedio_Application.MVVM.View.Windows
                 new Person { Name = "Bong Bong Marcos", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "08:00 PM"},
                 new Person { Name = "Benigno Aquino", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "03:00 PM"}
                 ];
+
+            foreach (Person p in people)
+            {
+                p.Initialize();
+            }
 
             people[0].SetAvailableDay(DayOfWeek.Saturday, true);
             people[0].SetAvailableDay(DayOfWeek.Monday, true);
@@ -319,17 +334,8 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Export_Click(object sender, RoutedEventArgs e)
         {
-            //foreach (RoomType rt in RoomTypes)
-            //{
-            //    Trace.WriteLine($"{rt.ID}: {rt.Name}");
-            //}
+            
 
-            //foreach (Person p in Personnel)
-            //{
-            //    Trace.WriteLine($"{p.ID}: {p.Name}");
-            //}
-
-            Trace.WriteLine($"{fullDataWrapper.RoomTypesGroup.IdCounter}");
 
         }
 

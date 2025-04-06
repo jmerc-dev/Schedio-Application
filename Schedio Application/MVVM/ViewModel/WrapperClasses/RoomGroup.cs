@@ -11,13 +11,13 @@ namespace Schedio_Application.MVVM.ViewModel.WrapperClasses
 {
     public class RoomGroup
     {
-        private int _idCounter;
-        public ObservableCollection<Room>? _Rooms { get; set; }
+        private int _IdCounter;
+        private ObservableCollection<Room>? _Rooms { get; set; }
 
         public int IdCounter
         {
-            get => _idCounter;
-            set => _idCounter = value;
+            get => _IdCounter;
+            set => _IdCounter = value;
         }
 
         public ObservableCollection<Room>? Rooms
@@ -47,7 +47,7 @@ namespace Schedio_Application.MVVM.ViewModel.WrapperClasses
 
                     if (newRoom == null)
                         throw new NullReferenceException();
-                    newRoom.ID = Interlocked.Increment(ref _idCounter);
+                    newRoom.ID = Interlocked.Increment(ref _IdCounter);
                 }
             }
         }
