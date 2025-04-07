@@ -76,8 +76,8 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         public bool IsAllocated
         {
-            get { return _IsAllocated; }
-            set {  _IsAllocated = value; OnPropertyChanged(); }
+            get => Units == UnitsAllocated;
+            //set {  _IsAllocated = value; OnPropertyChanged(); }
         }
 
         public int RoomTypeID
@@ -102,74 +102,76 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             get { return _Units; }
             set 
             { 
-                if (_Units == 0)
-                {
-                    UnitsRemaining = value;
-                }
-                else
-                {
-                    if (value > _Units)
-                    {
-                        UnitsRemaining += value - _Units;
-                    }
-                    else
-                    {
-                        if (value < _Units - UnitsRemaining)
-                        {
-                            new MBox($"You cannot decrease the units because it is allocated in the workshop.").ShowDialog();
-                            return;
-                        }
-
-                        UnitsRemaining -= _Units - value;
-                    }
-                }
                 
-                _Units = value;
+                if (value < UnitsAllocated)
+                {
+                    new MBox($"You cannot decrease the units because it is allocated in the workshop.").ShowDialog();
+                    return;
+                }
 
+                if (value < 0)
+                {
+                    new MBox($"Only positive values are allowed for Subject Units.").ShowDialog();
+                    return;
+                }
+
+                //if (_Units == 0)
+                //{
+                //    UnitsRemaining = _Units - value;
+                //}
+                //else
+                //{
+                //    if (value > _Units)
+                //    {
+                //        //UnitsRemaining += value - _Units;
+                //    }
+                //    else
+                //    {
+                //        if (value < _Units - UnitsRemaining)
+                //        {
+                //            new MBox($"You cannot decrease the units because it is allocated in the workshop.").ShowDialog();
+                //            return;
+                //        }
+
+
+                //    }
+                //}
+                _Units = value;
 
                 if (this.OwnerSection != null)
                 {
                     this.OwnerSection.TotalUnits = this.OwnerSection.GetTotalUnits();
                 }
-
-
+                
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(UnitsRemaining));
+                OnPropertyChanged(nameof(IsAllocated));
             }
         }
 
         public double UnitsRemaining
         {
-            get { return _UnitsRemaining; }
-            set
-            {
-                if (_UnitsRemaining == value)
-                {
-                    return;
-                }
-                
-                _UnitsRemaining = value;
-                // Updates Allocated Subjects Indicator
-                if (_UnitsRemaining == 0)
-                {
-                    OwnerSection.AllocatedSubjects += 1;
-                    IsAllocated = true;
-                }
-                else
-                {
-                    if (IsAllocated)
-                    {
-                        OwnerSection.AllocatedSubjects -= 1;
-                        IsAllocated = false;
-                    }
-                }
-                OnPropertyChanged();
-            }
+            get => Units - UnitsAllocated;
         }
 
         public double UnitsAllocated
         {
-            get => _Units - _UnitsRemaining;
-            set => _UnitsAllocated = value;
+            get => _UnitsAllocated;
+            set
+            {
+                if (value > Units)
+                {
+                    new MBox($"You must not exceed to the value of subject's total units").ShowDialog();
+                    return;
+                }
+                    
+
+                _UnitsAllocated = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(UnitsRemaining));
+                OnPropertyChanged(nameof(IsAllocated));
+
+            }
         }
 
         public ClassSection OwnerSection
@@ -241,7 +243,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             {
 
                 _SubjectEntries.Add(subjectAllocation.Entry);
-                UnitsRemaining -= subjectAllocation.Entry.UnitsToAllocate;
+                UnitsAllocated += subjectAllocation.Entry.UnitsToAllocate;
 
                 // Updates Allocated Units Indicator
                 if (this.OwnerSection != null)
@@ -265,7 +267,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             if (new MBox("Are you sure you want to deallocate this entry?", MBoxType.CancelOrOK).ShowDialog() == true)
             {
                 SubjectEntry se = (SubjectEntry)entry;
-                se.SubjectInfo.UnitsRemaining += se.UnitsToAllocate;
+                se.SubjectInfo.UnitsAllocated -= se.UnitsToAllocate;
                 _SubjectEntries.Remove(se);
 
                 // Updates Allocated Units Indicator
@@ -298,18 +300,19 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 return;
             }
 
-            double previousUnits = subEntry.UnitsToAllocate;
+            double prevUnitsAllocated = subEntry.UnitsToAllocate;
             this.OwnerSection.AllocatedUnits -= subEntry.UnitsToAllocate;
 
             SubjectAllocation subAllocObj = new SubjectAllocation(subEntry);
             if (subAllocObj.ShowDialog() == true)
             {
-                
-                if (subAllocObj.Entry.UnitsToAllocate > previousUnits)
-                    subAllocObj.Entry.SubjectInfo.UnitsRemaining -= subAllocObj.Entry.UnitsToAllocate - previousUnits;
-                else if (subAllocObj.Entry.UnitsToAllocate < previousUnits)
-                    subAllocObj.Entry.SubjectInfo.UnitsRemaining += previousUnits - subAllocObj.Entry.UnitsToAllocate;
-
+                double newUnitsAllocated = subAllocObj.Entry.UnitsToAllocate;
+                // TODO: 
+                //if (subAllocObj.Entry.UnitsToAllocate > prevUnitsAllocated)
+                //    subAllocObj.Entry.SubjectInfo.UnitsAllocated -= subAllocObj.Entry.UnitsToAllocate - previousUnits;
+                //else if (subAllocObj.Entry.UnitsToAllocate < previousUnits)
+                //    subAllocObj.Entry.SubjectInfo.UnitsRemaining += previousUnits - subAllocObj.Entry.UnitsToAllocate;
+                subAllocObj.Entry.SubjectInfo.UnitsAllocated = (UnitsAllocated - prevUnitsAllocated) + newUnitsAllocated;
                 this.OwnerSection.AllocatedUnits += subAllocObj.Entry.UnitsToAllocate;
 
                 Subject._SubjectEntries[Subject._SubjectEntries.IndexOf(subEntry)] = subEntry;
