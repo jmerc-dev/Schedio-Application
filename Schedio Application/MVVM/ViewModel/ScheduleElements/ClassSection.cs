@@ -25,7 +25,6 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private double _TotalUnits;
         private int _AllocatedSubjects;
         private double _AllocatedUnits;
-        private static int idCounter;
         private Color _Color;
 
         public RelayCommand SetColorCommand => new RelayCommand(execute => SetColor(this));
@@ -114,8 +113,6 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         {
             _Subjects = new ObservableCollection<Subject>();
             _Subjects.CollectionChanged += new NotifyCollectionChangedEventHandler(OnSubListChanged);
-            
-            this._ID = Interlocked.Increment(ref _IdCount);
 
             SectionColor = new Color
             {
@@ -144,7 +141,27 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         public void UpdateAllocatedUnits()
         {
-            TotalUnits = GetTotalUnits();
+            double newAllocatedUnits = 0;
+
+            foreach (Subject s in Subjects) 
+            {
+                newAllocatedUnits += s.UnitsAllocated;
+            }
+
+            AllocatedUnits = newAllocatedUnits;
+        }
+
+        public void UpdateAllocatedSubjects()
+        {
+            int fullyAllocatedSubjects = 0;
+
+            foreach (Subject s in Subjects)
+            {
+                fullyAllocatedSubjects += s.IsAllocated ? 1 : 0;
+            }
+
+            this.AllocatedSubjects = fullyAllocatedSubjects;
+            Trace.WriteLine(this.AllocatedSubjects);
         }
 
         public bool SetColor(ClassSection section)

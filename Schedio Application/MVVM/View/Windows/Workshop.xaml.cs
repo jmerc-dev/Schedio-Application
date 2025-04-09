@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Schedio_Application.MVVM.Model;
 using Schedio_Application.MVVM.View.UserControls;
 using Schedio_Application.MVVM.ViewModel.Commands;
 using Schedio_Application.MVVM.ViewModel.ScheduleElements;
@@ -36,12 +37,11 @@ namespace Schedio_Application.MVVM.View.Windows
     /// </summary>
     public partial class Workshop : Window, INotifyPropertyChanged
     {
-        /* 
-            Menu commands 
-        */
-        
 
+        private FileLoader _FileLoad;
         private ClassSection? _SelectedSection;
+        private FileSave _FileSave = new FileSave();
+
         public ClassSection? SelectedSection
         {
             get { return _SelectedSection; }
@@ -52,7 +52,6 @@ namespace Schedio_Application.MVVM.View.Windows
             } 
         }
 
-        private FileSave _FileSave = new FileSave();
         public FileSave FileSaveObject
         {
             get => _FileSave;
@@ -98,7 +97,7 @@ namespace Schedio_Application.MVVM.View.Windows
             Loaded += (sender, e) =>
             {
                 this.DataContext = this;
-                AddDummyData();
+                //AddDummyData();
             };
 
             Sections.CollectionChanged += new NotifyCollectionChangedEventHandler(section_CollectionChanged);
@@ -109,9 +108,17 @@ namespace Schedio_Application.MVVM.View.Windows
             };
         }
 
-        public Workshop(FullDataWrapper fdw)
+        public Workshop(FileLoader fl)
         {
             InitializeComponent();
+
+            if (fl.FilePath == null || fl.Data == null)
+                throw new NullReferenceException();
+
+            _FileLoad = fl;
+            _FileSave = new FileSave(fl.FilePath);
+
+            FullDataWrapper fdw = fl.Data;
 
             fullDataWrapper = fdw;
             Personnel = fdw.PeopleGroup.People;
@@ -363,7 +370,7 @@ namespace Schedio_Application.MVVM.View.Windows
     // Schedule Data Management
     public partial class Workshop : Window
     {
-        private static string? FilePath;
+        private FileLoader file;
         private FullDataWrapper fullDataWrapper;
 
         private ObservableCollection<Room> TempRooms;

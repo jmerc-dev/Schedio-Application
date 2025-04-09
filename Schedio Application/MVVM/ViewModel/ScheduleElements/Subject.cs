@@ -115,34 +115,14 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                     return;
                 }
 
-                //if (_Units == 0)
-                //{
-                //    UnitsRemaining = _Units - value;
-                //}
-                //else
-                //{
-                //    if (value > _Units)
-                //    {
-                //        //UnitsRemaining += value - _Units;
-                //    }
-                //    else
-                //    {
-                //        if (value < _Units - UnitsRemaining)
-                //        {
-                //            new MBox($"You cannot decrease the units because it is allocated in the workshop.").ShowDialog();
-                //            return;
-                //        }
-
-
-                //    }
-                //}
                 _Units = value;
 
                 if (this.OwnerSection != null)
                 {
                     this.OwnerSection.TotalUnits = this.OwnerSection.GetTotalUnits();
+                    this.OwnerSection.UpdateAllocatedSubjects();
                 }
-                
+
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(UnitsRemaining));
                 OnPropertyChanged(nameof(IsAllocated));
@@ -164,13 +144,17 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                     new MBox($"You must not exceed to the value of subject's total units").ShowDialog();
                     return;
                 }
-                    
 
                 _UnitsAllocated = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(UnitsRemaining));
                 OnPropertyChanged(nameof(IsAllocated));
 
+                if (this.OwnerSection != null)
+                {
+                    this.OwnerSection.UpdateAllocatedUnits();
+                    this.OwnerSection.UpdateAllocatedSubjects();
+                }
             }
         }
 
@@ -246,10 +230,10 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 UnitsAllocated += subjectAllocation.Entry.UnitsToAllocate;
 
                 // Updates Allocated Units Indicator
-                if (this.OwnerSection != null)
-                {
-                    this.OwnerSection.AllocatedUnits += subjectAllocation.Entry.UnitsToAllocate;
-                }
+                //if (this.OwnerSection != null)
+                //{
+                //    this.OwnerSection.AllocatedUnits += subjectAllocation.Entry.UnitsToAllocate;
+                //}
             }
         }
 

@@ -105,18 +105,12 @@ namespace Schedio_Application
                 try
                 {
                     FileLoader fileLoader = new FileLoader(openFileDialog.FileName);
-                    FullDataWrapper? data = fileLoader.Execute();
+                    fileLoader.Execute();
 
-                    if (data != null)
-                    {
-                        Workshop wk = new Workshop(data);
-                        Application.Current.MainWindow.Visibility = Visibility.Collapsed;
-                        wk.Show();
-                    }
-                    else
-                    {
-                        throw new NullReferenceException();
-                    }
+                    Workshop wk = new Workshop(fileLoader);
+                    Application.Current.MainWindow.Visibility = Visibility.Collapsed;
+                    wk.Show();
+                    
 
                 }
                 catch (Exception ex)
