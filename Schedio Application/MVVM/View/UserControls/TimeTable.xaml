@@ -15,6 +15,7 @@
                         <Setter Property="Height" Value="1"/>
                         <Setter Property="Width" Value="{Binding ElementName=cv_Container, Path=Width}"/>
                         <Setter Property="SnapsToDevicePixels" Value="True"/>
+                        <Setter Property="MinWidth" Value="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ActualWidth}"/>
                     </Style>
                 </Canvas.Resources>
                 <Rectangle Canvas.Top="9"/>
