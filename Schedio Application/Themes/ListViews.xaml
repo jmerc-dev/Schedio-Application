@@ -283,7 +283,7 @@
         </Grid>
         <DataTemplate.Triggers>
             <!-- Change image to check-green if all subjects are fully allocated -->
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=DataContext.UnitsRemaining}" Value="0">
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=DataContext.IsAllocated}" Value="True">
                 <Setter TargetName="img_Status" Property="Source" Value="pack://application:,,,/Schedio Application;component/Resources/Images/check-green.png"/>
             </DataTrigger>
         </DataTemplate.Triggers>

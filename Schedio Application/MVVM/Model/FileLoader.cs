@@ -19,15 +19,22 @@ namespace Schedio_Application.MVVM.Model
 {
     public class FileLoader
     {
-        private static string _FileExtension = ".json";
+        private string _FileExtension = ".json";
         private string? _FileContent;
-        private string _Path;
-
+        private string? _Path;
+        
         private RoomTypesConverterContext _RoomTypesConverterContext = new();
         private PeopleConverterContext _PeopleConverterContext = new();
         private SectionsConverterContext _SectionConverterContext = new();
         private SubjectsConverterContext _SubjectConverterContext = new();
         private RoomsConverterContext _RoomsConverterContext = new();
+
+        public FullDataWrapper? Data { get; set; }
+        public string? FilePath
+        {
+            get => _Path;
+            set => _Path = value;
+        }
 
         private JsonSerializerOptions options = new JsonSerializerOptions
         {
@@ -53,7 +60,7 @@ namespace Schedio_Application.MVVM.Model
             options.Converters.Add(new SubjectEntryConverter(_SubjectConverterContext, _RoomsConverterContext));
         }
 
-        public FullDataWrapper? Execute()
+        public void Execute()
         {
             _FileContent = File.ReadAllText(_Path);
             FullDataWrapper? fullData = JsonSerializer.Deserialize<FullDataWrapper>(_FileContent, options);
@@ -61,27 +68,38 @@ namespace Schedio_Application.MVVM.Model
             if (fullData == null || fullData.Identifier == null)
                 throw new FileFormatException("File is either corrupted or invalid");
 
-            //try
-            //{
-            //    Trace.WriteLine(fullData.PeopleGroup._People[0].Name);
-            //    foreach (Day d in fullData.PeopleGroup._People[0].Days)
-            //    {
-            //        Trace.WriteLine($"{d.Name} : {d.IsAvailable}");
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    new MBox(ex.Message).ShowDialog();
-            //    return null;
-            //}
-
-
             if (fullData.Identifier.Name != null && !fullData.Identifier.Name.Equals(FileHashKey.Key))
             {
                 throw new FileFormatException("Please import schedio file only");
             }
 
-            return fullData;
+            Data = fullData;
+
+            if (!IsValid(Data))
+                throw new NullReferenceException();
+        }
+
+        private bool IsValid(FullDataWrapper fdw)
+        {
+            if (fdw == null)
+                return false;
+
+            if (fdw.SectionsGroup == null || fdw.SectionsGroup.Sections == null)
+                return false;
+
+            if (fdw.RoomsGroup == null || fdw.RoomsGroup.Rooms == null)
+                return false;
+
+            if (fdw.RoomTypesGroup == null || fdw.RoomTypesGroup.RoomTypes == null)
+                return false;
+
+            if (fdw.SubjectEntriesGroup == null || fdw.SubjectEntriesGroup.SubjectEntries == null)
+                return false;
+
+            if (fdw.PeopleGroup == null || fdw.PeopleGroup.People == null)
+                return false;
+
+            return true;
         }
         
     }
