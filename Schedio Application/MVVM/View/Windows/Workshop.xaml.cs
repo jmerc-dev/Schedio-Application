@@ -140,6 +140,9 @@ namespace Schedio_Application.MVVM.View.Windows
                 this.DataContext = this;
                 LoadEntries(Subject.SubjectEntries);
                 //AddDummyData();
+                RoomTypes.Add(new RoomType("Classic"));
+                RoomTypes.Add(new RoomType("Lab"));
+                RoomTypes.Add(new RoomType("Court"));
             };
 
             Closing += (sender, e) =>
