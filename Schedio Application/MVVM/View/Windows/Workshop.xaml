@@ -360,14 +360,14 @@
                                         <TextBlock Text="Expand" Grid.Row="1" FontSize="11"/>
                                     </Grid>
                                 </Button>
-                                <Button Style="{StaticResource ImageButton}" Margin="10,0">
+                                <Button Style="{StaticResource ImageButton}" Margin="10,0" Name="btn_Find" Click="btn_Find_Click">
                                     <Grid Margin="4">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="2*"/>
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
                                         <Image Stretch="Uniform" Source="pack://application:,,,/Schedio Application;component/Resources/Images/find.png"/>
-                                        <TextBlock Text="Find" Grid.Row="1" FontSize="11"/>
+                                        <TextBlock Text="Find" Grid.Row="1" FontSize="11" HorizontalAlignment="Center"/>
                                     </Grid>
                                 </Button>
                             </StackPanel>

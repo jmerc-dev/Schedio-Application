@@ -1,0 +1,110 @@
+﻿<Window x:Class="Schedio_Application.MVVM.View.Windows.EntryLocator"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"
+        mc:Ignorable="d" Height="500" Width="850"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    <Border BorderBrush="{StaticResource GreyColor}" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" MouseLeftButtonDown="Grid_MouseLeftButtonDown" Background="Transparent">
+                <Button HorizontalAlignment="Right" Height="25" Width="25" Style="{StaticResource ImageButton}" Margin="5, 0" Click="Button_Click">
+                    <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/close.png"/>
+                </Button>
+            </Grid>
+
+            <Grid Grid.Row="1" Margin="45,10,45,25">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <!-- Row 0 -->
+                <TextBlock Text="Entry Locator" Style="{StaticResource TitleText}" FontSize="27"/>
+
+                <!-- Row 1 -->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Grid Grid.Row="0" Margin="0,20" HorizontalAlignment="Right" Height="30">
+                        <TextBox Width="350" FontSize="15" VerticalContentAlignment="Center" TextBlock.TextAlignment="Left" Name="tb_SearchSubject" Padding="5,0"/>
+
+                        <TextBlock IsHitTestVisible="False" Text="Find subject" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8,0,0,0" Foreground="DarkGray" FontSize="15">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=tb_SearchSubject}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+
+                        <Image IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Setter Property="SnapsToDevicePixels" Value="True"/>
+                                    <Setter Property="Source" Value="pack://application:,,,/Schedio Application;component/Resources/Images/find-not-active.png"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsFocused, ElementName=tb_SearchSubject}" Value="True">
+                                            <Setter Property="Source" Value="pack://application:,,,/Schedio Application;component/Resources/Images/find-active.png"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </Grid>
+                    
+                    <!-- Sort Button -->
+                    
+                    <!-- Filter -->
+                    <StackPanel Orientation="Horizontal" Grid.Column="2">
+                        <TextBlock Text="Filter by" VerticalAlignment="Center" Style="{StaticResource UneditableText}" Margin="5,0"/>
+                        <ComboBox Name="cbox_Filters" Style="{StaticResource MainComboBox}" Width="100" Height="30" VerticalContentAlignment="Center">
+                            <ComboBoxItem Content="None" IsSelected="True"/>
+                            <ComboBoxItem Content="Person"/>
+                            <ComboBoxItem Content="Room"/>
+                            <ComboBoxItem Content="Section"/>
+                        </ComboBox>
+                    </StackPanel>
+                    
+                    <!-- Search by filter -->
+                    <Grid Grid.Column="3" Margin="5,20" HorizontalAlignment="Right" Height="30">
+                        <TextBox Width="150" FontSize="15" VerticalContentAlignment="Center" TextBlock.TextAlignment="Left" Name="tb_SearchByFilter" Padding="5,0"/>
+
+                        <TextBlock IsHitTestVisible="False" Text="Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8,0,0,0" Foreground="DarkGray" FontSize="15">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=tb_SearchByFilter}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                </Grid>
+            </Grid>
+            
+
+        </Grid>
+    </Border>
+</Window>
