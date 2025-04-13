@@ -41,7 +41,7 @@
                     </Grid.ColumnDefinitions>
                     
                     <Grid Grid.Row="0" Margin="0,20" HorizontalAlignment="Right" Height="30">
-                        <TextBox Width="350" FontSize="15" VerticalContentAlignment="Center" TextBlock.TextAlignment="Left" Name="tb_SearchSubject" Padding="5,0"/>
+                        <TextBox Width="350" FontSize="15" VerticalContentAlignment="Center" TextBlock.TextAlignment="Left" Name="tb_SearchSubject" Padding="5,0,30,0"/>
 
                         <TextBlock IsHitTestVisible="False" Text="Find subject" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8,0,0,0" Foreground="DarkGray" FontSize="15">
                             <TextBlock.Style>
@@ -101,6 +101,37 @@
                             </TextBlock.Style>
                         </TextBlock>
                     </Grid>
+                </Grid>
+                
+                <!-- Row 2 -->
+                <Border BorderBrush="{StaticResource GreyColor}" BorderThickness="0,0,0,1" Grid.Row="2">
+                    
+                </Border>
+                
+                <!-- Row 3 -->
+                <Grid Grid.Row="3" Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <CheckBox Content="All" Grid.Row="0" Margin="25,0" VerticalContentAlignment="Center" Template="{DynamicResource PrimaryCheckBox}"/>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5,0">
+                        <StackPanel.Resources>
+                            <Style TargetType="CheckBox">
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                <Setter Property="Template" Value="{DynamicResource PrimaryCheckBox}"/>
+                                <Setter Property="Margin" Value="5,0"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        
+                        <CheckBox Content="Monday"/>
+                        <CheckBox Content="Tuesday"/>
+                        <CheckBox Content="Wednesday"/>
+                        <CheckBox Content="Thursday"/>
+                        <CheckBox Content="Friday"/>
+                        <CheckBox Content="Saturday"/>
+                        <CheckBox Content="Sunday"/>
+                    </StackPanel>
                 </Grid>
             </Grid>
             
