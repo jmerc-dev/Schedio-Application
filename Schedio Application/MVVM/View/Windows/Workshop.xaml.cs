@@ -96,7 +96,7 @@ namespace Schedio_Application.MVVM.View.Windows
             Loaded += (sender, e) =>
             {
                 this.DataContext = this;
-                new DummyData(true, RoomTypes, Rooms, Personnel, Sections);
+                new DummyData(false, RoomTypes, Rooms, Personnel, Sections);
             };
 
             Sections.CollectionChanged += new NotifyCollectionChangedEventHandler(section_CollectionChanged);
@@ -196,7 +196,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Find_Click(object sender, RoutedEventArgs e)
         {
-            new EntryLocator().Show();
+            new EntryLocator(this, Subject.SubjectEntries).Show();
         }
     }
 

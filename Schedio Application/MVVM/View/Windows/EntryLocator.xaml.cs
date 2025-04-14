@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +21,23 @@ namespace Schedio_Application.MVVM.View.Windows
     /// </summary>
     public partial class EntryLocator : Window
     {
-        public EntryLocator()
+        private Workshop _Workshop;
+        private ObservableCollection<SubjectEntry> _Entries;
+        private ObservableCollection<SubjectEntry>? _FilteredEntries;
+
+        public ObservableCollection<SubjectEntry> Entries
+        {
+            get { return _Entries; }
+        }
+
+        public EntryLocator(Workshop wk, ObservableCollection<SubjectEntry> entries)
         {
             InitializeComponent();
+
+            this._Workshop = wk;
+            this._Entries = entries;
+
+            this.DataContext = this;
         }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

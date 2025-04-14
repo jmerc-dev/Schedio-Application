@@ -4,10 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"
+        xmlns:converters="clr-namespace:Schedio_Application.MVVM.ViewModel.Converters"
         mc:Ignorable="d" Height="500" Width="850"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <converters:DayAbbreviationConverter x:Key="dayAbbreviationConverter"/>
+    </Window.Resources>
     <Border BorderBrush="{StaticResource GreyColor}" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
@@ -105,7 +109,53 @@
                 
                 <!-- Row 2 -->
                 <Border BorderBrush="{StaticResource GreyColor}" BorderThickness="0,0,0,1" Grid.Row="2">
-                    
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <ListView ItemsSource="{Binding Entries}" BorderThickness="0">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="ToolTip" Value="Double click to navigate"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.Style>
+                                <Style TargetType="{x:Type ListView}"/>
+                            </ListView.Style>
+                            <ListView.View>
+                                <GridView AllowsColumnReorder="True">
+                                    <GridViewColumn DisplayMemberBinding="{Binding SubjectInfo.Name}" Header="Subject Name" Width="200"/>
+                                    <GridViewColumn Header="Person" Width="150">
+                                        <GridViewColumn.CellTemplate >
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding SubjectInfo.AssignedPerson.Name}" TextAlignment="Center"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Section" Width="100">
+                                        <GridViewColumn.CellTemplate >
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding SubjectInfo.OwnerSection.Name}" TextAlignment="Center"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Room" Width="100">
+                                        <GridViewColumn.CellTemplate >
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding RoomAllocated.Name}" TextAlignment="Center"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding TimeFrame.Time}" Header="Time" Width="150"/>
+                                    <GridViewColumn Header="Day" Width="50">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding DayAssigned, Converter={StaticResource dayAbbreviationConverter}}" HorizontalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </ScrollViewer>
                 </Border>
                 
                 <!-- Row 3 -->
