@@ -20,7 +20,7 @@ namespace Schedio_Application.MVVM.ViewModel.Converters
                 return Day.DaysAcronym[((DayOfWeek)value).ToString()];
             }
 
-            return DependencyProperty.UnsetValue;
+            return "error";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

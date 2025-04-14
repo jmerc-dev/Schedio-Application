@@ -13,7 +13,6 @@ namespace Schedio_Application.MVVM.ViewModel.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Trace.WriteLine($"{value.ToString()}");
             return string.Empty;
             //double doubleValue = double.Parse(value.ToString());
             //double compareToValue = double.Parse(parameter.ToString());

@@ -229,11 +229,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 _SubjectEntries.Add(subjectAllocation.Entry);
                 UnitsAllocated += subjectAllocation.Entry.UnitsToAllocate;
 
-                // Updates Allocated Units Indicator
-                //if (this.OwnerSection != null)
-                //{
-                //    this.OwnerSection.AllocatedUnits += subjectAllocation.Entry.UnitsToAllocate;
-                //}
+                
             }
         }
 
