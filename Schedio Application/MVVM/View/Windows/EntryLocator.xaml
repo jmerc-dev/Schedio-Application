@@ -157,7 +157,7 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <CheckBox Content="All" Grid.Row="0" Margin="25,0" Width="50" VerticalContentAlignment="Center" HorizontalAlignment="Left" Template="{DynamicResource PrimaryCheckBox}"/>
+                    <CheckBox Content="All" Grid.Row="0" Margin="25,0" Width="50" x:Name="cbox_AllDays" IsChecked="True" Click="cbox_AllDays_Clicked" VerticalContentAlignment="Center" HorizontalAlignment="Left" Template="{DynamicResource PrimaryCheckBox}"/>
                     <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5,0" Name="container_DayFilter">
                         <StackPanel.Resources>
                             <Style TargetType="CheckBox">
@@ -167,6 +167,7 @@
                                 <Setter Property="IsChecked" Value="True"/>
                                 <EventSetter Event="Checked" Handler="DayFilter_Changed"/>
                                 <EventSetter Event="Unchecked" Handler="DayFilter_Changed"/>
+                                <EventSetter Event="Click" Handler="CheckBox_Click"/>
                             </Style>
                         </StackPanel.Resources>
                         

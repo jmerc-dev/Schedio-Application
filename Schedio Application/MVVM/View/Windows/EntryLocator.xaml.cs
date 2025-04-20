@@ -77,9 +77,8 @@ namespace Schedio_Application.MVVM.View.Windows
             AssignDayFilter((CheckBox)sender);
             _FilterObj.FilterByDays(_DayFilter);
 
-            Trace.WriteLine("####################");
-            for (int i = 0; i < 7; i++)
-                Trace.WriteLine(_DayFilter[i]);
+            // TODO: For some reason, this causes issue when clicking the 'All' checkbox
+            //"All" checkbox setter
         }
 
         private void AssignDayFilter(CheckBox? cbox)
@@ -101,6 +100,76 @@ namespace Schedio_Application.MVVM.View.Windows
 
             if (dayOfWeek != null)
                 _DayFilter[(int)dayOfWeek - 1 < 0 ? 6 : (int)dayOfWeek - 1] = (bool) isChecked;
+        }
+
+        private void cbox_AllDays_Clicked(object sender, RoutedEventArgs e)
+        {
+            CheckBox? cbox_All = sender as CheckBox;
+
+            if (cbox_All == null || cbox_All.IsChecked == null)
+                throw new NullReferenceException();
+
+            if (container_DayFilter == null)
+                return;
+
+            foreach (CheckBox cbox in container_DayFilter.Children)
+            {
+                cbox.IsChecked = cbox_All.IsChecked;
+            }
+        }
+
+        private void cbox_AllDays_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox? cbox_All = sender as CheckBox;
+
+            if (cbox_All == null || cbox_All.IsChecked == null)
+                throw new NullReferenceException();
+
+            if (container_DayFilter == null)
+                return;
+
+            foreach (CheckBox cbox in container_DayFilter.Children)
+            {
+                cbox.IsChecked = true;
+            }
+        }
+        
+        private void cbox_AllDays_Unchecked(object sender, RoutedEventArgs e)
+        {
+            CheckBox? cbox_All = sender as CheckBox;
+
+            if (cbox_All == null || cbox_All.IsChecked == null)
+                throw new NullReferenceException();
+
+            if (container_DayFilter == null)
+                return;
+
+            foreach (CheckBox cbox in container_DayFilter.Children)
+            {
+                cbox.IsChecked = false;
+            }
+        }
+
+
+        private bool IsAllChecked()
+        {
+            foreach (bool b in _DayFilter)
+            {
+                if (!b) return false;
+            }
+
+            return true;
+        }
+
+        private void CheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (cbox_AllDays.IsChecked == null)
+                throw new NullReferenceException();
+
+            if (IsAllChecked() && (bool)!cbox_AllDays.IsChecked)
+                cbox_AllDays.IsChecked = true;
+            else if (!IsAllChecked() && (bool)cbox_AllDays.IsChecked)
+                cbox_AllDays.IsChecked = false;
         }
     }
 }
