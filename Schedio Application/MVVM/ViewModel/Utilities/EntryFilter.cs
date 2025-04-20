@@ -3,15 +3,18 @@ using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Schedio_Application.MVVM.ViewModel.Utilities
 {
 
     public enum EntryFilterElement
     {
+        None,
         Person,
         Room,
         Section,
@@ -25,7 +28,6 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
     {
         private ObservableCollection<SubjectEntry> _Source;
         private ObservableCollection<SubjectEntry> _Filter;
-
         public EntryFilter(ObservableCollection<SubjectEntry> source, ObservableCollection<SubjectEntry> filter) 
         {
             this._Source = source;
@@ -37,18 +39,27 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
         /// </summary>
         public bool Filter(EntryFilterElement e, string key)
         {
-            switch (e)
+            foreach (SubjectEntry s in _Source)
             {
-                case EntryFilterElement.Person:
-                    break;
-                case EntryFilterElement.Room:
-                    break;
-                case EntryFilterElement.Section:
-                    break;
-                case EntryFilterElement.Subject:
-                    break;
-                default: 
-                    return false;
+                bool result = false;
+                switch (e)
+                {
+                    case EntryFilterElement.Person:
+                        result = s.SubjectInfo.AssignedPerson.Name != null && s.SubjectInfo.AssignedPerson.Name.Contains(key, StringComparison.CurrentCultureIgnoreCase);
+                        break;
+                    case EntryFilterElement.Room:
+                        result = s.RoomAllocated != null && s.RoomAllocated.Name.Contains(key, StringComparison.CurrentCultureIgnoreCase);
+                        break;
+                    case EntryFilterElement.Section:
+                        result = s.SubjectInfo.OwnerSection != null && s.SubjectInfo.OwnerSection.Name != null && s.SubjectInfo.OwnerSection.Name.Contains(key, StringComparison.CurrentCultureIgnoreCase);
+                        break;
+                    case EntryFilterElement.Subject:
+                        result = s.SubjectInfo.Name != null && s.SubjectInfo.Name.Contains(key, StringComparison.CurrentCultureIgnoreCase);
+                        break;
+                    default:
+                        throw new InvalidEnumArgumentException();
+                }
+                Execute(result, s);
             }
             return true;
         }
@@ -91,6 +102,13 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
 
             return true;
         }
-        
+        private void Execute(bool result, SubjectEntry s)
+        {
+            if (result)
+                AddIfAbsent(s);
+            else
+                RemoveIfPresent(s);
+        }
+
     }
 }

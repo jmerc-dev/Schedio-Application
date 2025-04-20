@@ -26,9 +26,9 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private double _Units;
         private ClassSection _ClassSection;
 
-        private double _UnitsRemaining;
+        //private double _UnitsRemaining;
         private double _UnitsAllocated;
-        private bool _IsAllocated;
+        //private bool _IsAllocated;
         private int _RoomTypeID;
 
         
@@ -77,7 +77,6 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public bool IsAllocated
         {
             get => Units == UnitsAllocated;
-            //set {  _IsAllocated = value; OnPropertyChanged(); }
         }
 
         public int RoomTypeID

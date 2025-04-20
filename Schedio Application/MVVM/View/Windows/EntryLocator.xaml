@@ -45,7 +45,7 @@
                     </Grid.ColumnDefinitions>
                     
                     <Grid Grid.Row="0" Margin="0,10" HorizontalAlignment="Right" Height="30">
-                        <TextBox Width="350" FontSize="15" VerticalContentAlignment="Center" TextBlock.TextAlignment="Left" Name="tb_SearchSubject" Padding="5,0,30,0"/>
+                        <TextBox Width="350" FontSize="15" VerticalContentAlignment="Center" TextBlock.TextAlignment="Left" Name="tb_SearchSubject" TextChanged="tb_SearchSubject_TextChanged" Padding="5,0,30,0"/>
 
                         <TextBlock IsHitTestVisible="False" Text="Find subject" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8,0,0,0" Foreground="DarkGray" FontSize="15">
                             <TextBlock.Style>
@@ -80,7 +80,7 @@
                     <!-- Filter -->
                     <StackPanel Orientation="Horizontal" Grid.Column="2">
                         <TextBlock Text="Filter by" VerticalAlignment="Center" Style="{StaticResource UneditableText}" Margin="5,0"/>
-                        <ComboBox Name="cbox_Filters" Style="{StaticResource MainComboBox}" Width="100" Height="30" VerticalContentAlignment="Center">
+                        <ComboBox Name="cbox_Filters" Style="{StaticResource MainComboBox}" SelectionChanged="cbox_Filters_SelectionChanged" Width="100" Height="30" VerticalContentAlignment="Center">
                             <ComboBoxItem Content="None" IsSelected="True"/>
                             <ComboBoxItem Content="Person"/>
                             <ComboBoxItem Content="Room"/>
@@ -90,7 +90,7 @@
                     
                     <!-- Search by filter -->
                     <Grid Grid.Column="3" Margin="5,10" HorizontalAlignment="Right" Height="30">
-                        <TextBox Width="150" FontSize="15" VerticalContentAlignment="Center" TextBlock.TextAlignment="Left" Name="tb_SearchByFilter" Padding="5,0"/>
+                        <TextBox Width="150" FontSize="15" VerticalContentAlignment="Center" TextBlock.TextAlignment="Left" Name="tb_SearchByFilter" TextChanged="tb_SearchByFilter_TextChanged" Padding="5,0"/>
 
                         <TextBlock IsHitTestVisible="False" Text="Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8,0,0,0" Foreground="DarkGray" FontSize="15">
                             <TextBlock.Style>
@@ -109,13 +109,21 @@
                 
                 <!-- Row 2 -->
                 <Border BorderBrush="{StaticResource GreyColor}" BorderThickness="0,0,0,1" Grid.Row="2">
-                    <ListView ItemsSource="{Binding FilteredEntries}" BorderThickness="0" Template="{StaticResource template_Simple}" ItemContainerStyle="{StaticResource lvi_Simple}" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                    <ListView Name="lv_SubjectsList" ItemsSource="{Binding FilteredEntries}" BorderThickness="0" Template="{StaticResource template_Simple}" ItemContainerStyle="{StaticResource lvi_Simple}" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                         <ListView.Style>
                             <Style TargetType="{x:Type ListView}"/>
                         </ListView.Style>
                         <ListView.View>
                             <GridView AllowsColumnReorder="False">
-
+                                <GridViewColumn Header="Section" Width="100" >
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <Border BorderBrush="{StaticResource GreyColor}" BorderThickness="0,0,1,0">
+                                                <TextBlock Text="{Binding SubjectInfo.OwnerSection.Name}" TextAlignment="Center"/>
+                                            </Border>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                                 <GridViewColumn DisplayMemberBinding="{Binding SubjectInfo.Name}" Header="Subject Name" Width="200"/>
                                 <GridViewColumn Header="Person" Width="150">
                                     <GridViewColumn.CellTemplate >
@@ -124,21 +132,20 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="Section" Width="100">
-                                    <GridViewColumn.CellTemplate >
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding SubjectInfo.OwnerSection.Name}" TextAlignment="Center"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
                                 <GridViewColumn Header="Room" Width="100">
                                     <GridViewColumn.CellTemplate >
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding RoomAllocated.Name}" TextAlignment="Center"/>
+                                            <TextBlock Text="{Binding RoomAllocated.Name}" TextAlignment="Center" HorizontalAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn DisplayMemberBinding="{Binding TimeFrame.Time}" Header="Time" Width="150"/>
+                                <GridViewColumn Header="Time" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding TimeFrame.Time}" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                                 <GridViewColumn Header="Day" Width="50">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>

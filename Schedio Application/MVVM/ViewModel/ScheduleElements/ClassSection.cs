@@ -16,7 +16,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
     public class ClassSection : PropertyNotification
     {
-        private static int _IdCount;
+        //private static int _IdCount;
 
         private int _ID;
         private string? _Name;
