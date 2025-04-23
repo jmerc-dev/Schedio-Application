@@ -161,7 +161,6 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
 
             this.AllocatedSubjects = fullyAllocatedSubjects;
-            Trace.WriteLine(this.AllocatedSubjects);
         }
 
         public bool SetColor(ClassSection section)

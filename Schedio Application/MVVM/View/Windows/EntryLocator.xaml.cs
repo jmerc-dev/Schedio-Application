@@ -127,12 +127,6 @@ namespace Schedio_Application.MVVM.View.Windows
                     throw new ArgumentNullException();
                 entryFilter.Filter(_FilterElement, tb_SearchByFilter.Text);
                 return;
-                foreach (SubjectEntry entry in e.NewItems)
-                {
-                    // Base this on dayfilter
-                    if (!_FilterLevel2.Contains(entry))
-                        _FilterLevel2.Add(entry);
-                }
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove)
             {
@@ -195,7 +189,8 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //this.Close();
+            this.Close();
+            return;
             if (FilteredEntries == null)
                 return;
             Trace.WriteLine("############### Filtered Entries ###############");

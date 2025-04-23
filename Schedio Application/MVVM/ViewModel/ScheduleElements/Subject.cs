@@ -286,11 +286,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             if (subAllocObj.ShowDialog() == true)
             {
                 double newUnitsAllocated = subAllocObj.Entry.UnitsToAllocate;
-                // TODO: 
-                //if (subAllocObj.Entry.UnitsToAllocate > prevUnitsAllocated)
-                //    subAllocObj.Entry.SubjectInfo.UnitsAllocated -= subAllocObj.Entry.UnitsToAllocate - previousUnits;
-                //else if (subAllocObj.Entry.UnitsToAllocate < previousUnits)
-                //    subAllocObj.Entry.SubjectInfo.UnitsRemaining += previousUnits - subAllocObj.Entry.UnitsToAllocate;
+                
                 subAllocObj.Entry.SubjectInfo.UnitsAllocated = (UnitsAllocated - prevUnitsAllocated) + newUnitsAllocated;
                 this.OwnerSection.AllocatedUnits += subAllocObj.Entry.UnitsToAllocate;
 
