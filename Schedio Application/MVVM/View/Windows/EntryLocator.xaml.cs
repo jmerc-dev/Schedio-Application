@@ -3,6 +3,7 @@ using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -26,11 +27,11 @@ namespace Schedio_Application.MVVM.View.Windows
     public partial class EntryLocator : Window
     {
         private Workshop _Workshop;
-        private ObservableCollection<SubjectEntry> _Entries;
+        private readonly ObservableCollection<SubjectEntry> _Entries;
         private EntryFilterElement _FilterElement;
 
         // Base Filter for Days
-        private ObservableCollection<SubjectEntry> _FilteredEntries;
+        private readonly ObservableCollection<SubjectEntry> _FilteredEntries;
 
         // 2nd Level: filter for cbox_Filters (Room, Section, Person) OR Subject Filter if cbox_Filter is NONE.
         private ObservableCollection<SubjectEntry>? _FilterLevel2;
@@ -48,9 +49,27 @@ namespace Schedio_Application.MVVM.View.Windows
             get { return _Entries; }
         }
 
+        // Day filtering
         public ObservableCollection<SubjectEntry> FilteredEntries
         {
             get { return _FilteredEntries; }
+        }
+
+        private ObservableCollection<SubjectEntry>? FilterLevel2
+        {
+            get => _FilterLevel2;
+            set
+            {
+                _FilterLevel2 = value;
+
+                if (_FilterLevel2 != null)
+                    _FilterLevel2.CollectionChanged += FilteredEntries_CollectionChanged;
+            }
+        }
+
+        private void _FilterLevel2_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public EntryLocator(Workshop wk, ObservableCollection<SubjectEntry> entries)
@@ -60,10 +79,105 @@ namespace Schedio_Application.MVVM.View.Windows
             this._Entries = entries;
             this._FilteredEntries = new ObservableCollection<SubjectEntry>(entries);
             this._FilterObj = new EntryFilter(_Entries, _FilteredEntries);
+            this._Entries.CollectionChanged += this.Entries_CollectionChanged;
+            this._FilteredEntries.CollectionChanged += FilteredEntries_CollectionChanged;
 
             InitializeComponent();
 
             this.DataContext = this;
+        }
+
+        private void Entries_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                if (e.NewItems == null || e.NewItems.Count == 0)
+                    throw new ArgumentNullException();
+
+                foreach (SubjectEntry entry in e.NewItems)
+                {
+                    if (!_DayFilter[CultureDayOfWeek.ConvertBack(entry.DayAssigned)])
+                        continue;
+
+                    if (!FilteredEntries.Contains(entry)) 
+                        FilteredEntries.Add(entry);
+                }
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                if (e.OldItems == null || e.OldItems.Count == 0)
+                    throw new ArgumentNullException();
+
+                foreach (SubjectEntry entry in e.OldItems)
+                {
+                    if (FilteredEntries.Contains(entry))
+                        FilteredEntries.Remove(entry);
+                }
+            }
+        }
+
+        private void FilteredEntries_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (_FilterLevel2 == null || _FilterElement == EntryFilterElement.None)
+                return;
+            EntryFilter? entryFilter = new EntryFilter((ObservableCollection<SubjectEntry>)FilteredEntries, _FilterLevel2);
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                if (e.NewItems == null || e.NewItems.Count == 0)
+                    throw new ArgumentNullException();
+                entryFilter.Filter(_FilterElement, tb_SearchByFilter.Text);
+                return;
+                foreach (SubjectEntry entry in e.NewItems)
+                {
+                    // Base this on dayfilter
+                    if (!_FilterLevel2.Contains(entry))
+                        _FilterLevel2.Add(entry);
+                }
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                if (e.OldItems == null || e.OldItems.Count == 0)
+                    throw new ArgumentNullException();
+
+                foreach (SubjectEntry entry in e.OldItems)
+                {
+                    if (_FilterLevel2.Contains(entry))
+                        _FilterLevel2.Remove(entry);
+                }
+            }
+        }
+
+        private void FilteredEntries2_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (_FilterLevel2 == null)
+                return;
+
+
+            if (_FilterLevel3 == null)
+                return;
+            return;
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                if (e.NewItems == null || e.NewItems.Count == 0)
+                    throw new ArgumentNullException();
+
+                foreach (SubjectEntry entry in e.NewItems)
+                {
+                    if (!_FilterLevel3.Contains(entry))
+                        _FilterLevel3.Add(entry);
+                }
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                if (e.OldItems == null || e.OldItems.Count == 0)
+                    throw new ArgumentNullException();
+
+                foreach (SubjectEntry entry in e.OldItems)
+                {
+                    if (_FilterLevel3.Contains(entry))
+                        _FilterLevel3.Remove(entry);
+                }
+            }
         }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -81,7 +195,32 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            //this.Close();
+            if (FilteredEntries == null)
+                return;
+            Trace.WriteLine("############### Filtered Entries ###############");
+            foreach (SubjectEntry s in FilteredEntries)
+            {
+                Trace.WriteLine($"{s.SubjectInfo.OwnerSection.Name}: {s.SubjectInfo.Name} , {s.TimeFrame.Time}");
+            }
+            
+            if (_FilterLevel2 == null)
+                return;
+            Trace.Write("\n\n");
+            Trace.WriteLine("############### Filter Level 2 ###############");
+            foreach (SubjectEntry s in _FilterLevel2)
+            {
+                Trace.WriteLine($"{s.SubjectInfo.OwnerSection.Name}: {s.SubjectInfo.Name} , {s.TimeFrame.Time}");
+            }
+            
+            if (_FilterLevel3 == null)
+                return;
+            Trace.Write("\n\n");
+            Trace.WriteLine("############### Filter Level 3 ###############");
+            foreach (SubjectEntry s in _FilterLevel3)
+            {
+                Trace.WriteLine($"{s.SubjectInfo.OwnerSection.Name}: {s.SubjectInfo.Name} , {s.TimeFrame.Time}");
+            }
         }
 
         private void DayFilter_Changed(object sender, RoutedEventArgs e)

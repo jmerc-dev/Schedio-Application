@@ -36,5 +36,28 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                     throw new ArgumentOutOfRangeException("int value must only range from 0 - 6");
             }
         }
+
+        public static int ConvertBack(DayOfWeek day)
+        {
+            switch (day)
+            {
+                case DayOfWeek.Monday:
+                    return 0;
+                case DayOfWeek.Tuesday:
+                    return 1;
+                case DayOfWeek.Wednesday:
+                    return 2;
+                case DayOfWeek.Thursday:
+                    return 3;
+                case DayOfWeek.Friday:
+                    return 4;
+                case DayOfWeek.Saturday:
+                    return 5;
+                case DayOfWeek.Sunday:
+                    return 6;
+                default:
+                    throw new ArgumentOutOfRangeException("int value must only range from 0 - 6");
+            }
+        }
     }
 }
