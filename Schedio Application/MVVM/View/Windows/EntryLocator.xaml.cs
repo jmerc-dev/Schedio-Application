@@ -64,7 +64,7 @@ namespace Schedio_Application.MVVM.View.Windows
                 _FilterLevel2 = value;
 
                 if (_FilterLevel2 != null)
-                    _FilterLevel2.CollectionChanged += FilteredEntries_CollectionChanged;
+                    _FilterLevel2.CollectionChanged += FilteredEntries2_CollectionChanged;
             }
         }
 
@@ -121,9 +121,8 @@ namespace Schedio_Application.MVVM.View.Windows
         {
 
             ObservableCollection<SubjectEntry> src = FilteredEntries;
-            ObservableCollection<SubjectEntry>? dst = IsSecondLevelOn ? _FilterLevel2 : _FilterLevel3;
+            ObservableCollection<SubjectEntry>? dst = IsSecondLevelOn ? FilterLevel2 : _FilterLevel3;
             EntryFilterElement efe = IsSecondLevelOn ? _FilterElement : EntryFilterElement.Subject;
-            Trace.WriteLine(efe);
 
             if (tb_SearchByFilter == null || tb_SearchSubject == null)
                 return;
@@ -154,11 +153,10 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void FilteredEntries2_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
-
             if (_FilterLevel3 == null)
                 return;
 
-            ObservableCollection<SubjectEntry>? src = _FilterLevel2;
+            ObservableCollection<SubjectEntry>? src = FilterLevel2;
             ObservableCollection<SubjectEntry> dst = _FilterLevel3;
             string? key = null;
 
@@ -210,6 +208,29 @@ namespace Schedio_Application.MVVM.View.Windows
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+
+            //Trace.WriteLine("\n\n================================================================================================");
+
+            //if (FilteredEntries != null)
+            //{
+            //    Trace.WriteLine("\n\n=================== Level 1 =====================");
+            //    foreach (SubjectEntry s in FilteredEntries)
+            //        Trace.WriteLine($"{s.SubjectInfo.OwnerSection.Name}: {s.RoomAllocated.Name} \t {s.SubjectInfo.Name} ==== {s.DayAssigned}");
+            //}
+
+            //if (_FilterLevel2 != null)
+            //{
+            //    Trace.WriteLine("\n\n=================== Level 2 =====================");
+            //    foreach (SubjectEntry s in _FilterLevel2)
+            //        Trace.WriteLine($"{s.SubjectInfo.OwnerSection.Name}: {s.RoomAllocated.Name} \t {s.SubjectInfo.Name} ==== {s.DayAssigned}");
+            //}
+
+            //if (_FilterLevel3 != null)
+            //{
+            //    Trace.WriteLine("\n\n=================== Level 3 =====================");
+            //    foreach (SubjectEntry s in _FilterLevel3)
+            //        Trace.WriteLine($"{s.SubjectInfo.OwnerSection.Name}: {s.RoomAllocated.Name} \t {s.SubjectInfo.Name} ==== {s.DayAssigned}");
+            //}
         }
 
         private void DayFilter_Changed(object sender, RoutedEventArgs e)
@@ -312,7 +333,16 @@ namespace Schedio_Application.MVVM.View.Windows
                 {
                     tb_SearchByFilter.IsEnabled = false;
                     IsSecondLevelOn = false;
-                    _FilterLevel2 = null;
+                    FilterLevel2 = null;
+
+                    if (tb_SearchSubject != null && lv_SubjectsList != null && _FilterLevel3 != null)
+                    {
+                        if (!tb_SearchSubject.Text.Equals(String.Empty))
+                        {
+                            lv_SubjectsList.ItemsSource = _FilterLevel3;
+                            new EntryFilter(FilteredEntries, _FilterLevel3).Filter(EntryFilterElement.Subject, tb_SearchSubject.Text);
+                        }
+                    }
                 }
                 else
                     tb_SearchByFilter.IsEnabled = true;
@@ -325,33 +355,54 @@ namespace Schedio_Application.MVVM.View.Windows
         private void tb_SearchByFilter_TextChanged(object sender, TextChangedEventArgs e)
         {
             string key = tb_SearchByFilter.Text;
+            string subKey = tb_SearchSubject.Text;
+
             if (key.Equals(String.Empty))
             {
-                lv_SubjectsList.ItemsSource = FilteredEntries;
                 IsSecondLevelOn = false;
                 _FilterLevel2 = null;
-                return;
+                if (!subKey.Equals(String.Empty) && _FilterLevel3 != null)
+                {
+                    lv_SubjectsList.ItemsSource = _FilterLevel3;
+                    new EntryFilter(FilteredEntries, _FilterLevel3).Filter(EntryFilterElement.Subject, tb_SearchSubject.Text);
+                    return;
+                }
+                else
+                {
+                    lv_SubjectsList.ItemsSource = FilteredEntries;
+                    //IsSecondLevelOn = false;
+                    //FilterLevel2 = null;
+                    return;
+                }
             }
-                
 
-            if (_FilterLevel2 == null) 
-                _FilterLevel2 = new ObservableCollection<SubjectEntry>(FilteredEntries);
+            if (FilterLevel2 == null) 
+                FilterLevel2 = new ObservableCollection<SubjectEntry>(FilteredEntries);
 
-            EntryFilter efLevel2 = new EntryFilter(FilteredEntries, _FilterLevel2);
+            EntryFilter efLevel2 = new EntryFilter(FilteredEntries, FilterLevel2);
             efLevel2.Filter(_FilterElement, key);
-            lv_SubjectsList.ItemsSource = _FilterLevel2;
             IsSecondLevelOn = true;
+
+            if (!subKey.Equals(String.Empty) && _FilterLevel3 != null)
+            {
+                _FilterLevel3.Clear();
+                lv_SubjectsList.ItemsSource = _FilterLevel3;
+                EntryFilter ef = new EntryFilter(FilterLevel2, _FilterLevel3);
+                ef.Filter(EntryFilterElement.Subject, subKey);
+            }
+            else
+                lv_SubjectsList.ItemsSource = FilterLevel2;
         }
 
         private void tb_SearchSubject_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string key = tb_SearchSubject.Text;
+            string subKey = tb_SearchSubject.Text;
             string filterByKey = tb_SearchByFilter.Text;
 
-            if (key.Equals(String.Empty))
+            if (subKey.Equals(String.Empty))
             {
                 if (IsSecondLevelOn)
-                    lv_SubjectsList.ItemsSource = _FilterLevel2;
+                    lv_SubjectsList.ItemsSource = FilterLevel2;
                 else
                     lv_SubjectsList.ItemsSource = FilteredEntries;
                 _FilterLevel3 = null;
@@ -360,20 +411,20 @@ namespace Schedio_Application.MVVM.View.Windows
 
             if (_FilterLevel3 == null) 
             {
-                _FilterLevel3 = new ObservableCollection<SubjectEntry>(_FilterLevel2 == null ? FilteredEntries : _FilterLevel2);
+                _FilterLevel3 = new ObservableCollection<SubjectEntry>(FilterLevel2 == null ? FilteredEntries : FilterLevel2);
             }
 
             lv_SubjectsList.ItemsSource = _FilterLevel3;
 
             EntryFilter? efNewLevel = null;
-            ObservableCollection<SubjectEntry>? src = _FilterLevel2 != null ? _FilterLevel2 : FilteredEntries;
+            ObservableCollection<SubjectEntry>? src = FilterLevel2 != null ? FilterLevel2 : FilteredEntries;
             ObservableCollection<SubjectEntry>? newFilterLevel = _FilterLevel3;
 
             if (src == null || newFilterLevel == null)
                 throw new ArgumentNullException();
 
             efNewLevel = new EntryFilter(src, newFilterLevel);
-            efNewLevel.Filter(EntryFilterElement.Subject, key);
+            efNewLevel.Filter(EntryFilterElement.Subject, subKey);
 
         }
     }

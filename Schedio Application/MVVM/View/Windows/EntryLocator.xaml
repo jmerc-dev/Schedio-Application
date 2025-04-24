@@ -90,7 +90,7 @@
                     
                     <!-- Search by filter -->
                     <Grid Grid.Column="3" Margin="5,10" HorizontalAlignment="Right" Height="30">
-                        <TextBox Width="150" FontSize="15" VerticalContentAlignment="Center" TextBlock.TextAlignment="Left" Name="tb_SearchByFilter" TextChanged="tb_SearchByFilter_TextChanged" Padding="5,0"/>
+                        <TextBox Width="150" FontSize="15" VerticalContentAlignment="Center" TextBlock.TextAlignment="Left" IsEnabled="False" Name="tb_SearchByFilter" TextChanged="tb_SearchByFilter_TextChanged" Padding="5,0"/>
 
                         <TextBlock IsHitTestVisible="False" Text="Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8,0,0,0" Foreground="DarkGray" FontSize="15">
                             <TextBlock.Style>

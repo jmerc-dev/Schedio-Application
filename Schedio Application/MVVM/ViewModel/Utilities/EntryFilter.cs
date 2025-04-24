@@ -4,6 +4,7 @@ using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,6 +48,7 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
             {
                 bool result = EntryFilter.CheckKey(e, s, key);
                 Execute(result, s);
+
             }
 
             return true;
