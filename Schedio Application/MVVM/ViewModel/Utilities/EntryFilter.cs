@@ -18,7 +18,8 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
         Person,
         Room,
         Section,
-        Subject
+        Subject,
+        Day
     }
 
     /// <summary>
@@ -39,28 +40,15 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
         /// </summary>
         public bool Filter(EntryFilterElement e, string key)
         {
+            if (e == EntryFilterElement.Day || e == EntryFilterElement.None)
+                throw new InvalidEnumArgumentException();
+
             foreach (SubjectEntry s in _Source)
             {
-                bool result = false;
-                switch (e)
-                {
-                    case EntryFilterElement.Person:
-                        result = s.SubjectInfo.AssignedPerson.Name != null && s.SubjectInfo.AssignedPerson.Name.Contains(key, StringComparison.CurrentCultureIgnoreCase);
-                        break;
-                    case EntryFilterElement.Room:
-                        result = s.RoomAllocated != null && s.RoomAllocated.Name.Contains(key, StringComparison.CurrentCultureIgnoreCase);
-                        break;
-                    case EntryFilterElement.Section:
-                        result = s.SubjectInfo.OwnerSection != null && s.SubjectInfo.OwnerSection.Name != null && s.SubjectInfo.OwnerSection.Name.Contains(key, StringComparison.CurrentCultureIgnoreCase);
-                        break;
-                    case EntryFilterElement.Subject:
-                        result = s.SubjectInfo.Name != null && s.SubjectInfo.Name.Contains(key, StringComparison.CurrentCultureIgnoreCase);
-                        break;
-                    default:
-                        throw new InvalidEnumArgumentException();
-                }
+                bool result = EntryFilter.CheckKey(e, s, key);
                 Execute(result, s);
             }
+
             return true;
         }
 
@@ -85,6 +73,29 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
                 }
             }
             return true;
+        }
+
+        public static bool CheckKey(EntryFilterElement e, SubjectEntry s, string key)
+        {
+            bool result = false;
+            switch (e)
+            {
+                case EntryFilterElement.Person:
+                    result = s.SubjectInfo.AssignedPerson.Name != null && s.SubjectInfo.AssignedPerson.Name.Contains(key, StringComparison.CurrentCultureIgnoreCase);
+                    break;
+                case EntryFilterElement.Room:
+                    result = s.RoomAllocated != null && s.RoomAllocated.Name.Contains(key, StringComparison.CurrentCultureIgnoreCase);
+                    break;
+                case EntryFilterElement.Section:
+                    result = s.SubjectInfo.OwnerSection != null && s.SubjectInfo.OwnerSection.Name != null && s.SubjectInfo.OwnerSection.Name.Contains(key, StringComparison.CurrentCultureIgnoreCase);
+                    break;
+                case EntryFilterElement.Subject:
+                    result = s.SubjectInfo.Name != null && s.SubjectInfo.Name.Contains(key, StringComparison.CurrentCultureIgnoreCase);
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException();
+            }
+            return result;
         }
 
         private bool AddIfAbsent(SubjectEntry entry)
