@@ -151,7 +151,10 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         private void FindEntry(Workshop? wk)
         {
-            // Run Workshop method here to find entries
+            if (wk == null)
+                throw new ArgumentNullException();
+
+            wk.FindEntry(this);
         }
 
         public bool ValidateAvailability()

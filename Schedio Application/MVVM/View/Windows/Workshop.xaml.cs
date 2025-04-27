@@ -418,6 +418,15 @@ namespace Schedio_Application.MVVM.View.Windows
             }
         }
 
+        public void FindEntry(SubjectEntry entry)
+        {
+            TimeTable tt = getDayTable(entry.DayAssigned);
+            int tabIndex = CultureDayOfWeek.ConvertBack(entry.DayAssigned);
+            tabCtrl_DayTimeTableContainer.SelectedIndex = tabIndex;
+
+            tt.FocusOnEntry(entry);
+        }
+
         
         private SubjectCard? FindCardEntry(SubjectEntry entry)
         {

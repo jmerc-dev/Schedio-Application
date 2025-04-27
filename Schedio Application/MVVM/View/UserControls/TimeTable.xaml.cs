@@ -72,8 +72,6 @@ namespace Schedio_Application.MVVM.View.UserControls
 
                 SetControlWidth(fullWidth);
                 SetControlHeight(fullHeight);
-
-                
             };
         }
 
@@ -230,6 +228,17 @@ namespace Schedio_Application.MVVM.View.UserControls
             
         }
 
+        public void FocusOnEntry(SubjectEntry entry)
+        {
+            foreach (SubjectCard sc in entriesContainer.Children) 
+            {
+                if (sc.Entry == entry)
+                {
+                    sc.Focus();
+                    return;
+                }    
+            }
+        }
         
 
         // Mouse dragging 
