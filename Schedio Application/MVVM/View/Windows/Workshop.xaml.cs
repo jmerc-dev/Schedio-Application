@@ -41,6 +41,7 @@ namespace Schedio_Application.MVVM.View.Windows
         private FileLoader _FileLoad;
         private ClassSection? _SelectedSection;
         private FileSave _FileSave = new FileSave();
+        private EntryLocator? _EntryLocator;
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public ClassSection? SelectedSection
@@ -104,6 +105,9 @@ namespace Schedio_Application.MVVM.View.Windows
             Closing += (sender, e) =>
             {
                 Application.Current.MainWindow.Visibility = Visibility.Visible;
+                
+                    
+                
             };
         }
 
@@ -196,7 +200,10 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Find_Click(object sender, RoutedEventArgs e)
         {
-            new EntryLocator(this, Subject.SubjectEntries).Show();
+            if (_EntryLocator == null)
+                _EntryLocator = new EntryLocator(this, Subject.SubjectEntries);
+
+            _EntryLocator.Show();
         }
     }
 

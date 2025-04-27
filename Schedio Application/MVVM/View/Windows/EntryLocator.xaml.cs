@@ -82,6 +82,10 @@ namespace Schedio_Application.MVVM.View.Windows
             this._FilterObj = new EntryFilter(_Entries, _FilteredEntries);
             this._Entries.CollectionChanged += this.Entries_CollectionChanged;
             this._FilteredEntries.CollectionChanged += FilteredEntries_CollectionChanged;
+            this._Workshop.Closing += (sender, e) =>
+            {
+                this.Close();
+            };
 
             InitializeComponent();
 
@@ -207,7 +211,8 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            this.Hide();
+            //this.Close();
 
             //Trace.WriteLine("\n\n================================================================================================");
 
