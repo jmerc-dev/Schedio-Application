@@ -372,11 +372,12 @@
 
     <Style TargetType="ListViewItem" x:Key="lvi_Simple">
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-        <Setter Property="ToolTip" Value="Double click to navigate"/>
+        <Setter Property="ToolTip" Value="Right click for options"/>
+        <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=MyWorkshop}"/>
         <Setter Property="ContextMenu">
             <Setter.Value>
                 <ContextMenu>
-                    <MenuItem Header="Go to"/>
+                    <MenuItem Header="Go to" Command="{Binding FindEntryCommand}" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
                 </ContextMenu>
             </Setter.Value>
         </Setter>

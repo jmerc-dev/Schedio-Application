@@ -109,7 +109,7 @@
                 
                 <!-- Row 2 -->
                 <Border BorderBrush="{StaticResource GreyColor}" BorderThickness="0,0,0,1" Grid.Row="2">
-                    <ListView Name="lv_SubjectsList" ItemsSource="{Binding FilteredEntries}" BorderThickness="0" Template="{StaticResource template_Simple}" ItemContainerStyle="{StaticResource lvi_Simple}" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                    <ListView Name="lv_SubjectsList" SelectionMode="Single" ItemsSource="{Binding FilteredEntries}" BorderThickness="0" Template="{StaticResource template_Simple}" ItemContainerStyle="{StaticResource lvi_Simple}" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                         <ListView.Style>
                             <Style TargetType="{x:Type ListView}"/>
                         </ListView.Style>

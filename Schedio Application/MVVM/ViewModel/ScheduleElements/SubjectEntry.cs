@@ -1,4 +1,5 @@
 ﻿using Schedio_Application.MVVM.View.Windows;
+using Schedio_Application.MVVM.ViewModel.Commands;
 using Schedio_Application.MVVM.ViewModel.Custom_Exceptions;
 using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
@@ -35,6 +36,8 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private int _RoomID;
 
         private DayOfWeek _DayAssigned;
+
+        public RelayCommand FindEntryCommand => new RelayCommand(execute => FindEntry(execute as Workshop));
 
         public Subject SubjectInfo 
         { 
@@ -144,6 +147,11 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 }
             }
             return true;
+        }
+
+        private void FindEntry(Workshop? wk)
+        {
+            // Run Workshop method here to find entries
         }
 
         public bool ValidateAvailability()

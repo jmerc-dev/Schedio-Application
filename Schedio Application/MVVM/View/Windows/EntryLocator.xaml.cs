@@ -1,4 +1,5 @@
-﻿using Schedio_Application.MVVM.ViewModel.ScheduleElements;
+﻿using Schedio_Application.MVVM.ViewModel.Commands;
+using Schedio_Application.MVVM.ViewModel.ScheduleElements;
 using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ namespace Schedio_Application.MVVM.View.Windows
         private readonly ObservableCollection<SubjectEntry> _Entries;
         private EntryFilterElement _FilterElement;
         private bool IsSecondLevelOn;
+        
 
         // Base Filter for Days
         private readonly ObservableCollection<SubjectEntry> _FilteredEntries;
@@ -68,6 +70,11 @@ namespace Schedio_Application.MVVM.View.Windows
             }
         }
 
+        public Workshop MyWorkshop
+        {
+            get => _Workshop;
+        }
+
         private void _FilterLevel2_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             throw new NotImplementedException();
@@ -90,6 +97,11 @@ namespace Schedio_Application.MVVM.View.Windows
             InitializeComponent();
 
             this.DataContext = this;
+        }
+
+        private void FindSubEntry()
+        {
+            Trace.WriteLine("Finding Subject Entry");
         }
 
         private void Entries_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
