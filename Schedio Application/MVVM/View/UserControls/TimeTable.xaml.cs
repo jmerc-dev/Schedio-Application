@@ -243,7 +243,6 @@ namespace Schedio_Application.MVVM.View.UserControls
 
         private void SetScrollLocation(double x, double y)
         {
-            Trace.WriteLine($"x: {x}, y: {y}");
             sv_Canvas.ScrollToHorizontalOffset(x);
             sv_Canvas.ScrollToVerticalOffset(y);
         }
