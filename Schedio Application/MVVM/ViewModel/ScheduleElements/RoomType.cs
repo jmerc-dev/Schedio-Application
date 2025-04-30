@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
-    public class RoomType : PropertyNotification
+    public class RoomType : PropertyNotification, IScheduleElement
     {
         private string? _Name;
 
@@ -20,7 +20,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             set => _ID = value;
         }
 
-        public string Name 
+        public string? Name 
         {
             get { return _Name; } 
             set 

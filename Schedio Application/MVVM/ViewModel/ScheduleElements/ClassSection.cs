@@ -14,7 +14,7 @@ using System.Windows.Media;
 
 namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
-    public class ClassSection : PropertyNotification
+    public class ClassSection : PropertyNotification, IScheduleElement
     {
         //private static int _IdCount;
 

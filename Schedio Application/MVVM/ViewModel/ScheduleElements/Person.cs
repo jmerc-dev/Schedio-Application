@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
-    public class Person : PropertyNotification
+    public class Person : PropertyNotification, IScheduleElement
     {
         const int MAX_CAPACITY = 7;
         //private static int _IdCounter = 0;

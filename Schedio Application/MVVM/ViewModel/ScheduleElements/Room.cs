@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
-    public class Room : PropertyNotification
+    public class Room : PropertyNotification, IScheduleElement
     {
         private static ObservableCollection<Room> _Rooms = new ObservableCollection<Room>();
         

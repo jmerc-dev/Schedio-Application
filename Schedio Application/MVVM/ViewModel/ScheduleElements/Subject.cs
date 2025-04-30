@@ -15,12 +15,12 @@ using System.Windows.Navigation;
 
 namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
-    public class Subject : PropertyNotification
+    public class Subject : PropertyNotification, IScheduleElement
     {
         private static int _IdCounter;
 
         private int _ID;
-        private string _Name;
+        private string? _Name;
         private Person _AssignedPerson;
         private RoomType _RoomType;
         private double _Units;
@@ -49,12 +49,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             set => _ID = value;
         }
 
-        public static int IDCount
-        {
-            get => _IdCounter;
-        }
-
-        public string Name 
+        public string? Name 
         { 
             get { return _Name; }
             set 
