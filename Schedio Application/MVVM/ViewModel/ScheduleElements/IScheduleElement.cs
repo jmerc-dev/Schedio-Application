@@ -11,6 +11,5 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public string? Name { get; set; }
         public int ID { get; set; }
 
-        // Still have issues with implementing Day class with this
     }
 }

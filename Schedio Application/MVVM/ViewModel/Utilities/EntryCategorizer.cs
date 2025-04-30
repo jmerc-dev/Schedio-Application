@@ -20,6 +20,40 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
             this._Entries = entries;
         }
 
+        /// <summary>
+        /// Grouping of entries exclusively by Day.
+        /// </summary>
+        /// <returns>ObservableCollection of maximum size 7 or else null</returns>
+        public ObservableCollection<DayBasedCategory>? CategorizeByDay()
+        {
+            ObservableCollection <DayBasedCategory> groupedByDayList = new ObservableCollection<DayBasedCategory>();
+            Dictionary<DayOfWeek, int> elementCountPair = new Dictionary<DayOfWeek, int>();
+
+            foreach (SubjectEntry entry in _Entries) 
+            {
+                DayOfWeek day = entry.DayAssigned;
+                if (elementCountPair.ContainsKey(day))
+                    elementCountPair[day] += 1;
+                else
+                    elementCountPair[day] = 1;
+            }
+
+            if (elementCountPair.Count > 7)
+                throw new ArgumentOutOfRangeException();
+
+            foreach (KeyValuePair<DayOfWeek, int> kvp in elementCountPair)
+            {
+                groupedByDayList.Add(new DayBasedCategory(kvp.Key, kvp.Value));
+            }
+
+            return groupedByDayList;
+        }
+
+        /// <summary>
+        /// Only accepts Person, Room, and ClassSection of enum ScheduleElement.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns>List of EntryCategoryCounter which has both the element value and count.</returns>
         public ObservableCollection<EntryCategoryCounter>? CategorizeBy(ScheduleElement element)
         {
             ObservableCollection<EntryCategoryCounter> groupedList = new ObservableCollection<EntryCategoryCounter>();
@@ -36,6 +70,7 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
             return groupedList;
         }
 
+
         private Dictionary<IScheduleElement, int>? GetCountBasedOnElement(ScheduleElement element)
         {
             Dictionary<IScheduleElement, int> elementCountPairs = new Dictionary<IScheduleElement, int>();
@@ -49,8 +84,6 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
                         break;
                     case ScheduleElement.Room:
                         RegisterEntryElement(elementCountPairs, entry.RoomAllocated);
-                        break;
-                    case ScheduleElement.Day:
                         break;
                     case ScheduleElement.ClassSection:
                         RegisterEntryElement(elementCountPairs, entry.SubjectInfo.OwnerSection);

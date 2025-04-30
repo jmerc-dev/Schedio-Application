@@ -17,10 +17,10 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private bool _IsAvailable;
         private List<TimeFrame> _CustomTimeframe;
 
-        public DayOfWeek Name
-        { 
-            get {  return _name; } 
-            set {  _name = value; }
+        public DayOfWeek DayValue
+        {
+            get { return _name; }
+            set { _name = value; }
         }
 
         public List<TimeFrame> CustomTimeframe
@@ -87,7 +87,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         public string GetAbbrevName()
         {
-            return DaysAcronym[this.Name.ToString()];
+            return DaysAcronym[this.DayValue.ToString()];
         }
 
         public bool AddCustomTimeframe(TimeFrame timeFrame)
