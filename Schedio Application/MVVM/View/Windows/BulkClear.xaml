@@ -63,13 +63,38 @@
                         </Image>
                     </Grid>
                     <TextBlock Text="Category:" Style="{StaticResource UneditableText}" Margin="30,10,0,10" VerticalAlignment="Center"/>
-                    <ComboBox Style="{StaticResource MainComboBox}" Width="120" Height="30" VerticalContentAlignment="Center" Margin="10,0,0,0">
-                        <ComboBoxItem Content="Section" IsSelected="True"/>
+                    <ComboBox Style="{StaticResource MainComboBox}" Name="cbox_Category" SelectionChanged="ComboBox_SelectionChanged" Width="120" Height="30" VerticalContentAlignment="Center" Margin="10,0,0,0">
+                        <ComboBoxItem Content="ClassSection"/>
                         <ComboBoxItem Content="Person"/>
                         <ComboBoxItem Content="Room"/>
                         <ComboBoxItem Content="Day"/>
                     </ComboBox>
                 </StackPanel>
+
+                <ListView ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled" x:Name="lv_CategorizedList" Grid.Row="2" ItemContainerStyle="{StaticResource lvi_Simple}" Template="{StaticResource template_Simple}">
+                    <ListView.Style>
+                        <Style TargetType="{x:Type ListView}"/>
+                    </ListView.Style>
+                    <ListView.View>
+                        <GridView AllowsColumnReorder="False">
+                            <GridViewColumn Header="Group Name" Width="200">
+                                <GridViewColumn.CellTemplate >
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" TextAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Entry Count" Width="240">
+                                <GridViewColumn.CellTemplate >
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Count}" TextAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                
                 <Grid Grid.Row="3">
                     <Button Height="35" Width="120" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Clear Selected" Style="{StaticResource ConfirmButton}"/>
                     <Button Height="35" Width="90" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Clear All" Style="{StaticResource DeleteButton}"/>

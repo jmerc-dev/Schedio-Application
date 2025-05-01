@@ -304,7 +304,7 @@
                                         <TextBlock Text="Colorize" Grid.Row="1" FontSize="11"/>
                                     </Grid>
                                 </Button>
-                                <Button Style="{StaticResource ImageButton}" Margin="10,0">
+                                <Button Style="{StaticResource ImageButton}" Margin="10,0" Name="btn_Clear" Click="btn_Clear_Click">
                                     <Grid Margin="4">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="2*"/>

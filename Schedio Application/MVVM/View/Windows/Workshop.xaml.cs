@@ -176,8 +176,6 @@ namespace Schedio_Application.MVVM.View.Windows
         private void btn_Export_Click(object sender, RoutedEventArgs e)
         {
 
-            new BulkClear().ShowDialog();
-
         }
 
         private void btn_BrowseSectionExplorer_Click(object sender, RoutedEventArgs e)
@@ -204,6 +202,16 @@ namespace Schedio_Application.MVVM.View.Windows
                 _EntryLocator = new EntryLocator(this, Subject.SubjectEntries);
 
             _EntryLocator.Show();
+        }
+
+        private void btn_Clear_Click(object sender, RoutedEventArgs e)
+        {
+            BulkClear bc = new BulkClear(Subject.SubjectEntries);
+            if (bc.ShowDialog() == true)
+            {
+
+            }
+            
         }
     }
 
