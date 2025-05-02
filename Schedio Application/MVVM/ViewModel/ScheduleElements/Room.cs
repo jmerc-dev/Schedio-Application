@@ -17,7 +17,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         private static ObservableCollection<Room> _Rooms = new ObservableCollection<Room>();
         
         private int _ID;
-        private string _name;
+        private string? _name;
         private RoomType _type;
 
         public static ObservableCollection<Room> RoomsList
@@ -33,7 +33,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         }
 
 
-        public string Name 
+        public string? Name 
         { 
             get { return _name; }
             set 

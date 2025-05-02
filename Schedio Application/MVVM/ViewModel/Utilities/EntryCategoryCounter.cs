@@ -22,6 +22,8 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
             get => _value.Name;
         }
 
+        public IScheduleElement Value { get => _value; }
+
         public EntryCategoryCounter(IScheduleElement value, int count)
         {
             _value = value;

@@ -25,7 +25,19 @@ namespace Schedio_Application.MVVM.View.Windows
     public partial class BulkClear : Window
     {
         private readonly EntryCategorizer _EntryCategorizer;
-        private ScheduleElement selectedCategory;
+
+        private ObservableCollection<DayBasedCategory>? _ListByDay;
+        private ObservableCollection<EntryCategoryCounter>? _ListByEntryCategory;
+
+        private ObservableCollection<DayBasedCategory>? _FilteredListByDay;
+        private ObservableCollection<EntryCategoryCounter>? _FilteredListByEntryCategory;
+
+        public bool IsDaySelected {  get; private set; }
+        public bool IsClearAllSelected { get; private set; }
+        public bool IsClearSelected { get; private set; }
+        public ScheduleElement SelectedCategory { get; private set; }
+        public ObservableCollection<DayBasedCategory>? ListToDeleteByDays { get; private set; }
+        public ObservableCollection<EntryCategoryCounter>? ListToDeleteByEntryCategory { get; private set; }
 
         public BulkClear(ObservableCollection<SubjectEntry> entries)
         {
@@ -70,14 +82,96 @@ namespace Schedio_Application.MVVM.View.Windows
             switch (element)
             {
                 case ScheduleElement.Day:
-                    lv_CategorizedList.ItemsSource = _EntryCategorizer.CategorizeByDay();
+
+                    _ListByDay = _EntryCategorizer.CategorizeByDay();
+                    _ListByEntryCategory = null;
+
+                    lv_CategorizedList.ItemsSource = _ListByDay;
+                    IsDaySelected = true;
                     break;
                 default:
-                    lv_CategorizedList.ItemsSource = _EntryCategorizer.CategorizeBy(element);
+                    _ListByEntryCategory = _EntryCategorizer.CategorizeBy(element);
+                    lv_CategorizedList.ItemsSource = _ListByEntryCategory;
                     break;
             }
 
-            selectedCategory = element;
+            SelectedCategory = element;
+        }
+
+        private void tb_SearchGroup_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (tb_SearchGroup.Text.Equals("String.Empty"))
+            {
+                if (IsDaySelected)
+                    lv_CategorizedList.ItemsSource = _ListByDay;
+                else
+                    lv_CategorizedList.ItemsSource = _ListByEntryCategory;
+                return;
+            }
+
+            string toSearch = tb_SearchGroup.Text;
+
+            if (lv_CategorizedList != null)
+            {
+                if (IsDaySelected && _ListByDay != null)
+                {
+                    _FilteredListByDay = new();
+                    foreach (DayBasedCategory item in _ListByDay)
+                    {
+                        if (item.Name.Contains(toSearch))
+                            _FilteredListByDay.Add(item);
+                    }
+                    lv_CategorizedList.ItemsSource = _FilteredListByDay;
+                }
+                else if (!IsDaySelected && _ListByEntryCategory != null)
+                {
+                    _FilteredListByEntryCategory = new();
+                    foreach (EntryCategoryCounter item in _ListByEntryCategory)
+                    {
+                        if (item.Name == null)
+                            continue;
+
+                        if (item.Name.Contains(toSearch))
+                            _FilteredListByEntryCategory.Add(item);
+                    }
+                    lv_CategorizedList.ItemsSource = _FilteredListByEntryCategory;
+                }
+            }
+        }
+
+        private void btn_ClearSelected_Click(object sender, RoutedEventArgs e)
+        {
+            IsClearSelected = true;
+            IsClearAllSelected = false;
+
+            if (IsDaySelected)
+            {
+                ListToDeleteByDays = new();
+                foreach (DayBasedCategory dayBasedCategory in lv_CategorizedList.SelectedItems)
+                {
+                    ListToDeleteByDays.Add(dayBasedCategory);
+                }
+            }
+            else
+            {
+                ListToDeleteByEntryCategory = new();
+                foreach (EntryCategoryCounter entryCategoryCounter in lv_CategorizedList.SelectedItems)
+                {
+                    ListToDeleteByEntryCategory.Add(entryCategoryCounter);
+                }
+            }
+
+            DialogResult = true;
+        }
+
+        //Refactor this to only clear those who are in list
+        private void btn_ClearAll_Click(object sender, RoutedEventArgs e)
+        {
+            
+            IsClearSelected = false;
+            IsClearAllSelected = true;
+            DialogResult = true;
+            
         }
     }
 }

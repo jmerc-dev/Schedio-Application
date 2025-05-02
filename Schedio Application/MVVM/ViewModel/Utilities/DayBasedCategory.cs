@@ -12,6 +12,11 @@ namespace Schedio_Application.MVVM.ViewModel.Utilities
         private DayOfWeek _Day;
         private int _Count;
 
+        public DayOfWeek Day
+        {
+            get => _Day;
+        }
+
         public string Name 
         { 
             get => _Day.ToString();

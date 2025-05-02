@@ -403,4 +403,28 @@
         </Setter>
     </Style>
 
+    <Style TargetType="ListViewItem" x:Key="lvi_CategoryCount">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <StackPanel x:Name="stackPanel" Background="Transparent">
+                        <GridViewRowPresenter x:Name="presenter" TextBlock.Foreground="{StaticResource PrimaryTextColor}" Content="{TemplateBinding Content}" Columns="{TemplateBinding GridView.ColumnCollection}" Margin="0,7"/>
+                    </StackPanel>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="stackPanel" Property="Background" Value="{StaticResource PrimaryShadeColor}"/>
+                        </Trigger>
+
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="stackPanel" Property="Background" Value="{StaticResource SecondaryShadeColor}"/>
+                            <Setter TargetName="presenter" Property="TextBlock.Foreground" Value="{StaticResource PrimaryBackground}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

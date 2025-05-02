@@ -207,9 +207,68 @@ namespace Schedio_Application.MVVM.View.Windows
         private void btn_Clear_Click(object sender, RoutedEventArgs e)
         {
             BulkClear bc = new BulkClear(Subject.SubjectEntries);
-            if (bc.ShowDialog() == true)
+            if (bc.ShowDialog() == true && new MBox("Are you sure you want to delete? The items will permanently be removed.", MBoxImage.Warning).ShowDialog() == true)
             {
+                if (bc.IsClearSelected)
+                {
+                    // Finding items to be deleted and adding it on itemsToDelete for basis
+                    ObservableCollection<SubjectEntry> itemsToDelete = new();
+                    if (bc.IsDaySelected)
+                    {
+                        foreach (SubjectEntry entry in Subject.SubjectEntries)
+                        {
+                            if (bc.ListToDeleteByDays == null)
+                                return;
+                            foreach (DayBasedCategory dayCategory in bc.ListToDeleteByDays)
+                            {
+                                if (entry.DayAssigned == dayCategory.Day)
+                                    itemsToDelete.Add(entry);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (SubjectEntry entry in Subject.SubjectEntries)
+                        {
+                            if (bc.ListToDeleteByEntryCategory == null)
+                                return;
 
+                            // TODO:
+                            foreach (EntryCategoryCounter ecc in bc.ListToDeleteByEntryCategory)
+                            {
+                                Type type = ecc.Value.GetType();
+                                IScheduleElement element = ecc.Value;
+                                if (type == typeof(ClassSection) && entry.SubjectInfo.OwnerSection == element)
+                                {
+                                    itemsToDelete.Add(entry);
+                                }
+                                else if (type == typeof(Person) && entry.SubjectInfo.AssignedPerson == element)
+                                {
+                                    itemsToDelete.Add(entry);
+                                }
+                                else if (type == typeof(Room) && entry.RoomAllocated == element)
+                                {
+                                    itemsToDelete.Add(entry);
+                                }
+                                Trace.WriteLine($"{ecc.Value.GetType()}");
+                                //if (entry.DayAssigned == dayCategory.Day)
+                                //    itemsToDelete.Add(entry);
+                            }
+                        }
+                    }
+
+                    foreach(SubjectEntry entry in itemsToDelete)
+                    {
+                        Subject.SubjectEntries.Remove(entry);
+                    }
+                }
+                else if (bc.IsClearAllSelected && (new MBox("", MBoxType.ConfirmDelete).ShowDialog() == true))
+                {
+                    for (int i = Subject.SubjectEntries.Count - 1; i >= 0; i--)
+                    {
+                        Subject.SubjectEntries.RemoveAt(i);
+                    }
+                }
             }
             
         }
@@ -386,43 +445,41 @@ namespace Schedio_Application.MVVM.View.Windows
         // Subject entries related function
         private void SubjectEntries_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Add)
+            switch (e.Action)
             {
-                if (e.NewItems != null && e.NewItems.Count == 1)
-                {
-                    SubjectEntry newEntry = (SubjectEntry) e.NewItems[0];
-
-                    if (newEntry.DayAssigned == null)
+                case NotifyCollectionChangedAction.Add:
+                    if (e.NewItems != null && e.NewItems.Count == 1)
                     {
-                        new MBox("No day assigned", MBoxImage.Warning).ShowDialog();
-                        return;
+                        SubjectEntry newEntry = (SubjectEntry)e.NewItems[0];
+
+                        if (newEntry.DayAssigned == null)
+                        {
+                            new MBox("No day assigned", MBoxImage.Warning).ShowDialog();
+                            return;
+                        }
+
+                        getDayTable(newEntry.DayAssigned).addEntry(newEntry);
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    if (e.OldItems.Count > 0)
+                    {
+                        SubjectEntry se = (SubjectEntry)e.OldItems[0];
+                        getDayTable(se.DayAssigned).removeEntry(se);
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    SubjectCard? card = FindCardEntry((SubjectEntry)Subject.SubjectEntries[e.NewStartingIndex]);
+
+                    if (card == null)
+                    {
+                        new MBox("Cannot find card entry");
                     }
 
-                    getDayTable(newEntry.DayAssigned).addEntry(newEntry);
-                }
-            }
-            else if (e.Action == NotifyCollectionChangedAction.Remove)
-            {   
-                if (e.OldItems.Count > 0)
-                {
-                    SubjectEntry se = (SubjectEntry) e.OldItems[0];
-                    getDayTable(se.DayAssigned).removeEntry(se);
-                    
-                }
-            }
-            else if (e.Action == NotifyCollectionChangedAction.Replace)
-            {
-                SubjectCard? card = FindCardEntry((SubjectEntry) Subject.SubjectEntries[e.NewStartingIndex]);
+                    getDayTable(card.Entry.DayAssigned).PlaceCard(card);
 
-                if (card == null)
-                {
-                    new MBox("Cannot find card entry");
-                }
-
-                getDayTable(card.Entry.DayAssigned).PlaceCard(card);
-
-                Trace.WriteLine($"An item has been replaced {e.OldStartingIndex} {e.NewStartingIndex}");
-                
+                    Trace.WriteLine($"An item has been replaced {e.OldStartingIndex} {e.NewStartingIndex}");
+                    break;
             }
         }
 
