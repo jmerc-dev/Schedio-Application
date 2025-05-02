@@ -1,0 +1,195 @@
+﻿<Window x:Class="Schedio_Application.MVVM.View.Windows.EntryLocator"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Schedio_Application.MVVM.View.Windows"
+        xmlns:converters="clr-namespace:Schedio_Application.MVVM.ViewModel.Converters"
+        mc:Ignorable="d" Height="550" Width="850"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <converters:DayAbbreviationConverter x:Key="dayAbbreviationConverter"/>
+    </Window.Resources>
+    <Border BorderBrush="{StaticResource GreyColor}" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" MouseLeftButtonDown="Grid_MouseLeftButtonDown" Background="Transparent">
+                <Button HorizontalAlignment="Right" Height="25" Width="25" Style="{StaticResource ImageButton}" Margin="5, 0" Click="Button_Click">
+                    <Image Source="pack://application:,,,/Schedio Application;component/Resources/Images/close.png"/>
+                </Button>
+            </Grid>
+
+            <Grid Grid.Row="1" Margin="45,10,45,40">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <!-- Row 0 -->
+                <TextBlock Text="Entry Locator" Style="{StaticResource TitleText}" FontSize="27"/>
+
+                <!-- Row 1 -->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Grid Grid.Row="0" Margin="0,10" Height="30">
+                        <TextBox Width="350" FontSize="15" VerticalContentAlignment="Center" TextBlock.TextAlignment="Left" Name="tb_SearchSubject" TextChanged="tb_SearchSubject_TextChanged" Padding="5,0,30,0"/>
+
+                        <TextBlock IsHitTestVisible="False" Text="Find subject" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8,0,0,0" Foreground="DarkGray" FontSize="15">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=tb_SearchSubject}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+
+                        <Image IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Setter Property="SnapsToDevicePixels" Value="True"/>
+                                    <Setter Property="Source" Value="pack://application:,,,/Schedio Application;component/Resources/Images/find-not-active.png"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsFocused, ElementName=tb_SearchSubject}" Value="True">
+                                            <Setter Property="Source" Value="pack://application:,,,/Schedio Application;component/Resources/Images/find-active.png"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </Grid>
+                    
+                    <!-- Sort Button -->
+                    
+                    <!-- Filter -->
+                    <StackPanel Orientation="Horizontal" Grid.Column="2">
+                        <TextBlock Text="Filter by" VerticalAlignment="Center" Style="{StaticResource UneditableText}" Margin="5,0"/>
+                        <ComboBox Name="cbox_Filters" Style="{StaticResource MainComboBox}" SelectionChanged="cbox_Filters_SelectionChanged" Width="100" Height="30" VerticalContentAlignment="Center">
+                            <ComboBoxItem Content="None" IsSelected="True"/>
+                            <ComboBoxItem Content="Person"/>
+                            <ComboBoxItem Content="Room"/>
+                            <ComboBoxItem Content="Section"/>
+                        </ComboBox>
+                    </StackPanel>
+                    
+                    <!-- Search by filter -->
+                    <Grid Grid.Column="3" Margin="5,10" HorizontalAlignment="Right" Height="30">
+                        <TextBox Width="150" FontSize="15" VerticalContentAlignment="Center" TextBlock.TextAlignment="Left" IsEnabled="False" Name="tb_SearchByFilter" TextChanged="tb_SearchByFilter_TextChanged" Padding="5,0"/>
+
+                        <TextBlock IsHitTestVisible="False" Text="Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8,0,0,0" Foreground="DarkGray" FontSize="15">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=tb_SearchByFilter}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                </Grid>
+                
+                <!-- Row 2 -->
+                <Border BorderBrush="{StaticResource GreyColor}" BorderThickness="0,0,0,1" Grid.Row="2">
+                    <ListView Name="lv_SubjectsList" SelectionMode="Single" ItemsSource="{Binding FilteredEntries}" BorderThickness="0" Template="{StaticResource template_Simple}" ItemContainerStyle="{StaticResource lvi_Simple}" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                        <ListView.Style>
+                            <Style TargetType="{x:Type ListView}"/>
+                        </ListView.Style>
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="False">
+                                <GridViewColumn Header="Section" Width="100" >
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <Border BorderBrush="{StaticResource GreyColor}" BorderThickness="0,0,1,0">
+                                                <TextBlock Text="{Binding SubjectInfo.OwnerSection.Name}" TextAlignment="Center"/>
+                                            </Border>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding SubjectInfo.Name}" Header="Subject Name" Width="200"/>
+                                <GridViewColumn Header="Person" Width="150">
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding SubjectInfo.AssignedPerson.Name}" TextAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Room" Width="100">
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding RoomAllocated.Name}" TextAlignment="Center" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Time" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding TimeFrame.Time}" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Day" Width="50">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding DayAssigned, Converter={StaticResource dayAbbreviationConverter}}" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Border>
+                
+                <!-- Row 3 -->
+                <Grid Grid.Row="3" Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <CheckBox Content="All" Grid.Row="0" Margin="25,0" Width="50" x:Name="cbox_AllDays" IsChecked="True" Click="cbox_AllDays_Clicked" VerticalContentAlignment="Center" HorizontalAlignment="Left" Template="{DynamicResource PrimaryCheckBox}"/>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5,0" Name="container_DayFilter">
+                        <StackPanel.Resources>
+                            <Style TargetType="CheckBox">
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                <Setter Property="Template" Value="{DynamicResource PrimaryCheckBox}"/>
+                                <Setter Property="Margin" Value="5,0"/>
+                                <Setter Property="IsChecked" Value="True"/>
+                                <EventSetter Event="Checked" Handler="DayFilter_Changed"/>
+                                <EventSetter Event="Unchecked" Handler="DayFilter_Changed"/>
+                                <EventSetter Event="Click" Handler="CheckBox_Click"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        
+                        <CheckBox Content="Monday"/>
+                        <CheckBox Content="Tuesday"/>
+                        <CheckBox Content="Wednesday"/>
+                        <CheckBox Content="Thursday"/>
+                        <CheckBox Content="Friday"/>
+                        <CheckBox Content="Saturday"/>
+                        <CheckBox Content="Sunday"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+            
+
+        </Grid>
+    </Border>
+</Window>

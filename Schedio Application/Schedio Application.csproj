@@ -40,6 +40,8 @@
     <None Remove="Resources\Images\expand.png" />
     <None Remove="Resources\Images\export.png" />
     <None Remove="Resources\Images\filter.png" />
+    <None Remove="Resources\Images\find-active.png" />
+    <None Remove="Resources\Images\find-not-active.png" />
     <None Remove="Resources\Images\find.png" />
     <None Remove="Resources\Images\hide.png" />
     <None Remove="Resources\Images\home-filled.png" />
@@ -123,6 +125,8 @@
     <Resource Include="Resources\Images\expand.png" />
     <Resource Include="Resources\Images\export.png" />
     <Resource Include="Resources\Images\filter.png" />
+    <Resource Include="Resources\Images\find-active.png" />
+    <Resource Include="Resources\Images\find-not-active.png" />
     <Resource Include="Resources\Images\find.png" />
     <Resource Include="Resources\Images\hide.png" />
     <Resource Include="Resources\Images\home-filled.png" />

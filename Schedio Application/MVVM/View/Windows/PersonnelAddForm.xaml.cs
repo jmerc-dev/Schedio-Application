@@ -345,7 +345,7 @@ namespace Schedio_Application.MVVM.View.Windows
                 // Locate where to put items
                 for (int i = 0; i < _person.Days.Length; i++)
                 {
-                    if (keyValuePair.Key == _person.Days[i].Name)
+                    if (keyValuePair.Key == _person.Days[i].DayValue)
                     {
                         _person.Days[i].CustomTimeframe = keyValuePair.Value;
                     }
@@ -359,7 +359,7 @@ namespace Schedio_Application.MVVM.View.Windows
             int index = 0;
             foreach (CheckBox checkbox in wp_Days.Children) 
             {
-                if (checkbox.Content.ToString().Equals(_person.Days[index].Name.ToString()))
+                if (checkbox.Content.ToString().Equals(_person.Days[index].DayValue.ToString()))
                 {
 
                     if (checkbox.IsChecked != null)
@@ -393,7 +393,7 @@ namespace Schedio_Application.MVVM.View.Windows
 
                 for (int i = 0; i < days.Length; i++)
                 {
-                    if (days[i].Name.ToString().Equals(name))
+                    if (days[i].DayValue.ToString().Equals(name))
                     {
                         cb.IsChecked = days[i].IsAvailable;
                         break;
@@ -415,7 +415,7 @@ namespace Schedio_Application.MVVM.View.Windows
             dailyTimeframe = new Dictionary<DayOfWeek, List<TimeFrame>>();
             for (int i = 0; i < _person.Days.Length; i++)
             {
-                dailyTimeframe.Add(_person.Days[i].Name, new List<TimeFrame>(_person.Days[i].CustomTimeframe));
+                dailyTimeframe.Add(_person.Days[i].DayValue, new List<TimeFrame>(_person.Days[i].CustomTimeframe));
             }
         }
 

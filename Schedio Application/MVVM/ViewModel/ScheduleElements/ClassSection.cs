@@ -14,9 +14,9 @@ using System.Windows.Media;
 
 namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
-    public class ClassSection : PropertyNotification
+    public class ClassSection : PropertyNotification, IScheduleElement
     {
-        private static int _IdCount;
+        //private static int _IdCount;
 
         private int _ID;
         private string? _Name;
@@ -161,7 +161,6 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             }
 
             this.AllocatedSubjects = fullyAllocatedSubjects;
-            Trace.WriteLine(this.AllocatedSubjects);
         }
 
         public bool SetColor(ClassSection section)

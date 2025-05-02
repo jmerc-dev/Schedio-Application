@@ -1,4 +1,5 @@
 ﻿using Schedio_Application.MVVM.ViewModel.Custom_Exceptions;
+using Schedio_Application.MVVM.ViewModel.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,10 +11,15 @@ using System.Windows;
 
 namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
-    public class TimeFrame
+    public class TimeFrame : PropertyNotification
     {
         private DateTime _startTime;
         private DateTime _endTime;
+
+        public string Time
+        {
+            get => $"{StartTime} - {EndTime}";
+        }
 
         public string StartTime 
         { 
@@ -23,6 +29,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 try
                 {
                     _startTime = DateTime.Parse(value);
+                    OnPropertyChanged(nameof(Time));
                 } catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
@@ -37,6 +44,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 try
                 {
                     _endTime = DateTime.Parse(value);
+                    OnPropertyChanged(nameof(Time));
                 }
                 catch (Exception ex)
                 {

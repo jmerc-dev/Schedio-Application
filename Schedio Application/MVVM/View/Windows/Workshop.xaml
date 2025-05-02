@@ -129,7 +129,7 @@
 
                                         <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,1,0,0" Grid.Row="2" Margin="20,0,0,0">
                                             <ScrollViewer CanContentScroll="True" Grid.Row="1" BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}"  HorizontalScrollBarVisibility="Disabled">
-                                                <ListView x:Name="lv_PersonnelList" ItemTemplate="{StaticResource dt_PersonnelList}" HorizontalContentAlignment="Stretch" FontSize="13"/>
+                                                <ListView x:Name="lv_PersonnelList" ItemTemplate="{StaticResource dt_PersonnelList}" HorizontalContentAlignment="Stretch" FontSize="13" ItemContainerStyle="{StaticResource lvi_Big}"/>
 
                                             </ScrollViewer>
                                         </Border>
@@ -180,7 +180,7 @@
 
                                         <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,1,0,0" Grid.Row="2" Margin="20,0,0,0">
                                             <ScrollViewer CanContentScroll="True" Grid.Row="1" BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}">
-                                                <ListView x:Name="lv_RoomsList" ItemTemplate="{StaticResource dt_RoomsList}" HorizontalContentAlignment="Stretch">
+                                                <ListView x:Name="lv_RoomsList" ItemTemplate="{StaticResource dt_RoomsList}" HorizontalContentAlignment="Stretch" ItemContainerStyle="{StaticResource lvi_Big}">
 
                                                 </ListView>
                                             </ScrollViewer>
@@ -230,7 +230,7 @@
 
                                         <Border BorderBrush="{StaticResource SecondaryShadeColor}" BorderThickness="0,1,0,0" Grid.Row="2" Margin="20,0,0,0">
                                             <ScrollViewer CanContentScroll="True" Grid.Row="1" BorderBrush="{StaticResource PrimaryBackground}" BorderThickness="0 0 10 0" Style="{DynamicResource MainScrollViewer}">
-                                                <ListView x:Name="lv_SectionList" ItemTemplate="{StaticResource dt_SectionList}" HorizontalContentAlignment="Stretch"/>
+                                                <ListView x:Name="lv_SectionList" ItemTemplate="{StaticResource dt_SectionList}" HorizontalContentAlignment="Stretch" ItemContainerStyle="{StaticResource lvi_Big}"/>
                                             </ScrollViewer>
                                         </Border>
                                     </Grid>
@@ -304,7 +304,7 @@
                                         <TextBlock Text="Colorize" Grid.Row="1" FontSize="11"/>
                                     </Grid>
                                 </Button>
-                                <Button Style="{StaticResource ImageButton}" Margin="10,0">
+                                <Button Style="{StaticResource ImageButton}" Margin="10,0" Name="btn_Clear" Click="btn_Clear_Click">
                                     <Grid Margin="4">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="2*"/>
@@ -360,14 +360,14 @@
                                         <TextBlock Text="Expand" Grid.Row="1" FontSize="11"/>
                                     </Grid>
                                 </Button>
-                                <Button Style="{StaticResource ImageButton}" Margin="10,0">
+                                <Button Style="{StaticResource ImageButton}" Margin="10,0" Name="btn_Find" Click="btn_Find_Click">
                                     <Grid Margin="4">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="2*"/>
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
                                         <Image Stretch="Uniform" Source="pack://application:,,,/Schedio Application;component/Resources/Images/find.png"/>
-                                        <TextBlock Text="Find" Grid.Row="1" FontSize="11"/>
+                                        <TextBlock Text="Find" Grid.Row="1" FontSize="11" HorizontalAlignment="Center"/>
                                     </Grid>
                                 </Button>
                             </StackPanel>
@@ -494,7 +494,7 @@
                                             <TextBlock Grid.Column="1" Text="Status" Foreground="{StaticResource GreyColor}" HorizontalAlignment="Center"/>
                                         </Grid>
                                         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Style="{StaticResource MainScrollViewer}" Margin="15,0,0,0">
-                                            <ListView Margin="5" Grid.Row="1" DataContext="{Binding SelectedSection}" ItemsSource="{Binding Subjects}" Name="lv_SelectedSectionSubjects" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource dt_SectionListStatusSimplified}" ItemContainerStyle="{StaticResource lvSubjectViewer}" SelectionMode="Single">
+                                            <ListView Margin="5" Grid.Row="1" DataContext="{Binding SelectedSection}" ItemsSource="{Binding Subjects}" Name="lv_SelectedSectionSubjects" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource dt_SubjectsListStatusSimplified}" ItemContainerStyle="{StaticResource lvSubjectViewer}" SelectionMode="Single">
                                                 
                                             </ListView>
                                         </ScrollViewer>

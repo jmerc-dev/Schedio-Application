@@ -41,6 +41,8 @@ namespace Schedio_Application.MVVM.View.Windows
         private FileLoader _FileLoad;
         private ClassSection? _SelectedSection;
         private FileSave _FileSave = new FileSave();
+        private EntryLocator? _EntryLocator;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public ClassSection? SelectedSection
         {
@@ -61,8 +63,6 @@ namespace Schedio_Application.MVVM.View.Windows
         {
             get { return "No Chosen Section"; }
         }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
 
         public void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
@@ -97,7 +97,7 @@ namespace Schedio_Application.MVVM.View.Windows
             Loaded += (sender, e) =>
             {
                 this.DataContext = this;
-                //AddDummyData();
+                new DummyData(false, RoomTypes, Rooms, Personnel, Sections);
             };
 
             Sections.CollectionChanged += new NotifyCollectionChangedEventHandler(section_CollectionChanged);
@@ -105,6 +105,9 @@ namespace Schedio_Application.MVVM.View.Windows
             Closing += (sender, e) =>
             {
                 Application.Current.MainWindow.Visibility = Visibility.Visible;
+                
+                    
+                
             };
         }
 
@@ -139,10 +142,6 @@ namespace Schedio_Application.MVVM.View.Windows
             {
                 this.DataContext = this;
                 LoadEntries(Subject.SubjectEntries);
-                //AddDummyData();
-                RoomTypes.Add(new RoomType("Classic"));
-                RoomTypes.Add(new RoomType("Lab"));
-                RoomTypes.Add(new RoomType("Court"));
             };
 
             Closing += (sender, e) =>
@@ -161,174 +160,6 @@ namespace Schedio_Application.MVVM.View.Windows
             return true;
         }
 
-        // Subject allocation CRUD
-
-        // Dummy Data
-        private void AddDummyData()
-        {
-            //RoomTypes = new ObservableCollection<RoomType>();
-            RoomTypes.Add(new RoomType("Classic"));
-            RoomTypes.Add(new RoomType("Lab"));
-            RoomTypes.Add(new RoomType("Court"));
-
-            Rooms.Add(new Room("101", RoomTypes[0]));
-            Rooms.Add(new Room("102", RoomTypes[1]));
-            Rooms.Add(new Room("103", RoomTypes[2]));
-            Rooms.Add(new Room("104", RoomTypes[1]));
-            Rooms.Add(new Room("105", RoomTypes[1]));
-            Rooms.Add(new Room("106", RoomTypes[1]));
-            Rooms.Add(new Room("107", RoomTypes[1]));
-            Rooms.Add(new Room("108", RoomTypes[1]));
-            Rooms.Add(new Room("109", RoomTypes[2]));
-            Rooms.Add(new Room("110", RoomTypes[1]));
-            Rooms.Add(new Room("201", RoomTypes[2]));
-            Rooms.Add(new Room("202", RoomTypes[1]));
-            Rooms.Add(new Room("203", RoomTypes[0]));
-            Rooms.Add(new Room("204", RoomTypes[0]));
-            Rooms.Add(new Room("205", RoomTypes[0]));
-
-            Person[] people = [
-                new Person { Name = "Jose Protacio Rizal", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "02:00 PM"},
-                new Person { Name = "Emilio Aguinaldo", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "05:00 PM"},
-                new Person { Name = "Apolinario Mabini", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "03:00 PM"},
-                new Person { Name = "Arthur McArthur", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "01:00 PM"},
-                new Person { Name = "Andres Bonifacio", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "07:00 PM"},
-                new Person { Name = "Lapu Lapu", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "05:00 PM"},
-                new Person { Name = "Apo Whang-od", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "02:00 PM"},
-                new Person { Name = "Tomoyuki Yamashita", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "01:00 PM"},
-                new Person { Name = "Gabriela Silang", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "09:00 PM"},
-                new Person { Name = "Bong Bong Marcos", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "08:00 PM"},
-                new Person { Name = "Benigno Aquino", IsConstant = true, ConstTime_Start = "12:00 AM", ConstTime_End = "03:00 PM"}
-                ];
-
-            foreach (Person p in people)
-            {
-                p.Initialize();
-            }
-
-            people[0].SetAvailableDay(DayOfWeek.Saturday, true);
-            people[0].SetAvailableDay(DayOfWeek.Monday, true);
-
-            people[1].SetAvailableDay(DayOfWeek.Monday, true);
-            people[1].SetAvailableDay(DayOfWeek.Tuesday, true);
-            people[1].SetAvailableDay(DayOfWeek.Wednesday, true);
-
-            people[2].SetAvailableDay(DayOfWeek.Tuesday, true);
-            people[2].SetAvailableDay(DayOfWeek.Wednesday, true);
-
-            people[3].SetAvailableDay(DayOfWeek.Tuesday, true);
-
-            people[4].SetAvailableDay(DayOfWeek.Thursday, true);
-            people[4].SetAvailableDay(DayOfWeek.Friday, true);
-
-            people[5].SetAvailableDay(DayOfWeek.Monday, true);
-            people[5].SetAvailableDay(DayOfWeek.Friday, true);
-
-            people[6].SetAvailableDay(DayOfWeek.Monday, true);
-            people[6].SetAvailableDay(DayOfWeek.Tuesday, true);
-            people[6].SetAvailableDay(DayOfWeek.Thursday, true);
-            people[6].SetAvailableDay(DayOfWeek.Saturday, true);
-
-            people[7].SetAvailableDay(DayOfWeek.Tuesday, true);
-            people[7].SetAvailableDay(DayOfWeek.Wednesday, true);
-            people[7].SetAvailableDay(DayOfWeek.Friday, true);
-
-            people[8].SetAvailableDay(DayOfWeek.Monday, true);
-            people[8].SetAvailableDay(DayOfWeek.Thursday, true);
-            people[8].SetAvailableDay(DayOfWeek.Saturday, true);
-
-            people[9].SetAvailableDay(DayOfWeek.Tuesday, true);
-
-            people[10].SetAvailableDay(DayOfWeek.Monday, true);
-            people[10].SetAvailableDay(DayOfWeek.Saturday, true);
-            
-
-            foreach (Person person in people)
-            {
-                Personnel.Add(person);
-            }
-
-
-            ClassSection[] DummySection = new ClassSection[10];
-            for (int i = 0; i < DummySection.Length; i++)
-            {
-                string[] courses = ["IT", "CS", "HRS", "CE", "P"];
-                DummySection[i] = new ClassSection();
-                if (i < 2)
-                    DummySection[i].Name =  $"{courses[0]}{i}0A";
-                else if (i < 4)
-                    DummySection[i].Name = $"{courses[1]}{i}0A";
-                else if (i < 6)
-                    DummySection[i].Name = $"{courses[2]}{i}0A";
-                else if (i < 8)
-                    DummySection[i].Name = $"{courses[3]}{i}0A";
-                else
-                    DummySection[i].Name = $"{courses[4]}{i}0A";
-
-                Random rnd = new Random();
-                
-                DummySection[i].Subjects.Add(new Subject
-                {
-                    Name = "NSTP II",
-                    AssignedPerson = people[0],
-                    RoomType = RoomTypes[0],
-                    Units = 1,
-                    OwnerSection = DummySection[i]
-                });
-
-                DummySection[i].Subjects.Add(new Subject
-                {
-                    Name = "Computer Programming",
-                    AssignedPerson = people[1],
-                    RoomType = RoomTypes[0],
-                    Units = 3,
-                    OwnerSection = DummySection[i]
-                });
-                DummySection[i].Subjects.Add(new Subject
-                {
-                    Name = "Computer Programming Lab",
-                    AssignedPerson = people[2],
-                    RoomType = RoomTypes[1],
-                    Units = 2,
-                    OwnerSection = DummySection[i]
-                });
-                DummySection[i].Subjects.Add(new Subject
-                {
-                    Name = "Entrepreneurship",
-                    AssignedPerson = people[3],
-                    RoomType = RoomTypes[0],
-                    Units = 2,
-                    OwnerSection = DummySection[i]
-                });
-                DummySection[i].Subjects.Add(new Subject
-                {
-                    Name = "Automata Theory",
-                    AssignedPerson = people[4],
-                    RoomType = RoomTypes[0],
-                    Units = 3,
-                    OwnerSection = DummySection[i]
-                });
-                DummySection[i].Subjects.Add(new Subject
-                {
-                    Name = "PE",
-                    AssignedPerson = people[5],
-                    RoomType = RoomTypes[2],
-                    Units = 2,
-                    OwnerSection = DummySection[i]
-                });
-                DummySection[i].Subjects.Add(new Subject
-                {
-                    Name = "Design and Analysis of Algorithms",
-                    AssignedPerson = people[6],
-                    RoomType = RoomTypes[0],
-                    Units = 3,
-                    OwnerSection = DummySection[i]
-                });
-                Sections.Add(DummySection[i]);
-            }
-
-        }
-
         // Subjects panel
         private void btn_ShowSubjects_Click(object sender, RoutedEventArgs e)
         {
@@ -344,8 +175,6 @@ namespace Schedio_Application.MVVM.View.Windows
 
         private void btn_Export_Click(object sender, RoutedEventArgs e)
         {
-            
-
 
         }
 
@@ -357,7 +186,6 @@ namespace Schedio_Application.MVVM.View.Windows
             {
                 // Save selected Section
                 SelectedSection = sectionExplorer.SelectedSection;
-                //lv_SelectedSectionSubjects.ItemsSource = SelectedSection.Subjects;
             }
         }
 
@@ -367,6 +195,83 @@ namespace Schedio_Application.MVVM.View.Windows
             Subject.SubjectEntries.Clear();
 
         }
+
+        private void btn_Find_Click(object sender, RoutedEventArgs e)
+        {
+            if (_EntryLocator == null)
+                _EntryLocator = new EntryLocator(this, Subject.SubjectEntries);
+
+            _EntryLocator.Show();
+        }
+
+        private void btn_Clear_Click(object sender, RoutedEventArgs e)
+        {
+            BulkClear bc = new BulkClear(Subject.SubjectEntries);
+            if (bc.ShowDialog() == true && new MBox("Are you sure you want to delete? The items will permanently be removed.", MBoxImage.Warning).ShowDialog() == true)
+            {
+                if (bc.IsClearSelected)
+                {
+                    // Finding items to be deleted and adding it on itemsToDelete for basis
+                    ObservableCollection<SubjectEntry> itemsToDelete = new();
+                    if (bc.IsDaySelected)
+                    {
+                        foreach (SubjectEntry entry in Subject.SubjectEntries)
+                        {
+                            if (bc.ListToDeleteByDays == null)
+                                return;
+                            foreach (DayBasedCategory dayCategory in bc.ListToDeleteByDays)
+                            {
+                                if (entry.DayAssigned == dayCategory.Day)
+                                    itemsToDelete.Add(entry);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (SubjectEntry entry in Subject.SubjectEntries)
+                        {
+                            if (bc.ListToDeleteByEntryCategory == null)
+                                return;
+
+                            // TODO:
+                            foreach (EntryCategoryCounter ecc in bc.ListToDeleteByEntryCategory)
+                            {
+                                Type type = ecc.Value.GetType();
+                                IScheduleElement element = ecc.Value;
+                                if (type == typeof(ClassSection) && entry.SubjectInfo.OwnerSection == element)
+                                {
+                                    itemsToDelete.Add(entry);
+                                }
+                                else if (type == typeof(Person) && entry.SubjectInfo.AssignedPerson == element)
+                                {
+                                    itemsToDelete.Add(entry);
+                                }
+                                else if (type == typeof(Room) && entry.RoomAllocated == element)
+                                {
+                                    itemsToDelete.Add(entry);
+                                }
+                                Trace.WriteLine($"{ecc.Value.GetType()}");
+                                //if (entry.DayAssigned == dayCategory.Day)
+                                //    itemsToDelete.Add(entry);
+                            }
+                        }
+                    }
+
+                    foreach(SubjectEntry entry in itemsToDelete)
+                    {
+                        Subject.SubjectEntries.Remove(entry);
+                    }
+                }
+                else if (bc.IsClearAllSelected && (new MBox("", MBoxType.ConfirmDelete).ShowDialog() == true))
+                {
+                    for (int i = Subject.SubjectEntries.Count - 1; i >= 0; i--)
+                    {
+                        Subject.SubjectEntries.RemoveAt(i);
+                    }
+                }
+            }
+            
+        }
     }
 
 
@@ -375,9 +280,15 @@ namespace Schedio_Application.MVVM.View.Windows
     {
         private FileLoader file;
         private FullDataWrapper fullDataWrapper;
-
         private ObservableCollection<Room> TempRooms;
         private ObservableCollection<RoomType> RoomTypes = new ObservableCollection<RoomType>();
+        private ObservableCollection<Person> Personnel;
+        private ObservableCollection<Person> TempPersonnel;
+
+        private ObservableCollection<ClassSection> Sections;
+        private ObservableCollection<ClassSection> TempSections;
+
+        private WarningConfirmation? warningModal;
 
         public static ObservableCollection<Room> Rooms 
         { 
@@ -388,14 +299,6 @@ namespace Schedio_Application.MVVM.View.Windows
         {
             get => fullDataWrapper;
         }
-
-        private ObservableCollection<Person> Personnel;
-        private ObservableCollection<Person> TempPersonnel;
-
-        private ObservableCollection<ClassSection> Sections;
-        private ObservableCollection<ClassSection> TempSections;
-
-        private WarningConfirmation? warningModal;
 
         private void tabCtrl_DataManager_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -542,44 +445,51 @@ namespace Schedio_Application.MVVM.View.Windows
         // Subject entries related function
         private void SubjectEntries_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Add)
+            switch (e.Action)
             {
-                if (e.NewItems != null && e.NewItems.Count == 1)
-                {
-                    SubjectEntry newEntry = (SubjectEntry) e.NewItems[0];
-
-                    if (newEntry.DayAssigned == null)
+                case NotifyCollectionChangedAction.Add:
+                    if (e.NewItems != null && e.NewItems.Count == 1)
                     {
-                        new MBox("No day assigned", MBoxImage.Warning).ShowDialog();
-                        return;
+                        SubjectEntry newEntry = (SubjectEntry)e.NewItems[0];
+
+                        if (newEntry.DayAssigned == null)
+                        {
+                            new MBox("No day assigned", MBoxImage.Warning).ShowDialog();
+                            return;
+                        }
+
+                        getDayTable(newEntry.DayAssigned).addEntry(newEntry);
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    if (e.OldItems.Count > 0)
+                    {
+                        SubjectEntry se = (SubjectEntry)e.OldItems[0];
+                        getDayTable(se.DayAssigned).removeEntry(se);
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    SubjectCard? card = FindCardEntry((SubjectEntry)Subject.SubjectEntries[e.NewStartingIndex]);
+
+                    if (card == null)
+                    {
+                        new MBox("Cannot find card entry");
                     }
 
-                    getDayTable(newEntry.DayAssigned).addEntry(newEntry);
-                }
-            }
-            else if (e.Action == NotifyCollectionChangedAction.Remove)
-            {   
-                if (e.OldItems.Count > 0)
-                {
-                    SubjectEntry se = (SubjectEntry) e.OldItems[0];
-                    getDayTable(se.DayAssigned).removeEntry(se);
-                    
-                }
-            }
-            else if (e.Action == NotifyCollectionChangedAction.Replace)
-            {
-                SubjectCard? card = FindCardEntry((SubjectEntry) Subject.SubjectEntries[e.NewStartingIndex]);
+                    getDayTable(card.Entry.DayAssigned).PlaceCard(card);
 
-                if (card == null)
-                {
-                    new MBox("Cannot find card entry");
-                }
-
-                getDayTable(card.Entry.DayAssigned).PlaceCard(card);
-
-                Trace.WriteLine($"An item has been replaced {e.OldStartingIndex} {e.NewStartingIndex}");
-                
+                    Trace.WriteLine($"An item has been replaced {e.OldStartingIndex} {e.NewStartingIndex}");
+                    break;
             }
+        }
+
+        public void FindEntry(SubjectEntry entry)
+        {
+            TimeTable tt = getDayTable(entry.DayAssigned);
+            int tabIndex = CultureDayOfWeek.ConvertBack(entry.DayAssigned);
+            tabCtrl_DayTimeTableContainer.SelectedIndex = tabIndex;
+
+            tt.FocusOnEntry(entry);
         }
 
         
@@ -599,7 +509,7 @@ namespace Schedio_Application.MVVM.View.Windows
             return null;
         }
 
-        private TimeTable? getDayTable(DayOfWeek? day)
+        private TimeTable getDayTable(DayOfWeek? day)
         {
             switch (day)
             {
@@ -617,7 +527,7 @@ namespace Schedio_Application.MVVM.View.Windows
                     return tt_Friday;
                 case DayOfWeek.Saturday:
                     return tt_Saturday;
-                default: return null;
+                default: throw new NullReferenceException();
                     
             }
         }

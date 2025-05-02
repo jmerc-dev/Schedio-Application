@@ -469,14 +469,14 @@ namespace Schedio_Application.MVVM.View.Pages
                     Trace.WriteLine($"\t\t{p.ConstTime_Start} => {p.ConstTime_End}");
                     foreach (Day d in p.Days)
                     {
-                        Trace.WriteLine($"\t\t{d.Name.ToString()}: {d.IsAvailable}");
+                        Trace.WriteLine($"\t\t{d.DayValue.ToString()}: {d.IsAvailable}");
                     }
                 }
                 else
                 {
                     foreach(Day d in p.Days)
                     {
-                        Trace.WriteLine($"\t\t{d.Name.ToString()}: {d.IsAvailable}");
+                        Trace.WriteLine($"\t\t{d.DayValue.ToString()}: {d.IsAvailable}");
                         foreach (TimeFrame tf in d.CustomTimeframe)
                         {
                             Trace.WriteLine($"\t\t\t{tf.StartTime} => {tf.EndTime}");

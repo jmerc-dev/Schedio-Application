@@ -72,8 +72,6 @@ namespace Schedio_Application.MVVM.View.UserControls
 
                 SetControlWidth(fullWidth);
                 SetControlHeight(fullHeight);
-
-                
             };
         }
 
@@ -230,6 +228,24 @@ namespace Schedio_Application.MVVM.View.UserControls
             
         }
 
+        public void FocusOnEntry(SubjectEntry entry)
+        {
+            foreach (SubjectCard sc in entriesContainer.Children) 
+            {
+                if (sc.Entry == entry)
+                {
+                    sc.Focus();
+                    SetScrollLocation((double)sc.GetValue(Canvas.LeftProperty), (double)sc.GetValue(Canvas.TopProperty));
+                    return;
+                }    
+            }
+        }
+
+        private void SetScrollLocation(double x, double y)
+        {
+            sv_Canvas.ScrollToHorizontalOffset(x);
+            sv_Canvas.ScrollToVerticalOffset(y);
+        }
         
 
         // Mouse dragging 

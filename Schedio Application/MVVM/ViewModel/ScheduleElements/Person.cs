@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
-    public class Person : PropertyNotification
+    public class Person : PropertyNotification, IScheduleElement
     {
         const int MAX_CAPACITY = 7;
         //private static int _IdCounter = 0;
@@ -145,7 +145,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             foreach (Day personDays in Days)
             {
                 // Checks for day availability
-                if (personDays.Name == day && personDays.IsAvailable)
+                if (personDays.DayValue == day && personDays.IsAvailable)
                 {
                     // Checks for custom timeframe/constant timeframe
                     if (IsConstant)
@@ -195,13 +195,13 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 
         private void SetDaysName()
         {
-            _Days[0].Name = DayOfWeek.Monday;
-            _Days[1].Name = DayOfWeek.Tuesday;
-            _Days[2].Name = DayOfWeek.Wednesday;
-            _Days[3].Name = DayOfWeek.Thursday;
-            _Days[4].Name = DayOfWeek.Friday;
-            _Days[5].Name = DayOfWeek.Saturday;
-            _Days[6].Name = DayOfWeek.Sunday;
+            _Days[0].DayValue = DayOfWeek.Monday;
+            _Days[1].DayValue = DayOfWeek.Tuesday;
+            _Days[2].DayValue = DayOfWeek.Wednesday;
+            _Days[3].DayValue = DayOfWeek.Thursday;
+            _Days[4].DayValue = DayOfWeek.Friday;
+            _Days[5].DayValue = DayOfWeek.Saturday;
+            _Days[6].DayValue = DayOfWeek.Sunday;
         }
 
         public void SetAvailableDay(DayOfWeek day, bool isChecked)

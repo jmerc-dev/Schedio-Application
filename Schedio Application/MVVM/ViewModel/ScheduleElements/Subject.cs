@@ -15,20 +15,20 @@ using System.Windows.Navigation;
 
 namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
 {
-    public class Subject : PropertyNotification
+    public class Subject : PropertyNotification, IScheduleElement
     {
         private static int _IdCounter;
 
         private int _ID;
-        private string _Name;
+        private string? _Name;
         private Person _AssignedPerson;
         private RoomType _RoomType;
         private double _Units;
         private ClassSection _ClassSection;
 
-        private double _UnitsRemaining;
+        //private double _UnitsRemaining;
         private double _UnitsAllocated;
-        private bool _IsAllocated;
+        //private bool _IsAllocated;
         private int _RoomTypeID;
 
         
@@ -49,12 +49,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             set => _ID = value;
         }
 
-        public static int IDCount
-        {
-            get => _IdCounter;
-        }
-
-        public string Name 
+        public string? Name 
         { 
             get { return _Name; }
             set 
@@ -77,7 +72,6 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
         public bool IsAllocated
         {
             get => Units == UnitsAllocated;
-            //set {  _IsAllocated = value; OnPropertyChanged(); }
         }
 
         public int RoomTypeID
@@ -229,11 +223,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
                 _SubjectEntries.Add(subjectAllocation.Entry);
                 UnitsAllocated += subjectAllocation.Entry.UnitsToAllocate;
 
-                // Updates Allocated Units Indicator
-                //if (this.OwnerSection != null)
-                //{
-                //    this.OwnerSection.AllocatedUnits += subjectAllocation.Entry.UnitsToAllocate;
-                //}
+                
             }
         }
 
@@ -291,11 +281,7 @@ namespace Schedio_Application.MVVM.ViewModel.ScheduleElements
             if (subAllocObj.ShowDialog() == true)
             {
                 double newUnitsAllocated = subAllocObj.Entry.UnitsToAllocate;
-                // TODO: 
-                //if (subAllocObj.Entry.UnitsToAllocate > prevUnitsAllocated)
-                //    subAllocObj.Entry.SubjectInfo.UnitsAllocated -= subAllocObj.Entry.UnitsToAllocate - previousUnits;
-                //else if (subAllocObj.Entry.UnitsToAllocate < previousUnits)
-                //    subAllocObj.Entry.SubjectInfo.UnitsRemaining += previousUnits - subAllocObj.Entry.UnitsToAllocate;
+                
                 subAllocObj.Entry.SubjectInfo.UnitsAllocated = (UnitsAllocated - prevUnitsAllocated) + newUnitsAllocated;
                 this.OwnerSection.AllocatedUnits += subAllocObj.Entry.UnitsToAllocate;
 
